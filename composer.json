@@ -23,8 +23,11 @@
 		"yiisoft/yii2-imagine": "~2.0",
 		"yiisoft/yii2-jui": "^2.0",
 		"ommu/yii2-redactor": "~2.0",
-		"ommu/users": "~2.0",
-		"ommu/mailer": "dev-version-2.x"
+		"ommu/users": "~2.1",
+		"ommu/mailer": "~0.1",
+		"ommu/report": "~2.1",
+		"ommu/support": "~2.1",
+		"ommu/banner": "~2.1"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
