@@ -74,5 +74,5 @@ if(\app\components\Application::isDev()) {
 		@chmod($themes, 0755, true);
 }
 
-$app = new yii\web\Application($config);
+$app = new app\components\Application($config);
 $app->run();

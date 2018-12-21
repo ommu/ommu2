@@ -6,6 +6,7 @@ Yii::setAlias('@models', '@app/models');
 Yii::setAlias('@modules', '@app/modules');
 Yii::setAlias('@vendor', '@app/vendor');
 Yii::setAlias('@ommu', '@vendor/ommu');
+Yii::setAlias('@themes', '@webroot/themes');
 Yii::setAlias('@public', '@webroot/public');
 
 $params = \app\components\Application::isDev() ? 
@@ -16,7 +17,7 @@ $database = \app\components\Application::isDev() ?
 	require(__DIR__ . '/database.php');
 
 $production = [
-	'name' => 'Ommu',
+	'name' => 'OMMU by sudaryanto.id',
 	'id' => 'basic',
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => ['log'],
@@ -40,10 +41,10 @@ $production = [
 			'errorAction' => 'site/error',
 		],
 		'formatter' => [
-			'class'   => 'app\components\i18n\Formatter',
-			'dateFormat' => 'php:d-M-Y',
+			'class'          => 'app\components\i18n\Formatter',
+			'dateFormat'     => 'php:d-M-Y',
 			'datetimeFormat' => 'php:d-M-Y H:i:s',
-			'timeFormat' => 'php:H:i:s',
+			'timeFormat'     => 'php:H:i:s',
 		],
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
@@ -61,15 +62,28 @@ $production = [
 				],
 			],
 		],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
-    ],
+		'urlManager' => [
+			'enablePrettyUrl' => true,
+			'showScriptName' => false,
+			'rules' => [
+			],
+		],
+		'authManager' => [
+			'class'             => 'mdm\admin\components\DbManager',
+			'db'                => 'sweeto',
+			'assignmentTable'   => 'swt_auth_assignment',
+			'itemTable'         => 'swt_auth_item',
+			'itemChildTable'    => 'swt_auth_item_child',
+			'ruleTable'         => 'swt_auth_rule',
+		],
+		'view' => [
+			'class' => '\app\components\View',
+		],
+		'setting' => [
+			'class' => '\app\components\SettingManager',
+			'moduleId' => 'base',
+		],
+	],
 	'params' => $params,
 ];
 
@@ -91,7 +105,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

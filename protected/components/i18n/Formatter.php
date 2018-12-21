@@ -4,8 +4,8 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
- * @created date 7 December 2018, 05:36 WIB
+ * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @created date 7 December 2017, 05:36 WIB
  * @link https://github.com/ommu/ommu
  */
 
@@ -61,13 +61,7 @@ class Formatter extends \yii\i18n\Formatter
 		if ($format === null)
 			$format = $this->dateFormat;
 
-		if(in_array('formatDateTimeValue', get_class_methods($this)))
-			return $this->formatDateTimeValue($value, $format, 'date');
-		else {
-			echo 'Formatter::asDate() isn\'t callable,
-				<br/>check this vendor/yiisoft/yii2/i18n/Formatter.php.<br/>
-				change method function formatDateTimeValue, private to protected.';
-		}
+		return parent::asDate($value, $format);
 	}
 
 	/**
@@ -106,13 +100,7 @@ class Formatter extends \yii\i18n\Formatter
 		if ($format === null)
 			$format = $this->timeFormat;
 
-		if(in_array('formatDateTimeValue', get_class_methods($this)))
-			return $this->formatDateTimeValue($value, $format, 'time');
-		else {
-			echo 'Formatter::asDate() isn\'t callable,
-				<br/>check this vendor/yiisoft/yii2/i18n/Formatter.php.<br/>
-				change method function formatDateTimeValue, private to protected.';
-		}
+		return parent::asTime($value, $format);
 	}
 
 	/**
@@ -151,18 +139,14 @@ class Formatter extends \yii\i18n\Formatter
 		if ($format === null)
 			$format = $this->datetimeFormat;
 
-		if(in_array('formatDateTimeValue', get_class_methods($this)))
-			return $this->formatDateTimeValue($value, $format, 'datetime');
-		else {
-			echo 'Formatter::asDate() isn\'t callable,
-				<br/>check this vendor/yiisoft/yii2/i18n/Formatter.php.<br/>
-				change method function formatDateTimeValue, private to protected.';
-		}
+		return parent::asDatetime($value, $format);
 	}
 
 	/**
-	 * Pendekan nama file sesuai setingan panjangnya. jika melebihi setingan panjang karakter
+	 * Mengembalikan kependekan nama file sesuai setingan panjangnya. jika melebihi setingan panjang karakter
 	 * maka akan direplace dengan karakter **
+	 *
+	 * @return string
 	 */
 	public function asShortImage($value)
 	{

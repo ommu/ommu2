@@ -4,8 +4,8 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 Ommu Platform (opensource.ommu.co)
- * @created date 7 December 2018, 05:36 WIB
+ * @copyright Copyright (c) 2017 Ommu Platform (opensource.ommu.co)
+ * @created date 7 December 2017, 05:36 WIB
  * @link https://github.com/ommu/ommu
  */
 
@@ -17,6 +17,44 @@ use mdm\admin\components\Helper;
 class Application extends \yii\web\Application
 {
 	const API_VERSION = '1.0.0';
+
+	/**
+	 * Mengembalikan id aplikasi
+	 * misalnya http://localhost/ommu maka akan mengembalikan ommu
+	 *
+	 * @return string
+	 */
+	public static function getAppId()
+	{
+		$bn = basename(Yii::getAlias('@webroot'));
+		$bn = str_ireplace('-', '_', $bn);
+		return $bn;
+	}
+
+	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode pengembangan atau produksi
+	 *
+	 * @return boolean true|false
+	 */
+	public static function isDev(): bool 
+	{
+		return defined('YII_DEBUG') && ($_SERVER["SERVER_ADDR"] == '127.0.0.1' || $_SERVER["HTTP_HOST"] == 'localhost');
+	}
+
+	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode social media atau tidak (baca:company profile)
+	 *
+	 * @return boolean true|false
+	 */
+	public function isSocialMedia(): bool
+	{
+		$setting = \app\models\CoreSettings::find()
+			->select(['site_type'])
+			->where(['id' => 1])
+			->one();
+
+		return $setting->site_type == 1;
+	}
 
 	/**
 	 * Memeriksa hak akses user berdasarkan route dan user idnya
@@ -36,34 +74,13 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * Mendapatkan id aplikasi
-	 * misalnya http://localhost/ecc4 maka akan mengembalikan ecc4
-	 *
-	 * @return string id
-	 */
-	public static function getAppId() 
-	{
-		$bn = basename(Yii::getAlias('@webroot'));
-		$bn = str_ireplace('-', '_', $bn);
-		return $bn;
-	}
-
-	/**
-	 * Memeriksa apakah aplikasi berjalan pada mode pengembangan atau produksi
-	 *
-	 * @return boolean true|false
-	 */
-	public static function isDev(): bool 
-	{
-		return defined('YII_DEBUG') && ($_SERVER["SERVER_ADDR"] == '127.0.0.1' || $_SERVER["HTTP_HOST"] == 'localhost');
-	}
-
-	/**
 	 * Mengembalikan semua koneksi database yg dipakai pada aplikasi ini dalam bentuk array
-	 * nama komponen db. misalnya ['db', 'db_ecc', 'db_api']
+	 * nama komponen db. misalnya ['db', 'db_ommu', 'db_api']
 	 *
 	 * $conn = Yii::$app->getAllConnection();
 	 * $dsn = Yii::$app->$conn[0]->dsn;
+	 * 
+	 * @return array
 	 */
 	public function getAllConnection()
 	{
@@ -80,7 +97,9 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan versi major API
+	 *
+	 * @return int
 	 */
 	public function getMajorApiVersion()
 	{
@@ -89,7 +108,9 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan versi minor API
+	 *
+	 * @return int
 	 */
 	public function getMinorApiVersion()
 	{
@@ -98,7 +119,9 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan versi release API
+	 *
+	 * @return int
 	 */
 	public function getReleaseApiVersion()
 	{
