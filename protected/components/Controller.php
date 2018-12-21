@@ -187,8 +187,8 @@ class Controller extends \yii\web\Controller
 			$data = [];
 
 		$data = \yii\helpers\ArrayHelper::merge(
-			$data, 
-			['partial' => Yii::$app->request->isAjax ? true : false],
+			$data,
+			['partial' => Yii::$app->request->isAjax ? true : false]
 		);
 
 		if(!Yii::$app->request->isAjax)

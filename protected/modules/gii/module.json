@@ -1,0 +1,10 @@
+{
+    "id": "gii",
+    "name": "Gii",
+    "description": "Code generation for Yii2",
+    "keywords": [
+        "gii"
+        "generator"
+    ],
+    "version": "1.0"
+}

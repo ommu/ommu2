@@ -27,7 +27,8 @@
 		"ommu/mailer": "~0.1",
 		"ommu/report": "~2.1",
 		"ommu/support": "~2.1",
-		"ommu/banner": "~2.1"
+		"ommu/banner": "~2.1",
+		"ommu/gentelella": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
@@ -75,7 +76,7 @@
 			"ommu-theme"
 		],
 		"installer-paths": {
-			"protected/themes/{$name}/": [
+			"themes/{$name}/": [
 				"type:ommu-theme"
 			]
 		}

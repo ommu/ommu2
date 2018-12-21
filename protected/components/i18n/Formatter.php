@@ -21,7 +21,7 @@ class Formatter extends \yii\i18n\Formatter
 	public $nullDisplay = '-';
 	/**
 	 * @var int panjang karakter yang akan ditampilkan. default 10
-	 */	
+	 */
 	public $shortImageLength = 10;
 
 	/**

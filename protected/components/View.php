@@ -267,7 +267,6 @@ class View extends \yii\web\View
 		}
 
 		if($themeName != $themeNameUnchached) {
-			Yii::$app->setting->delete('theme');
 			$themeName = $themeNameUnchached;
 			Yii::$app->setting->set('theme', $themeName);
 		}

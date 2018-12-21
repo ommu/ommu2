@@ -75,19 +75,21 @@ abstract class BaseSettingManager extends Component
 
 	/**
 	 * {@inheritdoc}
+	 * 
 	 */
 	public function get($name, $default=null)
 	{
-		return isset($this->_loaded[$name])? $this->_loaded[$name]: $default;
+		return isset($this->_loaded[$name]) ? $this->_loaded[$name] : $default;
 	}
 
 	/**
 	 * {@inheritdoc}
+	 * 
 	 */
 	public function getUncached($name, $default)
 	{
 		$record = $this->find()->andWhere(['name' => $name])->one();
-		return ($record !== null)? $record->value: $default;
+		return ($record !== null && $record->value != '') ? $record->value : $default;
 	}
 
 	/**
