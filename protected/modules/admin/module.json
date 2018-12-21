@@ -1,0 +1,9 @@
+{
+	"id": "admin",
+	"name": "Admin",
+	"description": "admin",
+	"keywords": [
+		"admin"
+	],
+	"version": "1.0"
+}
