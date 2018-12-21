@@ -1,5 +1,26 @@
 <?php
 /**
+ * DefaultController
+ * @var $this yii\web\View
+ *
+ * DefaultController implements the CRUD actions for Gii generator.
+ * Reference start
+ * TOC :
+ *	Index
+ *	View
+ *	Preview
+ *	Diff
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
+ * @created date 24 September 2017, 12:38 WIB
+ * @modified date 9 October 2017, 11:22 WIB
+ * @link https://github.com/ommu/mod-users
+ *
+ */
+
+/**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
@@ -8,14 +29,16 @@
 namespace app\modules\gii\controllers;
 
 use Yii;
+use app\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use mdm\admin\components\AccessControl;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class DefaultController extends \app\components\Controller
+class DefaultController extends Controller
 {
     /**
      * @var \yii\gii\Module
@@ -26,6 +49,17 @@ class DefaultController extends \app\components\Controller
      */
     public $generator;
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function behaviors()
+	{
+		return [
+			'access' => [
+				'class' => AccessControl::className(),
+			],
+		];
+	}
 
     /**
      * {@inheritdoc}
