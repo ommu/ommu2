@@ -53,6 +53,11 @@ class View extends \yii\web\View
 	 */
 	public $searchShow = false;
 	/**
+	 * @var boolean tempat menyimpan tipe current controller sebagai back-office atau front-office.
+	 *     default false, artinya current controller bertipe front-office.
+	 */
+	public static $isBackoffice = false;
+	/**
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
 	 */
 	private static $_themeApplied = false;
@@ -102,6 +107,18 @@ class View extends \yii\web\View
 				'name'  => 'image',
 				'content' => $this->image,
 			], 'image');
+		}
+
+		if(self::$isBackoffice && Yii::$app->params['backofficeOption']['noindex']) {
+			$this->registerMetaTag([
+				'name'  => 'robots',
+				'content' => 'noindex',
+			], 'robots');
+
+			$this->registerMetaTag([
+				'name'  => 'googlebot',
+				'content' => 'noindex',
+			], 'googlebot');
 		}
 	}
 
@@ -264,6 +281,7 @@ class View extends \yii\web\View
 		if($isBackofficeTheme) {
 			$themeName = Yii::$app->setting->get('backoffice_theme', Yii::$app->params['defaultTheme']);
 			$themeNameUnchached = Yii::$app->setting->getUncached('backoffice_theme', Yii::$app->params['defaultTheme']);
+			self::$isBackoffice = true;
 		}
 
 		if($themeName != $themeNameUnchached) {

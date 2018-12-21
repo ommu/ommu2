@@ -8,6 +8,11 @@ return [
 	// Tema default yang akan digunakan jika tidak ada pengaturan yang dilakukan.
 	'defaultTheme' => 'gentelella',
 
+	// Backoffice setting
+	'backofficeOption' => array(
+		'noindex' => true,
+	),
+
 	// Gridview setting
 	'gridView' => array(
 		'JuiDatepicker' => false,
