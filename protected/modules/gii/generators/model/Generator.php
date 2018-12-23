@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace yii\gii\generators\model;
+namespace app\modules\gii\generators\model;
 
 use Yii;
 use yii\base\InvalidConfigException;
