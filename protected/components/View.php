@@ -67,6 +67,7 @@ class View extends \yii\web\View
 	private static $_beforeRenderEventCalled = 0;
 
 	/**
+	 * beforeRender()
 	 * Menetapkan tema yang digunakan berdasarkan current controller.
 	 */
 	public function beforeRender($viewFile, $params)
@@ -81,6 +82,7 @@ class View extends \yii\web\View
 	}
 
 	/**
+	 * afterRender()
 	 * Mendaftarkan meta description, keyword dan image pada view/layout saat render.
 	 */
 	public function afterRender($viewFile, $params, &$output) 

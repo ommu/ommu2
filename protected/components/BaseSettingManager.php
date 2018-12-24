@@ -12,25 +12,25 @@
 namespace app\components;
 
 use Yii;
-use \yii\base\Component;
 
-abstract class BaseSettingManager extends Component
+abstract class BaseSettingManager extends \yii\base\Component
 {
 	/**
-	 * {@inheritdoc}
+	 * @var string tempat menyimpan nama module untuk pengelompokkan pengaturan.
 	 */
 	public $moduleId = null;
 	/**
-	 * {@inheritdoc}
+	 * @var string|array tempat menyimpan data pengaturan (baca:setting).
 	 */
 	protected $_loaded = null;
 	/**
-	 * {@inheritdoc}
+	 * @var string|array tempat menyimpan nama model pengaturan yang digunakan untuk menyimpan data pada database.
 	 */
 	public $modelClass = 'app\models\Settings';
 
 	/**
-	 * {@inheritdoc}
+	 * init()
+	 * Menyimpan data setting pada public varibale.
 	 */
 	public function init()
 	{
@@ -42,7 +42,7 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan object !(isNewRecord) setting setelah ditambahkan where nama module.
 	 */
 	protected function find()
 	{
@@ -52,19 +52,27 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Menambahkan atau memperbarui setting berdasarkan attribute.
+	 *     jika terjadi perubahan pada attribute setting, cache setting akan dihapus.
+	 * 
+	 * @param string $name attribute
+	 * @param string $value nilai untuk mengisi attribute setting
 	 */
 	public function set($name, $value)
 	{
 		if($value === null)
 			return $this->delete($name);
 
+		$value = (string)$value;
 		$record = $this->find()->andWhere(['name' => $name])->one();
+		if($record !== null && $record->value == $value)
+			return false;
+
 		if($record === null) {
 			$record = $this->createRecord();
 			$record->name = $name;
 		}
-		$record->value = (string)$value;
+		$record->value = $value;
 
 		if(!$record->save())
 			throw new \yii\base\Exception('Could not store setting! (' .print_r($record->getErrors(), true) . ')');
@@ -74,8 +82,11 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan nilai attribute setting pada cache.
+	 *     jika pada cache attribute setting tidak ditemukan maka akan dikembalikan dengan nilai default.
 	 * 
+	 * @param string $name attribute
+	 * @param string $value nilai default
 	 */
 	public function get($name, $default=null)
 	{
@@ -83,8 +94,11 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan nilai attribute setting pada database.
+	 *     jika pada database attribute setting tidak ditemukan maka akan dikembalikan dengan nilai default.
 	 * 
+	 * @param string $name attribute
+	 * @param string $value nilai default
 	 */
 	public function getUncached($name, $default)
 	{
@@ -93,7 +107,9 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Menghapus attribute setting pada database dan menghapus cache setting.
+	 * 
+	 * @param string $name attribute
 	 */
 	public function delete($name)
 	{
@@ -108,7 +124,9 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Menyimpan data setting pada public varibale.
+	 * 
+	 * @see init();
 	 */
 	protected function loadValues()
 	{
@@ -127,7 +145,7 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Menghapus cache setting.
 	 */
 	protected function invalidateCache()
 	{
@@ -135,7 +153,7 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan nama cache setting.
 	 */
 	protected function getCacheKey()
 	{
@@ -143,7 +161,7 @@ abstract class BaseSettingManager extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan object isNewRecord setting.
 	 */
 	protected function createRecord()
 	{
