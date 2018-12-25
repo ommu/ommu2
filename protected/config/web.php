@@ -20,7 +20,10 @@ $production = [
 	'name' => 'OMMU by sudaryanto.id',
 	'id' => 'basic',
 	'basePath' => dirname(__DIR__),
-	'bootstrap' => ['log'],
+	'bootstrap' => [
+		'app\components\bootstrap\ModuleAutoLoader',
+		'log'
+	],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -83,6 +86,9 @@ $production = [
 			'class' => '\app\components\SettingManager',
 			'moduleId' => 'base',
 		],
+		'moduleManager' => [
+			'class' => '\app\components\ModuleManager',
+		],
 	],
 	'params' => $params,
 ];
@@ -101,7 +107,7 @@ if (YII_ENV_DEV) {
     //     //'allowedIPs' => ['127.0.0.1', '::1'],
     // ];
 
-	$config['bootstrap'][] = 'gii';
+	// $config['bootstrap'][] = 'gii';
     // $config['modules']['gii'] = [
     //     'class' => 'app\modules\gii\Module',
     //     // uncomment the following to add your IP if you are not connecting from localhost.

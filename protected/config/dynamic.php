@@ -48,8 +48,5 @@
 				],
 			],
 		],
-		'gii' => [
-			'class' => 'app\modules\gii\Module',
-		],
 	],
 ]; ?>
