@@ -30,12 +30,4 @@ class Module extends \app\components\Module
 
 		// custom initialization code goes here
 	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getViewPath() 
-	{
-		return Yii::getAlias('@modules/admin/views');
-	}
 }
