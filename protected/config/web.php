@@ -15,6 +15,7 @@ $params = \app\components\Application::isDev() ?
 $database = \app\components\Application::isDev() ? 
 	require(__DIR__ . '/database-dev.php') :
 	require(__DIR__ . '/database.php');
+$bn = \app\components\Application::getAppId();
 
 $production = [
 	'name' => 'OMMU by sudaryanto.id',
@@ -36,10 +37,14 @@ $production = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+		'user' => [
+			'class'             => 'app\modules\user\components\User',
+			'identityClass'     => 'app\modules\user\models\Users',
+			'enableAutoLogin'   => true,
+			'loginUrl'          => ['/login'],
+			'identityCookie'    => ['name' => $bn . '_identity', 'httpOnly' => true],
+			'authTimeout'       => 7 * 24 * 3600,
+		],
 		'errorHandler' => [
 			'errorAction' => 'site/error',
 		],
@@ -99,20 +104,15 @@ $config = yii\helpers\ArrayHelper::merge(
 );
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    // $config['bootstrap'][] = 'debug';
-    // $config['modules']['debug'] = [
-    //     'class' => 'yii\debug\Module',
-    //     // uncomment the following to add your IP if you are not connecting from localhost.
-    //     //'allowedIPs' => ['127.0.0.1', '::1'],
-    // ];
-
-	// $config['bootstrap'][] = 'gii';
-    // $config['modules']['gii'] = [
-    //     'class' => 'app\modules\gii\Module',
-    //     // uncomment the following to add your IP if you are not connecting from localhost.
-    //     'allowedIPs' => ['127.0.0.1', '::1'],
+	// configuration adjustments for 'dev' environment
+	// $config['bootstrap'][] = 'debug';
+	// $config['modules']['debug'] = [
+	//     'class' => 'yii\debug\Module',
+	//     // uncomment the following to add your IP if you are not connecting from localhost.
+	//     //'allowedIPs' => ['127.0.0.1', '::1'],
 	// ];
+
+	$config['bootstrap'][] = 'gii';
 }
 
 return $config;

@@ -293,11 +293,11 @@ class View extends \yii\web\View
 
 		Yii::$app->view->theme = new \yii\base\Theme([
 			'basePath'		=> sprintf('@webroot/themes/%s', $themeName),
-			'baseUrl'		=> '@web',
+			'baseUrl'		=> sprintf('@web/themes/%s', $themeName),
 			'pathMap'		=> [
 				'@app/views'		=> sprintf('@webroot/themes/%s', $themeName),
-				'@app/coremodules'	=> sprintf('@webroot/themes/%s/coremodules', $themeName),
 				'@app/modules'		=> sprintf('@webroot/themes/%s/modules', $themeName),
+				'@app/widgets'		=> sprintf('@webroot/themes/%s/widgets', $themeName),
 			],
 		]);
 	}

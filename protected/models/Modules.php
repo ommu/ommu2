@@ -13,11 +13,17 @@
  * The followings are the available columns in table "ommu_core_modules":
  * @property integer $id
  * @property string $module_id
+ * @property integer $installed
  * @property integer $enabled
+ * @property string $creation_date
+ * @property integer $creation_id
+ * @property string $modified_date
+ * @property integer $modified_id
  *
  */
 
 namespace app\models;
+use ommu\users\models\Users;
 
 use Yii;
 
@@ -25,7 +31,11 @@ class Modules extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 	
-	public $gridForbiddenColumn = [];
+	public $gridForbiddenColumn = ['modified_date','modified_search'];
+
+	// Search Variable
+	public $creation_search;
+	public $modified_search;
 
 	const CACHE_ENABLE_MODULE_IDS = 'enabledModuleIds';
 
@@ -44,7 +54,8 @@ class Modules extends \app\components\ActiveRecord
 	{
 		return [
 			[['module_id'], 'required'],
-			[['enabled'], 'integer'],
+			[['installed', 'enabled', 'creation_id', 'modified_id'], 'integer'],
+			[['creation_date', 'modified_date'], 'safe'],
 			[['module_id'], 'string', 'max' => 64],
 		];
 	}
@@ -57,8 +68,31 @@ class Modules extends \app\components\ActiveRecord
 		return [
 			'id' => Yii::t('app', 'ID'),
 			'module_id' => Yii::t('app', 'Module'),
+			'installed' => Yii::t('app', 'Installed'),
 			'enabled' => Yii::t('app', 'Enabled'),
+			'creation_date' => Yii::t('app', 'Creation Date'),
+			'creation_id' => Yii::t('app', 'Creation'),
+			'modified_date' => Yii::t('app', 'Modified Date'),
+			'modified_id' => Yii::t('app', 'Modified'),
+			'creation_search' => Yii::t('app', 'Creation'),
+			'modified_search' => Yii::t('app', 'Modified'),
 		];
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCreation()
+	{
+		return $this->hasOne(Users::className(), ['user_id' => 'creation_id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getModified()
+	{
+		return $this->hasOne(Users::className(), ['user_id' => 'modified_id']);
 	}
 
 	/**
@@ -78,6 +112,44 @@ class Modules extends \app\components\ActiveRecord
 			'value' => function($model, $key, $index, $column) {
 				return $model->module_id;
 			},
+		];
+		$this->templateColumns['creation_date'] = [
+			'attribute' => 'creation_date',
+			'value' => function($model, $key, $index, $column) {
+				return Yii::$app->formatter->asDatetime($model->creation_date, 'medium');
+			},
+			'filter' => $this->filterDatepicker($this, 'creation_date'),
+		];
+		if(!Yii::$app->request->get('creation')) {
+			$this->templateColumns['creation_search'] = [
+				'attribute' => 'creation_search',
+				'value' => function($model, $key, $index, $column) {
+					return isset($model->creation) ? $model->creation->displayname : '-';
+				},
+			];
+		}
+		$this->templateColumns['modified_date'] = [
+			'attribute' => 'modified_date',
+			'value' => function($model, $key, $index, $column) {
+				return Yii::$app->formatter->asDatetime($model->modified_date, 'medium');
+			},
+			'filter' => $this->filterDatepicker($this, 'modified_date'),
+		];
+		if(!Yii::$app->request->get('modified')) {
+			$this->templateColumns['modified_search'] = [
+				'attribute' => 'modified_search',
+				'value' => function($model, $key, $index, $column) {
+					return isset($model->modified) ? $model->modified->displayname : '-';
+				},
+			];
+		}
+		$this->templateColumns['installed'] = [
+			'attribute' => 'installed',
+			'filter' => $this->filterYesNo(),
+			'value' => function($model, $key, $index, $column) {
+				return $this->filterYesNo($model->installed);
+			},
+			'contentOptions' => ['class'=>'center'],
 		];
 		$this->templateColumns['enabled'] = [
 			'attribute' => 'enabled',
@@ -112,7 +184,8 @@ class Modules extends \app\components\ActiveRecord
 	 *
 	 * @return array
 	 */
-	public static function getEnableIds() {
+	public static function getEnableIds()
+	{
 		$enabledModules = Yii::$app->cache->get(self::CACHE_ENABLE_MODULE_IDS);
 		if($enabledModules === false) {
 			$enabledModules = [];
@@ -124,6 +197,20 @@ class Modules extends \app\components\ActiveRecord
 			Yii::$app->cache->set(self::CACHE_ENABLE_MODULE_IDS, $enabledModules);
 		}
 		return $enabledModules;
+	}
+
+	/**
+	 * before validate attributes
+	 */
+	public function beforeValidate()
+	{
+		if(parent::beforeValidate()) {
+			if($this->isNewRecord)
+				$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			else
+				$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+		}
+		return true;
 	}
 
 	/**

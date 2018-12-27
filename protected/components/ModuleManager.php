@@ -31,6 +31,10 @@ class ModuleManager extends \yii\base\Component
 	 * @var array tempat menyimpan module yang dalam kondisi aktif/enable.
 	 */
 	protected $enabledModules = [];
+	/**
+	 * @var array tempat menyimpan daftar core module
+	 */
+	protected $coreModules = [];
 
 	/**
 	 * {@inheritdoc}
@@ -74,6 +78,7 @@ class ModuleManager extends \yii\base\Component
 		if(!isset($config['id']) || !isset($config['class']))
 			throw new InvalidConfigException('Module configuration requires an id and class attribute!');
 
+		$isCore      = (isset($config['core']) && $config['core']);
 		$isBootstrap = (isset($config['bootstrap']) && $config['bootstrap']);
 		$this->modules[$config['id']] = $config['class'];
 
@@ -84,12 +89,16 @@ class ModuleManager extends \yii\base\Component
 		// menambahkan alias berdasarkan nama module
 		Yii::setAlias('@' . $config['id'], $basePath);
 
-		if(!in_array($config['id'], $this->enabledModules))
+		if(!$isCore && !in_array($config['id'], $this->enabledModules))
 			return;
 
 		// menambahkan konfigurasi modules kosong jika pada file konfigurasi tidak ditemukan
 		if(!isset($config['modules']))
 			$config['modules'] = [];
+
+		// mengelompokkan core module
+		if($isCore)
+			$this->coreModules[$config['id']] = $config['class'];
 
 		// mendaftarkan urlManager module pada aplikasi
 		if(isset($config['urlManagerRules'])) {
@@ -105,7 +114,7 @@ class ModuleManager extends \yii\base\Component
 			'modules' => $config['modules']
 		];
 
-		$ignoredProperty = ['id', 'class', 'modules', 'bootstrap', 'tablePrefix', 'events', 'urlManagerRules'];
+		$ignoredProperty = ['id', 'class', 'modules', 'core', 'bootstrap', 'tablePrefix', 'events', 'urlManagerRules'];
 		foreach($config as $name => $val) {
 			if(!in_array($name, $ignoredProperty))
 				$moduleConfig[$name] = $val;

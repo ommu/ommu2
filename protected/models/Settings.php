@@ -37,7 +37,7 @@ class Settings extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 
-	public $gridForbiddenColumn = [];
+	public $gridForbiddenColumn = ['modified_date','modified_search'];
 
 	// Search Variable
 	public $creation_search;

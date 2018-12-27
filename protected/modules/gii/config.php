@@ -2,6 +2,7 @@
 return [
 	'id'           => 'gii',
 	'class'        => \app\modules\gii\Module::className(),
+	'core'         => true,
 	'bootstrap'    => true,
 	'allowedIPs'   => ['127.0.0.1', '::1'],
 	'generators'   => [

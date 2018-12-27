@@ -33,8 +33,6 @@ class Module extends \yii\gii\Module implements BootstrapInterface
 	public function init()
 	{
 		parent::init();
-
-		// custom initialization code goes here
 	}
 
 	/**
