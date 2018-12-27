@@ -1,5 +1,11 @@
 <?php
 /**
+ * @link http://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license http://www.yiiframework.com/license/
+ */
+
+/**
  * DefaultController
  * @var $this yii\web\View
  *
@@ -13,18 +19,12 @@
 *
 * @author Putra Sudaryanto <putra@sudaryanto.id>
 * @contact (+62)856-299-4114
-* @copyright Copyright (c) 2017 Ommu Platform (www.ommu.co)
+* @copyright Copyright (c) 2017 OMMU (www.ommu.co)
 * @created date 24 September 2017, 12:38 WIB
 * @modified date 9 October 2017, 11:22 WIB
 * @link https://github.com/ommu/mod-users
 *
 */
-
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\modules\gii\controllers;
 
