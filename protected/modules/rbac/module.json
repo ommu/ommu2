@@ -1,0 +1,9 @@
+{
+	"id": "rbac",
+	"name": "RBAC",
+	"description": "rbac",
+	"keywords": [
+		"rbac"
+	],
+	"version": "1.0"
+}
