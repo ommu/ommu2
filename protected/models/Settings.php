@@ -4,8 +4,8 @@
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
- * @created date 20 December 2018, 14:36 WIB
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 20 December 2017, 14:36 WIB
  * @link http://github.com/ommu/ommu
  *
  * This is the model class for table "ommu_settings".

@@ -11,6 +11,7 @@
  */
 
 return [
-	'id' => 'admin',
-	'class' => app\modules\admin\Module::className(),
+	'id'     => 'admin',
+	'class'  => app\modules\admin\Module::className(),
+	'core'   => true,
 ];

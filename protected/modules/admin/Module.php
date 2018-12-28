@@ -27,7 +27,5 @@ class Module extends \app\components\Module
 	public function init()
 	{
 		parent::init();
-
-		// custom initialization code goes here
 	}
 }
