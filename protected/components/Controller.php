@@ -22,10 +22,6 @@ class Controller extends \yii\web\Controller
 	 */
 	public $subLayout;
 	/**
-	 * @var string tempat menyimpan pageTitle pada controller yang akan ditampilkan view/layout sebagai nama halaman.
-	 */
-	public $pageTitle;
-	/**
 	 * @var object instance dari current controller. jika controller yg akses site maka akan berisi site.
 	 *    variabel akan di isi oleh klas anak/turunan dari klas ini.
 	 */
@@ -49,6 +45,10 @@ class Controller extends \yii\web\Controller
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting pada controller dipangil berulang kali.
 	 */
 	private static $settingInitialize = false;
+	/**
+	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
+	 */
+	private static $_themeApplied = false;
 
 	/**
 	 * {@inheritdoc}
@@ -104,13 +104,8 @@ class Controller extends \yii\web\Controller
 				if($setting != null)
 					Yii::$app->name = $setting->site_title;
 			}
-
-			if(!empty($this->pageTitle))
-				$this->getView()->pageTitle = $this->pageTitle;
-
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -152,6 +147,11 @@ class Controller extends \yii\web\Controller
 			}
 		}
 		*/
+
+		if(self::$_themeApplied == false) {
+			self::$_themeApplied = false;
+			$this->getView()->setTheme($this);
+		}
 	}
 
 	/**

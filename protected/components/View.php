@@ -73,9 +73,9 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if(parent::beforeRender($viewFile, $params)) {
-			if(!self::$_themeApplied) {
+			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
-				$this->setTheme();
+				$this->setTheme($this);
 			}
 		}
 		return true;
@@ -269,14 +269,14 @@ class View extends \yii\web\View
 	 * 
 	 * @see beforeRender()
 	 */
-	public function setTheme()
+	public function setTheme($context): void
 	{
 		if(Yii::$app->params['installed'] === false || Yii::$app->params['databaseInstalled'] === false)
 			return;
 
 		$isBackofficeTheme = true;
-		if(Yii::$app->controller != null && Yii::$app->controller->hasMethod('isBackofficeTheme'))
-			$isBackofficeTheme = Yii::$app->controller->isBackofficeTheme();
+		if($context != null && $context->hasMethod('isBackofficeTheme'))
+			$isBackofficeTheme = $context->isBackofficeTheme();
 
 		$themeName = Yii::$app->setting->get('theme', Yii::$app->params['defaultTheme']);
 		$themeNameUnchached = Yii::$app->setting->getUncached('theme', Yii::$app->params['defaultTheme']);
@@ -291,7 +291,7 @@ class View extends \yii\web\View
 			Yii::$app->setting->set('theme', $themeName);
 		}
 
-		Yii::$app->view->theme = new \yii\base\Theme([
+		$this->theme = new \yii\base\Theme([
 			'basePath'		=> sprintf('@webroot/themes/%s', $themeName),
 			'baseUrl'		=> sprintf('@web/themes/%s', $themeName),
 			'pathMap'		=> [
