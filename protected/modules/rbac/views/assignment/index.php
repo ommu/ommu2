@@ -1,14 +1,22 @@
 <?php
+/**
+ * @var $this yii\web\View
+ * @var $dataProvider yii\data\ActiveDataProvider
+ * @var $searchModel mdm\admin\models\searchs\Assignment
+ * @var $usernameField string
+ * @var $extraColumns string[]
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use yii\helpers\Html;
 use app\libraries\grid\GridView;
 use yii\widgets\Pjax;
-
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel mdm\admin\models\searchs\Assignment */
-/* @var $usernameField string */
-/* @var $extraColumns string[] */
 
 $this->context->layout = 'assignment';
 $this->title = Yii::t('rbac-admin', 'Assignments');

@@ -1,4 +1,16 @@
 <?php
+/**
+ * @var $this yii\web\View
+ * @var $model mdm\admin\models\Assignment
+ * @var $fullnameField string
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use mdm\admin\AnimateAsset;
 use yii\helpers\ArrayHelper;
@@ -6,10 +18,6 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\YiiAsset;
 use yii\helpers\Url;
-
-/* @var $this yii\web\View */
-/* @var $model mdm\admin\models\Assignment */
-/* @var $fullnameField string */
 
 $userName = $model->{$usernameField};
 if (!empty($fullnameField)) {

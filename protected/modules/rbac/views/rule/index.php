@@ -1,13 +1,21 @@
 <?php
+/**
+ * @var $this  yii\web\View
+ * @var $model mdm\admin\models\BizRule
+ * @var $dataProvider yii\data\ActiveDataProvider
+ * @var $searchModel mdm\admin\models\searchs\BizRule
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use yii\helpers\Url;
 use app\libraries\grid\GridView;
 use yii\widgets\Pjax;
-
-/* @var $this  yii\web\View */
-/* @var $model mdm\admin\models\BizRule */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel mdm\admin\models\searchs\BizRule */
 
 $this->context->layout = 'assignment';
 $this->title = Yii::t('rbac-admin', 'Rules');

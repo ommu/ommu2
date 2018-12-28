@@ -1,4 +1,16 @@
 <?php
+/**
+ * @var $this yii\web\View
+ * @var $model mdm\admin\models\Menu
+ * @var $form yii\widgets\ActiveForm
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -6,9 +18,6 @@ use mdm\admin\models\Menu;
 use yii\helpers\Json;
 use mdm\admin\AutocompleteAsset;
 
-/* @var $this yii\web\View */
-/* @var $model mdm\admin\models\Menu */
-/* @var $form yii\widgets\ActiveForm */
 AutocompleteAsset::register($this);
 $opts = Json::htmlEncode([
         'menus' => Menu::getMenuSource(),

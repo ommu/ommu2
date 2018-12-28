@@ -78,11 +78,10 @@ $production = [
 		],
 		'authManager' => [
 			'class'             => 'mdm\admin\components\DbManager',
-			'db'                => 'sweeto',
-			'assignmentTable'   => 'swt_auth_assignment',
-			'itemTable'         => 'swt_auth_item',
-			'itemChildTable'    => 'swt_auth_item_child',
-			'ruleTable'         => 'swt_auth_rule',
+			'assignmentTable'   => 'ommu_core_auth_assignment',
+			'itemTable'         => 'ommu_core_auth_item',
+			'itemChildTable'    => 'ommu_core_auth_item_child',
+			'ruleTable'         => 'ommu_core_auth_rule',
 		],
 		'view' => [
 			'class' => '\app\components\View',

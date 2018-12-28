@@ -1,4 +1,16 @@
 <?php
+/**
+ * @var $this yii\web\View
+ * @var $model mdm\admin\models\AuthItem
+ * @var $context mdm\admin\components\ItemController
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -6,10 +18,6 @@ use mdm\admin\AnimateAsset;
 use yii\helpers\Json;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model mdm\admin\models\AuthItem */
-/* @var $context mdm\admin\components\ItemController */
 
 $context = $this->context;
 $labels = $context->labels();
@@ -28,6 +36,7 @@ $this->registerJs($this->render('_script.js'));
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i>';
 
 $this->params['menu']['content'] = [
+	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(['index']), 'icon' => 'table'],
 	['label' => Yii::t('rbac-admin', 'Update'), 'url' => Url::to(['update', 'id'=>$model->name]), 'icon' => 'pencil'],
 	['label' => Yii::t('rbac-admin', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->name]), 'htmlOptions' => ['data-confirm'=>Yii::t('rbac-admin', 'Are you sure to delete this item?'), 'data-method'=>'post'], 'icon'=>'trash'],
 	['label' => Yii::t('rbac-admin', 'Create'), 'url' => Url::to(['create']), 'icon' => 'plus-square'],

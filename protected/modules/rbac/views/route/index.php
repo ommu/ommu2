@@ -1,12 +1,20 @@
 <?php
+/**
+ * @var $this yii\web\View
+ * @var $routes []
+ *
+ * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @created date 28 December 2017, 06:50 WIB
+ * @link https://github.com/ommu/ommu
+ *
+ */
 
 use mdm\admin\AnimateAsset;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\YiiAsset;
-
-/* @var $this yii\web\View */
-/* @var $routes [] */
 
 $this->context->layout = 'assignment';
 $this->title = Yii::t('rbac-admin', 'Routes');
