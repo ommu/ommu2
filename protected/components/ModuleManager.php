@@ -151,6 +151,11 @@ class ModuleManager extends \yii\base\Component
 	{
 		$modules = [];
 		foreach($this->modules as $id => $class) {
+			if(!isset($options['includeCoreModules']) || $options['includeCoreModules'] === false) {
+				if(in_array($class, $this->coreModules))
+					continue;
+			}
+			
 			if(isset($options['returnClass']) && $options['returnClass'])
 				$modules[$id] = $class;
 			else {
@@ -177,7 +182,7 @@ class ModuleManager extends \yii\base\Component
 	 * Mengembalikan informasi module dalam bentuk object
 	 * 
 	 * @param string $id nama module
-	 * @return void
+	 * @return void|object informasi module
 	 */
 	public function getModule($id)
 	{
@@ -188,6 +193,85 @@ class ModuleManager extends \yii\base\Component
 			$class = $this->modules[$id];
 			return Yii::createObject($class, [$id, Yii::$app]);
 		}
-		throw new Exception('Could not find/load requested module: ' . $id);
+		throw new Exception(Yii::t('app', 'Could not find/load requested module: {module-id}', array('module-id'=>$id)));
+	}
+
+	/**
+	 * Menghapus cache module.
+	 *
+	 * @return void
+	 */
+	public function flushCache()
+	{
+		Yii::$app->cache->delete(ModuleAutoLoader::CACHE_ID);
+	}
+
+	/**
+	 * Memperbarui status modul ke database dan register module
+	 *
+	 * @param \app\components\Module $module
+	 * @return void
+	 */
+	public function enable(\app\components\Module $module)
+	{
+		$model = Modules::findOne(['module_id' => $module->id]);
+		$model->enabled = 1;
+
+		if($model->save()) {
+			$this->enabledModules[] = $module->id;
+			$this->register($module->getBasePath());
+
+			return $model;
+		} else {
+			return Yii::t('app', '{module-id} module can\'t be enabled. Errors: {errors}', array(
+				'module-id'=>ucfirst($module->id),
+				'errors'=>print_r($model->errors, true),
+			));
+		}
+	}
+
+	/**
+	 * disable modul berdasarkan klas modul
+	 *
+	 * @param \app\components\Module $module, modul harus turunan kelas ini.
+	 * @return void
+	 */
+	public function disable(\app\components\Module $module)
+	{
+		$model = Modules::findOne(['module_id' => $module->id]);
+		$model->enabled = 0;
+
+		if($model != null) {
+			if($model->save()) {
+				if(($key=array_search($module->id, $this->enabledModules)) !== false)
+					unset($this->enabledModules[$key]);
+				Yii::$app->setModule($module->id, 'null');
+
+				return $model;
+			} else {
+				return Yii::t('app', '{module-id} module can\'t be disabled. Errors: {errors}', array(
+					'module-id'=>ucfirst($module->id),
+					'errors'=>print_r($model->errors, true),
+				));
+			}
+		} else {
+			return Yii::t('app', '{module-id} module can\'t be disabled.', array(
+				'module-id'=>ucfirst($module->id),
+			));
+		}
+	}
+
+	/**
+	 * uninstall modul berdasarkan klas modul
+	 *
+	 * @param \app\components\Module $module, modul harus turunan kelas ini.
+	 * @return void
+	 */
+	public function uninstall(\app\components\Module $module)
+	{
+		if(($key=array_search($module->id, $this->enabledModules)) !== false) {
+			unset($this->enabledModules[$key]);
+		}
+		Yii::$app->setModule($module->id, 'null');
 	}
 }

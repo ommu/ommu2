@@ -23,15 +23,16 @@
  */
 
 namespace app\models;
-use ommu\users\models\Users;
 
 use Yii;
+use yii\helpers\Url;
+use ommu\users\models\Users;
 
 class Modules extends \app\components\ActiveRecord
 {
 	use \ommu\traits\UtilityTrait;
 	
-	public $gridForbiddenColumn = ['modified_date','modified_search'];
+	public $gridForbiddenColumn = ['installed','modified_date','modified_search'];
 
 	// Search Variable
 	public $creation_search;
@@ -155,9 +156,11 @@ class Modules extends \app\components\ActiveRecord
 			'attribute' => 'enabled',
 			'filter' => $this->filterYesNo(),
 			'value' => function($model, $key, $index, $column) {
-				return $this->filterYesNo($model->enabled);
+				$url = Url::to(['enabled', 'id'=>$model->primaryKey]);
+				return $this->quickAction($url, $this->getEnableCondition($model->enabled, $model->module_id) ? 1 : 0, 'Yes,No#Enable,Disable');
 			},
 			'contentOptions' => ['class'=>'center'],
+			'format' => 'raw',
 		];
 	}
 
@@ -177,6 +180,14 @@ class Modules extends \app\components\ActiveRecord
 			$model = self::findOne($id);
 			return $model;
 		}
+	}
+
+	/**
+	 * User get information
+	 */
+	public function getEnableCondition($enabled, $module)
+	{
+		return $enabled == 1 && Yii::$app->hasModule($module) ? true : false;
 	}
 
 	/**

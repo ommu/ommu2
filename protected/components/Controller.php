@@ -61,17 +61,6 @@ class Controller extends \yii\web\Controller
 	/**
 	 * {@inheritdoc}
 	 */
-	public function forcePostRequest() 
-	{
-		if(\Yii::$app->request->method != 'POST') {
-			echo 'Invalid method!';
-			die();
-		}
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function htmlRedirect($url='')
 	{
 		return $this->renderPartial('@app/views/htmlRedirect.php', [

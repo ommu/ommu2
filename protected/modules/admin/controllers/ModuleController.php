@@ -46,6 +46,7 @@ class ModuleController extends Controller
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['POST'],
+					'enabled' => ['POST'],
 				],
 			],
 		];
@@ -56,6 +57,7 @@ class ModuleController extends Controller
 	 */
 	public function actionIndex()
 	{
+		Yii::$app->moduleManager->flushCache();
 		return $this->redirect(['manage']);
 	}
 
@@ -65,6 +67,8 @@ class ModuleController extends Controller
 	 */
 	public function actionManage()
 	{
+		Yii::$app->moduleManager->getModules(['includeCoreModules' => true]);
+
 		$searchModel = new ModulesSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -113,10 +117,55 @@ class ModuleController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->findModel($id)->delete();
-		
-		Yii::$app->session->setFlash('success', Yii::t('app', 'Module success deleted.'));
-		return $this->redirect(['index']);
+		$model = $this->findModel($id);
+
+		$module = Yii::$app->moduleManager->getModule($model->module_id);
+		if($module == null) {
+			Yii::$app->session->setFlash('success', Yii::t('app', 'Could not find request module!'));
+			return $this->redirect(['manage']);
+		}
+
+		if($model->delete()) {
+			$module->uninstall();
+
+			Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success deleted.', array('module-id'=>ucfirst($model->module_id))));
+			return $this->redirect(['manage']);
+		}
+	}
+
+	/**
+	 * actionEnabled an existing Modules model.
+	 * If installed is successful, the browser will be redirected to the 'manage' page.
+	 * @param integer $id
+	 * @return mixed
+	 */
+	public function actionEnabled($id)
+	{
+		$model = $this->findModel($id);
+		$replace = $model->enabled == 1 ? 0 : 1;
+		$model->enabled = $replace;
+
+		$module = Yii::$app->moduleManager->getModule($model->module_id);
+		if($module == null) {
+			Yii::$app->session->setFlash('success', Yii::t('app', 'Could not find request module!'));
+			return $this->redirect(['manage']);
+		}
+
+		if($replace == 0) {
+			$disable = $module->disable();
+			if(is_object($enable))
+				Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success disabled.', array('module-id'=>ucfirst($model->module_id))));
+			else
+				Yii::$app->session->setFlash('error', $disable);
+		} else {
+			$enable = $module->enable();
+			if(is_object($enable))
+				Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success enabled.', array('module-id'=>ucfirst($model->module_id))));
+			else
+				Yii::$app->session->setFlash('error', $enable);
+		}
+
+		return $this->redirect(['manage']);
 	}
 
 	/**

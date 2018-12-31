@@ -41,7 +41,7 @@ $this->params['menu']['content'] = [
 		],
 		[
 			'attribute' => 'enabled',
-			'value' => $this->filterYesNo($model->enabled),
+			'value' => $model->getEnableCondition($model->enabled, $model->module_id) ? Yii::t('app', 'Yes') : Yii::t('app', 'No'),
 		],
 		[
 			'attribute' => 'creation_date',
