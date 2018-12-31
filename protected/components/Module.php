@@ -78,7 +78,7 @@ class Module extends \yii\base\Module
 	public function uninstall()
 	{
 		$migrationPath = $this->getMigrationPath();
-		$uninstallMigration = $migrationPath . '/uninstall.php';
+		$uninstallMigration = join('/', [$migrationPath, 'uninstall.php']);
 		if(file_exists($uninstallMigration)) {
 			ob_start();
 			require_once($uninstallMigration);
@@ -110,7 +110,7 @@ class Module extends \yii\base\Module
 	 */
 	public function migrate()
 	{
-		$migrationPath = $this->basePath . '/migrations';
+		$migrationPath = $this->getMigrationPath();
 		if(is_dir($migrationPath)) {
 			\app\commands\MigrateController::webMigrateUp($migrationPath);
 		}

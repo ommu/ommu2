@@ -8,6 +8,7 @@ Yii::setAlias('@vendor', '@app/vendor');
 Yii::setAlias('@ommu', '@vendor/ommu');
 Yii::setAlias('@themes', '@webroot/themes');
 Yii::setAlias('@public', '@webroot/public');
+Yii::setAlias('@runtime', '@app/runtime');
 
 $params = \app\components\Application::isDev() ? 
 	require(__DIR__ . '/params-dev.php') :
@@ -92,6 +93,7 @@ $production = [
 		],
 		'moduleManager' => [
 			'class' => '\app\components\ModuleManager',
+			'createBackup' => true,
 		],
 	],
 	'params' => $params,

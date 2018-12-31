@@ -24,6 +24,10 @@ use app\models\Modules;
 class ModuleManager extends \yii\base\Component
 {
 	/**
+	 * @var boolean tempat menyimpan status apakah backup akan dilakukan setelah penghapusan modul
+	 */
+	public $createBackup = true;
+	/**
 	 * @var array tempat menyimpan nama dan class module yang terdapat pada folder module.
 	 */
 	protected $modules;
@@ -207,6 +211,57 @@ class ModuleManager extends \yii\base\Component
 	}
 
 	/**
+	 * Memeriksa apakah modul dapat dihapus atau tidak.
+	 *
+	 * @param string $moduleId
+	 * @return boolean true|false
+	 */
+	public function canRemoveModule($moduleId)
+	{
+		$module = $this->getModule($moduleId);
+
+		if($module === null)
+			return false;
+
+		$modulePath = $module->getBasePath();
+		$configFile = join('/', [$modulePath, 'config.php']);
+		if(is_file($configFile))
+			$config = require($configFile);
+
+		$isCore = (isset($config['core']) && $config['core']);
+
+		if(!$isCore && strpos($modulePath, Yii::getAlias(Yii::$app->params['moduleMarketplacePath'])) !== false)
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Menghapus modul dari folder. modul yang dihapus akan dibackup
+	 * di folder @app/runtime/module_backups
+	 *
+	 * @param \app\components\Module $module
+	 * @return void
+	 */
+	public function remove(\app\components\Module $module)
+	{
+		if($this->createBackup) {
+			$moduleBackupPath = Yii::getAlias('@runtime/module_backups');
+			if(!is_dir($moduleBackupPath)) {
+				if(@mkdir($moduleBackupPath, 0777))
+					throw new Exception('Could not create module backup folder!.');
+			}
+
+			$moduleBackupNewPath = join('/', [$moduleBackupPath, $module->id.'_'.time()]);
+			$moduleBasePath = $module->getBasePath();
+			FileHelper::copyDirectory($moduleBasePath, $moduleBackupNewPath);
+			FileHelper::removeDirectory($moduleBasePath);
+		}
+		
+		$this->flushCache();
+	}
+
+	/**
 	 * Memperbarui status modul ke database dan register module
 	 *
 	 * @param \app\components\Module $module
@@ -255,23 +310,24 @@ class ModuleManager extends \yii\base\Component
 				));
 			}
 		} else {
-			return Yii::t('app', '{module-id} module can\'t be disabled.', array(
+			return Yii::t('app', '{module-id} module not found in database.', array(
 				'module-id'=>ucfirst($module->id),
 			));
 		}
 	}
 
 	/**
-	 * uninstall modul berdasarkan klas modul
+	 * uninstall modul berdasarkan klas modul.
 	 *
 	 * @param \app\components\Module $module, modul harus turunan kelas ini.
 	 * @return void
 	 */
 	public function uninstall(\app\components\Module $module)
 	{
-		if(($key=array_search($module->id, $this->enabledModules)) !== false) {
+		if(($key=array_search($module->id, $this->enabledModules)) !== false)
 			unset($this->enabledModules[$key]);
-		}
 		Yii::$app->setModule($module->id, 'null');
+
+		$this->remove($module);
 	}
 }

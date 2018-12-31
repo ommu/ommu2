@@ -53,11 +53,13 @@ array_push($columnData, [
 		},
 		'delete' => function ($url, $model, $key) {
 			$url = Url::to(['delete', 'id'=>$model->primaryKey]);
-			return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-				'title' => Yii::t('app', 'Delete Module'),
-				'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-				'data-method'  => 'post',
-			]);
+			if(Yii::$app->moduleManager->canRemoveModule($model->module_id)) {
+				return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+					'title' => Yii::t('app', 'Delete Module'),
+					'data-confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+					'data-method'  => 'post',
+				]);
+			}
 		},
 	],
 	'template' => '{view}{delete}',

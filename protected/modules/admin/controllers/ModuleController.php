@@ -30,6 +30,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\Modules;
 use app\models\search\Modules as ModulesSearch;
+use yii\web\HttpException;
 
 class ModuleController extends Controller
 {
@@ -119,9 +120,27 @@ class ModuleController extends Controller
 	{
 		$model = $this->findModel($id);
 
+		if(!(Yii::$app->moduleManager->hasModule($model->module_id) && Yii::$app->moduleManager->canRemoveModule($model->module_id))) {
+			Yii::$app->session->setFlash('error', Yii::t('app', '{module-id} cannot be deleted.', array(
+				'module-id'=>ucfirst($model->module_id),
+			)));
+			return $this->redirect(['manage']);
+		}
+
 		$module = Yii::$app->moduleManager->getModule($model->module_id);
 		if($module == null) {
-			Yii::$app->session->setFlash('success', Yii::t('app', 'Could not find request module!'));
+			// throw new HttpException(500, Yii::t('app', 'Could not find request module!'));
+			Yii::$app->session->setFlash('error', Yii::t('app', 'Could not find request module!'));
+			return $this->redirect(['manage']);
+		}
+
+		if(!is_writable($module->getBasePath())) {
+			// throw new HttpException(500, Yii::t('app', 'Module path {module-path} is not writeable!', array(
+			// 	'module-path'=>$module->getPath(),
+			// )));
+			Yii::$app->session->setFlash('error', Yii::t('app', 'Module path {module-path} is not writeable!', array(
+				'module-path'=>$module->getPath(),
+			)));
 			return $this->redirect(['manage']);
 		}
 
@@ -129,7 +148,7 @@ class ModuleController extends Controller
 			$module->uninstall();
 
 			Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success deleted.', array('module-id'=>ucfirst($model->module_id))));
-			return $this->redirect(['manage']);
+			return $this->redirect(['index']);
 		}
 	}
 
@@ -147,7 +166,8 @@ class ModuleController extends Controller
 
 		$module = Yii::$app->moduleManager->getModule($model->module_id);
 		if($module == null) {
-			Yii::$app->session->setFlash('success', Yii::t('app', 'Could not find request module!'));
+			// throw new HttpException(500, Yii::t('app', 'Could not find request module!'));
+			Yii::$app->session->setFlash('error', Yii::t('app', 'Could not find request module!'));
 			return $this->redirect(['manage']);
 		}
 
@@ -165,7 +185,7 @@ class ModuleController extends Controller
 				Yii::$app->session->setFlash('error', $enable);
 		}
 
-		return $this->redirect(['manage']);
+		return $this->redirect(['index']);
 	}
 
 	/**
