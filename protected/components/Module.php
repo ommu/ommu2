@@ -17,6 +17,11 @@ use Yii;
 class Module extends \yii\base\Module
 {
 	/**
+	 * @var array tempat menyimpan informasi modul yang diambil dari file module.json
+	 */
+	private $_moduleInfo = null;
+
+	/**
 	 * @inheritdoc
 	 */
 	public function init()
@@ -27,6 +32,48 @@ class Module extends \yii\base\Module
 			'class' => \app\components\SettingManager::className(),
 			'moduleId' => $this->id,
 		]);
+	}
+
+	/**
+	 * Mengembalikan nama modul
+	 *
+	 * @return string nama modul
+	 */
+	public function getName()
+	{
+		$info = $this->getModuleInfo();
+		if($info['name'])
+			return $info['name'];
+
+		return $this->id;
+	}
+
+	/**
+	 * Mengembalikan deskripsi modul
+	 *
+	 * @return string description
+	 */
+	public function getDescription()
+	{
+		$info = $this->getModuleInfo();
+		if($info['description'])
+			return $info['description'];
+
+		return '';
+	}
+
+	/**
+	 * Mengembalikan versi modul
+	 *
+	 * @return string versi
+	 */
+	public function getVersion()
+	{
+		$info = $this->getModuleInfo();
+		if($info['version'])
+			return $info['version'];
+
+		return '';
 	}
 
 	/**
@@ -114,5 +161,19 @@ class Module extends \yii\base\Module
 		if(is_dir($migrationPath)) {
 			\app\commands\MigrateController::webMigrateUp($migrationPath);
 		}
+	}
+
+	/**
+	 * Mengembalikan informasi module dari file module.json
+	 *
+	 * @return array info modul
+	 */
+	protected function getModuleInfo()
+	{
+		if($this->_moduleInfo != null)
+			return $this->_moduleInfo;
+
+		$moduleJson = file_get_contents(join('/', [$this->getBasePath(), 'module.json']));
+		return \yii\helpers\Json::decode($moduleJson);
 	}
 }

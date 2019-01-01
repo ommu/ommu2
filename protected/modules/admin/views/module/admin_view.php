@@ -36,6 +36,18 @@ $this->params['menu']['content'] = [
 		'id',
 		'module_id',
 		[
+			'attribute' => 'name',
+			'value' => $model->name,
+		],
+		[
+			'attribute' => 'description',
+			'value' => $model->description,
+		],
+		[
+			'attribute' => 'version',
+			'value' => $model->version,
+		],
+		[
 			'attribute' => 'installed',
 			'value' => $this->filterYesNo($model->installed),
 		],
