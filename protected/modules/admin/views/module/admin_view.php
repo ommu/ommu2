@@ -16,11 +16,11 @@
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['manage']];
 $this->params['breadcrumbs'][] = $model->id;
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(['index']), 'icon' => 'table'],
+	['label' => Yii::t('app', 'Back To Manage'), 'url' => Url::to(['manage']), 'icon' => 'table'],
 	['label' => Yii::t('app', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->id]), 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'), 'method' => 'post', 'icon' => 'trash'],
 ];
 ?>
@@ -35,18 +35,6 @@ $this->params['menu']['content'] = [
 	'attributes' => [
 		'id',
 		'module_id',
-		[
-			'attribute' => 'name',
-			'value' => $model->name,
-		],
-		[
-			'attribute' => 'description',
-			'value' => $model->description,
-		],
-		[
-			'attribute' => 'version',
-			'value' => $model->version,
-		],
 		[
 			'attribute' => 'installed',
 			'value' => $this->filterYesNo($model->installed),

@@ -17,7 +17,6 @@ use \yii\base\Exception;
 use \yii\base\Event;
 use \yii\base\InvalidConfigException;
 use \yii\helpers\FileHelper;
-
 use app\components\bootstrap\ModuleAutoLoader;
 use app\models\Modules;
 
@@ -34,11 +33,11 @@ class ModuleManager extends \yii\base\Component
 	/**
 	 * @var array tempat menyimpan module yang dalam kondisi aktif/enable.
 	 */
-	protected $enabledModules = [];
+	protected $moduleEnabled = [];
 	/**
 	 * @var array tempat menyimpan daftar core module
 	 */
-	protected $coreModules = [];
+	protected $moduleCores = [];
 
 	/**
 	 * {@inheritdoc}
@@ -48,9 +47,9 @@ class ModuleManager extends \yii\base\Component
 		parent::init();
 
 		if(Yii::$app instanceof console\Application)
-			$this->enabledModules = [];
+			$this->moduleEnabled = [];
 		else
-			$this->enabledModules = Modules::getEnableIds();
+			$this->moduleEnabled = Modules::getEnableIds();
 	}
 
 	/**
@@ -93,7 +92,7 @@ class ModuleManager extends \yii\base\Component
 		// menambahkan alias berdasarkan nama module
 		Yii::setAlias('@' . $config['id'], $basePath);
 
-		if(!$isCore && !in_array($config['id'], $this->enabledModules))
+		if(!$isCore && !in_array($config['id'], $this->moduleEnabled))
 			return;
 
 		// menambahkan konfigurasi modules kosong jika pada file konfigurasi tidak ditemukan
@@ -102,7 +101,7 @@ class ModuleManager extends \yii\base\Component
 
 		// mengelompokkan core module
 		if($isCore)
-			$this->coreModules[$config['id']] = $config['class'];
+			$this->moduleCores[$config['id']] = $config['class'];
 
 		// mendaftarkan urlManager module pada aplikasi
 		if(isset($config['urlManagerRules'])) {
@@ -156,7 +155,7 @@ class ModuleManager extends \yii\base\Component
 		$modules = [];
 		foreach($this->modules as $id => $class) {
 			if(!isset($options['includeCoreModules']) || $options['includeCoreModules'] === false) {
-				if(in_array($class, $this->coreModules))
+				if(in_array($class, $this->moduleCores))
 					continue;
 			}
 			
@@ -208,6 +207,7 @@ class ModuleManager extends \yii\base\Component
 	public function flushCache()
 	{
 		Yii::$app->cache->delete(ModuleAutoLoader::CACHE_ID);
+		Yii::$app->cache->delete(Modules::CACHE_ENABLE_MODULE_IDS);
 	}
 
 	/**
@@ -273,7 +273,7 @@ class ModuleManager extends \yii\base\Component
 		$model->enabled = 1;
 
 		if($model->save()) {
-			$this->enabledModules[] = $module->id;
+			$this->moduleEnabled[] = $module->id;
 			$this->register($module->getBasePath());
 
 			return $model;
@@ -298,8 +298,8 @@ class ModuleManager extends \yii\base\Component
 
 		if($model != null) {
 			if($model->save()) {
-				if(($key=array_search($module->id, $this->enabledModules)) !== false)
-					unset($this->enabledModules[$key]);
+				if(($key=array_search($module->id, $this->moduleEnabled)) !== false)
+					unset($this->moduleEnabled[$key]);
 				Yii::$app->setModule($module->id, 'null');
 
 				return $model;
@@ -324,10 +324,46 @@ class ModuleManager extends \yii\base\Component
 	 */
 	public function uninstall(\app\components\Module $module)
 	{
-		if(($key=array_search($module->id, $this->enabledModules)) !== false)
-			unset($this->enabledModules[$key]);
+		if(($key=array_search($module->id, $this->moduleEnabled)) !== false)
+			unset($this->moduleEnabled[$key]);
 		Yii::$app->setModule($module->id, 'null');
 
 		$this->remove($module);
+	}
+
+	/**
+	 * Mengembalikan daftar module yang terdapat pada database.
+	 *
+	 * @return array daftar module
+	 */
+	public function getModulesFromDb()
+	{
+		$model = Modules::find()->all();
+		return \yii\helpers\ArrayHelper::map($model, 'module_id', 'module_id');
+	}
+	
+	/**
+	 * Install modul ke database.
+	 */
+	public function setModules()
+	{
+		$moduleFromDB = $this->getModulesFromDb();
+		foreach($this->modules as $key => $val) {
+			if(array_key_exists($key, $this->moduleCores))
+				continue;
+
+			if(!in_array($key, $moduleFromDB)) {
+				$module = new Modules();
+				$module->module_id = $key;
+				$module->save();
+			}
+		}
+
+		foreach($moduleFromDB as $val) {
+			if(array_key_exists($val, $this->modules))
+				continue;
+			
+			Modules::findOne(['module_id' => $val])->delete();
+		}
 	}
 }

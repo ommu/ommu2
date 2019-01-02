@@ -33,9 +33,6 @@ class Modules extends \app\components\ActiveRecord
 	use \ommu\traits\UtilityTrait;
 	
 	public $gridForbiddenColumn = ['installed','modified_date','modified_search'];
-	public $name;
-	public $description;
-	public $version;
 
 	// Search Variable
 	public $creation_search;
@@ -80,9 +77,6 @@ class Modules extends \app\components\ActiveRecord
 			'modified_id' => Yii::t('app', 'Modified'),
 			'creation_search' => Yii::t('app', 'Creation'),
 			'modified_search' => Yii::t('app', 'Modified'),
-			'name' => Yii::t('app', 'Name'),
-			'description' => Yii::t('app', 'Description'),
-			'version' => Yii::t('app', 'Version'),
 		];
 	}
 
@@ -208,26 +202,12 @@ class Modules extends \app\components\ActiveRecord
 			$enabledModules = [];
 			foreach(self::find()
 				->andWhere(['enabled' => '1'])
-				->all() as $em) {
-				$enabledModules[] = $em->module_id;
+				->all() as $item) {
+				$enabledModules[] = $item->module_id;
 			}
 			Yii::$app->cache->set(self::CACHE_ENABLE_MODULE_IDS, $enabledModules);
 		}
 		return $enabledModules;
-	}
-
-	/**
-	 * after find attributes
-	 */
-	public function afterFind()
-	{
-		parent::afterFind();
-
-		$module = Yii::$app->moduleManager->getModule($this->module_id);
-
-		$this->name = $module != null ? $module->getName() : '';
-		$this->description = $module != null ? $module->getDescription() : '';
-		$this->version = $module != null ? $module->getVersion() : '';
 	}
 
 	/**

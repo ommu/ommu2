@@ -59,6 +59,7 @@ class ModuleController extends Controller
 	public function actionIndex()
 	{
 		Yii::$app->moduleManager->flushCache();
+		Yii::$app->moduleManager->setModules();
 		return $this->redirect(['manage']);
 	}
 
@@ -173,7 +174,7 @@ class ModuleController extends Controller
 
 		if($replace == 0) {
 			$disable = $module->disable();
-			if(is_object($enable))
+			if(is_object($disable))
 				Yii::$app->session->setFlash('success', Yii::t('app', '{module-id} module success disabled.', array('module-id'=>ucfirst($model->module_id))));
 			else
 				Yii::$app->session->setFlash('error', $disable);
