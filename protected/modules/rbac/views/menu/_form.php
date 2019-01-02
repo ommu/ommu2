@@ -14,7 +14,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use mdm\admin\models\Menu;
+use app\models\Menu;
 use yii\helpers\Json;
 use mdm\admin\AutocompleteAsset;
 
