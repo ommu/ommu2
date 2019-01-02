@@ -34,7 +34,13 @@ $this->params['menu']['content'] = [
 	'attributes' => [
 		'menuParent.name:text:Parent',
 		'name',
-		'icon',
+		[
+			'attribute' => 'icon',
+			'value' => function($model) {
+				return '<i class="fa '.$model->icon.'"></i> '.$model->icon;
+			},
+			'format' => 'html',
+		],
 		'route',
 		'order',
 	],
