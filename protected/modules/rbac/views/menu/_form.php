@@ -47,6 +47,13 @@ $this->registerJs($this->render('_script.js'));
 	->textInput(['maxlength' => 128])
 	->label($model->getAttributeLabel('name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
 
+<?php echo $form->field($model, 'icon', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+	->widget('\insolita\iconpicker\Iconpicker', [
+		'iconset'=>'fontawesome',
+		'clientOptions'=>['rows'=>8,'cols'=>10,'placement'=>'right'],
+	])
+	->label($model->getAttributeLabel('icon'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+
 <?php echo $form->field($model, 'parent_name', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
 	->textInput(['id' => 'parent_name'])
 	->label($model->getAttributeLabel('parent_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>

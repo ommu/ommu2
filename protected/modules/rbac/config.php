@@ -43,5 +43,8 @@ return [
 			],
 			'searchClass' => 'ommu\users\models\search\Users',
 		],
+		'menu' => [
+			'class' => 'app\modules\rbac\controllers\MenuController',
+		],
 	],
 ];

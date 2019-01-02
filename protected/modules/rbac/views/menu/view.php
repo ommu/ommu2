@@ -34,6 +34,7 @@ $this->params['menu']['content'] = [
 	'attributes' => [
 		'menuParent.name:text:Parent',
 		'name',
+		'icon',
 		'route',
 		'order',
 	],
