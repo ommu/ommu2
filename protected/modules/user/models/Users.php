@@ -25,6 +25,11 @@ class Users extends UsersModel implements IdentityInterface
 	const STATUS_BLOCK = 2;
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public $oldSecurity = false;
+
+	/**
 	 * Finds an identity by the given ID.
 	 *
 	 * @param string|int $id the ID to be looked for
@@ -84,6 +89,16 @@ class Users extends UsersModel implements IdentityInterface
 	}
 
 	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		$this->oldSecurity = strlen($this->password) == 60 ? false : true;
+	}
+
+	/**
 	 * Finds user by email
 	 *
 	 * @param string $email
@@ -96,9 +111,18 @@ class Users extends UsersModel implements IdentityInterface
 			return static::find()->alias('t')
 				->where(['t.email' => $email])
 				->andWhere(['t.enabled' => self::STATUS_ACTIVE])
-				->andWhere(['in', 't.level_id', array_flip($level)])->one();
+				->andWhere(['in', 't.level_id', array_flip($level)])
+				->one();
 		} else
 			return static::findOne(['email' => $email, 'enabled' => self::STATUS_ACTIVE]);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function hashPassword($password)
+	{
+		return md5($this->salt.$password) === $this->password_i;
 	}
 
 	/**
@@ -110,10 +134,18 @@ class Users extends UsersModel implements IdentityInterface
 	public function validatePassword($password)
 	{
 		if($this->scenario == Users::SCENARIO_CHANGE_PASSWORD) {
-			if(!Yii::$app->security->validatePassword($this->$password, $this->password_i)) {
-				$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
-					'attribute'=>$this->getAttributeLabel($password),
-				]));
+			if($this->oldSecurity == true) {
+				if(!$this->hashPassword($this->$password)) {
+					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
+						'attribute'=>$this->getAttributeLabel($password),
+					]));
+				}
+			} else {
+				if(!Yii::$app->security->validatePassword($this->$password, $this->password_i)) {
+					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
+						'attribute'=>$this->getAttributeLabel($password),
+					]));
+				}
 			}
 		} else
 			return Yii::$app->security->validatePassword($password, $this->password);
@@ -132,16 +164,16 @@ class Users extends UsersModel implements IdentityInterface
 			throw new \Exception('Tidak dapat merefresh token!.');
 
 		// yang perlu disimpan ke database agar menghemat space ruang
-		// issuer, subject(di isi username saja), audience, expiration, not before, issued at, jwt id
+		// subject(di isi email saja), issuer, audience, issued at, not before, expiration, jwt id
 		$issuedAt = time();
 		$nbf = time() + UserIdentity::JWT_NOT_BEFORE;
 		$exp = time() + UserIdentity::JWT_TOKEN_EXPIRE;
 		$signer = new Sha256();
 		$token = Yii::$app->jwt->getBuilder()
 			->setSubject($user->email)
-			->setIssuer(UserIdentity::JWT_ISSUER)
-			->setAudience(UserIdentity::JWT_AUDIENCE)
-			->setId(UserIdentity::JWT_UNIQ_ID, true)
+			->setIssuer(Yii::$app->jwt->issuer)
+			->setAudience(Yii::$app->jwt->audiance)
+			->setId(Yii::$app->jwt->id, true)
 			->setIssuedAt($issuedAt)
 			->setNotBefore($nbf)
 			->setExpiration($exp)
@@ -152,13 +184,13 @@ class Users extends UsersModel implements IdentityInterface
 
 		// Simpan jwt claim ke database!
 		$jwtClaims = [
-			'issuer'    => UserIdentity::JWT_ISSUER,
-			'aud'       => UserIdentity::JWT_AUDIENCE,
-			'id'        => UserIdentity::JWT_UNIQ_ID,
+			'sub'       => $user->email,
+			'issuer'    => Yii::$app->jwt->issuer,
+			'aud'       => Yii::$app->jwt->audiance,
+			'id'        => Yii::$app->jwt->id,
 			'issued_at' => $issuedAt,
 			'nbf'       => $nbf,
 			'exp'       => $exp,
-			'sub'       => $user->email,
 			'user_id'   => $id,
 		];
 		$claim = serialize($jwtClaims);
@@ -172,7 +204,7 @@ class Users extends UsersModel implements IdentityInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Mengembalikan data pada kolom jwt_claims untuk kebutuhan autentifikasi
 	 */
 	public static function getClaimById($userId)
 	{

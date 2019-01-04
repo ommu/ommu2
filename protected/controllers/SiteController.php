@@ -1,13 +1,12 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
 use app\components\Controller;
 use yii\filters\AccessControl;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\modules\user\models\LoginForm;
+use yii\validators\EmailValidator;
 use app\models\ContactForm;
 
 class SiteController extends Controller
@@ -61,27 +60,36 @@ class SiteController extends Controller
 		return $this->render('index');
 	}
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+	/**
+	 * Login action.
+	 *
+	 * @return Response|string
+	 */
+	public function actionLogin()
+	{
+		if(!Yii::$app->user->isGuest)
+			return $this->goHome();
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
+		$model = new LoginForm();
+		if(Yii::$app->request->isPost) {
+			$model->load(Yii::$app->request->post());
+			$model->isAdmin = true;
 
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+			$validator = new EmailValidator();
+			if($validator->validate($model->username) === true)
+				$model->setByEmail(true);
+
+			if($model->login())
+				return $this->goBack();
+		}
+
+		$this->view->title = Yii::t('app', 'Login');
+		$this->view->description = '';
+		$this->view->keywords = '';
+		return $this->render('front_login', [
+			'model' => $model,
+		]);
+	}
 
 	/**
 	 * Logout action.

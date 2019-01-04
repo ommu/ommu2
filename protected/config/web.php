@@ -87,12 +87,19 @@ $production = [
 		'view' => [
 			'class' => '\app\components\View',
 		],
+		'jwt' => [
+			'class'    => 'app\components\Jwt',
+			'key'      => 'LLcrvjg0PkdtmckBnmtmxmHMzdV1UZ_2',
+			'issuer'   => 'http://ommu.co',
+			'audiance' => 'http://ommu.co',
+			'id'       => 'LLcrvjg0PkdtmckB2',
+		],
 		'setting' => [
-			'class' => '\app\components\SettingManager',
+			'class'    => '\app\components\SettingManager',
 			'moduleId' => 'base',
 		],
 		'moduleManager' => [
-			'class' => '\app\components\ModuleManager',
+			'class'        => '\app\components\ModuleManager',
 			'createBackup' => true,
 		],
 	],
