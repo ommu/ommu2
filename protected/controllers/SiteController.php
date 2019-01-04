@@ -5,6 +5,7 @@ use Yii;
 use app\components\Controller;
 use yii\filters\AccessControl;
 use yii\web\Response;
+use yii\helpers\Url;
 use app\modules\user\models\LoginForm;
 use yii\validators\EmailValidator;
 use app\models\ContactForm;
@@ -70,10 +71,12 @@ class SiteController extends Controller
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
 
+		if(!Yii::$app->isSocialMedia())
+			return $this->redirect(Url::to(['/admin/login']));
+
 		$model = new LoginForm();
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
-			$model->isAdmin = true;
 
 			$validator = new EmailValidator();
 			if($validator->validate($model->username) === true)
