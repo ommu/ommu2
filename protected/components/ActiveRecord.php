@@ -15,6 +15,8 @@ use Yii;
 
 class ActiveRecord extends \yii\db\ActiveRecord
 {
+	use \ommu\traits\GridViewTrait;
+
 	/**
 	 * @var array tempat menyimpan daftar kolom yang ditampilkan gridview.
 	 */

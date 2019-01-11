@@ -75,6 +75,10 @@ $production = [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
+				//a standard rule mapping '/' to 'site/index' action
+				'' 																	=> 'site/index',
+				//a standard rule mapping '/login' to 'site/login', and so on
+				'<action:(login|logout)>' 											=> 'site/<action>',
 			],
 		],
 		'authManager' => [
