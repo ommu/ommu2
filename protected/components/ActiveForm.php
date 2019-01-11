@@ -33,8 +33,5 @@ class ActiveForm extends YiiActiveForm
 		parent::init();
 		if (!isset($this->options['class']))
 			$this->options['class'] = 'form-horizontal form-label-left';
-
-		ob_start();
-		ob_implicit_flush(false);
 	}
 }

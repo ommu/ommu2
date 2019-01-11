@@ -13,16 +13,12 @@
  */
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use app\components\ActiveForm;
 ?>
 
 <div class="auth-item-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => [
-		'class' => 'form-horizontal form-label-left',
-		//'enctype' => 'multipart/form-data',
-	],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,

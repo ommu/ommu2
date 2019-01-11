@@ -19,7 +19,7 @@
  */
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use app\components\ActiveForm;
 use yii\gii\components\ActiveField;
 use yii\gii\CodeFile;
 
@@ -36,9 +36,6 @@ foreach ($generator->templates as $name => $path) {
 				'id' => "$id-generator",
 				'successCssClass' => '',
 				'fieldConfig' => ['class' => ActiveField::className()],
-				'options' => [
-					'class' => 'form-horizontal form-label-left',
-				],
 			]); ?>
 
 			<?php echo $this->renderFile($generator->formView(), [
