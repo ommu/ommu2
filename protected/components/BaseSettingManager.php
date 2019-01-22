@@ -26,7 +26,7 @@ abstract class BaseSettingManager extends \yii\base\Component
 	/**
 	 * @var string|array tempat menyimpan nama model pengaturan yang digunakan untuk menyimpan data pada database.
 	 */
-	public $modelClass = 'app\models\Settings';
+	public $modelClass = 'app\modules\admin\models\Settings';
 
 	/**
 	 * init()

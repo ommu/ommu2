@@ -3,7 +3,7 @@
  * Modules (modules)
  * @var $this yii\web\View
  * @var $this app\modules\admin\controllers\ModuleController
- * @var $model app\models\search\Modules
+ * @var $model app\modules\admin\models\search\Modules
  * @var $form yii\widgets\ActiveForm
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>

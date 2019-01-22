@@ -2,7 +2,7 @@
 /**
  * ModuleController
  * @var $this yii\web\View
- * @var $model app\models\Modules
+ * @var $model app\modules\admin\models\Modules
  *
  * ModuleController implements the CRUD actions for Modules model.
  * Reference start
@@ -28,8 +28,8 @@ use Yii;
 use yii\filters\VerbFilter;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
-use app\models\Modules;
-use app\models\search\Modules as ModulesSearch;
+use app\modules\admin\models\Modules;
+use app\modules\admin\models\search\Modules as ModulesSearch;
 use yii\web\HttpException;
 
 class ModuleController extends Controller

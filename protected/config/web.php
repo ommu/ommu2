@@ -107,6 +107,14 @@ $production = [
 			'createBackup' => true,
 		],
 	],
+	'modules' => [
+		'redactor' => [
+			'class'                 => 'yii\redactor\RedactorModule',
+			'uploadDir'             => '@public',
+			'uploadUrl'             => '@web/public',
+			'imageAllowExtensions'  => ['jpg','png']
+		],
+	],
 	'params' => $params,
 ];
 

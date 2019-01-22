@@ -28,7 +28,7 @@
  *
  */
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 use ommu\users\models\Users;

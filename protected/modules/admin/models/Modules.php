@@ -22,7 +22,7 @@
  *
  */
 
-namespace app\models;
+namespace app\modules\admin\models;
 
 use Yii;
 use yii\helpers\Url;

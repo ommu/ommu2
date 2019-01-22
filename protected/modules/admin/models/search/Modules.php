@@ -2,7 +2,7 @@
 /**
  * Modules
  *
- * Modules represents the model behind the search form about `app\models\Modules`.
+ * Modules represents the model behind the search form about `app\modules\admin\models\Modules`.
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
@@ -16,7 +16,7 @@ namespace app\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Modules as ModulesModel;
+use app\modules\admin\models\Modules as ModulesModel;
 
 class Modules extends ModulesModel
 {
