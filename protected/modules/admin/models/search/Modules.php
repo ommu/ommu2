@@ -12,7 +12,7 @@
  *
  */
 
-namespace app\models\search;
+namespace app\modules\admin\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
