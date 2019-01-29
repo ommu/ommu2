@@ -14,4 +14,9 @@ return [
 	'id'     => 'admin',
 	'class'  => app\modules\admin\Module::className(),
 	'core'   => true,
+
+	'controllerMap' => [
+		'dashboard' => 'app\modules\admin\controllers\DashboardController',
+		'login' => 'app\modules\admin\controllers\LoginController',
+	],
 ];

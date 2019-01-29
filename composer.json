@@ -24,6 +24,7 @@
 		"yiisoft/yii2-jui": "^2.0",
 		"sizeg/yii2-jwt": "^1.0",
 		"ommu/yii2-redactor": "~2.0",
+		"ommu/core": "v2.x-dev",
 		"ommu/users": "~2.1",
 		"ommu/mailer": "~0.1",
 		"ommu/report": "~2.1",

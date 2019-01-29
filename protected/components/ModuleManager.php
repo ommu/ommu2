@@ -18,7 +18,7 @@ use \yii\base\Event;
 use \yii\base\InvalidConfigException;
 use \yii\helpers\FileHelper;
 use app\components\bootstrap\ModuleAutoLoader;
-use app\modules\admin\models\Modules;
+use ommu\core\models\Modules;
 
 class ModuleManager extends \yii\base\Component
 {

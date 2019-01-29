@@ -12,14 +12,16 @@
 
 namespace app\modules\admin;
 
-class Module extends \app\components\Module
+use Yii;
+
+class Module extends \ommu\core\Module
 {
 	public $layout = 'main';
 
 	/**
 	 * @inheritdoc
 	 */
-	public $controllerNamespace = 'app\modules\admin\controllers';
+	public $controllerNamespace = 'ommu\core\controllers';
 
 	/**
 	 * @inheritdoc
@@ -27,5 +29,16 @@ class Module extends \app\components\Module
 	public function init()
 	{
 		parent::init();
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getViewPath() 
+	{
+		if(preg_match('/app/', get_class(Yii::$app->controller)))
+			return Yii::getAlias('@app/modules/admin/views');
+
+		return Yii::getAlias('@ommu/core/views');
 	}
 }
