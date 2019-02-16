@@ -137,8 +137,8 @@ class Controller extends \yii\web\Controller
 		}
 		*/
 
-		if(self::$_themeApplied == false) {
-			self::$_themeApplied = false;
+		if(!self::$_themeApplied) {
+			self::$_themeApplied = true;
 			$this->getView()->setTheme($this);
 		}
 	}

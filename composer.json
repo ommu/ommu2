@@ -14,7 +14,8 @@
 	},
 	"minimum-stability": "stable",
 	"require": {
-		"php": ">=5.4.0",
+		"php": "~7.0",
+		"oomphinc/composer-installers-extender": "^1.0",
 		"yiisoft/yii2": "~2.0.14",
 		"yiisoft/yii2-bootstrap": "~2.0.0",
 		"yiisoft/yii2-swiftmailer": "~2.0.0",
@@ -46,18 +47,18 @@
 		"process-timeout": 1800,
 		"preferred-install": "dist",
 		"vendor-dir": "protected/vendor",
-        "fxp-asset": {
-            "enabled": false
-        }
+		"fxp-asset": {
+			"enabled": false
+		}
 	},
 	"scripts": {
-        "post-install-cmd": [
-            "yii\\composer\\Installer::postInstall"
-        ],
-        "post-create-project-cmd": [
-            "yii\\composer\\Installer::postCreateProject",
-            "yii\\composer\\Installer::postInstall"
-        ]
+		"post-install-cmd": [
+			"yii\\composer\\Installer::postInstall"
+		],
+		"post-create-project-cmd": [
+			"yii\\composer\\Installer::postCreateProject",
+			"yii\\composer\\Installer::postInstall"
+		]
 	},
 	"extra": {
 		"yii\\composer\\Installer::postCreateProject": {
@@ -84,12 +85,9 @@
 		}
 	},
 	"repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-	],
-	"suggest": {
-		"components/jqueryui": "move to bower/jquery-ui or bower-asset/jquery-ui"
-	}
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	]
 }

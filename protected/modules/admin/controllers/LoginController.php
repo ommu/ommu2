@@ -18,6 +18,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\modules\user\models\LoginForm;
@@ -77,6 +78,9 @@ class LoginController extends Controller
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
 
+		if(Yii::$app->isSocialMedia())
+			return $this->redirect(Url::to(['/site/login']));
+
 		$model = new LoginForm();
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -91,7 +95,7 @@ class LoginController extends Controller
 		}
 
 		$this->view->title = Yii::t('app', 'Login');
-		$this->view->description = '';
+		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('admin_index', [
 			'model' => $model,

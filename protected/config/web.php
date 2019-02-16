@@ -1,13 +1,12 @@
 <?php
 Yii::setAlias('@webroot', realpath(__DIR__ . '/../../'));
 Yii::setAlias('@app', '@webroot/protected');
+Yii::setAlias('@themes', '@webroot/themes');
+Yii::setAlias('@public', '@webroot/public');
 Yii::setAlias('@config', '@app/config');
 Yii::setAlias('@models', '@app/models');
 Yii::setAlias('@modules', '@app/modules');
 Yii::setAlias('@vendor', '@app/vendor');
-Yii::setAlias('@ommu', '@vendor/ommu');
-Yii::setAlias('@themes', '@webroot/themes');
-Yii::setAlias('@public', '@webroot/public');
 Yii::setAlias('@runtime', '@app/runtime');
 
 $params = \app\components\Application::isDev() ? 
@@ -29,6 +28,7 @@ $production = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+		'@ommu'  => '@vendor/ommu',
     ],
 	'components' => [
 		'request' => [

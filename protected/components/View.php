@@ -13,6 +13,7 @@
 namespace app\components;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class View extends \yii\web\View
 {
@@ -289,7 +290,10 @@ class View extends \yii\web\View
 
 		if($themeName != $themeNameUnchached) {
 			$themeName = $themeNameUnchached;
-			Yii::$app->setting->set('theme', $themeName);
+			if(!$isBackofficeTheme)
+				Yii::$app->setting->set('theme', $themeName);
+			else
+				Yii::$app->setting->set('backoffice_theme', $themeName);
 		}
 
 		$this->theme = new \yii\base\Theme([
@@ -301,5 +305,71 @@ class View extends \yii\web\View
 				'@app/widgets'		=> sprintf('@webroot/themes/%s/widgets', $themeName),
 			],
 		]);
+
+		// controllerMap for themes
+		$controllerMap = [];
+		if($themeName)
+			$controllerMap = $this->getThemeController($themeName);
+		// Yii::$app->controllerMap = $controllerMap;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getController($theme, $path, $sub=null)
+	{
+		$controllerMap = [];
+		$controllerPath = Yii::getAlias($path);
+		$pathArray = explode('/', $path);
+		$lastPath = end($pathArray);
+		foreach(scandir($controllerPath) as $file) {
+			$controllerFile = $controllerPath . DIRECTORY_SEPARATOR . $file;
+			if($file == '.' || 
+				$file == '..' ||
+				(is_file($controllerFile) && in_array($file, ['index.php','.DS_Store']))) {
+					continue;
+			}
+
+			if(is_file($controllerFile)) {
+				$controller = join('-', [$theme, strtolower(preg_replace('(Controller.php)', '', $file))]);
+				if($lastPath != 'controllers')
+					$controller = join('-', [$theme, $lastPath, strtolower(preg_replace('(Controller.php)', '', $file))]);
+				$controllerClass = preg_replace('(.php)', '', $file);
+				
+				$nsClass = [
+					sprintf('themes\%s\controllers', $theme), 
+					$controllerClass,
+				];
+				if($sub != null) {
+					$nsClass = [
+						sprintf('themes\%s\controllers', $theme), 
+						$sub,
+						$controllerClass,
+					];
+				}
+				$controllerMap[$controller] = [
+					'class'=>join('\\', $nsClass),
+				];
+
+			} else if(is_dir($controllerFile)) {
+				$subPath = join('/', [$path, $file]);
+				$controllerMap = ArrayHelper::merge($controllerMap, $this->getController($theme, $subPath, $file));
+			}
+		}
+		
+		return $controllerMap;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getThemeController($theme)
+	{
+		if($theme) {
+			$controllerPath = sprintf('@webroot/themes/%s/controllers', $theme);
+			if(file_exists(Yii::getAlias($controllerPath)))
+				return $this->getController($theme, $controllerPath);
+		} else
+			return false;
 	}
 }

@@ -2,10 +2,10 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use app\components\Controller;
 use yii\filters\AccessControl;
 use yii\web\Response;
-use yii\helpers\Url;
 use app\modules\user\models\LoginForm;
 use yii\validators\EmailValidator;
 use app\models\ContactForm;
@@ -87,7 +87,7 @@ class SiteController extends Controller
 		}
 
 		$this->view->title = Yii::t('app', 'Login');
-		$this->view->description = '';
+		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('front_login', [
 			'model' => $model,
