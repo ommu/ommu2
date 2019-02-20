@@ -57,6 +57,21 @@ class Application extends \yii\web\Application
 	}
 
 	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode maintenance
+	 *
+	 * @return boolean true|false
+	 */
+	public function isMaintenance(): bool
+	{
+		$setting = \app\models\CoreSettings::find()
+			->select(['id', 'online'])
+			->where(['id' => 1])
+			->one();
+
+		return (!$setting->view->online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
+	}
+
+	/**
 	 * Memeriksa hak akses user berdasarkan route dan user idnya
 	 *
 	 * @param string $route rute/url dari sebuah request. contoh: /site/index

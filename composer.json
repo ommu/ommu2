@@ -12,7 +12,8 @@
 		"irc": "irc://irc.freenode.net/yii",
 		"source": "https://github.com/yiisoft/yii2"
 	},
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"require": {
 		"php": "~7.0",
 		"oomphinc/composer-installers-extender": "^1.0",

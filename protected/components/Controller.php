@@ -84,14 +84,6 @@ class Controller extends \yii\web\Controller
 		if(parent::beforeAction($action)) {
 			if(!self::$settingInitialize) {
 				self::$settingInitialize = true;
-
-				$setting = \app\models\CoreSettings::find()
-				->select(['site_title'])
-				->where(['id' => 1])
-				->one();
-
-				if($setting != null)
-					Yii::$app->name = $setting->site_title;
 			}
 		}
 		return true;

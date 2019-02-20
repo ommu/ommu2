@@ -8,7 +8,7 @@
 namespace app\components;
 
 use Yii;
-use yii\widgets\ActiveForm as YiiActiveForm;
+use yii\helpers\ArrayHelper;
 
 /**
  * ActiveForm is a widget that builds an interactive HTML form for one or multiple data models.
@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm as YiiActiveForm;
  * @created date 11 January 2019, 11:11 WIB
  * @link https://github.com/ommu/ommu
  */
-class ActiveForm extends YiiActiveForm
+class ActiveForm extends \yii\widgets\ActiveForm
 {
 	/**
 	 * Initializes the widget.
@@ -33,5 +33,19 @@ class ActiveForm extends YiiActiveForm
 		parent::init();
 		if (!isset($this->options['class']))
 			$this->options['class'] = 'form-horizontal form-label-left';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function field($model, $attribute, $options=[])
+	{
+		$bootstrap = '4';
+		if(!array_key_exists('template', $options)) {
+			if($bootstrap == 4)
+				$options = ArrayHelper::merge(['template'=>'{label}{input}{hint}{error}'], $options);
+		}
+
+		return parent::field($model, $attribute, $options);
 	}
 }
