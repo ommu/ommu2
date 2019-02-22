@@ -20,9 +20,9 @@ use mdm\admin\AutocompleteAsset;
 
 AutocompleteAsset::register($this);
 $opts = Json::htmlEncode([
-        'menus' => Menu::getMenuSource(),
-        'routes' => Menu::getSavedRoutes(),
-    ]);
+		'menus' => Menu::getMenuSource(),
+		'routes' => Menu::getSavedRoutes(),
+	]);
 $this->registerJs("var _opts = $opts;");
 $this->registerJs($this->render('_script.js'));
 ?>
@@ -30,6 +30,7 @@ $this->registerJs($this->render('_script.js'));
 <div class="menu-form">
 
 <?php $form = ActiveForm::begin([
+	'options' => ['class'=>'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -39,32 +40,32 @@ $this->registerJs($this->render('_script.js'));
 
 <?php echo Html::activeHiddenInput($model, 'parent', ['id' => 'parent_id']); ?>
 
-<?php echo $form->field($model, 'name', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'name')
 	->textInput(['maxlength' => 128])
-	->label($model->getAttributeLabel('name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'icon', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'icon')
 	->widget('\insolita\iconpicker\Iconpicker', [
 		'iconset'=>'fontawesome',
 		'clientOptions'=>['rows'=>8,'cols'=>10,'placement'=>'right'],
 	])
-	->label($model->getAttributeLabel('icon'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('icon')); ?>
 
-<?php echo $form->field($model, 'parent_name', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'parent_name')
 	->textInput(['id' => 'parent_name'])
-	->label($model->getAttributeLabel('parent_name'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('parent_name')); ?>
 
-<?php echo $form->field($model, 'route', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'route')
 	->textInput(['id' => 'route'])
-	->label($model->getAttributeLabel('route'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('route')); ?>
 
-<?php echo $form->field($model, 'order', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'order')
 	->input('number')
-	->label($model->getAttributeLabel('order'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('order')); ?>
 
-<?php echo $form->field($model, 'data', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>'])
+<?php echo $form->field($model, 'data')
 	->textarea(['rows' => 4])
-	->label($model->getAttributeLabel('data'), ['class'=>'control-label col-md-3 col-sm-3 col-xs-12']); ?>
+	->label($model->getAttributeLabel('data')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group">

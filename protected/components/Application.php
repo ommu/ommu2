@@ -72,6 +72,16 @@ class Application extends \yii\web\Application
 	}
 
 	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode demo applikasi
+	 *
+	 * @return boolean true|false
+	 */
+	public function isDemoApps(): bool
+	{
+		return Yii::$app->params['demoApps'];
+	}
+
+	/**
 	 * Memeriksa hak akses user berdasarkan route dan user idnya
 	 *
 	 * @param string $route rute/url dari sebuah request. contoh: /site/index

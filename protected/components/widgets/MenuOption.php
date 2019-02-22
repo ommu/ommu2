@@ -9,7 +9,7 @@
  * @link https://github.com/ommu/ommu
  */
 
-namespace app\components\menu;
+namespace app\components\widgets;
 
 use yii\helpers\Html;
 

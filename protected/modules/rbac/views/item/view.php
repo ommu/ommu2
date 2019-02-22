@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 AnimateAsset::register($this);
 YiiAsset::register($this);
 $opts = Json::htmlEncode([
-    'items' => $model->getItems(),
+	'items' => $model->getItems(),
 ]);
 $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('_script.js'));

@@ -23,14 +23,10 @@ $this->params['menu']['content'] = [
 ];
 ?>
 
-<div class="x_panel">
-	<div class="x_content">
-		<div class="menu-create">
+<div class="menu-create">
 
-		<?php echo $this->render('_form', [
-			'model' => $model,
-		]); ?>
+<?php echo $this->render('_form', [
+	'model' => $model,
+]); ?>
 
-		</div>
-	</div>
 </div>

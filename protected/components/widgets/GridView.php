@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace app\components\grid;
+namespace app\components\widgets;
 
 use Yii;
 

@@ -25,14 +25,17 @@ use yii\helpers\ArrayHelper;
 class ActiveForm extends \yii\widgets\ActiveForm
 {
 	/**
+	 * {@inheritdoc}
+	 */
+	public $fieldClass = 'app\components\widgets\ActiveField';
+
+	/**
 	 * Initializes the widget.
 	 * This renders the form open tag.
 	 */
 	public function init()
 	{
 		parent::init();
-		if (!isset($this->options['class']))
-			$this->options['class'] = 'form-horizontal form-label-left';
 	}
 
 	/**
@@ -40,12 +43,26 @@ class ActiveForm extends \yii\widgets\ActiveForm
 	 */
 	public function field($model, $attribute, $options=[])
 	{
-		$bootstrap = '4';
-		if(!array_key_exists('template', $options)) {
-			if($bootstrap == 4)
-				$options = ArrayHelper::merge(['template'=>'{label}{input}{hint}{error}'], $options);
+		$horizontal = isset($this->options['class']) && preg_match('/(form-horizontal)/', $this->options['class']) ? true : false;
+		if(!array_key_exists('template', $options) && $horizontal)
+			$options = ArrayHelper::merge(['template'=>'{label}<div class="col-md-6 col-sm-9 col-xs-12">{input}{error}{hint}</div>'], $options);
+
+		$config = $this->fieldConfig;
+		if ($config instanceof \Closure) {
+			$config = call_user_func($config, $model, $attribute);
+		}
+		if (!isset($config['class'])) {
+			$config['class'] = $this->fieldClass;
+			if($horizontal) {
+				$config['options'] = ['class'=>'form-group row'];
+				$config['labelOptions'] = ['class'=>'control-label col-md-3 col-sm-3 col-xs-12'];
+			}
 		}
 
-		return parent::field($model, $attribute, $options);
+		return Yii::createObject(ArrayHelper::merge($config, $options, [
+			'model' => $model,
+			'attribute' => $attribute,
+			'form' => $this,
+		]));
 	}
 }

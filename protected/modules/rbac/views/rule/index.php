@@ -14,7 +14,7 @@
  */
 
 use yii\helpers\Url;
-use app\libraries\grid\GridView;
+use app\components\widgets\GridView;
 use yii\widgets\Pjax;
 
 $this->context->layout = 'assignment';

@@ -11,15 +11,15 @@
  */
 
 return [
-	'id'             => 'rbac',
-	'class'          => app\modules\rbac\Module::className(),
-	'core'           => true,
-	'bootstrap'      => true,
+	'id'			 => 'rbac',
+	'class'		  => app\modules\rbac\Module::className(),
+	'core'		   => true,
+	'bootstrap'	  => true,
 	'controllerMap'  => [
 		'assignment' => [
-			'class'          => 'mdm\admin\controllers\AssignmentController',
+			'class'		  => 'mdm\admin\controllers\AssignmentController',
 			'userClassName'  => 'app\modules\user\models\Users',
-			'idField'        => 'user_id',
+			'idField'		=> 'user_id',
 			'usernameField'  => 'email',
 			'fullnameField'  => 'displayname',
 			'extraColumns'   => [

@@ -23,6 +23,7 @@ $production = [
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => [
 		'app\components\bootstrap\ModuleAutoLoader',
+		'app\components\bootstrap\ThemeControllerHandle',
 		'log'
 	],
 	'aliases' => [

@@ -24,14 +24,10 @@ $this->params['menu']['content'] = [
 ];
 ?>
 
-<div class="x_panel">
-	<div class="x_content">
-		<div class="auth-item-update">
+<div class="auth-item-update">
 
-		<?php echo $this->render('_form', [
-			'model' => $model,
-		]); ?>
+<?php echo $this->render('_form', [
+	'model' => $model,
+]); ?>
 
-		</div>
-	</div>
 </div>

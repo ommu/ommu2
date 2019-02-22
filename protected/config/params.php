@@ -2,11 +2,18 @@
 return [
 	'adminEmail' => 'admin@example.com',
 
+	// DEMO
+	'demoApps' => false,								// true|false
+
 	// MODULES
 	// Folder apa saja yg akan di muat secara otomatis oleh module auto loader.
 	'moduleAutoloadPaths'    => ['@vendor/ommu', '@app/modules'],
 	'moduleMarketplacePath'  => '@app/modules',
 	'dontLoadModule'         => [],
+
+	// EMAIL
+	// Folder tempat lokasi email template
+	'mailTemplatePath'  => '@public/email/template',
 
 	// THEMES
 	// Letak folder tema, pada path ini tema akan diupload.
@@ -32,6 +39,14 @@ return [
 	// GRIDVIEW
 	// Gridview setting
 	'gridView' => array(
-		'JuiDatepicker' => false,
+		'datepicker' => false,							// true|false
+		'datepickerType' => 'flatpickr',				// flatpickr | juiDatepicker
+	),
+
+	// ActiveForm
+	// ActiveForm setting
+	'activeForm' => array(
+		'datepicker' => false,							// true|false
+		'datepickerType' => 'flatpickr',				// flatpickr | juiDatepicker
 	),
 ];
