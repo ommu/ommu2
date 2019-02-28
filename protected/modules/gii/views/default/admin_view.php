@@ -42,8 +42,9 @@ foreach ($generator->templates as $name => $path) {
 		'form' => $form,
 	]); ?>
 
-	<?php echo $form->field($generator, 'template', ['template' => '{label}<div class="col-md-9 col-sm-9 col-xs-12">{input}{error}</div>{hint}'])->sticky()
-		->label('Code Template', ['class'=>'control-label col-md-3 col-sm-3 col-xs-12'])
+	<?php echo $form->field($generator, 'template', ['template' => '{label}{beginWrapper}{input}{error}{endWrapper}{hint}'])
+		->sticky()
+		->label('Code Template')
 		->dropDownList($templates)->hint('Please select which set of the templates should be used to generated the code.') ?>
 
 	<div class="ln_solid"></div>
