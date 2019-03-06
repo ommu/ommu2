@@ -58,9 +58,6 @@ class Formatter extends \yii\i18n\Formatter
 		if(in_array(date('Y-m-d', strtotime($value)), ['0000-00-00','1970-01-01','0002-12-02','-0001-11-30']))
 			return $this->nullDisplay;
 
-		if ($format === null)
-			$format = $this->dateFormat;
-
 		return parent::asDate($value, $format);
 	}
 
@@ -97,9 +94,6 @@ class Formatter extends \yii\i18n\Formatter
 		if(in_array($value, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']))
 			return $this->nullDisplay;
 
-		if ($format === null)
-			$format = $this->timeFormat;
-
 		return parent::asTime($value, $format);
 	}
 
@@ -135,9 +129,6 @@ class Formatter extends \yii\i18n\Formatter
 	{
 		if(in_array($value, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']))
 			return $this->nullDisplay;
-
-		if ($format === null)
-			$format = $this->datetimeFormat;
 
 		return parent::asDatetime($value, $format);
 	}
