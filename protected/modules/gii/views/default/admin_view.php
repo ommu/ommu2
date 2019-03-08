@@ -20,8 +20,8 @@
 
 use yii\helpers\Html;
 use app\components\ActiveForm;
-use yii\gii\components\ActiveField;
 use yii\gii\CodeFile;
+use app\components\widgets\GiiActiveField as ActiveField;
 
 $templates = [];
 foreach ($generator->templates as $name => $path) {
