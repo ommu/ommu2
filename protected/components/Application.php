@@ -78,7 +78,7 @@ class Application extends \yii\web\Application
 	 */
 	public function isDemoApps(): bool
 	{
-		return Yii::$app->params['demoApps'];
+		return isset(Yii::$app->params['demoApps']) ? Yii::$app->params['demoApps'] : false;
 	}
 
 	/**

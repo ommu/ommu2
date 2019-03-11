@@ -36,9 +36,9 @@ $production = [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
 			'cookieValidationKey' => 'LLcrvjg0PkdtmckBnmtmxmHMzdV1UZ_2',
 		],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+		'cache' => [
+			'class' => 'yii\caching\FileCache',
+		],
 		'user' => [
 			'class'             => 'app\modules\user\components\User',
 			'identityClass'     => 'app\modules\user\models\Users',

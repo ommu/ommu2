@@ -101,7 +101,7 @@ class ThemeControllerHandle implements BootstrapInterface
 	public function getControllers($theme)
 	{
 		if($theme) {
-			$controllerPath = sprintf('@webroot/themes/%s/controllers', $theme);
+			$controllerPath = sprintf('@themes/%s/controllers', $theme);
 			if(file_exists(Yii::getAlias($controllerPath)))
 				return $this->getController($theme, $controllerPath);
 		} else
