@@ -1,9 +1,9 @@
 <?php
-$params = \app\components\Application::isDev() ? 
-	require(__DIR__ . '/params-dev.php') :
+$params = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/params-dev.php')))?
+	require(__DIR__ . '/params-dev.php'):
 	require(__DIR__ . '/params.php');
-$database = \app\components\Application::isDev() ? 
-	require(__DIR__ . '/database-dev.php') :
+$database = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/database-dev.php')))?
+	require(__DIR__ . '/database-dev.php'):
 	require(__DIR__ . '/database.php');
 $bn = \app\components\Application::getAppId();
 
