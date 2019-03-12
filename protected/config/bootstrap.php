@@ -1,6 +1,6 @@
 <?php
 Yii::setAlias('@webroot', dirname(dirname(__DIR__)));
-Yii::setAlias('@app', '@webroot/protected');
-Yii::setAlias('@themes', '@webroot/themes');
-Yii::setAlias('@public', '@webroot/public');
+Yii::setAlias('@app', dirname(dirname(__DIR__)) . '/protected');
+Yii::setAlias('@themes', dirname(dirname(__DIR__)) . '/themes');
+Yii::setAlias('@public', dirname(dirname(__DIR__)) . '/public');
 Yii::setAlias('@modules', '@app/modules');

@@ -10,19 +10,19 @@ $bn = \app\components\Application::getAppId();
 $production = [
 	'name' => 'OMMU by sudaryanto.id',
 	'id' => 'basic',
-	'basePath' => dirname(__DIR__),
 	'bootstrap' => [
 		'app\components\bootstrap\ModuleAutoLoader',
 		'app\components\bootstrap\ThemeControllerHandle',
 		'log'
 	],
+	'basePath' => dirname(__DIR__),
+	'vendorPath' => dirname(dirname(__DIR__)) . '/protected/vendor',
+	'runtimePath' => dirname(dirname(__DIR__)) . '/protected/runtime',
 	'aliases' => [
 		'@bower' => '@vendor/bower-asset',
 		'@npm'   => '@vendor/npm-asset',
 		'@ommu'  => '@vendor/ommu',
 	],
-	'vendorPath' => dirname(dirname(__DIR__)) . '/protected/vendor',
-	'runtimePath' => dirname(dirname(__DIR__)) . '/protected/runtime',
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
