@@ -1,14 +1,4 @@
 <?php
-Yii::setAlias('@webroot', realpath(__DIR__ . '/../../'));
-Yii::setAlias('@app', '@webroot/protected');
-Yii::setAlias('@themes', '@webroot/themes');
-Yii::setAlias('@public', '@webroot/public');
-Yii::setAlias('@config', '@app/config');
-Yii::setAlias('@models', '@app/models');
-Yii::setAlias('@modules', '@app/modules');
-Yii::setAlias('@vendor', '@app/vendor');
-Yii::setAlias('@runtime', '@app/runtime');
-
 $params = \app\components\Application::isDev() ? 
 	require(__DIR__ . '/params-dev.php') :
 	require(__DIR__ . '/params.php');
@@ -31,6 +21,8 @@ $production = [
 		'@npm'   => '@vendor/npm-asset',
 		'@ommu'  => '@vendor/ommu',
 	],
+	'vendorPath' => dirname(dirname(__DIR__)) . '/protected/vendor',
+	'runtimePath' => dirname(dirname(__DIR__)) . '/protected/runtime',
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
