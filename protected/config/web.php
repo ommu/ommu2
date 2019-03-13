@@ -27,6 +27,7 @@ $production = [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
 			'cookieValidationKey' => 'LLcrvjg0PkdtmckBnmtmxmHMzdV1UZ_2',
+			'csrfParam' => $bn . '_csrf',
 		],
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
