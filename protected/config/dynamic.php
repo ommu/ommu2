@@ -1,6 +1,4 @@
 <?php return [
-	'name' => 'Br0t0',
-	'language' => 'id',
 	'components' => [
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
