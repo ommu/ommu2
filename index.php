@@ -39,6 +39,27 @@ if(\app\components\Application::isDev()) {
 	else
 		@chmod($cache, 0777, true);
 	
+	// generate public directory
+	$public = dirname(__FILE__).'/public';
+	if(!file_exists($public))
+		@mkdir($public, 0755, true);
+	else
+		@chmod($public, 0755, true);
+	
+	// generate mail directory
+	$mail = dirname(__FILE__).'/mail';
+	if(!file_exists($mail))
+		@mkdir($mail, 0755, true);
+	else
+		@chmod($mail, 0755, true);
+	
+	// generate themes directory
+	$themes = dirname(__FILE__).'/themes';
+	if(!file_exists($themes))
+		@mkdir($themes, 0755, true);
+	else
+		@chmod($themes, 0755, true);
+	
 	// generate modules directory in protected
 	$modules = dirname(__FILE__).'/protected/modules';
 	if(!file_exists($modules))
@@ -59,20 +80,6 @@ if(\app\components\Application::isDev()) {
 		@mkdir($vendor, 0777, true);
 	else
 		@chmod($vendor, 0777, true);
-	
-	// generate public directory
-	$public = dirname(__FILE__).'/public';
-	if(!file_exists($public))
-		@mkdir($public, 0755, true);
-	else
-		@chmod($public, 0755, true);
-	
-	// generate themes directory
-	$themes = dirname(__FILE__).'/themes';
-	if(!file_exists($themes))
-		@mkdir($themes, 0755, true);
-	else
-		@chmod($themes, 0755, true);
 }
 
 $app = new app\components\Application($config);
