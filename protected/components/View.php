@@ -311,6 +311,14 @@ class View extends \yii\web\View
 				Yii::$app->setting->set('backoffice_theme', $themeName);
 		}
 
+		$this->theme($themeName);
+	}
+
+	/**
+	 * Menetapkan pengaturan tema
+	 */
+	public function theme($themeName): void
+	{
 		$this->theme = new \yii\base\Theme([
 			'basePath'		=> sprintf('@themes/%s', $themeName),
 			'baseUrl'		=> sprintf('@web/themes/%s', $themeName),
