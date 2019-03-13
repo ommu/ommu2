@@ -7,7 +7,7 @@ $database = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/da
 	require(__DIR__ . '/database.php');
 $bn = \app\components\Application::getAppId();
 
-$production = [
+$config = [
 	'name' => 'OMMU by sudaryanto.id',
 	'id' => 'basic',
 	'bootstrap' => [
@@ -113,7 +113,7 @@ $production = [
 ];
 
 $config = yii\helpers\ArrayHelper::merge(
-	$production,
+	$config,
 	$database
 );
 
