@@ -15,9 +15,7 @@
 
 namespace app\models;
 
-use ommu\core\models\CoreLanguages as CoreLanguagesCore;
-
-class CoreLanguages extends CoreLanguagesCore
+class CoreLanguages extends \ommu\core\models\CoreLanguages
 {
 	
 }

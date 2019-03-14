@@ -15,9 +15,7 @@
 
 namespace app\models;
 
-use ommu\core\models\CoreSettings as CoreSettingsCore;
-
-class CoreSettings extends CoreSettingsCore
+class CoreSettings extends \ommu\core\models\CoreSettings
 {
 	
 }

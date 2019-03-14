@@ -15,9 +15,7 @@
 
 namespace app\models;
 
-use ommu\core\models\CoreTags as CoreTagsCore;
-
-class CoreTags extends CoreTagsCore
+class CoreTags extends \ommu\core\models\CoreTags
 {
 	
 }
