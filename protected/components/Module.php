@@ -22,7 +22,7 @@ class Module extends \yii\base\Module
 	private $_moduleInfo = null;
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function init()
 	{
@@ -158,9 +158,8 @@ class Module extends \yii\base\Module
 	public function migrate()
 	{
 		$migrationPath = $this->getMigrationPath();
-		if(is_dir($migrationPath)) {
+		if(is_dir($migrationPath))
 			\app\commands\MigrateController::webMigrateUp($migrationPath);
-		}
 	}
 
 	/**
