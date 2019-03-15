@@ -47,25 +47,25 @@ $this->registerJs($js);
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name')
+<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput(['maxlength' => 64])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'description')
+<?php echo $form->field($model, 'description', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textarea(['rows' => 2])
 	->label($model->getAttributeLabel('description')); ?>
 
-<?php echo $form->field($model, 'ruleName')
+<?php echo $form->field($model, 'ruleName', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput(['id' => 'rule_name'])
 	->label($model->getAttributeLabel('ruleName')); ?>
 
-<?php echo $form->field($model, 'data'
-	)->textarea(['rows' => 6])
+<?php echo $form->field($model, 'data', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
+	->textarea(['rows' => 6])
 	->label($model->getAttributeLabel('data')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-9 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-9 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
 		'name' => 'submit-button']); ?>
 	</div>

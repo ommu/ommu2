@@ -27,17 +27,17 @@ use app\components\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name')
+<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput(['maxlength' => 64])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'className')
+<?php echo $form->field($model, 'className', ['horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 	->textInput()
 	->label($model->getAttributeLabel('className')); ?>
 
 <div class="ln_solid"></div>
 <div class="form-group row">
-	<div class="col-md-9 col-sm-9 col-xs-12 offset-sm-3">
+	<div class="col-md-9 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
 		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
 		'name' => 'submit-button']); ?>
 	</div>

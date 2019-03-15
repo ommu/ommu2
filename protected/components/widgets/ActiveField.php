@@ -51,7 +51,7 @@ class ActiveField extends \yii\bootstrap\ActiveField
 		if ($layout === 'horizontal') {
 			$config['template'] = "{label}\n{beginWrapper}\n{input}\n{error}\n{hint}\n{endWrapper}";
 			$cssClasses = array_merge([
-				'offset' => 'offset-sm-3',
+				'offset' => 'col-sm-offset-3',
 				'label' => 'col-md-3 col-sm-3 col-xs-12 col-12',
 				'wrapper' => 'col-md-6 col-sm-9 col-xs-12 col-12',
 				'error' => '',
