@@ -15,7 +15,26 @@
 
 namespace app\models;
 
-class SourceMessage extends \ommu\core\models\CoreLanguages
+use app\components\i18n\Configs;
+
+class SourceMessage extends \ommu\core\models\SourceMessage
 {
-	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName()
+	{
+		return Configs::instance()->sourceTable;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getDb()
+	{
+		if (Configs::instance()->db !== null)
+			return Configs::instance()->db;
+		else
+			return parent::getDb();
+	}
 }

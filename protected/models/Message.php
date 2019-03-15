@@ -15,7 +15,26 @@
 
 namespace app\models;
 
+use app\components\i18n\Configs;
+
 class Message extends \ommu\core\models\Message
 {
-	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function tableName()
+	{
+		return Configs::instance()->translateTable;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getDb()
+	{
+		if (Configs::instance()->db !== null)
+			return Configs::instance()->db;
+		else
+			return parent::getDb();
+	}
 }

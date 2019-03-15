@@ -27,6 +27,13 @@ return [
 		'noindex' => true,
 	),
 
+	// i18n
+	'i18n.config' => [
+		'db' => 'db',
+		'sourceTable' => 'source_message',
+		'translateTable' => 'message',
+	],
+
 	// RBAC
 	// Jika diset 1 maka url akan dicatat pada file log
 	'debugRBAC' => 0,
