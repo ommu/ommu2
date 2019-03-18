@@ -35,6 +35,17 @@ class Module extends \yii\base\Module
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function getLayoutPath()
+	{
+		if(Yii::$app->view->theme)
+			return Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'layouts';
+		else
+			return parent::getLayoutPath();
+	}
+
+	/**
 	 * Mengembalikan nama modul
 	 *
 	 * @return string nama modul
