@@ -11,10 +11,10 @@
  */
 
 return [
-	'id'			 => 'rbac',
-	'class'		  => app\modules\rbac\Module::className(),
-	'core'		   => true,
-	'bootstrap'	  => true,
+	'id'            => 'rbac',
+	'class'         => app\modules\rbac\Module::className(),
+	'core'          => true,
+	'bootstrap'     => true,
 	'controllerMap'  => [
 		'assignment' => [
 			'class'		  => 'mdm\admin\controllers\AssignmentController',
