@@ -46,5 +46,11 @@ return [
 				'default' => '@app/modules/gii/generators/extension/default',
 			],
 		],
+		'migration' => [
+			'class' => 'ommu\gii\migration\Generator',
+			'templates' => [
+				'default' => '@vendor/ommu/gii/migration/default',
+			],
+		],
 	]
 ];
