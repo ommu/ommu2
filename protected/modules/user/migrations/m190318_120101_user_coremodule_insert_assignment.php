@@ -1,6 +1,6 @@
 <?php
 /**
- * m190318_120101_create_user_module_assignment
+ * m190318_120101_user_coremodule_insert_assignment
  * 
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
@@ -13,7 +13,7 @@
 use Yii;
 use yii\db\Schema;
 
-class m190318_120101_create_user_module_assignment extends \yii\db\Migration
+class m190318_120101_user_coremodule_insert_assignment extends \yii\db\Migration
 {
 	public function up()
 	{
