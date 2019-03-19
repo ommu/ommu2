@@ -37,11 +37,22 @@ class m190319_030101_rbac_create_table_ommu_core_menu_category extends \yii\db\M
 				'updated_date' => Schema::TYPE_DATETIME . ' NOT NULL DEFAULT \'0000-00-00 00:00:00\' COMMENT \'trigger\'',
 				'PRIMARY KEY ([[id]])',
 			], $tableOptions);
+
+			$this->createIndex(
+				'code',
+				'ommu_core_menu_category',
+				'code'
+			);
 		}
 	}
 
 	public function down()
 	{
+		$this->dropIndex(
+			'code',
+			'ommu_core_menu_category'
+		);
+
 		$this->dropTable('ommu_core_menu_category');
 	}
 }

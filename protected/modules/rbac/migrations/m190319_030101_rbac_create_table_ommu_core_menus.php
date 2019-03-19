@@ -40,11 +40,44 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 				'PRIMARY KEY ([[id]])',
 				'FOREIGN KEY ([[cat_id]]) REFERENCES ommu_core_menu_category ([[id]]) ON DELETE SET NULL ON UPDATE CASCADE',
 			], $tableOptions);
+
+			$this->createIndex(
+				'cat_id',
+				'ommu_core_menus',
+				'cat_id'
+			);
+
+			$this->createIndex(
+				'parent',
+				'ommu_core_menus',
+				'parent'
+			);
+
+			$this->createIndex(
+				'route',
+				'ommu_core_menus',
+				'route'
+			);
 		}
 	}
 
 	public function down()
 	{
+		$this->dropIndex(
+			'cat_id',
+			'ommu_core_menus'
+		);
+
+		$this->dropIndex(
+			'parent',
+			'ommu_core_menus'
+		);
+
+		$this->dropIndex(
+			'route',
+			'ommu_core_menus'
+		);
+
 		$this->dropTable('ommu_core_menus');
 	}
 }
