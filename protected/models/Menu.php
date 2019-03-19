@@ -40,4 +40,21 @@ class Menu extends MdmMenu
 			'icon' => Yii::t('app', 'Icon'),
 		]);
 	}
+
+	/**
+	 * before validate attributes
+	 */
+	public function beforeValidate()
+	{
+		if(parent::beforeValidate()) {
+			if($this->isNewRecord) {
+				if($this->creation_id == null)
+					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			} else {
+				if($this->modified_id == null)
+					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+			}
+		}
+		return true;
+	}
 }
