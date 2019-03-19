@@ -17,6 +17,8 @@ use mdm\admin\models\Menu as MdmMenu;
 
 class Menu extends MdmMenu
 {
+	public $menuCode;
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -39,6 +41,39 @@ class Menu extends MdmMenu
 		return \yii\helpers\ArrayHelper::merge($attributes, [
 			'icon' => Yii::t('app', 'Icon'),
 		]);
+	}
+
+	/**
+	 * function getMenus
+	 */
+	public static function getOmmuMenus() 
+	{
+		$model = self::find()->select(['id', 'name', 'module'])->all();
+
+		return \yii\helpers\ArrayHelper::map($model, 'id', 'menuCode');
+	}
+
+	/**
+	 * function getMenus
+	 */
+	public static function getParentId($menuCode) 
+	{
+		$menus = self::getOmmuMenus();
+		$menuFlip = array_flip($menus);
+
+		return $menuFlip[$menuCode];
+	}
+
+	/**
+	 * after find attributes
+	 */
+	public function afterFind()
+	{
+		parent::afterFind();
+
+		$this->menuCode = $this->name;
+		if($this->module)
+			$this->menuCode = join('#', [$this->name, $this->module]);
 	}
 
 	/**

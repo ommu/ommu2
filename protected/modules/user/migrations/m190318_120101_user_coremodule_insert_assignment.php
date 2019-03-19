@@ -11,7 +11,6 @@
  */
 
 use Yii;
-use yii\db\Schema;
 
 class m190318_120101_user_coremodule_insert_assignment extends \yii\db\Migration
 {

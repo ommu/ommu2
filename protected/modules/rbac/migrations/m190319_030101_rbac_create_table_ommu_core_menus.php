@@ -28,6 +28,7 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 				'id' => Schema::TYPE_INTEGER . '(11) NOT NULL AUTO_INCREMENT',
 				'cat_id' => Schema::TYPE_SMALLINT . '(5) UNSIGNED',
 				'name' => Schema::TYPE_STRING . '(128) NOT NULL',
+				'module' => Schema::TYPE_STRING . '(32) NOT NULL',
 				'icon' => Schema::TYPE_STRING . '(64)',
 				'parent' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
 				'route' => Schema::TYPE_STRING . '(256)',
@@ -57,6 +58,12 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 				'route',
 				'ommu_core_menus',
 				'route'
+			);
+
+			$this->createIndex(
+				'name',
+				'ommu_core_menus',
+				['name', 'module']
 			);
 		}
 	}

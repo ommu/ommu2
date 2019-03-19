@@ -11,7 +11,6 @@
  */
 
 use Yii;
-use yii\db\Schema;
 
 class m190318_120101_gii_insert_role extends \yii\db\Migration
 {
@@ -21,6 +20,7 @@ class m190318_120101_gii_insert_role extends \yii\db\Migration
 		if(Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
 				['/gii/*', '2', '', time()],
+				['/gii/default/index', '2', '', time()],
 			]);
 		}
 
