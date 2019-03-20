@@ -70,16 +70,21 @@ class DefaultController extends Controller
 		return parent::beforeAction($action);
 	}
 
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionIndex()
 	{
-		$this->layout = 'generator_main';
+		$this->layout = 'main';
 
 		$this->view->title = 'Welcome to Gii';
 		$this->view->description = 'a magical tool that can write code for you';
 		return $this->render('admin_index');
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionView($id)
 	{
 		$generator = $this->loadGenerator($id);
@@ -108,6 +113,9 @@ class DefaultController extends Controller
 		return $this->render('admin_view', $params);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionPreview($id, $file)
 	{
 		$generator = $this->loadGenerator($id);
@@ -125,6 +133,9 @@ class DefaultController extends Controller
 		throw new NotFoundHttpException("Code file not found: $file");
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function actionDiff($id, $file)
 	{
 		$generator = $this->loadGenerator($id);
