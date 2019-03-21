@@ -30,9 +30,9 @@ class Module extends \yii\base\Module
 
 		if(is_array($config = $this->getModuleConfig())) {
 			$this->params = \yii\helpers\ArrayHelper::merge(
-				$this->params, [
-					'config' => $config,
-			]);
+				$this->params,
+				$config
+			);
 		}
 		
 		$this->set('setting', [
