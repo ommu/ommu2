@@ -28,6 +28,13 @@ class Module extends \yii\base\Module
 	{
 		parent::init();
 
+		if(is_array($config = $this->getModuleConfig())) {
+			$this->params = \yii\helpers\ArrayHelper::merge(
+				$this->params, [
+					'config' => $config,
+			]);
+		}
+		
 		$this->set('setting', [
 			'class' => \app\components\SettingManager::className(),
 			'moduleId' => $this->id,
@@ -185,5 +192,17 @@ class Module extends \yii\base\Module
 
 		$moduleJson = file_get_contents(join('/', [$this->getBasePath(), 'module.json']));
 		return \yii\helpers\Json::decode($moduleJson);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getModuleConfig()
+	{
+		$configFile = $this->getBasePath() . DIRECTORY_SEPARATOR . $this->id .'.yaml';
+		if(!file_exists($configFile))
+			return false;
+		
+		return \Symfony\Component\Yaml\Yaml::parseFile($configFile);
 	}
 }

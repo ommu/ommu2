@@ -1,0 +1,21 @@
+zone_submenu:
+  country:
+    label: Countries
+    url: ['zone/country']
+    select: controller
+  province:
+    label: Provinces
+    url: ['zone/province']
+    select: controller
+  city:
+    label: Cities
+    url: ['zone/city']
+    select: controller
+  district:
+    label: Districts
+    url: ['zone/district']
+    select: controller
+  village:
+    label: Villages
+    url: ['zone/village']
+    select: controller

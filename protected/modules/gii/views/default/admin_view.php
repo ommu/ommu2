@@ -20,8 +20,8 @@
 
 use yii\helpers\Html;
 use app\components\ActiveForm;
-use yii\gii\CodeFile;
 use app\components\widgets\GiiActiveField as ActiveField;
+use yii\gii\CodeFile;
 
 $templates = [];
 foreach ($generator->templates as $name => $path) {
@@ -42,7 +42,7 @@ foreach ($generator->templates as $name => $path) {
 		'form' => $form,
 	]); ?>
 
-	<?php echo $form->field($generator, 'template', ['template' => '{label}{beginWrapper}{input}{error}{endWrapper}{hint}'])
+	<?php echo $form->field($generator, 'template', ['template' => '{label}{beginWrapper}{input}{error}{endWrapper}{hint}', 'horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
 		->sticky()
 		->label('Code Template')
 		->dropDownList($templates)->hint('Please select which set of the templates should be used to generated the code.') ?>
@@ -80,6 +80,6 @@ foreach ($generator->templates as $name => $path) {
 		</div>
 	</div>
 	<?php }?>
-
+	
 	<?php ActiveForm::end(); ?>
 </div>

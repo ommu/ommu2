@@ -17,10 +17,13 @@ use yii\helpers\Url;
 class Controller extends \yii\web\Controller
 {
 	/**
-	 * {@inheritdoc}
 	 * @var string untuk menampung sub-layout pada view.
 	 */
 	public $subLayout;
+	/**
+	 * @var string untuk menampung sub-menu pada view.
+	 */
+	public $subMenu = [];
 	/**
 	 * @var object instance dari current controller. jika controller yg akses site maka akan berisi site.
 	 *    variabel akan di isi oleh klas anak/turunan dari klas ini.
@@ -83,6 +86,9 @@ class Controller extends \yii\web\Controller
 	{
 		if(parent::beforeAction($action)) {
 			if(!self::$settingInitialize) {
+				if(!empty($this->subMenu))
+					$this->layout = 'main_submenu';
+
 				self::$settingInitialize = true;
 			}
 		}
@@ -174,7 +180,7 @@ class Controller extends \yii\web\Controller
 
 		if(!Yii::$app->request->isAjax)
 			return $this->render($render, $data);
-		else
-			return $this->renderPartial($render, $data);
+
+		return $this->renderPartial($render, $data);
 	}
 }
