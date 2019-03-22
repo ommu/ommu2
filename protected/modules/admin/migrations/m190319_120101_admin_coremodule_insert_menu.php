@@ -21,6 +21,7 @@ class m190319_120101_admin_coremodule_insert_menu extends \yii\db\Migration
 		if(Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Summary', 'admin', null, Menu::getParentId('Dashboard#rbac'), '/admin/dashboard/index', null, null],
+				['Static Pages', 'admin', null, Menu::getParentId('Publications#rbac'), '/admin/page/admin/index', null, null],
 				['Module Manager', 'admin', null, Menu::getParentId('Development Tools#rbac'), '/admin/module/index', null, null],
 			]);
 		}

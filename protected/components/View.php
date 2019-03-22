@@ -79,6 +79,9 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if(parent::beforeRender($viewFile, $params)) {
+			if(!empty($this->context->subMenu))
+				$this->context->layout = 'main_submenu';
+				
 			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
 				$this->setTheme($this);

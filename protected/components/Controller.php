@@ -85,12 +85,8 @@ class Controller extends \yii\web\Controller
 	public function beforeAction($action) 
 	{
 		if(parent::beforeAction($action)) {
-			if(!self::$settingInitialize) {
-				if(!empty($this->subMenu))
-					$this->layout = 'main_submenu';
-
+			if(!self::$settingInitialize)
 				self::$settingInitialize = true;
-			}
 		}
 		return true;
 	}
