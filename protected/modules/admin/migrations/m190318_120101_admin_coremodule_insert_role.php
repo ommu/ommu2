@@ -22,7 +22,7 @@ class m190318_120101_admin_coremodule_insert_role extends \yii\db\Migration
 				['/admin/dashboard/*', '2', '', time()],
 				['/admin/dashboard/index', '2', '', time()],
 				['/admin/module/*', '2', '', time()],
-				['/admin/module/index', '2', '', time()],
+				['/admin/module/manage', '2', '', time()],
 				['/admin/page/admin/*', '2', '', time()],
 				['/admin/page/admin/index', '2', '', time()],
 				['/admin/page/view/*', '2', '', time()],
