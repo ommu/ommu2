@@ -48,12 +48,7 @@ class Application extends \yii\web\Application
 	 */
 	public function isSocialMedia(): bool
 	{
-		$setting = \app\models\CoreSettings::find()
-			->select(['site_type'])
-			->where(['id' => 1])
-			->one();
-
-		return $setting->site_type == 1;
+		return isset(Yii::$app->params['communityApps']) ? Yii::$app->params['communityApps'] : false;
 	}
 
 	/**

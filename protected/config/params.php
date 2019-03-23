@@ -2,7 +2,8 @@
 return [
 	'adminEmail' => 'admin@example.com',
 
-	// DEMO
+	// Application Condition
+	'communityApps' => true,							// true|false
 	'demoApps' => false,								// true|false
 
 	// MODULES

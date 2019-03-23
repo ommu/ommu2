@@ -64,10 +64,6 @@ class View extends \yii\web\View
 	 */
 	private static $_themeApplied = false;
 	/**
-	 * @var boolean tempat menyimpan nama aplikasi untuk mencegah fungsi dipangil berulang kali.
-	 */
-	private static $_appNameApplied = false;
-	/**
 	 * {@inheritdoc}
 	 */
 	private static $_beforeRenderEventCalled = 0;
@@ -85,17 +81,6 @@ class View extends \yii\web\View
 			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
 				$this->setTheme($this);
-			}
-
-			if(!self::$_appNameApplied) {
-				self::$_appNameApplied = true;
-				$setting = \app\models\CoreSettings::find()
-				->select(['site_title'])
-				->where(['id' => 1])
-				->one();
-
-				if($setting != null)
-					Yii::$app->name = $setting->site_title;
 			}
 		}
 		return true;
