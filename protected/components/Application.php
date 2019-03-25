@@ -12,6 +12,7 @@
 namespace app\components;
 
 use Yii;
+use app\models\CoreSettings;
 use mdm\admin\components\Helper;
 
 class Application extends \yii\web\Application
@@ -31,6 +32,20 @@ class Application extends \yii\web\Application
 		return $bn;
 	}
 
+	/**
+	 * Mengembalikan name aplikasi
+	 *
+	 * @return string
+	 */
+	public static function getAppName()
+	{
+		$setting = CoreSettings::find()
+			->select(['site_title'])
+			->where(['id' => 1])
+			->one();
+
+		return $setting->site_title ? $setting->site_title : 'OMMU by sudaryanto.id';
+	}
 	/**
 	 * Memeriksa apakah aplikasi berjalan pada mode pengembangan atau produksi
 	 *
@@ -52,21 +67,6 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * Memeriksa apakah aplikasi berjalan pada mode maintenance
-	 *
-	 * @return boolean true|false
-	 */
-	public function isMaintenance(): bool
-	{
-		$setting = \app\models\CoreSettings::find()
-			->select(['id', 'online'])
-			->where(['id' => 1])
-			->one();
-
-		return (!$setting->view->online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
-	}
-
-	/**
 	 * Memeriksa apakah aplikasi berjalan pada mode demo applikasi
 	 *
 	 * @return boolean true|false
@@ -74,6 +74,21 @@ class Application extends \yii\web\Application
 	public function isDemoApps(): bool
 	{
 		return isset(Yii::$app->params['demoApps']) ? Yii::$app->params['demoApps'] : false;
+	}
+
+	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode maintenance
+	 *
+	 * @return boolean true|false
+	 */
+	public function isMaintenance(): bool
+	{
+		$setting = CoreSettings::find()
+			->select(['id', 'online'])
+			->where(['id' => 1])
+			->one();
+
+		return (!$setting->view->online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
 	}
 
 	/**
