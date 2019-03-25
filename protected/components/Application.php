@@ -12,7 +12,7 @@
 namespace app\components;
 
 use Yii;
-use app\models\CoreSettings;
+use ommu\core\models\CoreSettings;
 use mdm\admin\components\Helper;
 
 class Application extends \yii\web\Application
@@ -39,13 +39,9 @@ class Application extends \yii\web\Application
 	 */
 	public static function getAppName()
 	{
-		$setting = CoreSettings::find()
-			->select(['site_title'])
-			->where(['id' => 1])
-			->one();
-
-		return $setting->site_title ? $setting->site_title : 'OMMU by sudaryanto.id';
+		return 'OMMU by sudaryanto.id';
 	}
+
 	/**
 	 * Memeriksa apakah aplikasi berjalan pada mode pengembangan atau produksi
 	 *

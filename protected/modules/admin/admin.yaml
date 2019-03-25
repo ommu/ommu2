@@ -1,10 +1,10 @@
 language_submenu:
   setting:
-    label: Settings
+    label: Language Selection Settings
     url: ['setting/language']
     select: action
   language:
-    label: Languages
+    label: Language i18n Package
     url: ['language/manage']
     select: controller
 zone_submenu:
