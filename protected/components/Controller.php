@@ -13,6 +13,7 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\Url;
+use ommu\core\models\CoreSettings;
 
 class Controller extends \yii\web\Controller
 {
@@ -94,7 +95,7 @@ class Controller extends \yii\web\Controller
 
 			if(!self::$_appNameApplied && Yii::$app->params['dynamicAppName']) {
 				self::$_appNameApplied = true;
-				$setting = \app\models\CoreSettings::find()
+				$setting = CoreSettings::find()
 					->select(['site_title'])
 					->where(['id' => 1])
 					->one();

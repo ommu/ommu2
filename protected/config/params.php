@@ -25,9 +25,9 @@ return [
 
 	// BACKOFFICE
 	// Backoffice setting/option
-	'backofficeOption' => array(
+	'backofficeOption' => [
 		'noindex' => true,
-	),
+	],
 
 	// RBAC
 	// Jika diset 1 maka url akan dicatat pada file log
@@ -40,15 +40,15 @@ return [
 
 	// GRIDVIEW
 	// Gridview setting
-	'gridView' => array(
+	'gridView' => [
 		'datepicker' => false,							// true|false
 		'datepickerType' => 'flatpickr',				// flatpickr | juiDatepicker
-	),
+	],
 
 	// ActiveForm
 	// ActiveForm setting
-	'activeForm' => array(
+	'activeForm' => [
 		'datepicker' => false,							// true|false
 		'datepickerType' => 'flatpickr',				// flatpickr | juiDatepicker
-	),
+	],
 ];
