@@ -27,6 +27,7 @@ class Users extends UsersModel implements IdentityInterface
 	/**
 	 * {@inheritdoc}
 	 */
+	public $photos;
 	public $oldSecurity = false;
 
 	/**
@@ -95,6 +96,7 @@ class Users extends UsersModel implements IdentityInterface
 	{
 		parent::afterFind();
 
+		$this->photos = join('/', [self::getUploadPath(false), 'default.png']);
 		$this->oldSecurity = strlen($this->password) == 60 ? false : true;
 	}
 

@@ -24,19 +24,12 @@ use yii\helpers\Json;
 class GiiActiveField extends \app\components\widgets\ActiveField
 {
 	/**
-	 * @var Generator
-	 */
-	public $model;
-
-	/**
 	 * {@inheritdoc}
 	 */
 	public function init()
 	{
-		$stickyAttributes = $this->model->stickyAttributes();
-		if (in_array($this->attribute, $stickyAttributes, true)) {
-			$this->sticky();
-		}
+		parent::init();
+
 		$hints = $this->model->hints();
 		if (isset($hints[$this->attribute])) {
 			$this->hint($hints[$this->attribute]);

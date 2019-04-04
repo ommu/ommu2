@@ -14,10 +14,7 @@ namespace app\components;
 
 use Yii;
 use \yii\base\Exception;
-use \yii\base\Event;
-use \yii\base\InvalidConfigException;
 use \yii\helpers\FileHelper;
-use app\components\bootstrap\ModuleAutoLoader;
 use ommu\core\models\Modules;
 
 class ModuleManager extends \yii\base\Component
@@ -79,7 +76,7 @@ class ModuleManager extends \yii\base\Component
 			$config = require($basePath . '/config.php');
 
 		if(!isset($config['id']) || !isset($config['class']))
-			throw new InvalidConfigException('Module configuration requires an id and class attribute!');
+			throw new \yii\base\InvalidConfigException('Module configuration requires an id and class attribute!');
 
 		$isCore      = (isset($config['core']) && $config['core']);
 		$isBootstrap = (isset($config['bootstrap']) && $config['bootstrap']);
@@ -140,7 +137,7 @@ class ModuleManager extends \yii\base\Component
 		// mendaftarkan penanganan events
 		if(isset($config['events'])) {
 			foreach($config['events'] as $event) {
-				Event::on($event['class'], $event['event'], $event['callback']);
+				\yii\base\Event::on($event['class'], $event['event'], $event['callback']);
 			}
 		}
 	}
@@ -206,7 +203,7 @@ class ModuleManager extends \yii\base\Component
 	 */
 	public function flushCache()
 	{
-		Yii::$app->cache->delete(ModuleAutoLoader::CACHE_ID);
+		Yii::$app->cache->delete(app\components\bootstrap\ModuleAutoLoader::CACHE_ID);
 		Yii::$app->cache->delete(Modules::CACHE_ENABLE_MODULE_IDS);
 	}
 

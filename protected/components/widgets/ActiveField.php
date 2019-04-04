@@ -28,6 +28,19 @@ class ActiveField extends \yii\bootstrap\ActiveField
 	public $horizontalCheckboxTemplate = "{beginWrapper}\n<div class=\"checkbox\">\n{beginLabel}\n{input}\n{labelTitle}\n{endLabel}\n</div>\n{error}\n{hint}\n{endWrapper}";
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function init()
+	{
+		if($this->model->hasMethod('stickyAttributes')) {
+			$stickyAttributes = $this->model->stickyAttributes();
+			if (in_array($this->attribute, $stickyAttributes, true)) {
+				$this->sticky();
+			}
+		}
+	}
+
+	/**
 	 * @param array $instanceConfig the configuration passed to this instance's constructor
 	 * @return array the layout specific default configuration for this instance
 	 */
