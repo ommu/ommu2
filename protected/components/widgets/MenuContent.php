@@ -42,7 +42,7 @@ class MenuContent extends \yii\widgets\Menu
 	 */
 	public function init()
 	{
-		Html::addCssClass($this->options, 'nav content-menu');
+		Html::addCssClass($this->options, 'content-menu');
 		parent::init();
 	}
 

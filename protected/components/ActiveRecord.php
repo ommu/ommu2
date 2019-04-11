@@ -31,6 +31,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	public $gridForbiddenColumn = [];
 
 	/**
+	 * (@inheritdoc)
+	 */
+	protected $_labels;
+
+	/**
 	 * Mengembalikan data kolom yang di ditampilkan gridview.
 	 *
 	 * @param array $columns daftar kolom (get-request "GridColumn")
@@ -86,6 +91,22 @@ class ActiveRecord extends \yii\db\ActiveRecord
 			}
 		}
 		return $data;
+	}
+
+	/**
+	 * (@inheritdoc)
+	 */
+	public function setAttributeLabels($labels)
+	{
+		$this->_labels = $labels;
+	}
+
+	/**
+	 * (@inheritdoc)
+	 */
+	public function getAttributeLabel($attribute)
+	{
+		return $this->_labels[$attribute] ?? parent::getAttributeLabel($attribute);
 	}
 
 	/**

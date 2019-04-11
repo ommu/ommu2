@@ -110,13 +110,34 @@ class Users extends UsersModel implements IdentityInterface
 	{
 		if($isAdmin == true) {
 			$level = UserLevel::getLevel('admin');
-			return static::find()->alias('t')
-				->where(['t.email' => $email])
-				->andWhere(['t.enabled' => self::STATUS_ACTIVE])
-				->andWhere(['in', 't.level_id', array_flip($level)])
+			return static::find()
+				->where(['email' => $email])
+				->andWhere(['enabled' => self::STATUS_ACTIVE])
+				->andWhere(['in', 'level_id', array_flip($level)])
 				->one();
-		} else
-			return static::findOne(['email' => $email, 'enabled' => self::STATUS_ACTIVE]);
+		}
+
+		return static::findOne(['email' => $email, 'enabled' => self::STATUS_ACTIVE]);
+	}
+
+	/**
+	 * Finds user by username
+	 *
+	 * @param string $username
+	 * @return static|null
+	 */
+	public function findByUsername($username, $isAdmin=false)
+	{
+		if($isAdmin == true) {
+			$level = UserLevel::getLevel('admin');
+			return static::find()
+				->where(['username' => $username])
+				->andWhere(['enabled' => self::STATUS_ACTIVE])
+				->andWhere(['in', 'level_id', array_flip($level)])
+				->one();
+		}
+
+		return static::findOne(['username' => $username, 'enabled' => self::STATUS_ACTIVE]);
 	}
 
 	/**
@@ -133,24 +154,27 @@ class Users extends UsersModel implements IdentityInterface
 	 * @param  string  $password password to validate
 	 * @return boolean if password provided is valid for current user
 	 */
-	public function validatePassword($password)
+	public function validatePassword($password): bool
 	{
 		if($this->scenario == Users::SCENARIO_CHANGE_PASSWORD) {
-			if($this->oldSecurity == true) {
-				if(!$this->hashPassword($this->$password)) {
-					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
-						'attribute'=>$this->getAttributeLabel($password),
-					]));
-				}
-			} else {
+			if($this->oldSecurity == false) {
 				if(!Yii::$app->security->validatePassword($this->$password, $this->password_i)) {
 					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
 						'attribute'=>$this->getAttributeLabel($password),
 					]));
+					return false;
+				}
+			} else {
+				if(!$this->hashPassword($this->$password)) {
+					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
+						'attribute'=>$this->getAttributeLabel($password),
+					]));
+					return false;
 				}
 			}
-		} else
-			return Yii::$app->security->validatePassword($password, $this->password);
+		}
+		
+		return Yii::$app->security->validatePassword($password, $this->password);
 	}
 
 	/**
