@@ -14,6 +14,7 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 
 class View extends \yii\web\View
 {
@@ -283,20 +284,20 @@ class View extends \yii\web\View
 		if($context != null && $context->hasMethod('isBackofficeTheme'))
 			$isBackofficeTheme = $context->isBackofficeTheme();
 
-		$themeName = Yii::$app->setting->get('theme', Yii::$app->params['defaultTheme']);
-		$themeNameUnchached = Yii::$app->setting->getUncached('theme', Yii::$app->params['defaultTheme']);
+		$appName = \app\components\Application::getAppId();
+		$themeParam = join('_', [$appName, 'theme']);
+		$themeName = Yii::$app->setting->get($themeParam);
+		$themeNameUnchached = Yii::$app->setting->getUncached($themeParam, Yii::$app->params['defaultTheme']);
 		if($isBackofficeTheme) {
-			$themeName = Yii::$app->setting->get('backoffice_theme', Yii::$app->params['defaultTheme']);
-			$themeNameUnchached = Yii::$app->setting->getUncached('backoffice_theme', Yii::$app->params['defaultTheme']);
+			$themeParam = join('_', [$appName, 'backoffice_theme']);
+			$themeName = Yii::$app->setting->get($themeParam);
+			$themeNameUnchached = Yii::$app->setting->getUncached($themeParam, Yii::$app->params['defaultTheme']);
 			self::$isBackoffice = true;
 		}
 
 		if($themeName != $themeNameUnchached) {
 			$themeName = $themeNameUnchached;
-			if(!$isBackofficeTheme)
-				Yii::$app->setting->set('theme', $themeName);
-			else
-				Yii::$app->setting->set('backoffice_theme', $themeName);
+			Yii::$app->setting->set($themeParam, $themeName);
 		}
 
 		$this->theme($themeName);

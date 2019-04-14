@@ -33,6 +33,13 @@ $config = [
 			'identityCookie'    => ['name' => $bn . '_identity', 'httpOnly' => true],
 			'authTimeout'       => 7 * 24 * 3600,
 		],
+		'authManager' => [
+			'class'             => 'mdm\admin\components\DbManager',
+			'assignmentTable'   => 'ommu_core_auth_assignment',
+			'itemTable'         => 'ommu_core_auth_item',
+			'itemChildTable'    => 'ommu_core_auth_item_child',
+			'ruleTable'         => 'ommu_core_auth_rule',
+		],
 		'formatter' => [
 			'class'          => 'app\components\i18n\Formatter',
 			'dateFormat'     => 'php:d-M-Y',
