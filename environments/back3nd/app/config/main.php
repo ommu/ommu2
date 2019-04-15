@@ -19,7 +19,7 @@ $config = [
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-			'cookieValidationKey' => 'bdbe0c4a-008d-4a71-a7d9-89f17d908ee5'
+			'cookieValidationKey' => ''
 		],
 		'errorHandler' => [
 			'errorAction' => 'site/error',
@@ -32,10 +32,10 @@ $config = [
 		],
 		'jwt' => [
 			'class'    => 'app\components\Jwt',
-			'key'      => '7HgMBs0OzqYqXrQTz01GSRqFnj18Swta',
-			'issuer'   => 'http://dpad.jogjaprov.go.id',
-			'audiance' => 'http://dpad.jogjaprov.go.id',
-			'id'       => 'bdbe0c4a-008d-4a71-a7d9-89f17d908ee5',
+			'key'      => '',
+			'issuer'   => '',
+			'audiance' => '',
+			'id'       => '',
 		],
 		'moduleManager' => [
 			'class'        => '\app\components\ModuleManager',
