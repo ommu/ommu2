@@ -19,7 +19,6 @@ use yii\helpers\Inflector;
 class View extends \yii\web\View
 {
 	use \ommu\traits\UtilityTrait;
-	use \ommu\traits\GridViewTrait;
 	use \ommu\traits\FileTrait;
 	use \app\modules\user\components\traits\UserTrait;
 	
