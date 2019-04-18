@@ -4,7 +4,6 @@ namespace app\controllers;
 use Yii;
 use yii\helpers\Url;
 use app\components\Controller;
-use yii\filters\AccessControl;
 use yii\web\Response;
 use app\modules\user\models\LoginForm;
 use yii\validators\EmailValidator;
@@ -13,26 +12,6 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
 	public static $backoffice = false;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function behaviors()
-	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'only' => ['logout'],
-				'rules' => [
-					[
-						'actions' => ['logout'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
-				],
-			],
-		];
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -58,7 +37,7 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		return $this->render('index');
+		return $this->render('front_index');
 	}
 
 	/**
