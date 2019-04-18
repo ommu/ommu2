@@ -32,6 +32,7 @@ return [
 	// USER
 	'user' => [
 		'rememberMe' => false,
+		'rememberMeDay' => 7,
 	],
 
 	// RBAC

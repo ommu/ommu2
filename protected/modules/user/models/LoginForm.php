@@ -150,7 +150,7 @@ class LoginForm extends Model
 			$user->lastlogin_ip = $_SERVER['REMOTE_ADDR'];
 			$user->save(false, ['lastlogin_date','lastlogin_ip','lastlogin_from']);
 
-			return Yii::$app->user->login($this->getUser($this->isAdmin), $this->rememberMe ? 3600*24*30 : 0);
+			return Yii::$app->user->login($this->getUser($this->isAdmin), $this->rememberMe ? 3600*24*7 : 0);
 		}
 
 		return false;
