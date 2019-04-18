@@ -29,6 +29,11 @@ return [
 		'noindex' => true,
 	],
 
+	// USER
+	'user' => [
+		'rememberMe' => false,
+	],
+
 	// RBAC
 	// Jika diset 1 maka url akan dicatat pada file log
 	'debugRBAC' => 0,
