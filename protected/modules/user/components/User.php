@@ -34,8 +34,6 @@ class User extends \yii\web\User
 	const JWT_TOKEN_EXPIRE       = 3600 * 24 * 7;
 	const EVENT_INVALIDATE_CACHE = 'invalidateCache';
 
-	private static $_cvMigrationAlreadyRun = false;
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -115,7 +113,7 @@ class User extends \yii\web\User
 	public function getLanguage()
 	{
 		if($this->isGuest)
-			return '';
+			return Yii::$app->params['defaultLanguage'] ?? 'id';
 
 		return $this->getIdentity()->language;
 	}

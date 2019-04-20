@@ -13,6 +13,14 @@ return [
 	'moduleMarketplacePath'  => '@app/modules',
 	'dontLoadModule'         => [],
 
+	// LANGUAGE
+	'availableLanguages' => [
+		'id' => 'Bahasa Indonesia',
+		'en' => 'English (US)',
+	],
+	'allowedLanguages' => [],
+	'defaultLanguage' => 'id',
+
 	// EMAIL
 	// Folder tempat lokasi email template
 	'mailTemplatePath'  => '@public/email/template',
