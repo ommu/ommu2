@@ -205,7 +205,17 @@ class View extends \yii\web\View
 	 */
 	public function getPageTitle() 
 	{
-		return (trim($this->title) != '' ? $this->title.' - ' : '') . Yii::$app->name;
+		$appName = \app\components\Application::getAppId();
+		$pageTitleTemplate = Yii::$app->setting->get(join('_', [$appName, 'pagetitle_template']));
+		if(!$pageTitleTemplate)
+			$pageTitleTemplate = '{title} | {small-name} - {long-name}';
+		$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
+
+		return strtr($pageTitleTemplate, [
+			'{title}' => trim($this->title) != '' ? $this->title : 'OMMU',
+			'{small-name}' => $siteName['small'],
+			'{long-name}' => $siteName['long'],
+		]);
 	}
 
 	/**

@@ -39,9 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	->label($model->getAttributeLabel('name'))
 	->hint(Yii::t('app', 'Give your website a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
 
-<?php echo $form->field($model, 'pagetitle_template')
+<?php echo $form->field($model, 'pagetitle_template', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textInput(['maxlength' => true])
-	->label($model->getAttributeLabel('pagetitle_template')); ?>
+	->label($model->getAttributeLabel('pagetitle_template'))
+	->hint(Yii::t('app', 'e.g. {title} | {small-name} - {long-name}')); ?>
 
 <?php echo $form->field($model, 'description', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>3, 'cols'=>50, 'maxlength' => true])
