@@ -14,6 +14,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\ActiveForm;
+use app\models\BaseSetting;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -27,6 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
 ]); ?>
+
+<?php $appType = BaseSetting::getAppType();
+echo $form->field($model, 'app_type')
+	->dropDownList($appType, ['prompt'=>''])
+	->label($model->getAttributeLabel('app_type')); ?>
 
 <?php // echo $form->errorSummary($model);?>
 

@@ -2,10 +2,6 @@
 return [
 	'adminEmail' => 'admin@example.com',
 
-	// Application Condition
-	'communityApps' => true,							// true|false
-	'demoApps' => false,								// true|false
-
 	// MODULES
 	// Folder apa saja yg akan di muat secara otomatis oleh module auto loader.
 	'moduleAutoloadPaths'    => ['@vendor/ommu', '@app/modules'],

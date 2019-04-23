@@ -33,16 +33,6 @@ class Application extends \yii\web\Application
 	}
 
 	/**
-	 * Mengembalikan name aplikasi
-	 *
-	 * @return string
-	 */
-	public static function getAppName()
-	{
-		return 'OMMU by sudaryanto.id';
-	}
-
-	/**
 	 * Memeriksa apakah aplikasi berjalan pada mode pengembangan atau produksi
 	 *
 	 * @return boolean true|false
@@ -59,7 +49,10 @@ class Application extends \yii\web\Application
 	 */
 	public function isSocialMedia(): bool
 	{
-		return isset(Yii::$app->params['communityApps']) ? Yii::$app->params['communityApps'] : false;
+		$appName = self::getAppId();
+		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+
+		return $appType == 'community' ? true : false;
 	}
 
 	/**
@@ -69,7 +62,10 @@ class Application extends \yii\web\Application
 	 */
 	public function isDemoApps(): bool
 	{
-		return isset(Yii::$app->params['demoApps']) ? Yii::$app->params['demoApps'] : false;
+		$appName = self::getAppId();
+		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+
+		return $appType == 'demo' ? true : false;
 	}
 
 	/**

@@ -5,7 +5,7 @@ $database = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/da
 $bn = \app\components\Application::getAppId();
 
 $config = [
-	'name' => \app\components\Application::getAppName(),
+	'name' => 'OMMU by sudaryanto.id',
 	'id' => 'basic',
 	'basePath' => dirname(__DIR__),
 	'vendorPath' => dirname(__DIR__) . '/vendor',

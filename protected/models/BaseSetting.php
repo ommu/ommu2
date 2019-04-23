@@ -19,6 +19,7 @@ use Yii;
 class BaseSetting extends \yii\base\Model
 {
 	public $app;
+	public $app_type;
 	public $name;
 	public $description;
 	public $keywords;
@@ -35,7 +36,8 @@ class BaseSetting extends \yii\base\Model
 	public function rules()
 	{
 		return [
-			[['name'], 'required'],
+			[['app_type', 'name'], 'required'],
+			[['app_type'], 'string', 'max' => 16],
 			[['pagetitle_template'], 'string', 'max' => 64],
 			[['name', 'description', 'keywords'], 'string', 'max' => 256],
 			[['description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout',
@@ -51,6 +53,7 @@ class BaseSetting extends \yii\base\Model
 	{
 		return [
 			'app' => Yii::t('app', 'Application ID'),
+			'app_type' => Yii::t('app', 'Site Type'),
 			'name' => Yii::t('app', 'Site Title'),
 			'description' => Yii::t('app', 'Site Description'),
 			'keywords' => Yii::t('app', 'Site Keyword'),
@@ -70,6 +73,7 @@ class BaseSetting extends \yii\base\Model
 	{
 		parent::init();
 
+		$this->app_type = Yii::$app->setting->get($this->getId('app_type'), 'company');
 		$this->name = unserialize(Yii::$app->setting->get($this->getId('name')));
 		$this->description = Yii::$app->setting->get($this->getId('description'));
 		$this->keywords = Yii::$app->setting->get($this->getId('keywords'));
@@ -87,6 +91,23 @@ class BaseSetting extends \yii\base\Model
 	public function getId($name)
 	{
 		return join('_', [$this->app, $name]);
+	}
+
+	/**
+	 * function getAppType
+	 */
+	public static function getAppType($value=null)
+	{
+		$items = array(
+			'community' => Yii::t('app', 'Social Media / Community Website'),
+			'company' => Yii::t('app', 'Company Profile'),
+			'demo' => Yii::t('app', 'Demo Application'),
+		);
+
+		if($value !== null)
+			return $items[$value];
+		else
+			return $items;
 	}
 
 	/**
@@ -117,6 +138,7 @@ class BaseSetting extends \yii\base\Model
 	 */
 	public function save()
 	{
+		Yii::$app->setting->set($this->getId('app_type'), serialize($this->app_type));
 		Yii::$app->setting->set($this->getId('name'), serialize($this->name));
 		Yii::$app->setting->set($this->getId('description'), $this->description);
 		Yii::$app->setting->set($this->getId('keywords'), $this->keywords);
