@@ -11,7 +11,8 @@ $config = [
 	'vendorPath' => dirname(__DIR__) . '/vendor',
 	'runtimePath' => dirname(__DIR__) . '/runtime',
 	'bootstrap' => [
-		'log'
+		'log',
+		'app\components\bootstrap\ThemeControllerHandle'
 	],
 	'aliases' => [
 		'@bower' => '@vendor/bower-asset',

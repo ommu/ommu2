@@ -48,7 +48,7 @@ class SettingController extends Controller
 
 		$themes = [];
 		foreach(Theme::getThemes() as $key => $val) {
-			$themes[$key] = ucwords($key);
+			$themes[$key] = $val ? $val['name'] : ucwords($key);
 		}
 
 		if(Yii::$app->request->isPost) {
