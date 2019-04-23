@@ -73,9 +73,7 @@ class BaseSetting extends \yii\base\Model
 		$this->name = unserialize(Yii::$app->setting->get($this->getId('name')));
 		$this->description = Yii::$app->setting->get($this->getId('description'));
 		$this->keywords = Yii::$app->setting->get($this->getId('keywords'));
-		$this->pagetitle_template = Yii::$app->setting->get($this->getId('pagetitle_template'));
-		if(!$this->pagetitle_template)
-			$this->pagetitle_template = '{title} | {small-name} - {long-name}';
+		$this->pagetitle_template = Yii::$app->setting->get($this->getId('pagetitle_template'), '{title} | {small-name} - {long-name}');
 		$this->backoffice_theme = Yii::$app->setting->get($this->getId('backoffice_theme'));
 		$this->backoffice_theme_sublayout = Yii::$app->setting->get($this->getId('backoffice_theme_sublayout'));
 		$this->theme = Yii::$app->setting->get($this->getId('theme'));
