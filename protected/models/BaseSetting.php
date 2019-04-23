@@ -138,7 +138,7 @@ class BaseSetting extends \yii\base\Model
 	 */
 	public function save()
 	{
-		Yii::$app->setting->set($this->getId('app_type'), serialize($this->app_type));
+		Yii::$app->setting->set($this->getId('app_type'), $this->app_type);
 		Yii::$app->setting->set($this->getId('name'), serialize($this->name));
 		Yii::$app->setting->set($this->getId('description'), $this->description);
 		Yii::$app->setting->set($this->getId('keywords'), $this->keywords);

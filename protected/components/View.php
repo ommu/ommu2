@@ -92,21 +92,20 @@ class View extends \yii\web\View
 	 */
 	public function afterRender($viewFile, $params, &$output) 
 	{
-		$setting = \app\models\CoreSettings::find()
-			->select(['site_description', 'site_keywords'])
-			->where(['id' => 1])
-			->one();
+		$appName = \app\components\Application::getAppId();
+		$description = Yii::$app->setting->get(join('_', [$appName, 'description']));
+		$keywords = Yii::$app->setting->get(join('_', [$appName, 'keywords']));
 
 		parent::afterRender($viewFile, $params, $output);
 
 		$this->registerMetaTag([
 			'name'  => 'description',
-			'content' => trim($this->description) != '' ? $this->description : $setting->site_description,
+			'content' => trim($this->description) != '' ? $this->description : $description,
 		], 'description');
 
 		$this->registerMetaTag([
 			'name'  => 'keywords',
-			'content' => trim($this->keywords) != '' ? $this->keywords : $setting->site_keywords,
+			'content' => trim($this->keywords) != '' ? $this->keywords : $keywords,
 		], 'keywords');
 
 		if(trim($this->image) != '') {
