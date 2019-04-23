@@ -5,7 +5,6 @@ return [
 	// Application Condition
 	'communityApps' => true,							// true|false
 	'demoApps' => false,								// true|false
-	'dynamicAppName' => true,							// true|false
 
 	// MODULES
 	// Folder apa saja yg akan di muat secara otomatis oleh module auto loader.

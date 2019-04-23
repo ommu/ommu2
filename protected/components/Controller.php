@@ -90,18 +90,16 @@ class Controller extends \yii\web\Controller
 	public function beforeAction($action) 
 	{
 		if(parent::beforeAction($action)) {
+			$appName = \app\components\Application::getAppId();
+
 			if(!self::$settingInitialize)
 				self::$settingInitialize = true;
 
-			if(!self::$_appNameApplied && Yii::$app->params['dynamicAppName']) {
+			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
-				$setting = CoreSettings::find()
-					->select(['site_title'])
-					->where(['id' => 1])
-					->one();
-
-				if($setting != null)
-					Yii::$app->name = $setting->site_title;
+				$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
+				
+				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 			}
 		}
 		return true;
