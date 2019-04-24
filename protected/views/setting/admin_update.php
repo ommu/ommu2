@@ -16,8 +16,92 @@ use yii\helpers\Url;
 use app\components\ActiveForm;
 use app\models\BaseSetting;
 
+\yii2mod\selectize\SelectizeAsset::register($this);
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
+$js = <<<JS
+	var xhr;
+	var backend_theme, f_backend_theme;
+	var backend_sublayout, f_backend_sublayout;
+	var front_theme, f_front_theme;
+	var front_sublayout, f_front_sublayout;
+	var v_backend_sublayout = '$model->backoffice_theme_sublayout';
+	var v_front_sublayout = '$model->theme_sublayout';
+
+	f_backend_theme = $('#basesetting-backoffice_theme').selectize({
+		onChange: function(value) {
+			if (!value.length) return;
+			backend_sublayout.disable();
+			backend_sublayout.clearOptions();
+			backend_sublayout.removeOption(value, true);
+			backend_sublayout.load(function(callback) {
+				xhr && xhr.abort();
+				xhr = $.ajax({
+					url: '$getSublayoutUrl' + value,
+					success: function(results) {
+						backend_sublayout.removeOption(v_backend_sublayout);
+						backend_sublayout.showInput();
+						backend_sublayout.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+
+	f_front_theme = $('#basesetting-theme').selectize({
+		onChange: function(value) {
+			if (!value.length) return;
+			front_sublayout.disable();
+			front_sublayout.clearOptions();
+			front_sublayout.load(function(callback) {
+				xhr && xhr.abort();
+				xhr = $.ajax({
+					url: '$getSublayoutUrl' + value,
+					success: function(results) {
+						front_sublayout.removeOption(v_front_sublayout);
+						front_sublayout.showInput();
+						front_sublayout.enable();
+						callback(results);
+					},
+					error: function() {
+						callback();
+					}
+				})
+			});
+		}
+	});
+
+	f_backend_sublayout = $('#basesetting-backoffice_theme_sublayout').selectize({
+		valueField: 'id',
+		labelField: 'label',
+		searchField: ['label'],
+		onChange: function(value) {
+			v_backend_sublayout = value;
+		}
+	});
+
+	f_front_sublayout = $('#basesetting-theme_sublayout').selectize({
+		valueField: 'id',
+		labelField: 'label',
+		searchField: ['label'],
+		onChange: function(value) {
+			v_front_sublayout = value;
+		}
+	});
+
+	backend_sublayout  = f_backend_sublayout[0].selectize;
+	backend_theme = f_backend_theme[0].selectize;
+	front_sublayout  = f_front_sublayout[0].selectize;
+	front_theme = f_front_theme[0].selectize;
+JS;
+$this->registerJs($js, \yii\web\View::POS_READY);
 ?>
 
 <div class="base-setting-form">
@@ -64,9 +148,17 @@ echo $form->field($model, 'app_type')
 	->dropDownList($themes, ['prompt'=>''])
 	->label($model->getAttributeLabel('backoffice_theme'));?>
 
+<?php echo $form->field($model, 'backoffice_theme_sublayout')
+	->dropDownList($backSubLayout, ['prompt'=>''])
+	->label($model->getAttributeLabel('backoffice_theme_sublayout'));?>
+
 <?php echo $form->field($model, 'theme')
 	->dropDownList($themes, ['prompt'=>''])
 	->label($model->getAttributeLabel('theme'));?>
+
+<?php echo $form->field($model, 'theme_sublayout')
+	->dropDownList($frontSubLayout, ['prompt'=>''])
+	->label($model->getAttributeLabel('theme_sublayout'));?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>6, 'cols'=>50])

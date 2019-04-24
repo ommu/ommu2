@@ -21,6 +21,7 @@ use Yii;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\BaseSetting;
+use app\components\Application;
 use app\models\Theme;
 
 class SettingController extends Controller
@@ -43,18 +44,26 @@ class SettingController extends Controller
 	public function actionUpdate()
 	{
 		$app = Yii::$app->request->get('app');
+		$appName = Application::getAppId();
 
-		$model = new BaseSetting(['app'=>$app ? $app : 'back3nd']);
+		$model = new BaseSetting(['app'=>$app ? $app : $appName]);
 
 		$themes = [];
-		foreach(Theme::getThemes() as $key => $val) {
+		foreach($allTheme = Theme::getThemes() as $key => $val) {
 			$themes[$key] = $val ? $val['name'] : ucwords($key);
 		}
+
+		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'];
+		if(!isset($backSubLayout))
+			$backSubLayout = [];
+		$frontSubLayout = $allTheme[$model->theme]['sublayout'];
+		if(!isset($frontSubLayout))
+			$frontSubLayout = [];
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			if($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'General setting <strong>{app-name}</strong> success updated.', ['app-name'=>$model->name]));
+				Yii::$app->session->setFlash('success', Yii::t('app', 'General setting <strong>{app-name}</strong> success updated.', ['app-name'=>$model->name['long']]));
 				if($app != null)
 					return $this->redirect(['update', 'app'=>$app]);
 				return $this->redirect(['update']);
@@ -66,11 +75,39 @@ class SettingController extends Controller
 		}
 
 		$this->view->title = Yii::t('app', 'General Settings');
-		$this->view->description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name'=>$model->name]);
+		$this->view->description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name'=>$model->name['long']]);
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
 			'model' => $model,
 			'themes' => $themes,
+			'backSubLayout' => $backSubLayout,
+			'frontSubLayout' => $frontSubLayout,
 		]);
+	}
+
+	/**
+	 * ThemeSublayout Action
+	 */
+	public function actionSublayout($theme)
+	{
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		$yaml = Theme::themeParseYaml($theme);
+
+		return is_array($yaml) ? ($yaml['sublayout'] ? $this->getSublayout($yaml['sublayout']) : []) : [];
+	}
+
+	/**
+	 * GetSublayout
+	 */
+	public function getSublayout($sublayout)
+	{
+		$result = [];
+		foreach($sublayout as $key => $val) {
+			$result[] = [
+				'id' => $key, 
+				'label' => $val,
+			];
+		}
+		return $result;
 	}
 }

@@ -33,7 +33,8 @@
 		"ommu/report": "~2.1",
 		"ommu/support": "~2.1",
 		"ommu/banner": "~2.1",
-		"ommu/gentelella": "@dev"
+		"ommu/gentelella": "@dev",
+		"yii2mod/yii2-selectize": "*"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

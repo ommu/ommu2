@@ -14,6 +14,7 @@ namespace app\components;
 use Yii;
 use yii\helpers\Url;
 use ommu\core\models\CoreSettings;
+use app\components\Application;
 
 class Controller extends \yii\web\Controller
 {
@@ -90,10 +91,19 @@ class Controller extends \yii\web\Controller
 	public function beforeAction($action) 
 	{
 		if(parent::beforeAction($action)) {
-			$appName = \app\components\Application::getAppId();
+			$appName = Application::getAppId();
 
-			if(!self::$settingInitialize)
+			if(!self::$settingInitialize) {
 				self::$settingInitialize = true;
+				// Set SubLayout
+				$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
+				if($this->isBackofficeTheme())
+					$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
+				$this->subLayout = $themeSublayout;
+
+				if(($layout = Yii::$app->request->get('layout')) != null)
+					$this->subLayout = $layout ? $layout : 'default';
+			}
 
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;

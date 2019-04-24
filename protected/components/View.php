@@ -15,6 +15,7 @@ namespace app\components;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
+use app\components\Application;
 
 class View extends \yii\web\View
 {
@@ -92,7 +93,7 @@ class View extends \yii\web\View
 	 */
 	public function afterRender($viewFile, $params, &$output) 
 	{
-		$appName = \app\components\Application::getAppId();
+		$appName = Application::getAppId();
 		$description = Yii::$app->setting->get(join('_', [$appName, 'description']));
 		$keywords = Yii::$app->setting->get(join('_', [$appName, 'keywords']));
 
@@ -204,7 +205,7 @@ class View extends \yii\web\View
 	 */
 	public function getPageTitle() 
 	{
-		$appName = \app\components\Application::getAppId();
+		$appName = Application::getAppId();
 		$pageTitleTemplate = Yii::$app->setting->get(join('_', [$appName, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
 		$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
 
@@ -290,7 +291,7 @@ class View extends \yii\web\View
 		if($context != null && $context->hasMethod('isBackofficeTheme'))
 			$isBackofficeTheme = $context->isBackofficeTheme();
 
-		$appName = \app\components\Application::getAppId();
+		$appName = Application::getAppId();
 		$themeParam = join('_', [$appName, 'theme']);
 		$themeName = Yii::$app->setting->get($themeParam);
 		$themeNameUnchached = Yii::$app->setting->getUncached($themeParam, Yii::$app->params['defaultTheme']);
