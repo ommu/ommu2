@@ -15,6 +15,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\components\ActiveForm;
 use app\models\BaseSetting;
+use yii\helpers\ArrayHelper;
 
 \yii2mod\selectize\SelectizeAsset::register($this);
 
@@ -100,6 +101,22 @@ $js = <<<JS
 	backend_theme = f_backend_theme[0].selectize;
 	front_sublayout  = f_front_sublayout[0].selectize;
 	front_theme = f_front_theme[0].selectize;
+
+	$('#basesetting-online input[name="BaseSetting[online]"]').on('change', function() {
+		var id = $(this).val();
+		if(id == '1') {
+			$('div#construction').hide();
+		} else {
+			$('div#construction').show();
+			if(id == '0') {
+				$('.field-basesetting-construction_text-comingsoon').hide();
+				$('.field-basesetting-construction_text-maintenance').show();
+			} else {
+				$('.field-basesetting-construction_text-maintenance').hide();
+				$('.field-basesetting-construction_text-comingsoon').show();
+			}
+		}
+	});
 JS;
 $this->registerJs($js, \yii\web\View::POS_READY);
 ?>
@@ -108,7 +125,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 
 <?php $form = ActiveForm::begin([
 	'options' => ['class'=>'form-horizontal form-label-left'],
-	'enableClientValidation' => true,
+	'enableClientValidation' => false,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
 ]); ?>
@@ -144,6 +161,37 @@ echo $form->field($model, 'app_type')
 	->label($model->getAttributeLabel('keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your website. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your website\'s search engine rankings.')); ?>
 
+<div class="ln_solid"></div>
+
+<?php $online = BaseSetting::getOnline();
+echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
+	->radioList($online)
+	->label($model->getAttributeLabel('online'))
+	->hint(Yii::t('app', 'Maintenance Mode will prevent site visitors from accessing your website.')); ?>
+
+<div id="construction" <?php echo $model->online == '1' ? 'style="display: none;"' : ''; ?>>
+	<?php $model->construction_date = !in_array($model->construction_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->construction_date : '';
+	echo $form->field($model, 'construction_date')
+		->textInput(['type' => 'date'])
+		->label($model->getAttributeLabel('construction_date')); ?>
+
+	<?php $options = [];
+	if($model->online != '2')
+		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
+	echo $form->field($model, 'construction_text[comingsoon]', ['options'=>$options])
+		->textarea(['rows'=>4, 'cols'=>50])
+		->label($model->getAttributeLabel('construction_text[comingsoon]')); ?>
+
+	<?php $options = [];
+	if($model->online != '0')
+		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
+	echo $form->field($model, 'construction_text[maintenance]', ['options'=>$options])
+		->textarea(['rows'=>4, 'cols'=>50])
+		->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
+</div>
+
+<div class="ln_solid"></div>
+
 <?php echo $form->field($model, 'backoffice_theme')
 	->dropDownList($themes, ['prompt'=>''])
 	->label($model->getAttributeLabel('backoffice_theme'));?>
@@ -151,6 +199,8 @@ echo $form->field($model, 'app_type')
 <?php echo $form->field($model, 'backoffice_theme_sublayout')
 	->dropDownList($backSubLayout, ['prompt'=>''])
 	->label($model->getAttributeLabel('backoffice_theme_sublayout'));?>
+
+<div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'theme')
 	->dropDownList($themes, ['prompt'=>''])

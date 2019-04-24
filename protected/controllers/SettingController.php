@@ -63,7 +63,8 @@ class SettingController extends Controller
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			if($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('app', 'General setting <strong>{app-name}</strong> success updated.', ['app-name'=>$model->name['long']]));
+				$name = unserialize($model->name);
+				Yii::$app->session->setFlash('success', Yii::t('app', 'Apps setting <strong>{app-name}</strong> success updated.', ['app-name'=>$name['long']]));
 				if($app != null)
 					return $this->redirect(['update', 'app'=>$app]);
 				return $this->redirect(['update']);
@@ -74,7 +75,7 @@ class SettingController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'General Settings');
+		$this->view->title = Yii::t('app', 'Apps Settings: {app-name}', ['app-name'=>$model->name['small']]);
 		$this->view->description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name'=>$model->name['long']]);
 		$this->view->keywords = '';
 		return $this->render('admin_update', [
