@@ -19,10 +19,6 @@ use app\components\Application;
 class Controller extends \yii\web\Controller
 {
 	/**
-	 * @var string untuk menampung sub-layout pada view.
-	 */
-	public $subLayout;
-	/**
 	 * @var string untuk menampung sub-menu pada view.
 	 */
 	public $subMenu = [];
@@ -95,14 +91,7 @@ class Controller extends \yii\web\Controller
 
 			if(!self::$settingInitialize) {
 				self::$settingInitialize = true;
-				// Set SubLayout
-				$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
-				if($this->isBackofficeTheme())
-					$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
-				$this->subLayout = $themeSublayout;
-
-				if(($layout = Yii::$app->request->get('layout')) != null)
-					$this->subLayout = $layout ? $layout : 'default';
+				$this->getView()->setSublayout($this);
 			}
 
 			if(!self::$_appNameApplied) {

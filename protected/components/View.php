@@ -24,6 +24,10 @@ class View extends \yii\web\View
 	use \app\modules\user\components\traits\UserTrait;
 	
 	/**
+	 * @var string untuk menampung sub-layout pada view.
+	 */
+	public $subLayout;
+	/**
 	 * @var string tempat menyimpan deskripsi pada controller yang akan ditampilkan view/layout sebagai meta description.
 	 */
 	public $description;
@@ -324,5 +328,26 @@ class View extends \yii\web\View
 				'@app/widgets'		=> sprintf('@themes/%s/widgets', $themeName),
 			],
 		]);
+	}
+
+	/**
+	 * Menetapkan sub-layout dari tema yang akan digunakan/aktif berdasarkan current controller.
+	 */
+	public function setSublayout($context): void
+	{
+		if(($layout = Yii::$app->request->get('layout')) != null) {
+			$this->subLayout = $layout ? $layout : 'default';
+			return;
+		}
+
+		$isBackofficeTheme = true;
+		if($context != null && $context->hasMethod('isBackofficeTheme'))
+			$isBackofficeTheme = $context->isBackofficeTheme();
+
+		$appName = Application::getAppId();
+		$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
+		if($isBackofficeTheme)
+			$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
+		$this->subLayout = $themeSublayout;
 	}
 }
