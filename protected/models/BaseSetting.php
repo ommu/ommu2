@@ -199,7 +199,8 @@ class BaseSetting extends \yii\base\Model
 			return false;
 
 		$this->name = serialize($this->name);
-		$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
+		if($this->construction_date != '')
+			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
 		$this->construction_text = serialize($this->construction_text);
 
 		return true;

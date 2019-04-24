@@ -14,6 +14,7 @@ namespace app\components;
 use Yii;
 use ommu\core\models\CoreSettings;
 use mdm\admin\components\Helper;
+use app\components\helpers\TimeHelper;
 
 class Application extends \yii\web\Application
 {
@@ -75,12 +76,13 @@ class Application extends \yii\web\Application
 	 */
 	public function isMaintenance(): bool
 	{
-		$setting = CoreSettings::find()
-			->select(['id', 'online'])
-			->where(['id' => 1])
-			->one();
+		$appName = self::getAppId();
+		$online = Yii::$app->setting->get(join('_', [$appName, 'online']), 1);
+		$constructionDate = Yii::$app->setting->get(join('_', [$appName, 'construction_date']));
+		if($online != 1)
+			$online = $constructionDate < TimeHelper::getDate() ? 1 : 0;
 
-		return (!$setting->view->online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
+		return (!$online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
 	}
 
 	/**
