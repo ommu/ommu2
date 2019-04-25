@@ -32,6 +32,8 @@ class BaseSetting extends \yii\base\Model
 	public $theme_include_script;
 	public $construction_date;
 	public $construction_text;
+	public $analytic;
+	public $analytic_property;
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -40,10 +42,10 @@ class BaseSetting extends \yii\base\Model
 	{
 		return [
 			[['app_type', 'name', 'online'], 'required'],
-			[['online'], 'integer'],
-			[['app_type', 'name', 'description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'theme', 'theme_sublayout', 'theme_include_script', 'construction_date', 'construction_text'], 'string'],
-			[['description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'theme', 'theme_sublayout', 'theme_include_script', 'construction_date', 'construction_text'], 'safe'],
-			[['app_type'], 'string', 'max' => 16],
+			[['online', 'analytic'], 'integer'],
+			[['app_type', 'name', 'description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'theme', 'theme_sublayout', 'theme_include_script', 'construction_date', 'construction_text', 'analytic_property'], 'string'],
+			[['description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'theme', 'theme_sublayout', 'theme_include_script', 'construction_date', 'construction_text', 'analytic', 'analytic_property'], 'safe'],
+			[['app_type', 'analytic_property'], 'string', 'max' => 16],
 			[['pagetitle_template'], 'string', 'max' => 64],
 			[['name', 'description', 'keywords'], 'string', 'max' => 256],
 		];
@@ -71,6 +73,8 @@ class BaseSetting extends \yii\base\Model
 			'construction_text' => Yii::t('app', 'Maintenance Text'),
 			'construction_text[comingsoon]' => Yii::t('app', 'Coming Soon Text'),
 			'construction_text[maintenance]' => Yii::t('app', 'Maintenance Text'),
+			'analytic' => Yii::t('app', 'Google Analytics'),
+			'analytic_property' => Yii::t('app', 'GA Tracking ID'),
 		];
 	}
 
@@ -94,6 +98,8 @@ class BaseSetting extends \yii\base\Model
 		$this->theme_include_script = Yii::$app->setting->get($this->getId('theme_include_script'));
 		$this->construction_date = Yii::$app->setting->get($this->getId('construction_date'));
 		$this->construction_text = unserialize(Yii::$app->setting->get($this->getId('construction_text')));
+		$this->analytic = Yii::$app->setting->get($this->getId('analytic'), 1);
+		$this->analytic_property = Yii::$app->setting->get($this->getId('analytic_property'));
 	}
 
 	/**
@@ -130,6 +136,22 @@ class BaseSetting extends \yii\base\Model
 			'1' => Yii::t('app', 'Online'),
 			'2' => Yii::t('app', 'Coming Soon'),
 			'0' => Yii::t('app', 'Maintenance'),
+		);
+
+		if($value !== null)
+			return $items[$value];
+		else
+			return $items;
+	}
+
+	/**
+	 * function getAnalytics
+	 */
+	public static function getAnalytics($value=null)
+	{
+		$items = array(
+			'1' => Yii::t('app', 'Enable'),
+			'0' => Yii::t('app', 'Disable'),
 		);
 
 		if($value !== null)
@@ -184,6 +206,11 @@ class BaseSetting extends \yii\base\Model
 				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
 		}
 
+		if($this->analytic == 1) {
+			if($this->analytic_property == '')
+				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
+		}
+
 		if(!empty($this->getErrors()))
 			return false;
 
@@ -227,6 +254,8 @@ class BaseSetting extends \yii\base\Model
 		Yii::$app->setting->set($this->getId('theme_include_script'), $this->theme_include_script);
 		Yii::$app->setting->set($this->getId('construction_date'), $this->construction_date);
 		Yii::$app->setting->set($this->getId('construction_text'), $this->construction_text);
+		Yii::$app->setting->set($this->getId('analytic'), $this->analytic);
+		Yii::$app->setting->set($this->getId('analytic_property'), $this->analytic_property);
 		
 		return true;
 	}

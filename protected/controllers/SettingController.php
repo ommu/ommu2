@@ -64,9 +64,9 @@ class SettingController extends Controller
 			$model->load(Yii::$app->request->post());
 			if($model->save()) {
 				$name = unserialize($model->name);
-				$success = Yii::t('app', 'General setting <strong>{app-name}</strong> success updated.', ['app-name'=>$model->name['small']]);
+				$success = Yii::t('app', 'General setting success updated.');
 				if($app != null)
-					$success = Yii::t('app', 'App setting <strong>{app-name}</strong> success updated.', ['app-name'=>$model->name['long']]);
+					$success = Yii::t('app', 'App setting <strong>{app-name}</strong> success updated.', ['app-name'=>$name['long']]);
 				Yii::$app->session->setFlash('success', $success);
 				if($app != null)
 					return $this->redirect(['update', 'app'=>$app]);

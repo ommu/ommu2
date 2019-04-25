@@ -146,7 +146,7 @@ echo $form->field($model, 'app_type')
 	->label($model->getAttributeLabel('name'))
 	->hint(Yii::t('app', 'Give your website a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
 
-<?php echo $form->field($model, 'pagetitle_template', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'pagetitle_template')
 	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('pagetitle_template'))
 	->hint(Yii::t('app', 'e.g. {title} | {small-name} - {long-name}')); ?>
@@ -189,6 +189,20 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 		->textarea(['rows'=>4, 'cols'=>50])
 		->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
 </div>
+
+<div class="ln_solid"></div>
+
+<?php $appType = BaseSetting::getAnalytics();
+echo $form->field($model, 'analytic')
+	->dropDownList($appType, ['prompt'=>''])
+	->label($model->getAttributeLabel('analytic'))
+	->hint(Yii::t('app', 'Want to use Google Analytics to keep track of your site\'s traffic data? Setup is super easy. Just enter your Google Analytics Tracking ID and *bam*... you\'re tracking your site\'s traffic stats! If you need help finding your ID, check here.')); ?>
+
+<?php echo $form->field($model, 'analytic_property')
+	->textInput(['maxlength' => true])
+	->label($model->getAttributeLabel('analytic_property'))
+	->hint(Yii::t('app', 'Enter the Google Analytics Website Property (Tracking ID).')); ?>
+
 
 <div class="ln_solid"></div>
 
