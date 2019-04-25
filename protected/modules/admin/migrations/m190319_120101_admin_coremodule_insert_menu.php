@@ -26,7 +26,6 @@ class m190319_120101_admin_coremodule_insert_menu extends \yii\db\Migration
 				['Spam & Banning Tools', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/banned', null, null],
 				['Signup Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/signup', null, null],
 				['Language Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/language', null, null],
-				['Google Analytics Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/analytic', null, null],
 				['Module Manager', 'admin', null, Menu::getParentId('Development Tools#rbac'), '/admin/module/index', null, null],
 			]);
 		}

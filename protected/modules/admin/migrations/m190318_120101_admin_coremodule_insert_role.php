@@ -38,7 +38,6 @@ class m190318_120101_admin_coremodule_insert_role extends \yii\db\Migration
 				['/admin/setting/banned', '2', '', time()],
 				['/admin/setting/signup', '2', '', time()],
 				['/admin/setting/language', '2', '', time()],
-				['/admin/setting/analytic', '2', '', time()],
 			]);
 		}
 
@@ -61,7 +60,6 @@ class m190318_120101_admin_coremodule_insert_role extends \yii\db\Migration
 				['userModerator', '/admin/setting/banned'],
 				['userModerator', '/admin/setting/signup'],
 				['userModerator', '/admin/setting/language'],
-				['userModerator', '/admin/setting/analytic'],
 			]);
 		}
 	}
