@@ -297,18 +297,11 @@ class View extends \yii\web\View
 
 		$appName = Application::getAppId();
 		$themeParam = join('_', [$appName, 'theme']);
-		$themeName = Yii::$app->setting->get($themeParam);
-		$themeNameUnchached = Yii::$app->setting->getUncached($themeParam, Yii::$app->params['defaultTheme']);
+		$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 		if($isBackofficeTheme) {
 			$themeParam = join('_', [$appName, 'backoffice_theme']);
-			$themeName = Yii::$app->setting->get($themeParam);
-			$themeNameUnchached = Yii::$app->setting->getUncached($themeParam, Yii::$app->params['defaultTheme']);
+			$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 			self::$isBackoffice = true;
-		}
-
-		if($themeName != $themeNameUnchached) {
-			$themeName = $themeNameUnchached;
-			Yii::$app->setting->set($themeParam, $themeName);
 		}
 
 		$this->theme($themeName);
@@ -348,6 +341,7 @@ class View extends \yii\web\View
 		$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
 		if($isBackofficeTheme)
 			$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
+
 		$this->subLayout = $themeSublayout;
 	}
 }

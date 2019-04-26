@@ -66,7 +66,20 @@ class Application extends \yii\web\Application
 		$appName = self::getAppId();
 		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
 
-		return $appType == 'demo' ? true : false;
+		return $appType == 'demo-app' ? true : false;
+	}
+
+	/**
+	 * Memeriksa apakah aplikasi berjalan pada mode demo theme
+	 *
+	 * @return boolean true|false
+	 */
+	public function isDemoTheme(): bool
+	{
+		$appName = self::getAppId();
+		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+
+		return $appType == 'demo-theme' ? true : false;
 	}
 
 	/**

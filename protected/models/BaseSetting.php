@@ -118,7 +118,8 @@ class BaseSetting extends \yii\base\Model
 		$items = array(
 			'community' => Yii::t('app', 'Social Media / Community Website'),
 			'company' => Yii::t('app', 'Company Profile'),
-			'demo' => Yii::t('app', 'Demo Application'),
+			'demo-app' => Yii::t('app', 'Demo Application'),
+			'demo-theme' => Yii::t('app', 'Demo Theme'),
 		);
 
 		if($value !== null)

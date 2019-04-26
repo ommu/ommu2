@@ -23,7 +23,7 @@ class ThemeControllerHandle implements BootstrapInterface
 	 */
 	public function bootstrap($app)
 	{
-		if(!$app->isDemoApps())
+		if(!$app->isDemoTheme())
 			return;
 
 		$themePath = Yii::getAlias($app->params['themePath']);
