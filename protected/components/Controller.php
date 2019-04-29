@@ -91,7 +91,6 @@ class Controller extends \yii\web\Controller
 
 			if(!self::$settingInitialize) {
 				self::$settingInitialize = true;
-				$this->getView()->setSublayout($this);
 			}
 
 			if(!self::$_appNameApplied) {

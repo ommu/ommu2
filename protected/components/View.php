@@ -65,6 +65,10 @@ class View extends \yii\web\View
 	 */
 	public static $isBackoffice = false;
 	/**
+	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting pada controller dipangil berulang kali.
+	 */
+	private static $_settingInitialize = false;
+	/**
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
 	 */
 	private static $_themeApplied = false;
@@ -86,6 +90,11 @@ class View extends \yii\web\View
 			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
 				$this->setTheme($this);
+			}
+
+			if(!self::$_settingInitialize) {
+				self::$_settingInitialize = true;
+				$this->setSublayout($this);
 			}
 		}
 		return true;
@@ -333,13 +342,9 @@ class View extends \yii\web\View
 			return;
 		}
 
-		$isBackofficeTheme = true;
-		if($context != null && $context->hasMethod('isBackofficeTheme'))
-			$isBackofficeTheme = $context->isBackofficeTheme();
-
 		$appName = Application::getAppId();
 		$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
-		if($isBackofficeTheme)
+		if(self::$isBackoffice)
 			$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
 
 		$this->subLayout = $themeSublayout;
