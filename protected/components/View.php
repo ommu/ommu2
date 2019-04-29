@@ -73,6 +73,10 @@ class View extends \yii\web\View
 	 */
 	private static $_themeApplied = false;
 	/**
+	 * @var boolean tempat menyimpan nama aplikasi untuk mencegah fungsi dipangil berulang kali.
+	 */
+	private static $_appNameApplied = false;
+	/**
 	 * {@inheritdoc}
 	 */
 	private static $_beforeRenderEventCalled = 0;
@@ -84,6 +88,8 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if(parent::beforeRender($viewFile, $params)) {
+			$appName = Application::getAppId();
+
 			if(!empty($this->context->subMenu))
 				$this->context->layout = 'main_submenu';
 				
@@ -95,6 +101,13 @@ class View extends \yii\web\View
 			if(!self::$_settingInitialize) {
 				self::$_settingInitialize = true;
 				$this->setSublayout($this);
+			}
+
+			if(!self::$_appNameApplied) {
+				self::$_appNameApplied = true;
+				$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
+				
+				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 			}
 		}
 		return true;

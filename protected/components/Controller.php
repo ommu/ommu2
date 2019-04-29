@@ -50,10 +50,6 @@ class Controller extends \yii\web\Controller
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
 	 */
 	private static $_themeApplied = false;
-	/**
-	 * @var boolean tempat menyimpan nama aplikasi untuk mencegah fungsi dipangil berulang kali.
-	 */
-	private static $_appNameApplied = false;
 
 	/**
 	 * {@inheritdoc}
@@ -87,17 +83,8 @@ class Controller extends \yii\web\Controller
 	public function beforeAction($action) 
 	{
 		if(parent::beforeAction($action)) {
-			$appName = Application::getAppId();
-
 			if(!self::$settingInitialize) {
 				self::$settingInitialize = true;
-			}
-
-			if(!self::$_appNameApplied) {
-				self::$_appNameApplied = true;
-				$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
-				
-				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 			}
 		}
 		return true;
