@@ -20,5 +20,28 @@ use Yii;
  */
 class GridView extends \yiister\gentelella\widgets\grid\GridView
 {
-	
+	use \ommu\traits\ThemeTrait;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function run()
+	{
+		parent::run();
+
+		if(($themeName = $this->view->theme->name) != 'gentelella') {
+			$gridViewIgnore = self::themeParseYaml($themeName)['gridview_ignore'];
+			unset($this->view->assetBundles['yiister\gentelella\assets\ThemeBuildAsset']);
+			unset($this->view->assetBundles['yiister\gentelella\widgets\grid\GridViewAsset']);
+
+			if(isset($gridViewIgnore) && is_array($gridViewIgnore) && !empty($gridViewIgnore)) {
+				foreach ($gridViewIgnore as $val) {
+					if($val == 'bootstrap')
+						unset($this->view->assetBundles['yii\bootstrap\BootstrapAsset']);
+					else if($val == 'fontawesome')
+						unset($this->view->assetBundles['rmrevin\yii\fontawesome\AssetBundle']);
+				}
+			}
+		}
+	}
 }

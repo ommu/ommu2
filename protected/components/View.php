@@ -312,13 +312,13 @@ class View extends \yii\web\View
 	 */
 	public function theme($themeName): void
 	{
-		$this->theme = new \yii\base\Theme([
-			'basePath'		=> sprintf('@themes/%s', $themeName),
-			'baseUrl'		=> sprintf('@web/themes/%s', $themeName),
-			'pathMap'		=> [
-				'@app/views'		=> sprintf('@themes/%s', $themeName),
-				'@app/modules'		=> sprintf('@themes/%s/modules', $themeName),
-				'@app/widgets'		=> sprintf('@themes/%s/widgets', $themeName),
+		$this->theme = new \app\components\Theme([
+			'basePath'	=> sprintf('@themes/%s', $themeName),
+			'baseUrl'	=> sprintf('@web/themes/%s', $themeName),
+			'pathMap'	=> [
+				'@app/views'	=> sprintf('@themes/%s', $themeName),
+				'@app/modules'	=> sprintf('@themes/%s/modules', $themeName),
+				'@app/widgets'	=> sprintf('@themes/%s/widgets', $themeName),
 			],
 		]);
 	}
