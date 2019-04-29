@@ -34,7 +34,7 @@
 		"ommu/support": "~2.1",
 		"ommu/banner": "~2.1",
 		"ommu/gentelella": "@dev",
-		"yii2mod/yii2-selectize": "*",
+		"ommu/yii2-selectize": "*",
 		"mg-code/yii2-helpers": "*"
 	},
 	"require-dev": {
