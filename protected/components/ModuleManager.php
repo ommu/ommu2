@@ -203,7 +203,7 @@ class ModuleManager extends \yii\base\Component
 	 */
 	public function flushCache()
 	{
-		Yii::$app->cache->delete(app\components\bootstrap\ModuleAutoLoader::CACHE_ID);
+		Yii::$app->cache->delete(\app\components\bootstrap\ModuleAutoLoader::CACHE_ID);
 		Yii::$app->cache->delete(Modules::CACHE_ENABLE_MODULE_IDS);
 	}
 
