@@ -16,91 +16,15 @@ use yii\helpers\Url;
 use app\components\ActiveForm;
 use app\models\BaseSetting;
 use yii\helpers\ArrayHelper;
-
-\yii2mod\selectize\SelectizeAsset::register($this);
+use ommu\selectize\Selectize;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
 $js = <<<JS
 	var xhr;
-	var backend_theme, f_backend_theme;
-	var backend_sublayout, f_backend_sublayout;
-	var front_theme, f_front_theme;
-	var front_sublayout, f_front_sublayout;
 	var v_backend_sublayout = '$model->backoffice_theme_sublayout';
 	var v_front_sublayout = '$model->theme_sublayout';
-
-	f_backend_theme = $('#basesetting-backoffice_theme').selectize({
-		onChange: function(value) {
-			if (!value.length) return;
-			backend_sublayout.disable();
-			backend_sublayout.clearOptions();
-			backend_sublayout.removeOption(value, true);
-			backend_sublayout.load(function(callback) {
-				xhr && xhr.abort();
-				xhr = $.ajax({
-					url: '$getSublayoutUrl' + value,
-					success: function(results) {
-						backend_sublayout.removeOption(v_backend_sublayout);
-						backend_sublayout.showInput();
-						backend_sublayout.enable();
-						callback(results);
-					},
-					error: function() {
-						callback();
-					}
-				})
-			});
-		}
-	});
-
-	f_front_theme = $('#basesetting-theme').selectize({
-		onChange: function(value) {
-			if (!value.length) return;
-			front_sublayout.disable();
-			front_sublayout.clearOptions();
-			front_sublayout.load(function(callback) {
-				xhr && xhr.abort();
-				xhr = $.ajax({
-					url: '$getSublayoutUrl' + value,
-					success: function(results) {
-						front_sublayout.removeOption(v_front_sublayout);
-						front_sublayout.showInput();
-						front_sublayout.enable();
-						callback(results);
-					},
-					error: function() {
-						callback();
-					}
-				})
-			});
-		}
-	});
-
-	f_backend_sublayout = $('#basesetting-backoffice_theme_sublayout').selectize({
-		valueField: 'id',
-		labelField: 'label',
-		searchField: ['label'],
-		onChange: function(value) {
-			v_backend_sublayout = value;
-		}
-	});
-
-	f_front_sublayout = $('#basesetting-theme_sublayout').selectize({
-		valueField: 'id',
-		labelField: 'label',
-		searchField: ['label'],
-		onChange: function(value) {
-			v_front_sublayout = value;
-		}
-	});
-
-	backend_sublayout  = f_backend_sublayout[0].selectize;
-	backend_theme = f_backend_theme[0].selectize;
-	front_sublayout  = f_front_sublayout[0].selectize;
-	front_theme = f_front_theme[0].selectize;
 
 	$('#basesetting-online input[name="BaseSetting[online]"]').on('change', function() {
 		var id = $(this).val();
@@ -118,7 +42,9 @@ $js = <<<JS
 		}
 	});
 JS;
-$this->registerJs($js, \yii\web\View::POS_READY);
+$this->registerJs($js, \yii\web\View::POS_END);
+
+$getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
 ?>
 
 <div class="base-setting-form">
@@ -207,21 +133,93 @@ echo $form->field($model, 'analytic')
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'backoffice_theme')
-	->dropDownList($themes, ['prompt'=>''])
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $themes,
+		'pluginOptions' => [
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				if (!value.length) return;
+				basesetting_backoffice_theme_sublayout.disable();
+				basesetting_backoffice_theme_sublayout.clearOptions();
+				basesetting_backoffice_theme_sublayout.load(function(callback) {
+					xhr && xhr.abort();
+					xhr = $.ajax({
+						url: \''.$getSublayoutUrl.'\' + value,
+						success: function(results) {
+							basesetting_backoffice_theme_sublayout.removeOption(v_backend_sublayout);
+							basesetting_backoffice_theme_sublayout.showInput();
+							basesetting_backoffice_theme_sublayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+			}'),
+		],
+	])
 	->label($model->getAttributeLabel('backoffice_theme'));?>
 
 <?php echo $form->field($model, 'backoffice_theme_sublayout')
-	->dropDownList($backSubLayout, ['prompt'=>''])
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $backSubLayout,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_backend_sublayout = value;
+			}'),
+		],
+	])
 	->label($model->getAttributeLabel('backoffice_theme_sublayout'));?>
 
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'theme')
-	->dropDownList($themes, ['prompt'=>''])
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $themes,
+		'pluginOptions' => [
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				if (!value.length) return;
+				basesetting_theme_sublayout.disable();
+				basesetting_theme_sublayout.clearOptions();
+				basesetting_theme_sublayout.load(function(callback) {
+					xhr && xhr.abort();
+					xhr = $.ajax({
+						url: \''.$getSublayoutUrl.'\' + value,
+						success: function(results) {
+							basesetting_theme_sublayout.removeOption(v_front_sublayout);
+							basesetting_theme_sublayout.showInput();
+							basesetting_theme_sublayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+			}'),
+		],
+	])
 	->label($model->getAttributeLabel('theme'));?>
 
 <?php echo $form->field($model, 'theme_sublayout')
-	->dropDownList($frontSubLayout, ['prompt'=>''])
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $frontSubLayout,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_front_sublayout = value;
+			}'),
+		],
+	])
 	->label($model->getAttributeLabel('theme_sublayout'));?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
