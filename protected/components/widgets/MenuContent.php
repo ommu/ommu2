@@ -25,7 +25,7 @@ class MenuContent extends \yii\widgets\Menu
 	/**
 	 * {@inheritdoc}
 	 */
-	public $linkTemplate = "<a href=\"{url}\" title=\"{label}\" {htmlOptions}{data-confirm}{data-method}>{icon} {label}</a>";
+	public $linkTemplate = "<a href=\"{url}\" title=\"{label}\" {htmlOptions}>{icon} {label}</a>";
 
 	/**
 	 * {@inheritdoc}
@@ -61,12 +61,6 @@ class MenuContent extends \yii\widgets\Menu
 				'{htmlOptions}' => isset($item['htmlOptions'])
 					? ' '.$this->htmlOptions($item['htmlOptions'])
 					: '',
-				'{data-confirm}' => isset($item['data-confirm'])
-					? ' data-confirm="'.$item['data-confirm'].'"'
-					: '',
-				'{data-method}' => isset($item['data-method'])
-					? ' data-method="'.$item['data-method'].'"'
-					: '',
 			]
 		);
 	}
@@ -79,6 +73,8 @@ class MenuContent extends \yii\widgets\Menu
 		$htmlOptions = '';
 		if(!empty($array)) {
 			foreach ($array as $key => $value) {
+				if($key == 'class')
+					$value = join(' ', [$value, $this->view->themeSetting['content_menu_class']]);
 				$htmlOptions .= $key.'="'.$value.'"';
 			}
 		}

@@ -20,6 +20,7 @@ use app\components\Application;
 class View extends \yii\web\View
 {
 	use \ommu\traits\UtilityTrait;
+	use \ommu\traits\ThemeTrait;
 	use \ommu\traits\FileTrait;
 	use \app\modules\user\components\traits\UserTrait;
 	
@@ -27,6 +28,10 @@ class View extends \yii\web\View
 	 * @var string untuk menampung sub-layout pada view.
 	 */
 	public $subLayout;
+	/**
+	 * {@inheritdoc}
+	 */
+	public $themeSetting = [];
 	/**
 	 * @var string tempat menyimpan deskripsi pada controller yang akan ditampilkan view/layout sebagai meta description.
 	 */
@@ -88,26 +93,29 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if(parent::beforeRender($viewFile, $params)) {
-			$appName = Application::getAppId();
-
-			if(!empty($this->context->subMenu))
-				$this->context->layout = 'main_submenu';
-				
 			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
+
 				$this->setTheme($this);
 			}
 
-			if(!self::$_settingInitialize) {
-				self::$_settingInitialize = true;
-				$this->setSublayout($this);
-			}
+			if(!empty($this->context->subMenu))
+				$this->context->layout = 'main_submenu';
 
+			$appName = Application::getAppId();
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
+
 				$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
-				
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
+			}
+
+			$themeName = $this->theme->name;
+			if(!self::$_settingInitialize) {
+				self::$_settingInitialize = true;
+
+				$this->themeSetting = self::themeParseYaml($themeName)['theme_setting'];
+				$this->setSublayout($this);
 			}
 		}
 		return true;

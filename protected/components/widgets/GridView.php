@@ -29,8 +29,8 @@ class GridView extends \yiister\gentelella\widgets\grid\GridView
 	{
 		parent::run();
 
-		if(($themeName = $this->view->theme->name) != 'gentelella') {
-			$gridViewIgnore = self::themeParseYaml($themeName)['gridview_ignore'];
+		if($this->view->theme->name != 'gentelella') {
+			$gridViewIgnore = $this->view->themeSetting['gridview_ignore'];
 			unset($this->view->assetBundles['yiister\gentelella\assets\ThemeBuildAsset']);
 			unset($this->view->assetBundles['yiister\gentelella\widgets\grid\GridViewAsset']);
 
