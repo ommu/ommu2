@@ -13,9 +13,8 @@
 namespace app\models;
 
 use Yii;
-use mdm\admin\models\Menu as MdmMenu;
 
-class Menu extends MdmMenu
+class Menu extends \mdm\admin\models\Menu
 {
 	public $menuCode;
 

@@ -114,7 +114,11 @@ class View extends \yii\web\View
 			if(!self::$_settingInitialize) {
 				self::$_settingInitialize = true;
 
-				$this->themeSetting = self::themeParseYaml($themeName)['theme_setting'];
+				$themeInfo = self::themeParseYaml($themeName);
+				$this->themeSetting = $themeInfo['theme_setting'];
+				if(isset($themeInfo['widget_class']))
+					$this->themeSetting = ArrayHelper::merge($this->themeSetting, $themeInfo['widget_class']);
+				
 				$this->setSublayout($this);
 			}
 		}

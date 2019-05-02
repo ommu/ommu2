@@ -13,9 +13,8 @@
 namespace app\modules\rbac\components;
 
 use Yii;
-use mdm\admin\components\MenuHelper as MdmMenuHelper;
 
-class MenuHelper extends MdmMenuHelper
+class MenuHelper extends \mdm\admin\components\MenuHelper
 {
 	/**
 	 * Normalize menu

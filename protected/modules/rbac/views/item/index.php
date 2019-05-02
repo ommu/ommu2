@@ -14,7 +14,7 @@
  */
 
 use yii\helpers\Url;
-use app\components\widgets\GridView;
+use app\components\grid\GridView;
 use mdm\admin\components\RouteRule;
 use mdm\admin\components\Configs;
 use yii\widgets\Pjax;
