@@ -41,11 +41,8 @@ $this->params['menu']['content'] = [
 				'label' => Yii::t('rbac-admin', 'Name'),
 			],
 			[
-				'class' => 'yii\grid\ActionColumn',
+				'class' => 'app\components\grid\ActionColumn',
 				'header' => Yii::t('app', 'Option'),
-				'contentOptions' => [
-					'class'=>'action-column',
-				],
 			],
 		],
 	]);?>

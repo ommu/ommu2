@@ -47,11 +47,8 @@ $this->params['menu']['content'] = [
 			'route',
 			'order',
 			[
-				'class' => 'yii\grid\ActionColumn',
+				'class' => 'app\components\grid\ActionColumn',
 				'header' => Yii::t('app', 'Option'),
-				'contentOptions' => [
-					'class'=>'action-column',
-				],
 			],
 		],
 	]);?>

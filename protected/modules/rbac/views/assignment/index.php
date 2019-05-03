@@ -31,11 +31,8 @@ $columns = [
 if (!empty($extraColumns))
 	$columns = array_merge($columns, $extraColumns);
 $columns[] = [
-	'class' => 'yii\grid\ActionColumn',
+	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
-	'contentOptions' => [
-		'class'=>'action-column',
-	],
 	'template' => '{view}'
 ];
 ?>
