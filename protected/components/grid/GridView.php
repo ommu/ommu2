@@ -12,7 +12,6 @@
 namespace app\components\grid;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 class GridView extends \yii\grid\GridView
 {
@@ -22,8 +21,8 @@ class GridView extends \yii\grid\GridView
 	public static function widget($config = [])
 	{
 		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['GridView']))
-			$parentClass = Yii::$app->view->themeSetting['GridView'];
+		if(isset(Yii::$app->view->themeSetting['widget_class']['GridView']))
+			$parentClass = Yii::$app->view->themeSetting['widget_class']['GridView'];
 
 		return $parentClass::widget($config);
 	}

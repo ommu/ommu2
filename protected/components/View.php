@@ -115,11 +115,12 @@ class View extends \yii\web\View
 				self::$_settingInitialize = true;
 
 				$themeInfo = self::themeParseYaml($themeName);
-				$this->themeSetting = $themeInfo['theme_setting'];
+				if(isset($themeInfo['theme_setting']))
+					$this->themeSetting = ArrayHelper::merge($this->themeSetting, $themeInfo['theme_setting']);
 				if(isset($themeInfo['widget_class']))
-					$this->themeSetting = ArrayHelper::merge($this->themeSetting, $themeInfo['widget_class']);
-				
-				$this->setSublayout($this);
+					$this->themeSetting = ArrayHelper::merge($this->themeSetting, ['widget_class'=>$themeInfo['widget_class']]);
+				if(isset($themeInfo['ignore_asset_class']))
+					$this->themeSetting = ArrayHelper::merge($this->themeSetting, ['ignore_asset_class'=>$themeInfo['ignore_asset_class']]);
 			}
 		}
 		return true;
@@ -136,6 +137,9 @@ class View extends \yii\web\View
 		$keywords = Yii::$app->setting->get(join('_', [$appName, 'keywords']));
 
 		parent::afterRender($viewFile, $params, $output);
+
+		$this->unsetAssetBundles();
+		$this->setSublayout();
 
 		$this->registerMetaTag([
 			'name'  => 'description',
@@ -360,7 +364,7 @@ class View extends \yii\web\View
 	/**
 	 * Menetapkan sub-layout dari tema yang akan digunakan/aktif berdasarkan current controller.
 	 */
-	public function setSublayout($context): void
+	public function setSublayout()
 	{
 		if(($layout = Yii::$app->request->get('layout')) != null) {
 			$this->subLayout = $layout ? $layout : 'default';
@@ -373,5 +377,19 @@ class View extends \yii\web\View
 			$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
 
 		$this->subLayout = $themeSublayout;
+	}
+
+	/**
+	 * Menghapus register asset pada assetBundles yang terdapat pada ignore_asset_class
+	 */
+	public function unsetAssetBundles()
+	{
+		$ignoreAssetClass = $this->themeSetting['ignore_asset_class'];
+
+		if(isset($ignoreAssetClass) && is_array($ignoreAssetClass) && !empty($ignoreAssetClass)) {
+			foreach ($ignoreAssetClass as $assetClass) {
+				unset($this->assetBundles[$assetClass]);
+			}
+		}
 	}
 }
