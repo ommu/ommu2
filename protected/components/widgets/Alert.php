@@ -1,5 +1,5 @@
 <?php
-namespace app\widgets;
+namespace app\components\widgets;
 
 use Yii;
 
@@ -51,7 +51,10 @@ class Alert extends \yii\bootstrap\Widget
     {
         $session = Yii::$app->session;
         $flashes = $session->getAllFlashes();
-        $appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+		$appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+		$bootstrapClass = 'yii\bootstrap\Alert';
+		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+			$bootstrapClass = 'yii\bootstrap4\Alert';
 
         foreach ($flashes as $type => $flash) {
             if (!isset($this->alertTypes[$type])) {
@@ -59,7 +62,7 @@ class Alert extends \yii\bootstrap\Widget
             }
 
             foreach ((array) $flash as $i => $message) {
-                echo \yii\bootstrap\Alert::widget([
+                echo $bootstrapClass::widget([
                     'body' => $message,
                     'closeButton' => $this->closeButton,
                     'options' => array_merge($this->options, [
