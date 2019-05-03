@@ -51,10 +51,11 @@ class Alert extends \yii\bootstrap\Widget
     {
         $session = Yii::$app->session;
         $flashes = $session->getAllFlashes();
-		$appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
-		$bootstrapClass = 'yii\bootstrap\Alert';
-		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
-			$bootstrapClass = 'yii\bootstrap4\Alert';
+        $appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+
+        $bootstrapClass = 'yii\bootstrap\Alert';
+        if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+            $bootstrapClass = 'yii\bootstrap4\Alert';
 
         foreach ($flashes as $type => $flash) {
             if (!isset($this->alertTypes[$type])) {
