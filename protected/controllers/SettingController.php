@@ -22,7 +22,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\BaseSetting;
 use app\components\Application;
-use app\models\Theme;
+use app\components\Theme;
 
 class SettingController extends Controller
 {
@@ -56,9 +56,15 @@ class SettingController extends Controller
 		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'];
 		if(!isset($backSubLayout))
 			$backSubLayout = [];
+		$backPagination = $allTheme[$model->backoffice_theme]['pagination'];
+		if(!isset($backPagination))
+			$backPagination = [];
 		$frontSubLayout = $allTheme[$model->theme]['sublayout'];
 		if(!isset($frontSubLayout))
 			$frontSubLayout = [];
+		$frontPagination = $allTheme[$model->theme]['pagination'];
+		if(!isset($frontPagination))
+			$frontPagination = [];
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -92,7 +98,9 @@ class SettingController extends Controller
 			'model' => $model,
 			'themes' => $themes,
 			'backSubLayout' => $backSubLayout,
+			'backPagination' => $backPagination,
 			'frontSubLayout' => $frontSubLayout,
+			'frontPagination' => $frontPagination,
 		]);
 	}
 
@@ -105,6 +113,17 @@ class SettingController extends Controller
 		$yaml = Theme::themeParseYaml($theme);
 
 		return is_array($yaml) ? ($yaml['sublayout'] ? $this->getSublayout($yaml['sublayout']) : []) : [];
+	}
+
+	/**
+	 * ThemePagination Action
+	 */
+	public function actionPagination($theme)
+	{
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		$yaml = Theme::themeParseYaml($theme);
+
+		return is_array($yaml) ? ($yaml['pagination'] ? $this->getSublayout($yaml['pagination']) : []) : [];
 	}
 
 	/**

@@ -21,10 +21,15 @@ use ommu\selectize\Selectize;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$backofficeThemePagination = $model->backoffice_theme_pagination ? $model->backoffice_theme_pagination : 'default';
+$themePagination = $model->theme_pagination ? $model->theme_pagination : 'default';
+
 $js = <<<JS
-	var xhr;
+	var sublayout, pagination;
 	var v_backend_sublayout = '$model->backoffice_theme_sublayout';
+	var v_backend_pagination = '$backofficeThemePagination';
 	var v_front_sublayout = '$model->theme_sublayout';
+	var v_front_pagination = '$themePagination';
 
 	$('#basesetting-online input[name="BaseSetting[online]"]').on('change', function() {
 		var id = $(this).val();
@@ -45,6 +50,7 @@ JS;
 $this->registerJs($js, \yii\web\View::POS_END);
 
 $getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
+$getPaginationUrl = Url::to(['pagination', 'theme'=>'']);
 ?>
 
 <div class="base-setting-form">
@@ -142,13 +148,30 @@ echo $form->field($model, 'analytic')
 				basesetting_backoffice_theme_sublayout.disable();
 				basesetting_backoffice_theme_sublayout.clearOptions();
 				basesetting_backoffice_theme_sublayout.load(function(callback) {
-					xhr && xhr.abort();
-					xhr = $.ajax({
+					sublayout && sublayout.abort();
+					sublayout = $.ajax({
 						url: \''.$getSublayoutUrl.'\' + value,
 						success: function(results) {
 							basesetting_backoffice_theme_sublayout.removeOption(v_backend_sublayout);
 							basesetting_backoffice_theme_sublayout.showInput();
 							basesetting_backoffice_theme_sublayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+				basesetting_backoffice_theme_pagination.disable();
+				basesetting_backoffice_theme_pagination.clearOptions();
+				basesetting_backoffice_theme_pagination.load(function(callback) {
+					pagination && pagination.abort();
+					pagination = $.ajax({
+						url: \''.$getPaginationUrl.'\' + value,
+						success: function(results) {
+							basesetting_backoffice_theme_pagination.removeOption(v_backend_pagination);
+							basesetting_backoffice_theme_pagination.showInput();
+							basesetting_backoffice_theme_pagination.enable();
 							callback(results);
 						},
 						error: function() {
@@ -176,6 +199,21 @@ echo $form->field($model, 'analytic')
 	])
 	->label($model->getAttributeLabel('backoffice_theme_sublayout'));?>
 
+<?php echo $form->field($model, 'backoffice_theme_pagination')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $backPagination,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_backend_pagination = value;
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('backoffice_theme_pagination'));?>
+
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'theme')
@@ -188,13 +226,30 @@ echo $form->field($model, 'analytic')
 				basesetting_theme_sublayout.disable();
 				basesetting_theme_sublayout.clearOptions();
 				basesetting_theme_sublayout.load(function(callback) {
-					xhr && xhr.abort();
-					xhr = $.ajax({
+					sublayout && sublayout.abort();
+					sublayout = $.ajax({
 						url: \''.$getSublayoutUrl.'\' + value,
 						success: function(results) {
 							basesetting_theme_sublayout.removeOption(v_front_sublayout);
 							basesetting_theme_sublayout.showInput();
 							basesetting_theme_sublayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+				basesetting_theme_pagination.disable();
+				basesetting_theme_pagination.clearOptions();
+				basesetting_theme_pagination.load(function(callback) {
+					pagination && pagination.abort();
+					pagination = $.ajax({
+						url: \''.$getPaginationUrl.'\' + value,
+						success: function(results) {
+							basesetting_theme_pagination.removeOption(v_front_pagination);
+							basesetting_theme_pagination.showInput();
+							basesetting_theme_pagination.enable();
 							callback(results);
 						},
 						error: function() {
@@ -221,6 +276,21 @@ echo $form->field($model, 'analytic')
 		],
 	])
 	->label($model->getAttributeLabel('theme_sublayout'));?>
+
+<?php echo $form->field($model, 'theme_pagination')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $frontPagination,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_front_pagination = value;
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('theme_pagination'));?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>6, 'cols'=>50])

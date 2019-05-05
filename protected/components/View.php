@@ -88,7 +88,7 @@ class View extends \yii\web\View
 			if(!self::$_themeApplied && !$this->theme) {
 				self::$_themeApplied = true;
 
-				$this->setTheme($this);
+				$this->setTheme($this->context);
 			}
 
 			if(!empty($this->context->subMenu))
@@ -389,5 +389,18 @@ class View extends \yii\web\View
 			$themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class'=>$themeInfo['ignore_asset_class']]);
 
 		return $themeSetting;
+	}
+
+	/**
+	 * Menetapkan pagination layout dari tema yang akan digunakan/aktif berdasarkan current controller.
+	 */
+	public function getPagination()
+	{
+		$appName = Application::getAppId();
+		$themePagination = Yii::$app->setting->get(join('_', [$appName, 'theme_pagination']), 'default');
+		if(self::$isBackoffice)
+			$themePagination = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_pagination']), 'default');
+
+		return $themePagination;
 	}
 }
