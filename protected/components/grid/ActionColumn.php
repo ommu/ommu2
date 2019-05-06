@@ -18,22 +18,5 @@ class ActionColumn extends \yii\grid\ActionColumn
 	/**
 	 * {@inheritdoc}
 	 */
-	public function init()
-	{
-		parent::init();
-
-		$this->contentOptions = ['class'=>'action-column'];
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function widget($config = [])
-	{
-		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['widget_class']['ActionColumn']))
-			$parentClass = Yii::$app->view->themeSetting['widget_class']['ActionColumn'];
-
-		return $parentClass::widget($config);
-	}
+	public $contentOptions = ['class'=>'action-column'];
 }
