@@ -42,14 +42,14 @@ foreach ($generator->templates as $name => $path) {
 		'form' => $form,
 	]); ?>
 
-	<?php echo $form->field($generator, 'template', ['template' => '{label}{beginWrapper}{input}{error}{endWrapper}{hint}', 'horizontalCssClasses' => ['wrapper'=>'col-md-9 col-sm-9 col-xs-12 col-12']])
+	<?php echo $form->field($generator, 'template', ['template' => '{label}{beginWrapper}{input}{error}{endWrapper}{hint}', 'horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
 		->sticky()
 		->label('Code Template')
 		->dropDownList($templates)->hint('Please select which set of the templates should be used to generated the code.') ?>
 
 	<div class="ln_solid"></div>
 	<div class="form-group row">
-		<div class="col-md-9 col-sm-9 col-xs-12 col-12 col-sm-offset-3">
+		<div class="col-sm-9 col-xs-12 col-12 col-sm-offset-3">
 			<?php echo Html::submitButton('Preview', ['name' => 'preview', 'class' => 'btn btn-primary']) ?>
 			<?php if (isset($files)): ?>
 				<?php echo Html::submitButton('Generate', ['name' => 'generate', 'class' => 'btn btn-success']) ?>

@@ -42,6 +42,10 @@ $this->params['menu']['content'] = [
 		],
 		'route',
 		'order',
+		[
+			'attribute' => 'public',
+			'value' => $this->filterYesNo($model->public),
+		],
 	],
 	'template' => '<tr><th style="width:25%">{label}</th><td>{value}</td></tr>',
 ]); ?>

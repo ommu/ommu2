@@ -20,14 +20,11 @@ namespace app\modules\rbac\controllers;
 
 use Yii;
 use app\models\Menu;
-use mdm\admin\controllers\MenuController as MdmMenuController;
 
-class MenuController extends MdmMenuController
+class MenuController extends \mdm\admin\controllers\MenuController
 {
 	/**
-	 * Creates a new Menu model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 * @return mixed
+	 * {@inheritdoc}
 	 */
 	public function actionCreate()
 	{
@@ -44,11 +41,7 @@ class MenuController extends MdmMenuController
 	}
 
 	/**
-	 * Finds the Menu model based on its primary key value.
-	 * If the model is not found, a 404 HTTP exception will be thrown.
-	 * @param  integer $id
-	 * @return Menu the loaded model
-	 * @throws NotFoundHttpException if the model cannot be found
+	 * {@inheritdoc}
 	 */
 	protected function findModel($id)
 	{

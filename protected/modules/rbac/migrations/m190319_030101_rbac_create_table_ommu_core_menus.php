@@ -27,12 +27,13 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 			$this->createTable('ommu_core_menus', [
 				'id' => Schema::TYPE_INTEGER . '(11) NOT NULL AUTO_INCREMENT',
 				'name' => Schema::TYPE_STRING . '(128) NOT NULL',
-				'module' => Schema::TYPE_STRING . '(32) NOT NULL',
-				'icon' => Schema::TYPE_STRING . '(64)',
 				'parent' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
 				'route' => Schema::TYPE_STRING . '(256)',
 				'order' => Schema::TYPE_INTEGER . '(11)',
 				'data' => Schema::TYPE_TEXT,
+				'public' => Schema::TYPE_TINYINT . '(1) NOT NULL DEFAULT \'0\'',
+				'module' => Schema::TYPE_STRING . '(32) NOT NULL',
+				'icon' => Schema::TYPE_STRING . '(64)',
 				'creation_date' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT \'trigger\'',
 				'creation_id' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
 				'modified_date' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP COMMENT \'trigger\'',
@@ -63,17 +64,17 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 	public function down()
 	{
 		$this->dropIndex(
-			'cat_id',
-			'ommu_core_menus'
-		);
-
-		$this->dropIndex(
 			'parent',
 			'ommu_core_menus'
 		);
 
 		$this->dropIndex(
 			'route',
+			'ommu_core_menus'
+		);
+
+		$this->dropIndex(
+			'name',
 			'ommu_core_menus'
 		);
 

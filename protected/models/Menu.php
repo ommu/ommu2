@@ -26,6 +26,7 @@ class Menu extends \mdm\admin\models\Menu
 		$rules = parent::rules();
 
 		return \yii\helpers\ArrayHelper::merge($rules, [
+			[['public'], 'integer'],
 			[['icon'], 'string', 'max' => 64],
 		]);
 	}
@@ -38,6 +39,7 @@ class Menu extends \mdm\admin\models\Menu
 		$attributes = parent::attributeLabels();
 
 		return \yii\helpers\ArrayHelper::merge($attributes, [
+			'public' => Yii::t('app', 'Public Manu'),
 			'icon' => Yii::t('app', 'Icon'),
 		]);
 	}

@@ -13,16 +13,30 @@
 namespace app\modules\rbac\components;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class MenuHelper extends \mdm\admin\components\MenuHelper
 {
 	/**
-	 * Normalize menu
-	 * @param  array $assigned
-	 * @param  array $menus
-	 * @param  Closure $callback
-	 * @param  integer $parent
-	 * @return array
+	 * {@inheritdoc}
+	 */
+	public static function requiredParent($assigned, &$menus)
+	{
+		$assigned = ArrayHelper::merge($assigned, static::getPublicManu($menus));
+		$l = count($assigned);
+		for ($i = 0; $i < $l; $i++) {
+			$id = $assigned[$i];
+			$parent_id = $menus[$id]['parent'];
+			if ($parent_id !== null && !in_array($parent_id, $assigned)) {
+				$assigned[$l++] = $parent_id;
+			}
+		}
+
+		return $assigned;
+	}
+
+	/**
+	 * {@inheritdoc}
 	 */
 	public static function normalizeMenu(&$assigned, &$menus, $callback, $parent = null)
 	{
@@ -53,5 +67,23 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 		}
 
 		return $result;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function getPublicManu($menus)
+	{
+		$menus = ArrayHelper::map($menus, 'id', 'public');
+
+		$assigned = [];
+		if(is_array($menus) && !empty($menus)) {
+			foreach ($menus as $key => $val) {
+				if($val == 1)
+					$assigned[] = $key;
+			}
+		}
+
+		return $assigned;
 	}
 }
