@@ -43,7 +43,7 @@ class View extends \yii\web\View
 	/**
 	 * @var boolean tempat menyimpan status show|hide title pada controller yang akan ditampilkan view/layout saat render.
 	 */
-	public $titleShow = false;
+	public $titleShow = true;
 	/**
 	 * @var boolean tempat menyimpan status show|hide description pada controller yang akan ditampilkan view/layout saat render.
 	 */
