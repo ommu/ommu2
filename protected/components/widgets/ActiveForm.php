@@ -14,7 +14,7 @@
  * @link https://github.com/ommu/ommu
  */
 
-namespace app\components;
+namespace app\components\widgets;
 
 use Yii;
 

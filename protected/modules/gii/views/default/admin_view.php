@@ -19,7 +19,7 @@
  */
 
 use yii\helpers\Html;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 use app\components\widgets\GiiActiveField as ActiveField;
 use yii\gii\CodeFile;
 

@@ -13,7 +13,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 use app\models\BaseSetting;
 use yii\helpers\ArrayHelper;
 use ommu\selectize\Selectize;

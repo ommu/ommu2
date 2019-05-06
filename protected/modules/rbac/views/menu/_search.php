@@ -13,7 +13,7 @@
  */
 
 use yii\helpers\Html;
-use app\components\ActiveForm;
+use yii\widgets\ActiveForm;
 ?>
 
 <div class="menu-search">

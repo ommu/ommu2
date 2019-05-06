@@ -14,7 +14,7 @@
  */
 
 use yii\helpers\Html;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 use mdm\admin\components\RouteRule;
 use mdm\admin\AutocompleteAsset;
 use yii\helpers\Json;

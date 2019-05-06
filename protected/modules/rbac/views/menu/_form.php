@@ -13,7 +13,7 @@
  */
 
 use yii\helpers\Html;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 use app\models\Menu;
 use yii\helpers\Json;
 use mdm\admin\AutocompleteAsset;

@@ -13,7 +13,7 @@
  */
 
 use yii\helpers\Html;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 ?>
 
 <div class="auth-item-form">
