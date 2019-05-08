@@ -392,7 +392,7 @@ class View extends \yii\web\View
 	}
 
 	/**
-	 * Menetapkan pagination layout dari tema yang akan digunakan/aktif berdasarkan current controller.
+	 * {@inheritdoc}
 	 */
 	public function getPagination()
 	{
@@ -402,5 +402,13 @@ class View extends \yii\web\View
 			$themePagination = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_pagination']), 'default');
 
 		return $themePagination;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getSubmenuOnLayout()
+	{
+		return !empty($this->context->subMenu) ? true : false;
 	}
 }

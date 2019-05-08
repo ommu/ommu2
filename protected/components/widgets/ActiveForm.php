@@ -39,9 +39,21 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
 					],
 					'wrapperOptions' => [
 						'class' => 'col-md-8 col-sm-9 col-12',
+						'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
 					],
 				]],
 			);
+			if(self::getLayout($config)['layout'] === 'horizontal') {
+				$config = ArrayHelper::merge(
+					$config, 
+					['fieldConfig' => [
+						'horizontalCssClasses' => [
+							'offset' => !Yii::$app->view->submenuOnLayout ? 'offset-md-4 offset-sm-3' : 'offset-sm-3',
+							'offset' => '',
+						],
+					]],
+				);
+			}
 		} else {
 			$config = ArrayHelper::merge(
 				$config, 
@@ -53,7 +65,7 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
 						'class' => ['control-label', 'col-md-3 col-sm-3 col-xs-12'],
 					],
 					'wrapperOptions' => [
-						'class' => 'col-md-6 col-sm-9 col-xs-12',
+						'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
 					],
 					'hintOptions' => [
 						'tag' => 'div',
@@ -61,7 +73,7 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
 					],
 					'errorOptions' => [
 						'tag' => 'div',
-						'class' => ['help-block', 'help-block-error'],
+						'class' => 'help-block help-block-error',
 					],
 				]],
 			);
@@ -70,6 +82,9 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
 					$config, 
 					['fieldConfig' => [
 						'template' => "{label}\n{beginWrapper}\n{input}\n{error}\n{hint}\n{endWrapper}",
+						'horizontalCssClasses' => [
+							'offset' => 'col-sm-offset-3',
+						],
 					]],
 				);
 			}
