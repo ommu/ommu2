@@ -19,108 +19,89 @@ namespace app\components\widgets;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class ActiveForm extends \yii\bootstrap\ActiveForm
+function get_form_parent() {
+	if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+		return 'yii\bootstrap4\ActiveForm';
+
+	return 'yii\bootstrap\ActiveForm';
+}
+class_alias(get_form_parent(), 'app\components\widgets\OActiveForm');
+
+class ActiveForm extends OActiveForm
 {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function begin($config = [])
+	public $fieldClass = 'app\components\widgets\ActiveField';
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init()
 	{
-		$config = ArrayHelper::merge(
-			$config, 
-			self::getLayout($config)
-		);
+		if(isset($this->options['class'])) {
+			if(preg_match('/(form-horizontal)/', $this->options['class']))
+				$this->layout = 'horizontal';
+			if(preg_match('/(form-inline)/', $this->options['class']))
+				$this->layout = 'inline';
+		}
+
 		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
-			$config = ArrayHelper::merge(
-				$config, 
-				['fieldConfig' => [
-					'labelOptions' => [
-						'class' => ['col-form-label', 'col-md-4 col-sm-3 col-12'],
-					],
-					'wrapperOptions' => [
-						'class' => 'col-md-8 col-sm-9 col-12',
-						'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
-					],
-				]],
-			);
-			if(self::getLayout($config)['layout'] === 'horizontal') {
-				$config = ArrayHelper::merge(
-					$config, 
-					['fieldConfig' => [
+			$this->fieldConfig = [
+				'options' => [
+					'class' => ['form-group', 'row'],
+				],
+				'labelOptions' => [
+					'class' => ['col-form-label', 'col-md-4 col-sm-3 col-12'],
+				],
+				'wrapperOptions' => [
+					'class' => 'col-md-8 col-sm-9 col-12',
+					'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
+				],
+			];
+			if($this->layout === 'horizontal') {
+				$this->fieldConfig = ArrayHelper::merge(
+					$this->fieldConfig, 
+					[
 						'horizontalCssClasses' => [
 							'offset' => !Yii::$app->view->submenuOnLayout ? 'offset-md-4 offset-sm-3' : 'offset-sm-3',
-							'offset' => '',
 						],
-					]],
+					],
 				);
 			}
 		} else {
-			$config = ArrayHelper::merge(
-				$config, 
-				['fieldConfig' => [
-					'options' => [
-						'class' => ['form-group', 'row'],
-					],
-					'labelOptions' => [
-						'class' => ['control-label', 'col-md-3 col-sm-3 col-xs-12'],
-					],
-					'wrapperOptions' => [
-						'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
-					],
-					'hintOptions' => [
-						'tag' => 'div',
-						'class' => 'hint-block',
-					],
-					'errorOptions' => [
-						'tag' => 'div',
-						'class' => 'help-block help-block-error',
-					],
-				]],
-			);
-			if(self::getLayout($config)['layout'] === 'horizontal') {
-				$config = ArrayHelper::merge(
-					$config, 
-					['fieldConfig' => [
+			$this->fieldConfig = [
+				'options' => [
+					'class' => ['form-group', 'row'],
+				],
+				'labelOptions' => [
+					'class' => ['control-label', 'col-md-3 col-sm-3 col-xs-12'],
+				],
+				'wrapperOptions' => [
+					'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
+				],
+				'hintOptions' => [
+					'tag' => 'div',
+					'class' => 'hint-block',
+				],
+				'errorOptions' => [
+					'tag' => 'div',
+					'class' => 'help-block help-block-error',
+				],
+			];
+			if($this->layout === 'horizontal') {
+				$this->fieldConfig = ArrayHelper::merge(
+					$this->fieldConfig, 
+					[
 						'template' => "{label}\n{beginWrapper}\n{input}\n{error}\n{hint}\n{endWrapper}",
 						'horizontalCssClasses' => [
 							'offset' => 'col-sm-offset-3',
 						],
-					]],
+					],
 				);
 			}
 		}
 
-		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
-			$parentClass = 'yii\bootstrap4\ActiveForm';
-
-		return  $parentClass::begin($config);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function end()
-	{
-		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
-			$parentClass = 'yii\bootstrap4\ActiveForm';
-
-		return  $parentClass::end($config);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function getLayout($config)
-	{
-		if(!isset($config['options']['class']))
-			return [];
-
-		if(preg_match('/(form-horizontal)/', $config['options']['class']))
-			return ['layout'=>'horizontal'];
-
-		if(preg_match('/(form-inline)/', $config['options']['class']))
-			return ['layout'=>'inline'];
+		parent::init();
 	}
 }
