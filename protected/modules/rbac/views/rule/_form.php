@@ -27,21 +27,18 @@ use app\components\widgets\ActiveForm;
 
 <?php //echo $form->errorSummary($model);?>
 
-<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'name')
 	->textInput(['maxlength' => 64])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'className', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'className')
 	->textInput()
 	->label($model->getAttributeLabel('className')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
-		'name' => 'submit-button']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(['button'=>Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'), 'name' => 'submit-button'])]); ?>
 
 <?php ActiveForm::end(); ?>
 

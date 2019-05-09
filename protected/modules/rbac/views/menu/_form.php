@@ -40,43 +40,41 @@ $this->registerJs($this->render('_script.js'));
 
 <?php echo Html::activeHiddenInput($model, 'parent', ['id' => 'parent_id']); ?>
 
-<?php echo $form->field($model, 'name', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'name')
 	->textInput(['maxlength' => 128])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'icon', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'icon')
 	->widget('\insolita\iconpicker\Iconpicker', [
 		'iconset'=>'fontawesome',
 		'clientOptions'=>['rows'=>8,'cols'=>10,'placement'=>'right'],
 	])
 	->label($model->getAttributeLabel('icon')); ?>
 
-<?php echo $form->field($model, 'parent_name', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'parent_name')
 	->textInput(['id' => 'parent_name'])
 	->label($model->getAttributeLabel('parent_name')); ?>
 
-<?php echo $form->field($model, 'route', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'route')
 	->textInput(['id' => 'route'])
 	->label($model->getAttributeLabel('route')); ?>
 
-<?php echo $form->field($model, 'order', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'order')
 	->input('number')
 	->label($model->getAttributeLabel('order')); ?>
 
-<?php echo $form->field($model, 'data', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'data')
 	->textarea(['rows' => 4])
 	->label($model->getAttributeLabel('data')); ?>
 
-<?php echo $form->field($model, 'public', ['horizontalCssClasses' => ['wrapper'=>'col-sm-9 col-xs-12 col-12']])
+<?php echo $form->field($model, 'public')
 	->checkbox()
 	->label($model->getAttributeLabel('public')); ?>
 
 <div class="ln_solid"></div>
-<div class="form-group row">
-	<div class="col-sm-9 col-xs-12 col-12 col-sm-offset-3">
-		<?php echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
-	</div>
-</div>
+
+<?php echo $form->field($model, 'submitButton')
+	->submitButton(['button'=>Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])]); ?>
 
 <?php ActiveForm::end(); ?>
 
