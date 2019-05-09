@@ -3,9 +3,9 @@
  * ActiveField represents a form input field within an [[ActiveForm]].
  *
  * For more details and usage information on ActiveField, see the [guide article on forms](guide:input-forms).
+ * @see yii\gii\components\ActiveField
  * @see yii\bootstrap\ActiveField
  * @see yii\widgets\ActiveField
- * @see yii\gii\components\ActiveField
  * @see app\components\widgets\ActiveField
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
@@ -20,9 +20,15 @@ namespace app\components\widgets;
 use Yii;
 use yii\gii\Generator;
 use yii\helpers\Json;
+use yii\helpers\Html;
 
 class GiiActiveField extends \app\components\widgets\ActiveField
 {
+	/**
+	 * @var Generator
+	 */
+	public $model;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -30,6 +36,10 @@ class GiiActiveField extends \app\components\widgets\ActiveField
 	{
 		parent::init();
 
+		$stickyAttributes = $this->model->stickyAttributes();
+		if (in_array($this->attribute, $stickyAttributes, true)) {
+			$this->sticky();
+		}
 		$hints = $this->model->hints();
 		if (isset($hints[$this->attribute])) {
 			$this->hint($hints[$this->attribute]);
@@ -42,6 +52,17 @@ class GiiActiveField extends \app\components\widgets\ActiveField
 				$this->autoComplete($autoCompleteData[$this->attribute]);
 			}
 		}
+	}
+
+	/**
+	 * Makes field remember its value between page reloads
+	 * @return $this the field object itself
+	 */
+	public function sticky()
+	{
+		Html::addCssClass($this->options['class'], 'sticky');
+
+		return $this;
 	}
 
 	/**

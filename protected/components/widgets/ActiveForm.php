@@ -46,8 +46,12 @@ class ActiveForm extends OActiveForm
 				$this->layout = 'inline';
 		}
 
+		$submenuOnLayout = false;
+		if(Yii::$app->view->submenuOnLayout || in_array(strtolower(Yii::$app->view->context->module->id), ['gii', 'rbac']))
+			$submenuOnLayout = true;
+
 		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
-			$this->fieldConfig = [
+			$fieldConfig = [
 				'options' => [
 					'class' => ['form-group', 'row'],
 				],
@@ -55,22 +59,21 @@ class ActiveForm extends OActiveForm
 					'class' => ['col-form-label', 'col-md-4 col-sm-3 col-12'],
 				],
 				'wrapperOptions' => [
-					'class' => 'col-md-8 col-sm-9 col-12',
-					'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
+					'class' => !$submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
 				],
 			];
 			if($this->layout === 'horizontal') {
-				$this->fieldConfig = ArrayHelper::merge(
-					$this->fieldConfig, 
+				$fieldConfig = ArrayHelper::merge(
+					$fieldConfig, 
 					[
 						'horizontalCssClasses' => [
-							'offset' => !Yii::$app->view->submenuOnLayout ? 'offset-md-4 offset-sm-3' : 'offset-sm-3',
+							'offset' => !$submenuOnLayout ? 'offset-md-4 offset-sm-3' : 'offset-sm-3',
 						],
-					],
+					]
 				);
 			}
 		} else {
-			$this->fieldConfig = [
+			$fieldConfig = [
 				'options' => [
 					'class' => ['form-group', 'row'],
 				],
@@ -78,7 +81,7 @@ class ActiveForm extends OActiveForm
 					'class' => ['control-label', 'col-md-3 col-sm-3 col-xs-12'],
 				],
 				'wrapperOptions' => [
-					'class' => !Yii::$app->view->submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
+					'class' => !$submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
 				],
 				'hintOptions' => [
 					'tag' => 'div',
@@ -90,17 +93,22 @@ class ActiveForm extends OActiveForm
 				],
 			];
 			if($this->layout === 'horizontal') {
-				$this->fieldConfig = ArrayHelper::merge(
-					$this->fieldConfig, 
+				$fieldConfig = ArrayHelper::merge(
+					$fieldConfig, 
 					[
 						'template' => "{label}\n{beginWrapper}\n{input}\n{error}\n{hint}\n{endWrapper}",
 						'horizontalCssClasses' => [
 							'offset' => 'col-sm-offset-3',
 						],
-					],
+					]
 				);
 			}
 		}
+
+		if(!empty($this->fieldConfig))
+			$fieldConfig = ArrayHelper::merge($fieldConfig, $this->fieldConfig);
+
+		$this->fieldConfig = $fieldConfig;
 
 		parent::init();
 	}
