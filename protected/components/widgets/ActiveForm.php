@@ -56,7 +56,7 @@ class ActiveForm extends OActiveForm
 					'class' => ['form-group', 'row'],
 				],
 				'labelOptions' => [
-					'class' => ['col-form-label', 'col-md-4 col-sm-3 col-12'],
+					'class' => ['col-form-label', (!$submenuOnLayout ? 'col-md-4 col-sm-3 col-12' : 'col-sm-3 col-12')],
 				],
 				'wrapperOptions' => [
 					'class' => !$submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
