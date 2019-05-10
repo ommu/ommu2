@@ -79,11 +79,15 @@
 			]
 		},
 		"installer-types": [
-			"ommu-theme"
+			"ommu-theme",
+			"ommu-apps"
 		],
 		"installer-paths": {
 			"themes/{$name}/": [
 				"type:ommu-theme"
+			],
+			"{$name}": [
+				"type:ommu-apps"
 			]
 		}
 	},
