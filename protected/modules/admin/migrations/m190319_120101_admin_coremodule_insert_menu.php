@@ -22,7 +22,7 @@ class m190319_120101_admin_coremodule_insert_menu extends \yii\db\Migration
 			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Summary', 'admin', null, Menu::getParentId('Dashboard#rbac'), '/admin/dashboard/index', null, null],
 				['Static Pages', 'admin', null, Menu::getParentId('Publications#rbac'), '/admin/page/admin/index', null, null],
-				['General Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/general', null, null],
+				['Public Permissions', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/general', null, null],
 				['Spam & Banning Tools', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/banned', null, null],
 				['Signup Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/signup', null, null],
 				['Language Settings', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/language', null, null],
