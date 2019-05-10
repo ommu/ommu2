@@ -66,6 +66,7 @@ class ActiveForm extends OActiveForm
 				$fieldConfig = ArrayHelper::merge(
 					$fieldConfig, 
 					[
+						'template' => "{label}\n{beginWrapper}\n{input}\n{error}\n{hint}\n{endWrapper}",
 						'horizontalCssClasses' => [
 							'offset' => !$submenuOnLayout ? 'offset-md-4 offset-sm-3' : 'offset-sm-3',
 						],

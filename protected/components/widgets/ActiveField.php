@@ -56,7 +56,7 @@ class ActiveField extends OActiveField
 	 */
 	public function submitButton($options = [])
 	{
-		if($this->template === $this->form->fieldConfig['template']) {
+		if(!isset($this->template) || (isset($this->template) && $this->template === $this->form->fieldConfig['template'])) {
 			if (!isset($options['template'])) {
 				$this->template = $this->form->layout === 'horizontal' ?
 					$this->horizontalSubmitButtonTemplate : $this->horizontalSubmitButtonTemplate;
