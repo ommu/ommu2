@@ -15,9 +15,10 @@ $config = [
 		'app\components\bootstrap\ThemeControllerHandle'
 	],
 	'aliases' => [
-		'@bower' => '@vendor/bower-asset',
-		'@npm'   => '@vendor/npm-asset',
-		'@ommu'  => '@vendor/ommu',
+		'@bower'      => '@vendor/bower-asset',
+		'@npm'        => '@vendor/npm-asset',
+		'@ommu'       => '@vendor/ommu',
+		'@webpublic'  => '/public',
 	],
 	'components' => [
 		'request' => [

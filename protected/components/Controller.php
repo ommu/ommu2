@@ -19,9 +19,13 @@ use app\components\Application;
 class Controller extends \yii\web\Controller
 {
 	/**
-	 * @var string untuk menampung sub-menu pada view.
+	 * @var string untuk menampung sub-menu yang akan di render pada layout main_submenu.
 	 */
 	public $subMenu = [];
+	/**
+	 * @var integer untuk menampung sub-menu parameter.
+	 */
+	public $subMenuParam;
 	/**
 	 * @var object instance dari current controller. jika controller yg akses site maka akan berisi site.
 	 *    variabel akan di isi oleh klas anak/turunan dari klas ini.
