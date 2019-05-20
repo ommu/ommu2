@@ -15,7 +15,6 @@ namespace app\components;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
-use app\components\Application;
 
 class View extends \yii\web\View
 {
@@ -94,11 +93,10 @@ class View extends \yii\web\View
 			if(!empty($this->context->subMenu))
 				$this->context->layout = 'main_submenu';
 
-			$appName = Application::getAppId();
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
 
-				$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
+				$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 			}
 
@@ -115,9 +113,8 @@ class View extends \yii\web\View
 	 */
 	public function afterRender($viewFile, $params, &$output) 
 	{
-		$appName = Application::getAppId();
-		$description = Yii::$app->setting->get(join('_', [$appName, 'description']));
-		$keywords = Yii::$app->setting->get(join('_', [$appName, 'keywords']));
+		$description = Yii::$app->setting->get(join('_', [Yii::$app->id, 'description']));
+		$keywords = Yii::$app->setting->get(join('_', [Yii::$app->id, 'keywords']));
 
 		parent::afterRender($viewFile, $params, $output);
 
@@ -229,9 +226,8 @@ class View extends \yii\web\View
 	 */
 	public function getPageTitle() 
 	{
-		$appName = Application::getAppId();
-		$pageTitleTemplate = Yii::$app->setting->get(join('_', [$appName, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
-		$siteName = unserialize(Yii::$app->setting->get(join('_', [$appName, 'name'])));
+		$pageTitleTemplate = Yii::$app->setting->get(join('_', [Yii::$app->id, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
+		$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
 
 		return strtr($pageTitleTemplate, [
 			'{title}' => trim($this->title) != '' ? $this->title : 'OMMU',
@@ -315,11 +311,10 @@ class View extends \yii\web\View
 		if($context != null && $context->hasMethod('isBackofficeTheme'))
 			$isBackofficeTheme = $context->isBackofficeTheme();
 
-		$appName = Application::getAppId();
-		$themeParam = join('_', [$appName, 'theme']);
+		$themeParam = join('_', [Yii::$app->id, 'theme']);
 		$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 		if($isBackofficeTheme) {
-			$themeParam = join('_', [$appName, 'backoffice_theme']);
+			$themeParam = join('_', [Yii::$app->id, 'backoffice_theme']);
 			$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 			self::$isBackoffice = true;
 		}
@@ -351,10 +346,9 @@ class View extends \yii\web\View
 		if(($layout = Yii::$app->request->get('layout')) != null)
 			return $layout ? $layout : 'default';
 
-		$appName = Application::getAppId();
-		$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'theme_sublayout']), 'default');
+		$themeSublayout = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_sublayout']), 'default');
 		if(self::$isBackoffice)
-			$themeSublayout = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_sublayout']), 'default');
+			$themeSublayout = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_sublayout']), 'default');
 
 		return $themeSublayout;
 	}
@@ -396,10 +390,9 @@ class View extends \yii\web\View
 	 */
 	public function getPagination()
 	{
-		$appName = Application::getAppId();
-		$themePagination = Yii::$app->setting->get(join('_', [$appName, 'theme_pagination']), 'default');
+		$themePagination = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_pagination']), 'default');
 		if(self::$isBackoffice)
-			$themePagination = Yii::$app->setting->get(join('_', [$appName, 'backoffice_theme_pagination']), 'default');
+			$themePagination = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_pagination']), 'default');
 
 		return $themePagination;
 	}

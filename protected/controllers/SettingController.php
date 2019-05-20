@@ -21,7 +21,6 @@ use Yii;
 use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\BaseSetting;
-use app\components\Application;
 use app\components\Theme;
 
 class SettingController extends Controller
@@ -44,9 +43,7 @@ class SettingController extends Controller
 	public function actionUpdate()
 	{
 		$app = Yii::$app->request->get('app');
-		$appName = Application::getAppId();
-
-		$model = new BaseSetting(['app'=>$app ? $app : $appName]);
+		$model = new BaseSetting(['app'=>$app ? $app : Yii::$app->id]);
 
 		$themes = [];
 		foreach($allTheme = Theme::getThemes() as $key => $val) {
