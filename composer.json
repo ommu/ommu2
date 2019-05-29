@@ -33,8 +33,8 @@
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
 		"ommu/report": "dev-master",
-		"ommu/support": "~2.2",
-		"ommu/banner": "~2.3",
+		"ommu/support": "~2.1",
+		"ommu/banner": "~2.1",
 		"ommu/gentelella": "dev-master",
 		"ommu/yii2-selectize": "*",
 		"mg-code/yii2-helpers": "*"
