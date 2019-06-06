@@ -334,6 +334,9 @@ class View extends \yii\web\View
 				'@app/views'	=> sprintf('@themes/%s', $themeName),
 				'@app/modules'	=> sprintf('@themes/%s/modules', $themeName),
 				'@app/widgets'	=> sprintf('@themes/%s/widgets', $themeName),
+				sprintf('@%s/app/views', Yii::$app->id)		=> sprintf('@themes/%s', $themeName),
+				sprintf('@%s/app/modules', Yii::$app->id)	=> sprintf('@themes/%s/modules', $themeName),
+				sprintf('@%s/app/widgets', Yii::$app->id)	=> sprintf('@themes/%s/widgets', $themeName),
 			],
 		]);
 	}
