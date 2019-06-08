@@ -14,7 +14,6 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Inflector;
 
 class View extends \yii\web\View
 {
@@ -410,25 +409,30 @@ class View extends \yii\web\View
 
 	/**
 	 * Renders a static string by applying a widget layout.
-     *
-     * @param string $view the view name.
-     * @param array $params the parameters (name-value pairs) that should be made available in the view.
-     * These parameters will not be available in the layout.
-     * @return string the rendering result.
+	 *
+	 * @param string $view the view name.
+	 * @param array $params the parameters (name-value pairs) that should be made available in the view.
+	 * These parameters will not be available in the layout.
+	 * @return string the rendering result.
 	 */
 	public function renderWidget($view, $params=[], $context=null)
 	{
 		if($context == null)
 			$context = $this->context;
-		$contentMenu = false;
-		if(isset($params['contentMenu']))
-			$contentMenu = $params['contentMenu'];
 		$content = $this->render($view, $params, $context);
 
-		$layout = $context->layout;
+		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
-		if ($layoutFile !== false)
-			return $this->renderFile($layoutFile, ['content'=>$content, 'contentMenu'=>$contentMenu], $context);
+		if ($layoutFile !== false) {
+			$contentParams = ['content'=>$content];
+
+			$contentMenu = false;
+			if(isset($params['contentMenu']))
+				$contentMenu = $params['contentMenu'];
+			$contentParams = ArrayHelper::merge($contentParams, ['contentMenu'=>$contentMenu]);
+
+			return $this->renderFile($layoutFile, $contentParams, $context);
+		}
 
 		return $content;
 	}

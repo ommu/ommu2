@@ -82,7 +82,7 @@ class ActiveForm extends OActiveForm
 					'class' => ['control-label', 'col-md-3 col-sm-3 col-xs-12'],
 				],
 				'wrapperOptions' => [
-					'class' => !$submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12',
+					'class' => !Yii::$app->request->isAjax ? (!$submenuOnLayout ? 'col-md-6 col-sm-9 col-xs-12' : 'col-md-9 col-sm-9 col-xs-12') : 'col-md-9 col-sm-9 col-xs-12',
 				],
 				'hintOptions' => [
 					'tag' => 'div',

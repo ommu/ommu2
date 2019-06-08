@@ -13,8 +13,7 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\Url;
-use ommu\core\models\CoreSettings;
-use app\components\Application;
+use yii\helpers\ArrayHelper;
 
 class Controller extends \yii\web\Controller
 {
@@ -172,7 +171,7 @@ class Controller extends \yii\web\Controller
 		if($data == null)
 			$data = [];
 
-		$data = \yii\helpers\ArrayHelper::merge(
+		$data = ArrayHelper::merge(
 			$data,
 			['partial' => Yii::$app->request->isAjax ? true : false]
 		);
@@ -180,6 +179,34 @@ class Controller extends \yii\web\Controller
 		if(!Yii::$app->request->isAjax)
 			return $this->render($render, $data);
 
-		return $this->renderPartial($render, $data);
+		return $this->renderModal($render, $data);
+	}
+
+	/**
+	 * Renders a static string by applying a modal layout.
+	 *
+	 * @param string $view the view name.
+	 * @param array $params the parameters (name-value pairs) that should be made available in the view.
+	 * These parameters will not be available in the layout.
+	 * @return string the rendering result.
+	 */
+	public function renderModal($view, $params=[])
+	{
+		$content = $this->getView()->render($view, $params, $this);
+
+		$layout = $context->layout ? $context->layout : 'main';
+		$layoutFile = preg_replace("/($layout)/", 'modal', $this->findLayoutFile($this->getView()));
+		if ($layoutFile !== false) {
+			$contentParams = ['content'=>$content];
+
+			$modalHeader = true;
+			if(isset($params['modalHeader']))
+				$modalHeader = $params['modalHeader'];
+			$contentParams = ArrayHelper::merge($contentParams, ['modalHeader'=>$modalHeader]);
+
+			return $this->getView()->renderFile($layoutFile, $contentParams, $this);
+		}
+
+		return $content;
 	}
 }
