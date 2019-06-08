@@ -89,7 +89,7 @@ class View extends \yii\web\View
 				$this->setTheme($this->context);
 			}
 
-			if(!empty($this->context->subMenu))
+			if(!empty($this->context->subMenu) && !Yii::$app->request->isAjax)
 				$this->context->layout = 'main_submenu';
 
 			if(!self::$_appNameApplied) {
