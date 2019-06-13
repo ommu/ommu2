@@ -37,7 +37,8 @@
 		"ommu/banner": "~2.1",
 		"ommu/gentelella": "dev-master",
 		"ommu/yii2-selectize": "*",
-		"mg-code/yii2-helpers": "*"
+		"mg-code/yii2-helpers": "*",
+		"ommu/gapi-google-analytics-php-interface": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

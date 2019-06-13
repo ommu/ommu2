@@ -179,7 +179,7 @@ class Controller extends \yii\web\Controller
 		if(!Yii::$app->request->isAjax)
 			return $this->render($render, $data);
 
-		return $this->renderModal($render, $data);
+		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader'=>false]));
 	}
 
 	/**
