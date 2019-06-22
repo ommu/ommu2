@@ -110,7 +110,7 @@ class View extends \yii\web\View
 	 * afterRender()
 	 * Mendaftarkan meta description, keyword dan image pada view/layout saat render.
 	 */
-	public function afterRender($viewFile, $params, &$output) 
+	public function afterRender($viewFile, $params, &$output)
 	{
 		$description = Yii::$app->setting->get(join('_', [Yii::$app->id, 'description']));
 		$keywords = Yii::$app->setting->get(join('_', [Yii::$app->id, 'keywords']));
@@ -223,7 +223,7 @@ class View extends \yii\web\View
 	 *
 	 * @return string
 	 */
-	public function getPageTitle() 
+	public function getPageTitle()
 	{
 		$pageTitleTemplate = Yii::$app->setting->get(join('_', [Yii::$app->id, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
 		$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
@@ -240,7 +240,7 @@ class View extends \yii\web\View
 	 *
 	 * @return boolean true|false
 	 */
-	public function getDialog() 
+	public function getDialog()
 	{
 		return isset($this->background) && trim($this->background) != '' ? true : false;
 	}
