@@ -192,7 +192,7 @@ class Controller extends \yii\web\Controller
 	 */
 	public function renderModal($view, $params=[])
 	{
-		$content = $this->getView()->render($view, $params, $this);
+		$content = $this->renderAjax($view, $params);
 
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'modal', $this->findLayoutFile($this->getView()));

@@ -43,10 +43,16 @@ $config = [
 			'ruleTable'         => 'ommu_core_auth_rule',
 		],
 		'formatter' => [
-			'class'          => 'app\components\i18n\Formatter',
-			'dateFormat'     => 'php:d-M-Y',
-			'datetimeFormat' => 'php:d-M-Y H:i:s',
-			'timeFormat'     => 'php:H:i:s',
+			'class'             => 'app\components\i18n\Formatter',
+			'dateFormat'        => 'php:d-M-Y',
+			'datetimeFormat'    => 'php:d-M-Y H:i:s',
+			'timeFormat'        => 'php:H:i:s',
+			'thousandSeparator' => '.',
+			'decimalSeparator'  => ',',
+			'locale'            => 'id',
+			'defaultTimeZone'   => 'Asia/Jakarta',
+			'currencyCode'      => 'IDR',
+		 
 		],
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
