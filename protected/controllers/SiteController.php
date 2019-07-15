@@ -38,6 +38,9 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+		if(Yii::$app->user->isGuest && Yii::$app->id == 'back3nd')
+			return $this->redirect(Url::to(['/admin/login']));
+
 		return $this->render('front_index');
 	}
 
