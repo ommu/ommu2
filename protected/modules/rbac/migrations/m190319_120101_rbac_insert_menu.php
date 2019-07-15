@@ -37,7 +37,6 @@ class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 		if(Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Menu Settings', 'rbac', null, Menu::getParentId('Settings#rbac'), '/rbac/menu/index', null, null],
-				['Permission Manager', 'rbac', null, Menu::getParentId('Development Tools#rbac'), '/rbac/assignment/index', null, null],
 			]);
 		}
 	}

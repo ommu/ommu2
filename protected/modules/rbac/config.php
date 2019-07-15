@@ -24,6 +24,12 @@ return [
 			'fullnameField'  => 'displayname',
 			'extraColumns'   => [
 				[
+					'attribute' => 'username',
+					'value' => function($model, $key, $index, $column) {
+						return $model->username;
+					}
+				],
+				[
 					'attribute' => 'displayname',
 					'value' => function($model, $key, $index, $column) {
 						return $model->displayname;
