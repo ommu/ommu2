@@ -71,7 +71,10 @@
 		"yii\\composer\\Installer::postCreateProject": {
 			"setPermission": [
 				{
-					"protected/runtime": "0777"
+					"protected/runtime": "0777",
+					"back3nd/assets": "0777",
+					"back3nd/cache": "0777",
+					"back3nd/app/runtime": "0777"
 				}
 			]
 		},
