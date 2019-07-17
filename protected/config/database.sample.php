@@ -4,7 +4,7 @@ return [
 		// uncomment the following to use a MySQL database
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host=db.host;dbname=dbname=db.name',
+			'dsn' => 'mysql:host=db.host;dbname=db.name',
 			'username' => 'db.username',
 			'password' => 'db.password',
 			'charset' => 'utf8',
