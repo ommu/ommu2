@@ -40,7 +40,7 @@ class Application extends \yii\web\Application
 	 */
 	public static function isDev(): bool 
 	{
-		return defined('YII_DEBUG') && ($_SERVER["SERVER_ADDR"] == '127.0.0.1' || $_SERVER["HTTP_HOST"] == 'localhost');
+		return $_SERVER["SERVER_ADDR"] == '127.0.0.1' || $_SERVER["HTTP_HOST"] == 'localhost';
 	}
 
 	/**
