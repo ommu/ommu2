@@ -6,6 +6,9 @@
  * Reference start
  * TOC :
  *	Update
+ *	Sublayout
+ *	Pagination
+ *	Reset
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
@@ -35,6 +38,13 @@ class SettingController extends Controller
 				'class' => AccessControl::className(),
 			],
 		];
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function allowAction(): array {
+		return ['reset'];
 	}
 
 	/**
@@ -136,5 +146,15 @@ class SettingController extends Controller
 			];
 		}
 		return $result;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function actionReset()
+	{
+		Yii::$app->setting->invalidateCache();
+
+		return $this->goBack();
 	}
 }
