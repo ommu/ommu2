@@ -153,7 +153,7 @@ class SettingController extends Controller
 	 */
 	public function actionReset()
 	{
-		Yii::$app->setting->invalidateCache();
+		Yii::$app->setting->delete('reset');
 
 		return $this->goBack();
 	}
