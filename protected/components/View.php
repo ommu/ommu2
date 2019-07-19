@@ -14,6 +14,7 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 
 class View extends \yii\web\View
 {
@@ -97,6 +98,11 @@ class View extends \yii\web\View
 
 				$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
+
+				if(Yii::$app->isDemoTheme()) {
+					$themeInfo = self::themeParseYaml($this->theme->name);
+					Yii::$app->name = Inflector::camelize($themeInfo['name']);
+				}
 			}
 
 			if(!self::$_settingInitialize) {
@@ -228,8 +234,17 @@ class View extends \yii\web\View
 		$pageTitleTemplate = Yii::$app->setting->get(join('_', [Yii::$app->id, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
 		$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
 
+		$title = trim($this->title) != '' ? $this->title : 'OMMU';
+		if(Yii::$app->isDemoTheme()) {
+			$themeInfo = self::themeParseYaml($this->theme->name);
+			if($title != 'OMMU')
+				$title = join(' - ', [$this->title, $themeInfo['name']]);
+			else
+				$title = $themeInfo['name'];
+		}
+
 		return strtr($pageTitleTemplate, [
-			'{title}' => trim($this->title) != '' ? $this->title : 'OMMU',
+			'{title}' => $title,
 			'{small-name}' => $siteName ? $siteName['small'] : 'OMMU',
 			'{long-name}' => $siteName ? $siteName['long'] : 'OMMU',
 		]);
