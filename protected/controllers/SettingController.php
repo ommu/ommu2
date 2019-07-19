@@ -57,7 +57,7 @@ class SettingController extends Controller
 
 		$themes = [];
 		foreach($allTheme = Theme::getThemes() as $key => $val) {
-			$themes[$key] = $val ? $val['name'] : ucwords($key);
+			$themes[$key] = $val ? $val['desc'] : ucwords($key);
 		}
 
 		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'];
