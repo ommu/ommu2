@@ -13,9 +13,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\components\widgets\ActiveForm;
-use app\models\BaseSetting;
 use yii\helpers\ArrayHelper;
+use app\components\widgets\ActiveForm;
 use ommu\selectize\Selectize;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
@@ -62,7 +61,7 @@ $getPaginationUrl = Url::to(['pagination', 'theme'=>'']);
 	//'enableClientScript' => true,
 ]); ?>
 
-<?php $appType = BaseSetting::getAppType();
+<?php $appType = $model::getAppType();
 echo $form->field($model, 'app_type')
 	->dropDownList($appType, ['prompt'=>''])
 	->label($model->getAttributeLabel('app_type')); ?>
@@ -93,9 +92,16 @@ echo $form->field($model, 'app_type')
 	->label($model->getAttributeLabel('keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your website. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your website\'s search engine rankings.')); ?>
 
+<?php $uploadPath = join('/', [$model::getUploadPath(false)]);
+$logo = $model->logo ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->logo])), ['alt'=>$model->logo, 'class'=>'mb-3']) : '';
+echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$logo.'</div>{input}{error}{hint}{endWrapper}'])
+	->fileInput()
+	->label($model->getAttributeLabel('logo'))
+	->hint(Yii::t('app', 'extensions are allowed: png, bmp')); ?>
+
 <div class="ln_solid"></div>
 
-<?php $online = BaseSetting::getOnline();
+<?php $online = $model::getOnline();
 echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->radioList($online)
 	->label($model->getAttributeLabel('online'))
@@ -124,7 +130,7 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 
 <div class="ln_solid"></div>
 
-<?php $appType = BaseSetting::getAnalytics();
+<?php $appType = $model::getAnalytics();
 echo $form->field($model, 'analytic')
 	->dropDownList($appType, ['prompt'=>''])
 	->label($model->getAttributeLabel('analytic'))
@@ -214,7 +220,7 @@ echo $form->field($model, 'analytic')
 	])
 	->label($model->getAttributeLabel('backoffice_theme_pagination'));?>
 
-<?php $appType = BaseSetting::getAnalytics();
+<?php $appType = $model::getAnalytics();
 echo $form->field($model, 'backoffice_indexing')
 	->dropDownList($appType, ['prompt'=>''])
 	->label($model->getAttributeLabel('backoffice_indexing')); ?>
@@ -297,7 +303,7 @@ echo $form->field($model, 'backoffice_indexing')
 	])
 	->label($model->getAttributeLabel('theme_pagination'));?>
 
-<?php $appType = BaseSetting::getAnalytics();
+<?php $appType = $model::getAnalytics();
 echo $form->field($model, 'theme_indexing')
 	->dropDownList($appType, ['prompt'=>''])
 	->label($model->getAttributeLabel('theme_indexing')); ?>
