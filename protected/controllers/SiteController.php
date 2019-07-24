@@ -45,6 +45,9 @@ class SiteController extends Controller
 				return $this->redirect(Url::to(['/admin/dashboard/index']));
 		}
 
+		$this->view->title = Yii::t('app', 'Home');
+		$this->view->description = '';
+		$this->view->keywords = '';
 		return $this->render('front_index');
 	}
 
@@ -93,31 +96,38 @@ class SiteController extends Controller
 		return $this->goHome();
 	}
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+	/**
+	 * Displays contact page.
+	 *
+	 * @return Response|string
+	 */
+	public function actionContact()
+	{
+		$model = new ContactForm();
+		if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+			Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
+			return $this->refresh();
+		}
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+		$this->view->title = Yii::t('app', 'Contact Us');
+		$this->view->description = '';
+		$this->view->keywords = '';
+		return $this->render('contact', [
+			'model' => $model,
+		]);
+	}
+
+	/**
+	 * Displays about page.
+	 *
+	 * @return string
+	 */
+	public function actionAbout()
+	{
+		$this->view->title = Yii::t('app', 'Abouts');
+		$this->view->description = '';
+		$this->view->keywords = '';
+		return $this->render('about');
+	}
 }
