@@ -120,6 +120,8 @@ class View extends \yii\web\View
 	{
 		$description = Yii::$app->setting->get(join('_', [Yii::$app->id, 'description']));
 		$keywords = Yii::$app->setting->get(join('_', [Yii::$app->id, 'keywords']));
+		$backendIndexing = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_indexing']), 1);
+		$frontendIndexing = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_indexing']), 1);
 
 		parent::afterRender($viewFile, $params, $output);
 
@@ -142,7 +144,7 @@ class View extends \yii\web\View
 			], 'image');
 		}
 
-		if(self::$isBackoffice && Yii::$app->params['backofficeOption']['noindex']) {
+		if((self::$isBackoffice && !$backendIndexing) || (!self::$isBackoffice && !$frontendIndexing)) {
 			$this->registerMetaTag([
 				'name'  => 'robots',
 				'content' => 'noindex',

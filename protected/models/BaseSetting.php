@@ -28,9 +28,11 @@ class BaseSetting extends \yii\base\Model
 	public $backoffice_theme;
 	public $backoffice_theme_sublayout;
 	public $backoffice_theme_pagination;
+	public $backoffice_indexing;
 	public $theme;
 	public $theme_sublayout;
 	public $theme_pagination;
+	public $theme_indexing;
 	public $theme_include_script;
 	public $construction_date;
 	public $construction_text;
@@ -44,9 +46,9 @@ class BaseSetting extends \yii\base\Model
 	{
 		return [
 			[['app_type', 'name', 'online'], 'required'],
-			[['online', 'analytic'], 'integer'],
+			[['online', 'analytic', 'backoffice_indexing', 'theme_indexing'], 'integer'],
 			[['app_type', 'name', 'description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_include_script', 'construction_date', 'construction_text', 'analytic_property'], 'string'],
-			[['description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_include_script', 'construction_date', 'construction_text', 'analytic', 'analytic_property'], 'safe'],
+			[['description', 'keywords', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'backoffice_indexing', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_indexing', 'theme_include_script', 'construction_date', 'construction_text', 'analytic', 'analytic_property'], 'safe'],
 			[['app_type', 'analytic_property'], 'string', 'max' => 16],
 			[['pagetitle_template'], 'string', 'max' => 64],
 			[['name', 'description', 'keywords'], 'string', 'max' => 256],
@@ -69,9 +71,11 @@ class BaseSetting extends \yii\base\Model
 			'backoffice_theme' => Yii::t('app', 'Backend Theme'),
 			'backoffice_theme_sublayout' => Yii::t('app', 'Backend Sublayout'),
 			'backoffice_theme_pagination' => Yii::t('app', 'Backend Pagination'),
+			'backoffice_indexing' => Yii::t('app', 'Backend Search Engine Indexing'),
 			'theme'=> Yii::t('app', 'Frontend Theme'),
 			'theme_sublayout'=> Yii::t('app', 'Frontend Sublayout'),
 			'theme_pagination'=> Yii::t('app', 'Frontend Pagination'),
+			'theme_indexing' => Yii::t('app', 'Frontend Search Engine Indexing'),
 			'theme_include_script'=> Yii::t('app', 'Head Scripts/Styles'),
 			'construction_date' => Yii::t('app', 'Offline Date'),
 			'construction_text' => Yii::t('app', 'Maintenance Text'),
@@ -98,9 +102,11 @@ class BaseSetting extends \yii\base\Model
 		$this->backoffice_theme = Yii::$app->setting->get($this->getId('backoffice_theme'));
 		$this->backoffice_theme_sublayout = Yii::$app->setting->get($this->getId('backoffice_theme_sublayout'));
 		$this->backoffice_theme_pagination = Yii::$app->setting->get($this->getId('backoffice_theme_pagination'));
+		$this->backoffice_indexing = Yii::$app->setting->get($this->getId('backoffice_indexing'));
 		$this->theme = Yii::$app->setting->get($this->getId('theme'));
 		$this->theme_sublayout = Yii::$app->setting->get($this->getId('theme_sublayout'));
 		$this->theme_pagination = Yii::$app->setting->get($this->getId('theme_pagination'));
+		$this->theme_indexing = Yii::$app->setting->get($this->getId('theme_indexing'));
 		$this->theme_include_script = Yii::$app->setting->get($this->getId('theme_include_script'));
 		$this->construction_date = Yii::$app->setting->get($this->getId('construction_date'));
 		$this->construction_text = unserialize(Yii::$app->setting->get($this->getId('construction_text')));
@@ -213,10 +219,19 @@ class BaseSetting extends \yii\base\Model
 				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
 		}
 
-		if($this->analytic == 1) {
-			if($this->analytic_property == '')
-				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
-		}
+		if($this->analytic != '') {
+			if($this->analytic == 1) {
+				if($this->analytic_property == '')
+					$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
+			}
+		} else
+			$this->addError('analytic', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic')]));
+
+		if($this->backoffice_indexing == '')
+			$this->addError('backoffice_indexing', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('backoffice_indexing')]));
+
+		if($this->theme_indexing == '')
+			$this->addError('theme_indexing', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('theme_indexing')]));
 
 		if(!empty($this->getErrors()))
 			return false;
@@ -257,9 +272,11 @@ class BaseSetting extends \yii\base\Model
 		Yii::$app->setting->set($this->getId('backoffice_theme'), $this->backoffice_theme);
 		Yii::$app->setting->set($this->getId('backoffice_theme_sublayout'), $this->backoffice_theme_sublayout);
 		Yii::$app->setting->set($this->getId('backoffice_theme_pagination'), $this->backoffice_theme_pagination);
+		Yii::$app->setting->set($this->getId('backoffice_indexing'), $this->backoffice_indexing);
 		Yii::$app->setting->set($this->getId('theme'), $this->theme);
 		Yii::$app->setting->set($this->getId('theme_sublayout'), $this->theme_sublayout);
 		Yii::$app->setting->set($this->getId('theme_pagination'), $this->theme_pagination);
+		Yii::$app->setting->set($this->getId('theme_indexing'), $this->theme_indexing);
 		Yii::$app->setting->set($this->getId('theme_include_script'), $this->theme_include_script);
 		Yii::$app->setting->set($this->getId('construction_date'), $this->construction_date);
 		Yii::$app->setting->set($this->getId('construction_text'), $this->construction_text);

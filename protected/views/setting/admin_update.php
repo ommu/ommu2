@@ -214,6 +214,11 @@ echo $form->field($model, 'analytic')
 	])
 	->label($model->getAttributeLabel('backoffice_theme_pagination'));?>
 
+<?php $appType = BaseSetting::getAnalytics();
+echo $form->field($model, 'backoffice_indexing')
+	->dropDownList($appType, ['prompt'=>''])
+	->label($model->getAttributeLabel('backoffice_indexing')); ?>
+
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'theme')
@@ -291,6 +296,11 @@ echo $form->field($model, 'analytic')
 		],
 	])
 	->label($model->getAttributeLabel('theme_pagination'));?>
+
+<?php $appType = BaseSetting::getAnalytics();
+echo $form->field($model, 'theme_indexing')
+	->dropDownList($appType, ['prompt'=>''])
+	->label($model->getAttributeLabel('theme_indexing')); ?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
 	->textarea(['rows'=>6, 'cols'=>50])
