@@ -127,34 +127,14 @@ class View extends \yii\web\View
 
 		$this->unsetAssetBundles();
 
-		$this->registerMetaTag([
-			'name'  => 'description',
-			'content' => trim($this->description) != '' ? $this->description : $description,
-		], 'description');
+		Yii::$app->meta->setTitle($this->title);
+		Yii::$app->meta->setDescription(trim($this->description) != '' ? $this->description : $description);
+		Yii::$app->meta->setKeywords(trim($this->keywords) != '' ? $this->keywords : $keywords);
+		Yii::$app->meta->setImage($this->image);
+		Yii::$app->meta->setUrl(Yii::$app->request->absoluteUrl);
 
-		$this->registerMetaTag([
-			'name'  => 'keywords',
-			'content' => trim($this->keywords) != '' ? $this->keywords : $keywords,
-		], 'keywords');
-
-		if(trim($this->image) != '') {
-			$this->registerMetaTag([
-				'name'  => 'image',
-				'content' => $this->image,
-			], 'image');
-		}
-
-		if((self::$isBackoffice && !$backendIndexing) || (!self::$isBackoffice && !$frontendIndexing)) {
-			$this->registerMetaTag([
-				'name'  => 'robots',
-				'content' => 'noindex',
-			], 'robots');
-
-			$this->registerMetaTag([
-				'name'  => 'googlebot',
-				'content' => 'noindex',
-			], 'googlebot');
-		}
+		if((self::$isBackoffice && !$backendIndexing) || (!self::$isBackoffice && !$frontendIndexing))
+			Yii::$app->meta->setRobots('noindex');
 	}
 
 	/**
@@ -237,6 +217,7 @@ class View extends \yii\web\View
 		$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
 
 		$title = trim($this->title) != '' ? $this->title : 'OMMU';
+		$this->title = $title;
 		if(Yii::$app->isDemoTheme()) {
 			$themeInfo = self::themeParseYaml($this->theme->name);
 			if($title != 'OMMU')

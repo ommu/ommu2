@@ -87,6 +87,10 @@ $config = [
 			'class'    => '\app\components\SettingManager',
 			'moduleId' => 'base',
 		],
+		'meta' => [
+			'class'    => '\app\components\SettingManager',
+			'moduleId' => 'meta',
+		],
 	],
 	'modules' => [
 		'redactor' => [
