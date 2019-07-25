@@ -28,6 +28,7 @@ class BaseSetting extends \yii\base\Model
 	public $description;
 	public $keywords;
 	public $logo;
+	public $copyright;
 	public $pagetitle_template;
 	public $backoffice_theme;
 	public $backoffice_theme_sublayout;
@@ -52,8 +53,8 @@ class BaseSetting extends \yii\base\Model
 		return [
 			[['app_type', 'name', 'online'], 'required'],
 			[['online', 'analytic', 'backoffice_indexing', 'theme_indexing'], 'integer'],
-			[['app_type', 'name', 'description', 'keywords', 'logo', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_include_script', 'construction_date', 'construction_text', 'analytic_property'], 'string'],
-			[['description', 'keywords', 'logo', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'backoffice_indexing', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_indexing', 'theme_include_script', 'construction_date', 'construction_text', 'analytic', 'analytic_property'], 'safe'],
+			[['app_type', 'name', 'description', 'keywords', 'logo', 'copyright', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_include_script', 'construction_date', 'construction_text', 'analytic_property'], 'string'],
+			[['description', 'keywords', 'logo', 'copyright', 'pagetitle_template', 'backoffice_theme', 'backoffice_theme_sublayout', 'backoffice_theme_pagination', 'backoffice_indexing', 'theme', 'theme_sublayout', 'theme_pagination', 'theme_indexing', 'theme_include_script', 'construction_date', 'construction_text', 'analytic', 'analytic_property'], 'safe'],
 			[['app_type', 'analytic_property', 'logo'], 'string', 'max' => 16],
 			[['pagetitle_template'], 'string', 'max' => 64],
 			[['name', 'description', 'keywords'], 'string', 'max' => 256],
@@ -73,6 +74,7 @@ class BaseSetting extends \yii\base\Model
 			'description' => Yii::t('app', 'Site Description'),
 			'keywords' => Yii::t('app', 'Site Keyword'),
 			'logo' => Yii::t('app', 'Logo'),
+			'copyright' => Yii::t('app', 'Copyright'),
 			'pagetitle_template' => Yii::t('app', 'Page Title Template'),
 			'backoffice_theme' => Yii::t('app', 'Backend Theme'),
 			'backoffice_theme_sublayout' => Yii::t('app', 'Backend Sublayout'),
@@ -105,6 +107,7 @@ class BaseSetting extends \yii\base\Model
 		$this->description = Yii::$app->setting->get($this->getId('description'));
 		$this->keywords = Yii::$app->setting->get($this->getId('keywords'));
 		$this->logo = Yii::$app->setting->get($this->getId('logo'));
+		$this->copyright = unserialize(Yii::$app->setting->get($this->getId('copyright')));
 		$this->pagetitle_template = Yii::$app->setting->get($this->getId('pagetitle_template'), '{title} | {small-name} - {long-name}');
 		$this->backoffice_theme = Yii::$app->setting->get($this->getId('backoffice_theme'));
 		$this->backoffice_theme_sublayout = Yii::$app->setting->get($this->getId('backoffice_theme_sublayout'));
@@ -267,6 +270,7 @@ class BaseSetting extends \yii\base\Model
 			return false;
 
 		$this->name = serialize($this->name);
+		$this->copyright = serialize($this->copyright);
 		if($this->construction_date != '')
 			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
 		$this->construction_text = serialize($this->construction_text);
@@ -304,6 +308,7 @@ class BaseSetting extends \yii\base\Model
 		Yii::$app->setting->set($this->getId('description'), $this->description);
 		Yii::$app->setting->set($this->getId('keywords'), $this->keywords);
 		Yii::$app->setting->set($this->getId('logo'), $this->logo);
+		Yii::$app->setting->set($this->getId('copyright'), $this->copyright);
 		Yii::$app->setting->set($this->getId('pagetitle_template'), $this->pagetitle_template);
 		Yii::$app->setting->set($this->getId('backoffice_theme'), $this->backoffice_theme);
 		Yii::$app->setting->set($this->getId('backoffice_theme_sublayout'), $this->backoffice_theme_sublayout);

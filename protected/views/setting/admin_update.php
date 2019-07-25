@@ -99,6 +99,14 @@ echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$l
 	->label($model->getAttributeLabel('logo'))
 	->hint(Yii::t('app', 'extensions are allowed: png, bmp')); ?>
 
+<?php $copyrightName = $form->field($model, 'copyright[name]', ['template' => '<div class="h5">Name</div>{input}', 'options' => ['tag' => null]])
+	->textInput(['maxlength' => true])
+	->label($model->getAttributeLabel('copyright')); ?>
+
+<?php echo $form->field($model, 'copyright[url]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$copyrightName.'<div class="h5">Website or Social Media URL</div>{input}{error}{endWrapper}'])
+	->textInput(['maxlength' => true])
+	->label($model->getAttributeLabel('copyright')); ?>
+
 <div class="ln_solid"></div>
 
 <?php $online = $model::getOnline();
