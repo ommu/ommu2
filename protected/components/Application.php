@@ -50,8 +50,7 @@ class Application extends \yii\web\Application
 	 */
 	public function isSocialMedia(): bool
 	{
-		$appName = self::getAppId();
-		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+		$appType = Yii::$app->setting->get(join('_', [Yii::$app->id, 'app_type']), 'company');
 
 		return $appType == 'community' ? true : false;
 	}
@@ -63,8 +62,7 @@ class Application extends \yii\web\Application
 	 */
 	public function isDemoApps(): bool
 	{
-		$appName = self::getAppId();
-		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+		$appType = Yii::$app->setting->get(join('_', [Yii::$app->id, 'app_type']), 'company');
 
 		return $appType == 'demo-app' ? true : false;
 	}
@@ -76,8 +74,7 @@ class Application extends \yii\web\Application
 	 */
 	public function isDemoTheme(): bool
 	{
-		$appName = self::getAppId();
-		$appType = Yii::$app->setting->get(join('_', [$appName, 'app_type']), 'company');
+		$appType = Yii::$app->setting->get(join('_', [Yii::$app->id, 'app_type']), 'company');
 
 		return $appType == 'demo-theme' ? true : false;
 	}
