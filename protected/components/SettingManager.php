@@ -17,6 +17,35 @@ use app\components\BaseSettingManager;
 
 class SettingManager extends BaseSettingManager
 {
+	public $google_meta = 1;
+	public $facebook_meta = 1;
+	public $twitter_meta = 1;
+
+	/**
+	 * init()
+	 * Menyimpan data setting pada public varibale.
+	 */
+	public function init()
+	{
+		parent::init();
+
+		$app = Yii::$app->id;
+		// google meta
+		$google_meta = $this->_loaded[join('_', [$app, 'google_meta'])];
+		if(!($google_meta == '' || $google_meta == 1))
+			$this->google_meta = 0;
+
+		// facebook meta
+		$facebook_meta = $this->_loaded[join('_', [$app, 'facebook_meta'])];
+		if(!($facebook_meta == '' || $facebook_meta == 1))
+			$this->facebook_meta = 0;
+
+		// twitter meta
+		$twitter_meta = $this->_loaded[join('_', [$app, 'twitter_meta'])];
+		if(!($twitter_meta == '' || $twitter_meta == 1))
+			$this->twitter_meta = 0;
+	}
+
 	/**
 	 * Register the robots meta
 	 * $index must be index or noindex or empty/null
@@ -46,11 +75,16 @@ class SettingManager extends BaseSettingManager
 	{
 		if (!empty($title)) {
 			Yii::$app->view->registerMetaTag(['name' => 'title', 'content' => $title], 'title');
-			Yii::$app->view->registerMetaTag(['itemprop' => 'name', 'content' => $title], 'name');
-			Yii::$app->view->registerMetaTag(['property' => 'og:type', 'content' => 'website'], 'og:type');
-			Yii::$app->view->registerMetaTag(['property' => 'og:title', 'content' => $title], 'og:title');
-			Yii::$app->view->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image'], 'twitter:card');
-			Yii::$app->view->registerMetaTag(['name' => 'twitter:title', 'content' => $title], 'twitter:title');
+			if($this->google_meta)
+				Yii::$app->view->registerMetaTag(['itemprop' => 'name', 'content' => $title], 'name');
+			if($this->facebook_meta) {
+				Yii::$app->view->registerMetaTag(['property' => 'og:type', 'content' => 'website'], 'og:type');
+				Yii::$app->view->registerMetaTag(['property' => 'og:title', 'content' => $title], 'og:title');
+			}
+			if($this->twitter_meta) {
+				Yii::$app->view->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image'], 'twitter:card');
+				Yii::$app->view->registerMetaTag(['name' => 'twitter:title', 'content' => $title], 'twitter:title');
+			}
 		}
 	}
 
@@ -62,9 +96,12 @@ class SettingManager extends BaseSettingManager
 	{
 		if (!empty($description)) {
 			Yii::$app->view->registerMetaTag(['name' => 'description', 'content' => $description], 'description');
-			Yii::$app->view->registerMetaTag(['itemprop' => 'description', 'content' => $description], 'google:description');
-			Yii::$app->view->registerMetaTag(['property' => 'og:description', 'content' => $description], 'og:description');
-			Yii::$app->view->registerMetaTag(['name' => 'twitter:description', 'content' => $description], 'twitter:description');
+			if($this->google_meta)
+				Yii::$app->view->registerMetaTag(['itemprop' => 'description', 'content' => $description], 'google:description');
+			if($this->facebook_meta)
+				Yii::$app->view->registerMetaTag(['property' => 'og:description', 'content' => $description], 'og:description');
+			if($this->twitter_meta)
+				Yii::$app->view->registerMetaTag(['name' => 'twitter:description', 'content' => $description], 'twitter:description');
 		}
 	}
 
@@ -87,9 +124,12 @@ class SettingManager extends BaseSettingManager
 	{
 		if (!empty($imageUrl)) {
 			Yii::$app->view->registerMetaTag(['name' => 'image', 'content' => $imageUrl], 'image');
-			Yii::$app->view->registerMetaTag(['itemprop' => 'image', 'content' => $imageUrl], 'google:image');
-			Yii::$app->view->registerMetaTag(['property' => 'og:image', 'content' => $imageUrl], 'og:image');
-			Yii::$app->view->registerMetaTag(['name' => 'ttwitter:image', 'content' => $imageUrl], 'twitter:image');
+			if($this->google_meta)
+				Yii::$app->view->registerMetaTag(['itemprop' => 'image', 'content' => $imageUrl], 'google:image');
+			if($this->facebook_meta)
+				Yii::$app->view->registerMetaTag(['property' => 'og:image', 'content' => $imageUrl], 'og:image');
+			if($this->twitter_meta)
+				Yii::$app->view->registerMetaTag(['name' => 'ttwitter:image', 'content' => $imageUrl], 'twitter:image');
 		}
 	}
 
@@ -100,7 +140,8 @@ class SettingManager extends BaseSettingManager
 	public function setUrl($url)
 	{
 		if (!empty($url)) {
-			Yii::$app->view->registerMetaTag(['property' => 'og:url', 'content' => $url], 'og:url');
+			if($this->facebook_meta)
+				Yii::$app->view->registerMetaTag(['property' => 'og:url', 'content' => $url], 'og:url');
 		}
 	}
 

@@ -313,7 +313,7 @@ echo $form->field($model, 'backoffice_indexing')
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'theme_indexing')
-	->dropDownList($appType,)
+	->dropDownList($appType)
 	->label($model->getAttributeLabel('theme_indexing')); ?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])

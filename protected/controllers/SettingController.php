@@ -6,6 +6,7 @@
  * Reference start
  * TOC :
  *	Update
+ *	Meta
  *	Sublayout
  *	Pagination
  *	Reset
@@ -25,6 +26,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\BaseSetting;
 use app\components\Theme;
+use app\models\MetaSetting;
 
 class SettingController extends Controller
 {
@@ -112,6 +114,47 @@ class SettingController extends Controller
 	}
 
 	/**
+	 * Meta Action
+	 */
+	public function actionMeta()
+	{
+		$app = Yii::$app->request->get('app');
+		$model = new MetaSetting(['app'=>$app ? $app : Yii::$app->id]);
+		$name = unserialize(Yii::$app->setting->get(join('_', [$model->app, 'name'])));
+
+		if(Yii::$app->request->isPost) {
+			$model->load(Yii::$app->request->post());
+			if($model->save()) {
+				$success = Yii::t('app', 'Meta setting success updated.');
+				if($app != null)
+					$success = Yii::t('app', 'App meta setting <strong>{app-name}</strong> success updated.', ['app-name'=>$name['long']]);
+				Yii::$app->session->setFlash('success', $success);
+				if($app != null)
+					return $this->redirect(['meta', 'app'=>$app]);
+				return $this->redirect(['meta']);
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+			}
+		}
+
+		$title = Yii::t('app', 'Meta Settings');
+		$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name'=>$name['small']]);
+		if($app != null) {
+			$title = Yii::t('app', 'Meta Setting: {app-name}', ['app-name'=>$name['small']]);
+			$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name'=>$name['long']]);
+		}
+
+		$this->view->title = $title;
+		$this->view->description = $description;
+		$this->view->keywords = '';
+		return $this->render('admin_meta', [
+			'model' => $model,
+		]);
+	}
+
+	/**
 	 * ThemeSublayout Action
 	 */
 	public function actionSublayout($theme)
@@ -154,6 +197,7 @@ class SettingController extends Controller
 	public function actionReset()
 	{
 		Yii::$app->setting->delete('reset');
+		Yii::$app->meta->delete('reset');
 
 		return $this->goBack();
 	}
