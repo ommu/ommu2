@@ -92,7 +92,7 @@ echo $form->field($model, 'app_type')
 	->label($model->getAttributeLabel('keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your website. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your website\'s search engine rankings.')); ?>
 
-<?php $uploadPath = join('/', [$model::getUploadPath(false)]);
+<?php $uploadPath = join('/', [$model::getUploadPath(false, $model->app)]);
 $logo = $model->logo ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->logo])), ['alt'=>$model->logo, 'class'=>'mb-3']) : '';
 echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$logo.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
@@ -132,7 +132,7 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'analytic')
-	->dropDownList($appType, ['prompt'=>''])
+	->dropDownList($appType)
 	->label($model->getAttributeLabel('analytic'))
 	->hint(Yii::t('app', 'Want to use Google Analytics to keep track of your site\'s traffic data? Setup is super easy. Just enter your Google Analytics Tracking ID and *bam*... you\'re tracking your site\'s traffic stats! If you need help finding your ID, check here.')); ?>
 
@@ -222,7 +222,7 @@ echo $form->field($model, 'analytic')
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'backoffice_indexing')
-	->dropDownList($appType, ['prompt'=>''])
+	->dropDownList($appType)
 	->label($model->getAttributeLabel('backoffice_indexing')); ?>
 
 <div class="ln_solid"></div>
@@ -305,7 +305,7 @@ echo $form->field($model, 'backoffice_indexing')
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'theme_indexing')
-	->dropDownList($appType, ['prompt'=>''])
+	->dropDownList($appType,)
 	->label($model->getAttributeLabel('theme_indexing')); ?>
 
 <?php echo $form->field($model, 'theme_include_script', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])

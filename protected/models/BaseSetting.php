@@ -15,9 +15,12 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 class BaseSetting extends \yii\base\Model
 {
+	use \ommu\traits\FileTrait;
+
 	public $app;
 	public $app_type;
 	public $online;
@@ -39,6 +42,7 @@ class BaseSetting extends \yii\base\Model
 	public $construction_text;
 	public $analytic;
 	public $analytic_property;
+	public $old_logo;
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -105,16 +109,17 @@ class BaseSetting extends \yii\base\Model
 		$this->backoffice_theme = Yii::$app->setting->get($this->getId('backoffice_theme'));
 		$this->backoffice_theme_sublayout = Yii::$app->setting->get($this->getId('backoffice_theme_sublayout'));
 		$this->backoffice_theme_pagination = Yii::$app->setting->get($this->getId('backoffice_theme_pagination'));
-		$this->backoffice_indexing = Yii::$app->setting->get($this->getId('backoffice_indexing'));
+		$this->backoffice_indexing = Yii::$app->setting->get($this->getId('backoffice_indexing'), 1);
 		$this->theme = Yii::$app->setting->get($this->getId('theme'));
 		$this->theme_sublayout = Yii::$app->setting->get($this->getId('theme_sublayout'));
 		$this->theme_pagination = Yii::$app->setting->get($this->getId('theme_pagination'));
-		$this->theme_indexing = Yii::$app->setting->get($this->getId('theme_indexing'));
+		$this->theme_indexing = Yii::$app->setting->get($this->getId('theme_indexing'), 1);
 		$this->theme_include_script = Yii::$app->setting->get($this->getId('theme_include_script'));
 		$this->construction_date = Yii::$app->setting->get($this->getId('construction_date'));
 		$this->construction_text = unserialize(Yii::$app->setting->get($this->getId('construction_text')));
 		$this->analytic = Yii::$app->setting->get($this->getId('analytic'), 1);
 		$this->analytic_property = Yii::$app->setting->get($this->getId('analytic_property'));
+		$this->old_logo = $this->logo;
 	}
 
 	/**
@@ -203,9 +208,9 @@ class BaseSetting extends \yii\base\Model
 	 * @param returnAlias set true jika ingin kembaliannya path alias atau false jika ingin string
 	 * relative path. default true.
 	 */
-	public static function getUploadPath($returnAlias=true) 
+	public static function getUploadPath($returnAlias=true, $app) 
 	{
-		return ($returnAlias ? Yii::getAlias('@public') : '');
+		return ($returnAlias ? join('/', [Yii::getAlias('@public'), $app]) : $app);
 	}
 
 	/**
@@ -231,19 +236,21 @@ class BaseSetting extends \yii\base\Model
 				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
 		}
 
-		if($this->analytic != '') {
-			if($this->analytic == 1) {
-				if($this->analytic_property == '')
-					$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
+		if($this->analytic == 1) {
+			if($this->analytic_property == '')
+				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
+		}
+
+		$this->logo = UploadedFile::getInstance($this, 'logo');
+		if($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
+			$logoFileType = $this->formatFileType('png, bmp');
+			if(!in_array(strtolower($this->logo->getExtension()), $logoFileType)) {
+				$this->addError('logo', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
+					'name'=>$this->logo->name,
+					'extensions'=>$this->formatFileType($logoFileType, false),
+				]));
 			}
-		} else
-			$this->addError('analytic', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic')]));
-
-		if($this->backoffice_indexing == '')
-			$this->addError('backoffice_indexing', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('backoffice_indexing')]));
-
-		if($this->theme_indexing == '')
-			$this->addError('theme_indexing', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('theme_indexing')]));
+		}
 
 		if(!empty($this->getErrors()))
 			return false;
@@ -264,6 +271,22 @@ class BaseSetting extends \yii\base\Model
 			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
 		$this->construction_text = serialize($this->construction_text);
 
+		$uploadPath = join('/', [self::getUploadPath(true, $this->app)]);
+		$verwijderenPath = join('/', [self::getUploadPath(true, $this->app), 'verwijderen']);
+		$this->createUploadDirectory(self::getUploadPath(true, $this->app));
+
+		$this->logo = UploadedFile::getInstance($this, 'logo');
+		if($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
+			$fileName = 'logo_'.time().'.'.strtolower($this->logo->getExtension());
+			if($this->logo->saveAs(join('/', [$uploadPath, $fileName]))) {
+				if($this->old_logo != '' && file_exists(join('/', [$uploadPath, $this->old_logo])))
+					rename(join('/', [$uploadPath, $this->old_logo]), join('/', [$verwijderenPath, time().'_'.$this->old_logo]));
+				$this->logo = $fileName;
+			}
+		} else {
+			if($this->logo == '')
+				$this->logo = $this->old_logo;
+		}
 		return true;
 	}
 
