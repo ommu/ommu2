@@ -357,6 +357,32 @@ JS;
 
 <div class="ln_solid"></div>
 
+<?php echo $form->field($model, 'office_contact[phone]')
+	->textarea(['rows'=>3, 'cols'=>50])
+	->label($model->getAttributeLabel('office_contact[phone]'))
+	->hint(Yii::t('app', 'A telephone number to contact this business')); ?>
+
+<?php echo $form->field($model, 'office_contact[fax]')
+	->textInput()
+	->label($model->getAttributeLabel('office_contact[fax]'))
+	->hint(Yii::t('app', 'A fax number to contact this business')); ?>
+
+<?php echo $form->field($model, 'office_contact[hotline]')
+	->textarea(['rows'=>3, 'cols'=>50])
+	->label($model->getAttributeLabel('office_contact[hotline]')); ?>
+
+<?php echo $form->field($model, 'office_contact[email]')
+	->textInput()
+	->label($model->getAttributeLabel('office_contact[email]'))
+	->hint(Yii::t('app', 'An email address to contact this business')); ?>
+
+<?php echo $form->field($model, 'office_contact[website]')
+	->textInput()
+	->label($model->getAttributeLabel('office_contact[website]'))
+	->hint(Yii::t('app', 'A website for this business')); ?>
+
+<div class="ln_solid"></div>
+
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(['button'=>Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary'])]); ?>
 

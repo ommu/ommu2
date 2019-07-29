@@ -36,7 +36,7 @@ class MetaSetting extends \yii\base\Model
 			[['app_type', 'google_meta', 'facebook_meta', 'twitter_meta'], 'required'],
 			[['google_meta', 'facebook_meta', 'twitter_meta'], 'integer'],
 			[['office_name', 'office_location'], 'string'],
-			[['office_address'], 'safe'],
+			[['office_address', 'office_contact'], 'safe'],
 			[['office_name', 'office_location'], 'string', 'max' => 64],
 		];
 	}
@@ -62,6 +62,11 @@ class MetaSetting extends \yii\base\Model
 			'office_address[village]' => Yii::t('app', 'Village'),
 			'office_address[zipcode]' => Yii::t('app', 'Zipcode'),
 			'office_contact' => Yii::t('app', 'Office Contact'),
+			'office_contact[phone]' => Yii::t('app', 'Phone'),
+			'office_contact[fax]' => Yii::t('app', 'FAX'),
+			'office_contact[email]' => Yii::t('app', 'Email'),
+			'office_contact[hotline]' => Yii::t('app', 'Hotline'),
+			'office_contact[website]' => Yii::t('app', 'Website'),
 		];
 	}
 
