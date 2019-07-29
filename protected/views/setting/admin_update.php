@@ -69,26 +69,26 @@ echo $form->field($model, 'app_type')
 <?php // echo $form->errorSummary($model);?>
 
 <?php $nameSmall = $form->field($model, 'name[small]', ['template' => '<div class="h5">Small Name</div>{input}', 'options' => ['tag' => null]])
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name')); ?>
 
 <?php echo $form->field($model, 'name[long]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$nameSmall.'<div class="h5">Long Name</div>{input}{error}{endWrapper}'])
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name'))
 	->hint(Yii::t('app', 'Give your website a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
 
 <?php echo $form->field($model, 'pagetitle_template')
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('pagetitle_template'))
 	->hint(Yii::t('app', 'e.g. {title} | {small-name} - {long-name}')); ?>
 
 <?php echo $form->field($model, 'description', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>3, 'cols'=>50, 'maxlength' => true])
+	->textarea(['rows'=>3, 'cols'=>50, 'maxlength'=>true])
 	->label($model->getAttributeLabel('description'))
 	->hint(Yii::t('app', 'Enter a brief, concise description of your website. Include any key words or phrases that you want to appear in search engine listings.')); ?>
 
 <?php echo $form->field($model, 'keywords', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
-	->textarea(['rows'=>4, 'cols'=>50, 'maxlength' => true])
+	->textarea(['rows'=>4, 'cols'=>50, 'maxlength'=>true])
 	->label($model->getAttributeLabel('keywords'))
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your website. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your website\'s search engine rankings.')); ?>
 
@@ -100,11 +100,11 @@ echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$l
 	->hint(Yii::t('app', 'extensions are allowed: png, bmp')); ?>
 
 <?php $copyrightName = $form->field($model, 'copyright[name]', ['template' => '<div class="h5">Name</div>{input}', 'options' => ['tag' => null]])
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('copyright')); ?>
 
 <?php echo $form->field($model, 'copyright[url]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$copyrightName.'<div class="h5">Website or Social Media URL</div>{input}{error}{endWrapper}'])
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('copyright')); ?>
 
 <div class="ln_solid"></div>
@@ -145,7 +145,7 @@ echo $form->field($model, 'analytic')
 	->hint(Yii::t('app', 'Want to use Google Analytics to keep track of your site\'s traffic data? Setup is super easy. Just enter your Google Analytics Tracking ID and *bam*... you\'re tracking your site\'s traffic stats! If you need help finding your ID, check here.')); ?>
 
 <?php echo $form->field($model, 'analytic_property')
-	->textInput(['maxlength' => true])
+	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('analytic_property'))
 	->hint(Yii::t('app', 'Enter the Google Analytics Website Property (Tracking ID).')); ?>
 

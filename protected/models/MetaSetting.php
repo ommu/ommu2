@@ -22,6 +22,10 @@ class MetaSetting extends \yii\base\Model
 	public $google_meta;
 	public $facebook_meta;
 	public $twitter_meta;
+	public $office_name;
+	public $office_location;
+	public $office_address;
+	public $office_contact;
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -31,11 +35,9 @@ class MetaSetting extends \yii\base\Model
 		return [
 			[['app_type', 'google_meta', 'facebook_meta', 'twitter_meta'], 'required'],
 			[['google_meta', 'facebook_meta', 'twitter_meta'], 'integer'],
-			[[], 'string'],
-			[[], 'safe'],
-			[['app_type', 'analytic_property', 'logo'], 'string', 'max' => 16],
-			[['pagetitle_template'], 'string', 'max' => 64],
-			[['name', 'description', 'keywords'], 'string', 'max' => 256],
+			[['office_name', 'office_location'], 'string'],
+			[['office_address'], 'safe'],
+			[['office_name', 'office_location'], 'string', 'max' => 64],
 		];
 	}
 
@@ -49,6 +51,17 @@ class MetaSetting extends \yii\base\Model
 			'google_meta' => Yii::t('app', 'Google Meta'),
 			'facebook_meta' => Yii::t('app', 'Facebook Meta'),
 			'twitter_meta' => Yii::t('app', 'Twitter Meta'),
+			'office_name' => Yii::t('app', 'Office Name'),
+			'office_location' => Yii::t('app', 'Office Maps Location'),
+			'office_address' => Yii::t('app', 'Office Address'),
+			'office_address[place]' => Yii::t('app', 'Place'),
+			'office_address[country]' => Yii::t('app', 'Country'),
+			'office_address[province]' => Yii::t('app', 'Province'),
+			'office_address[city]' => Yii::t('app', 'City'),
+			'office_address[district]' => Yii::t('app', 'District'),
+			'office_address[village]' => Yii::t('app', 'Village'),
+			'office_address[zipcode]' => Yii::t('app', 'Zipcode'),
+			'office_contact' => Yii::t('app', 'Office Contact'),
 		];
 	}
 
@@ -62,6 +75,10 @@ class MetaSetting extends \yii\base\Model
 		$this->google_meta = Yii::$app->meta->get($this->getId('google_meta'), 1);
 		$this->facebook_meta = Yii::$app->meta->get($this->getId('facebook_meta'), 1);
 		$this->twitter_meta = Yii::$app->meta->get($this->getId('twitter_meta'), 1);
+		$this->office_name = Yii::$app->meta->get($this->getId('office_name'));
+		$this->office_location = Yii::$app->meta->get($this->getId('office_location'));
+		$this->office_address = unserialize(Yii::$app->meta->get($this->getId('office_address')));
+		$this->office_contact = unserialize(Yii::$app->meta->get($this->getId('office_contact')));
 	}
 
 	/**
@@ -108,6 +125,9 @@ class MetaSetting extends \yii\base\Model
 		if(!$this->beforeValidate())
 			return false;
 
+		$this->office_address = serialize($this->office_address);
+		$this->office_contact = serialize($this->office_contact);
+
 		return true;
 	}
 
@@ -122,6 +142,10 @@ class MetaSetting extends \yii\base\Model
 		Yii::$app->meta->set($this->getId('google_meta'), $this->google_meta);
 		Yii::$app->meta->set($this->getId('facebook_meta'), $this->facebook_meta);
 		Yii::$app->meta->set($this->getId('twitter_meta'), $this->twitter_meta);
+		Yii::$app->meta->set($this->getId('office_name'), $this->office_name);
+		Yii::$app->meta->set($this->getId('office_location'), $this->office_location);
+		Yii::$app->meta->set($this->getId('office_address'), $this->office_address);
+		Yii::$app->meta->set($this->getId('office_contact'), $this->office_contact);
 		
 		return true;
 	}
