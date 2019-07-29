@@ -350,7 +350,7 @@ class View extends \yii\web\View
 		if(self::$isBackoffice)
 			$themeSublayout = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_sublayout']), 'default');
 
-		return $themeSublayout;
+		return $themeSublayout ? $themeSublayout : 'default';
 	}
 
 	/**
@@ -394,7 +394,7 @@ class View extends \yii\web\View
 		if(self::$isBackoffice)
 			$themePagination = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_pagination']), 'default');
 
-		return $themePagination;
+		return $themePagination ? $themePagination : 'default';
 	}
 
 	/**
