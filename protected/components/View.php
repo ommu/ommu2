@@ -90,8 +90,11 @@ class View extends \yii\web\View
 				$this->setTheme($this->context);
 			}
 
-			if(!empty($this->context->subMenu) && !Yii::$app->request->isAjax)
+			if($this->context instanceof Controller && self::$isBackoffice && (!empty($this->context->subMenu) && !Yii::$app->request->isAjax))
 				$this->context->layout = 'main_submenu';
+	
+			if($this->context instanceof Controller && !self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax))
+				$this->context->layout = 'main_sidebar';
 
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
