@@ -12,6 +12,7 @@
 namespace app\components;
 
 use Yii;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
@@ -86,8 +87,22 @@ class Controller extends \yii\web\Controller
 	public function beforeAction($action) 
 	{
 		if(parent::beforeAction($action)) {
-			if(!self::$settingInitialize) {
+			if(!self::$settingInitialize)
 				self::$settingInitialize = true;
+
+			if($action instanceof \yii\web\ErrorAction) {
+				$model = \ommu\report\models\ReportSetting::find()
+					->select(['auto_report_cat_id'])
+					->where(['id'=>1])
+					->one();
+				
+				if($model->auto_report_i) {
+					$url = Yii::$app->request->absoluteUrl;
+					$name = $action->getExceptionName();
+					$message = $action->getExceptionMessage();
+					$message = $name.' '.nl2br(Html::encode($message));
+					\ommu\report\models\Reports::insertReport($url, $message);
+				}
 			}
 		}
 		return true;
