@@ -144,7 +144,9 @@ class SiteController extends Controller
 		$this->view->title = $model->title->message;
 		$this->view->description = $model->description->message;
 		$this->view->keywords = '';
-		return $this->render('front_view');
+		return $this->render('front_view', [
+			'model' => $model,
+		]);
 	}
 
 	/**
