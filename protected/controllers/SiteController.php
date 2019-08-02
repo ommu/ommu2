@@ -20,7 +20,7 @@ class SiteController extends Controller
 	{
 		return [
 			'error' => [
-				'class' => 'yii\web\ErrorAction',
+				'class' => 'app\components\actions\ErrorAction',
 				'layout' => 'error',
 				'view' => 'front_error',
 			],
@@ -129,5 +129,36 @@ class SiteController extends Controller
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('about');
+	}
+
+	/**
+	 * Displays about static page.
+	 *
+	 * @return string
+	 */
+	public function actionView($id)
+	{
+		$model = $this->findModel($id);
+		\ommu\core\models\CorePageViews::insertView($model->page_id);
+
+		$this->view->title = $model->title->message;
+		$this->view->description = $model->description->message;
+		$this->view->keywords = '';
+		return $this->render('front_view');
+	}
+
+	/**
+	 * Finds the CorePages model based on its primary key value.
+	 * If the model is not found, a 404 HTTP exception will be thrown.
+	 * @param integer $id
+	 * @return CorePages the loaded model
+	 * @throws NotFoundHttpException if the model cannot be found
+	 */
+	protected function findModel($id)
+	{
+		if(($model = \ommu\core\models\CorePages::findOne($id)) !== null)
+			return $model;
+
+		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }
