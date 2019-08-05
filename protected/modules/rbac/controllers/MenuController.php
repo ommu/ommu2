@@ -20,9 +20,24 @@ namespace app\modules\rbac\controllers;
 
 use Yii;
 use app\models\Menu;
+use app\models\search\Menu as MenuSearch;
 
 class MenuController extends \mdm\admin\controllers\MenuController
 {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function actionIndex()
+	{
+		$searchModel = new MenuSearch;
+		$dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+		return $this->render('index', [
+			'dataProvider' => $dataProvider,
+			'searchModel' => $searchModel,
+		]);
+	}
+
 	/**
 	 * {@inheritdoc}
 	 */

@@ -76,6 +76,7 @@ $config = [
 			'rules' => [
 				//a standard rule mapping '/' to 'site/index' action
 				'' 																	=> 'site/index',
+				'<t:[\w\-]+>-<id:\d+>'												=> 'site/view',
 				//a standard rule mapping '/login' to 'site/login', and so on
 				'<action:(login|logout)>' 											=> 'site/<action>',
 			],
