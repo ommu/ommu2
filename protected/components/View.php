@@ -96,6 +96,9 @@ class View extends \yii\web\View
 			if($this->context instanceof Controller && !self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax))
 				$this->context->layout = 'main_sidebar';
 
+			if($this->context instanceof Controller)
+				$this->registerGoogleAnalytics();
+
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
 
@@ -436,5 +439,26 @@ class View extends \yii\web\View
 		}
 
 		return $content;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function registerGoogleAnalytics()
+	{
+		$analytic = Yii::$app->setting->get(join('_', [Yii::$app->id, 'analytic']), 1);
+		$analytic_property = Yii::$app->setting->get(join('_', [Yii::$app->id, 'analytic_property']), '');
+
+		if(!Yii::$app->isDev() && $analytic && $analytic_property) {
+			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position'=>self::POS_END, 'async'=>'async']);
+$js = <<<JS
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', '{$analytic_property}');
+JS;
+			$this->registerJs($js, self::POS_END);
+		}
 	}
 }
