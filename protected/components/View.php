@@ -102,7 +102,8 @@ class View extends \yii\web\View
 			if(!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
 
-				$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
+				$app = Yii::$app->id;
+				$siteName = unserialize(Yii::$app->setting->get(join('_', [$app, 'name'])));
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 
 				if(Yii::$app->isDemoTheme()) {
@@ -124,18 +125,19 @@ class View extends \yii\web\View
 	 */
 	public function afterRender($viewFile, $params, &$output)
 	{
-		$description = Yii::$app->setting->get(join('_', [Yii::$app->id, 'description']));
-		$keywords = Yii::$app->setting->get(join('_', [Yii::$app->id, 'keywords']));
-		$backendIndexing = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_indexing']), 1);
-		$frontendIndexing = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_indexing']), 1);
+		$app = Yii::$app->id;
+		$description = Yii::$app->setting->get(join('_', [$app, 'description']));
+		$keywords = Yii::$app->setting->get(join('_', [$app, 'keywords']));
+		$backendIndexing = Yii::$app->setting->get(join('_', [$app, 'backoffice_indexing']), 1);
+		$frontendIndexing = Yii::$app->setting->get(join('_', [$app, 'theme_indexing']), 1);
 
 		parent::afterRender($viewFile, $params, $output);
 
 		$this->unsetAssetBundles();
 
-		Yii::$app->meta->setTitle($this->title);
+		Yii::$app->meta->setTitle(Yii::$app->isDefaultRoute() ? $this->pageTitle : $this->title);
 		Yii::$app->meta->setDescription(trim($this->description) != '' ? $this->description : $description);
-		Yii::$app->meta->setKeywords(trim($this->keywords) != '' ? $this->keywords : $keywords);
+		Yii::$app->meta->setKeywords(trim($this->keywords) != '' ? join(', ', [$this->keywords, $keywords]) : $keywords);
 		Yii::$app->meta->setImage($this->image);
 		Yii::$app->meta->setUrl(Yii::$app->request->absoluteUrl);
 
@@ -219,8 +221,9 @@ class View extends \yii\web\View
 	 */
 	public function getPageTitle()
 	{
-		$pageTitleTemplate = Yii::$app->setting->get(join('_', [Yii::$app->id, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
-		$siteName = unserialize(Yii::$app->setting->get(join('_', [Yii::$app->id, 'name'])));
+		$app = Yii::$app->id;
+		$pageTitleTemplate = Yii::$app->setting->get(join('_', [$app, 'pagetitle_template']), '{title} | {small-name} - {long-name}');
+		$siteName = unserialize(Yii::$app->setting->get(join('_', [$app, 'name'])));
 
 		$title = trim($this->title) != '' ? $this->title : 'OMMU';
 		$this->title = $title;
@@ -231,6 +234,9 @@ class View extends \yii\web\View
 			else
 				$title = $themeInfo['name'];
 		}
+
+		if(Yii::$app->isDefaultRoute())
+			$pageTitleTemplate = str_replace('{title} | ', '', $pageTitleTemplate);
 
 		return strtr($pageTitleTemplate, [
 			'{title}' => $title,
@@ -310,14 +316,15 @@ class View extends \yii\web\View
 		if(Yii::$app->params['installed'] === false || Yii::$app->params['databaseInstalled'] === false)
 			return;
 
+		$app = Yii::$app->id;
 		$isBackofficeTheme = true;
 		if($context != null && $context->hasMethod('isBackofficeTheme'))
 			$isBackofficeTheme = $context->isBackofficeTheme();
 
-		$themeParam = join('_', [Yii::$app->id, 'theme']);
+		$themeParam = join('_', [$app, 'theme']);
 		$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 		if($isBackofficeTheme) {
-			$themeParam = join('_', [Yii::$app->id, 'backoffice_theme']);
+			$themeParam = join('_', [$app, 'backoffice_theme']);
 			$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 			self::$isBackoffice = true;
 		}
@@ -330,6 +337,7 @@ class View extends \yii\web\View
 	 */
 	public function theme($themeName): void
 	{
+		$app = Yii::$app->id;
 		$this->theme = new \app\components\Theme([
 			'basePath'	=> sprintf('@themes/%s', $themeName),
 			'baseUrl'	=> sprintf('@web/themes/%s', $themeName),
@@ -337,9 +345,9 @@ class View extends \yii\web\View
 				'@app/views'	=> sprintf('@themes/%s', $themeName),
 				'@app/modules'	=> sprintf('@themes/%s/modules', $themeName),
 				'@app/widgets'	=> sprintf('@themes/%s/widgets', $themeName),
-				sprintf('@%s/app/views', Yii::$app->id)		=> sprintf('@themes/%s', $themeName),
-				sprintf('@%s/app/modules', Yii::$app->id)	=> sprintf('@themes/%s/modules', $themeName),
-				sprintf('@%s/app/widgets', Yii::$app->id)	=> sprintf('@themes/%s/widgets', $themeName),
+				sprintf('@%s/app/views', $app)		=> sprintf('@themes/%s', $themeName),
+				sprintf('@%s/app/modules', $app)	=> sprintf('@themes/%s/modules', $themeName),
+				sprintf('@%s/app/widgets', $app)	=> sprintf('@themes/%s/widgets', $themeName),
 			],
 		]);
 	}
@@ -352,9 +360,10 @@ class View extends \yii\web\View
 		if(($layout = Yii::$app->request->get('layout')) != null)
 			return $layout ? $layout : 'default';
 
-		$themeSublayout = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_sublayout']), 'default');
+		$app = Yii::$app->id;
+		$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'theme_sublayout']), 'default');
 		if(self::$isBackoffice)
-			$themeSublayout = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_sublayout']), 'default');
+			$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_sublayout']), 'default');
 
 		return $themeSublayout ? $themeSublayout : 'default';
 	}
@@ -396,9 +405,10 @@ class View extends \yii\web\View
 	 */
 	public function getPagination()
 	{
-		$themePagination = Yii::$app->setting->get(join('_', [Yii::$app->id, 'theme_pagination']), 'default');
+		$app = Yii::$app->id;
+		$themePagination = Yii::$app->setting->get(join('_', [$app, 'theme_pagination']), 'default');
 		if(self::$isBackoffice)
-			$themePagination = Yii::$app->setting->get(join('_', [Yii::$app->id, 'backoffice_theme_pagination']), 'default');
+			$themePagination = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_pagination']), 'default');
 
 		return $themePagination ? $themePagination : 'default';
 	}
@@ -446,8 +456,9 @@ class View extends \yii\web\View
 	 */
 	public function registerGoogleAnalytics()
 	{
-		$analytic = Yii::$app->setting->get(join('_', [Yii::$app->id, 'analytic']), 1);
-		$analytic_property = Yii::$app->setting->get(join('_', [Yii::$app->id, 'analytic_property']), '');
+		$app = Yii::$app->id;
+		$analytic = Yii::$app->setting->get(join('_', [$app, 'analytic']), 1);
+		$analytic_property = Yii::$app->setting->get(join('_', [$app, 'analytic_property']), '');
 
 		if(!Yii::$app->isDev() && $analytic && $analytic_property) {
 			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position'=>self::POS_END, 'async'=>'async']);

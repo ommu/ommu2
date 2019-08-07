@@ -113,6 +113,25 @@ class Application extends \yii\web\Application
 	}
 
 	/**
+	 * Mengembalikan defaultRoute apps
+	 *
+	 * @return string
+	 */
+	public function isDefaultRoute(): bool
+	{
+		$app = $this->id;
+		$module = $this->controller->module->id;
+
+		if($module == $app) {
+			$controller = $this->controller->id;
+			$action = $this->controller->action->id;
+			return ($controller == 'site' && $action == 'index') ? true : false;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Mengembalikan semua koneksi database yg dipakai pada aplikasi ini dalam bentuk array
 	 * nama komponen db. misalnya ['db', 'db_ommu', 'db_api']
 	 *

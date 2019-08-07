@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace app\components;
 
 use Yii;
+use yii\helpers\Url;
 use app\components\BaseSettingManager;
 
 class SettingManager extends BaseSettingManager
@@ -122,6 +123,13 @@ class SettingManager extends BaseSettingManager
 	 */
 	public function setImage($imageUrl)
 	{
+		$app = Yii::$app->id;
+		$logo = Yii::$app->setting->get(join('_', [$app, 'logo']));
+		if($logo) {
+			$logoPath = join('/', [\app\models\BaseSetting::getUploadPath(false, $app)]);
+			$imageUrl = Url::to(join('/', ['@webpublic', $logoPath, $logo]));
+		}
+
 		if (!empty($imageUrl)) {
 			Yii::$app->view->registerMetaTag(['name' => 'image', 'content' => $imageUrl], 'image');
 			if($this->google_meta)
