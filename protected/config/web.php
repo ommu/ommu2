@@ -8,7 +8,7 @@ $database = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/da
 $bn = \app\components\Application::getAppId();
 
 $config = [
-	'name' => 'OMMU by sudaryanto.id',
+	'name' => 'OMMU',
 	'id' => 'basic',
 	'bootstrap' => [
 		'app\components\bootstrap\ModuleAutoLoader',

@@ -2,7 +2,7 @@
 /**
  * m190319_030101_rbac_create_table_ommu_core_menus
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 19 March 2019, 10:08 WIB

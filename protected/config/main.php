@@ -6,7 +6,7 @@ $bn = \app\components\Application::getAppId();
 
 $config = [
 	'id' => 'basic',
-	'name' => 'OMMU by sudaryanto.id',
+	'name' => 'OMMU',
 	'basePath' => dirname(__DIR__),
 	'vendorPath' => dirname(__DIR__) . '/vendor',
 	'runtimePath' => dirname(__DIR__) . '/runtime',

@@ -3,7 +3,7 @@
  * @var $this  yii\web\View
  * @var $model mdm\admin\models\BizRule
  *
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
  * @created date 28 December 2017, 06:50 WIB

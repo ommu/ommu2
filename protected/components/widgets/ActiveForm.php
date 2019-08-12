@@ -6,7 +6,7 @@
  * @see yii\bootstrap\ActiveForm
  * @see yii\widgets\ActiveForm
  * 
- * @author Putra Sudaryanto <putra@sudaryanto.id>
+ * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
  * @created date 11 January 2019, 11:11 WIB
