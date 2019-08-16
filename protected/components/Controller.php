@@ -124,25 +124,10 @@ class Controller extends \yii\web\Controller
 		$controller = self::$controller;
 		/*
 		$routes  = PublicRoute::find()->orderBy('route ASC')->all();
-		foreach($routes as $val) {
-			$route = trim($val->route);
-			if(substr($route, 0, 1) == '/') {
-				$route = substr($route, 1);
-			}
-			$route = explode('/', $route);
-
-			// module/controller/action
-			if(count($route) == 3) {
-				list($module, $controller, $action) = $route;
-				if(Yii::$app->hasModule($module) == false)
-					continue;
-				else {
-					array_push(self::$allowedAction, $action);
-				}
-
-			// controller/action
-			}else {
-				list($controller, $action) = $route;
+		$currentRoute = $this->getRoute();
+		foreach ($routes as $val) {
+			$action  = $this->getAllowedAction($currentRoute, $val->route);
+			if ($action != null) {
 				array_push(self::$allowedAction, $action);
 			}
 		}
@@ -152,6 +137,28 @@ class Controller extends \yii\web\Controller
 			self::$_themeApplied = true;
 			$this->getView()->setTheme($this);
 		}
+	}
+
+	/**
+	 * Get action yg cocok dengan rute di database
+	 *
+	 * @param  string $currentRoute rute saat ini
+	 * @param  string $dbRoute      rute pada tabel
+	 * @return mixed  string|null
+	 */
+	private function getAllowedAction(string $currentRoute, string $dbRoute): ?string
+	{
+		$route      = trim($dbRoute);
+		$listRoute  = explode('/', $route);
+		$routeCnt   = count($listRoute);
+		$action     = $listRoute[$routeCnt - 1];
+		$matchRoute = array_slice($listRoute, 0, $routeCnt - 1);
+		$_route     = implode('/', $matchRoute);
+
+		if ($currentRoute == $_route) {
+			return $action;
+		}
+		return null;
 	}
 
 	/**
