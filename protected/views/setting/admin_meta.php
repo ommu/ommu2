@@ -309,6 +309,11 @@ JS;
 	])
 	->label($model->getAttributeLabel('office_address[province]')); ?>
 
+<?php echo $form->field($model, 'office_address[zipcode]')
+	->textInput(['maxlength'=>6])
+	->label($model->getAttributeLabel('office_address[zipcode]'))
+	->hint(Yii::t('app', 'The state (or region) line of the postal address for this business')); ?>
+
 <?php echo $form->field($model, 'office_address[country]')
 	->widget(Selectize::className(), [
 		'cascade' => true,
@@ -349,11 +354,6 @@ JS;
 		],
 	])
 	->label($model->getAttributeLabel('office_address[country]')); ?>
-
-<?php echo $form->field($model, 'office_address[zipcode]')
-	->textInput(['maxlength'=>6])
-	->label($model->getAttributeLabel('office_address[zipcode]'))
-	->hint(Yii::t('app', 'The state (or region) line of the postal address for this business')); ?>
 
 <div class="ln_solid"></div>
 
