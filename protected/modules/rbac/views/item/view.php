@@ -35,12 +35,13 @@ $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('_script.js'));
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i>';
 
+if(!$small) {
 $this->params['menu']['content'] = [
 	['label' => Yii::t('rbac-admin', 'Update'), 'url' => Url::to(['update', 'id'=>$model->name]), 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
 	['label' => Yii::t('rbac-admin', 'Delete'), 'url' => Url::to(['delete', 'id'=>$model->name]), 'htmlOptions' => ['data-confirm'=>Yii::t('rbac-admin', 'Are you sure to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon'=>'trash'],
 	['label' => Yii::t('rbac-admin', 'Create'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
 ];
-?>
+} ?>
 
 <div class="auth-item-view">
 
