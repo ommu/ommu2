@@ -19,6 +19,18 @@ class Menu extends \mdm\admin\models\Menu
 	public $menuCode;
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function init()
+	{
+		if(($app = Yii::$app->request->get('app')) != null) {
+			$params = require(join('/', [dirname(Yii::getAlias('@webroot')), $app, 'app/config', 'params.php']));
+			Yii::$app->params = ArrayHelper::merge(Yii::$app->params, $params);
+		}
+		return parent::init();
+	}
+
+	/**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
