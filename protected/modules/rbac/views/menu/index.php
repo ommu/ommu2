@@ -21,37 +21,62 @@ $this->context->layout = 'assignment';
 $this->title = Yii::t('rbac-admin', 'Menus');
 $this->params['breadcrumbs'][] = $this->title;
 
+$createUrl = Url::to(['create']);
+if(($app = Yii::$app->request->get('app')) != null)
+	$createUrl = Url::to(['create', 'app'=>Yii::$app->request->get('app')]);
 $this->params['menu']['content'] = [
-	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
+	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
 ];
 ?>
 
 <div class="menu-index">
-	<?php Pjax::begin(); ?>
+<?php Pjax::begin(); ?>
 
-	<?php echo GridView::widget([
-		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
-		'columns' => [
-			[
-				'class' => 'yii\grid\SerialColumn',
-			],
-			'name',
-			[
-				'attribute' => 'menuParent.name',
-				'filter' => Html::activeTextInput($searchModel, 'parent_name', [
-					'class' => 'form-control', 'id' => null
-				]),
-				'label' => Yii::t('rbac-admin', 'Parent'),
-			],
-			'route',
-			'order',
-			[
-				'class' => 'app\components\grid\ActionColumn',
-				'header' => Yii::t('app', 'Option'),
-			],
-		],
-	]);?>
+<?php 
+$columnData = [
+	[
+		'class' => 'yii\grid\SerialColumn',
+	],
+	'name',
+	[
+		'attribute' => 'menuParent.name',
+		'filter' => Html::activeTextInput($searchModel, 'parent_name', [
+			'class' => 'form-control', 'id' => null
+		]),
+		'label' => Yii::t('rbac-admin', 'Parent'),
+	],
+	'route',
+	'order',
+];
 
-	<?php Pjax::end(); ?>
+array_push($columnData, [
+	'class' => 'app\components\grid\ActionColumn',
+	'header' => Yii::t('app', 'Option'),
+	'urlCreator' => function($action, $model, $key, $index) {
+		if($action == 'view') {
+			if(($app = Yii::$app->request->get('app')) != null)
+				return Url::to(['view', 'id'=>$key, 'app'=>$app]);
+			return Url::to(['view', 'id'=>$key]);
+		}
+		if($action == 'update') {
+			if(($app = Yii::$app->request->get('app')) != null)
+				return Url::to(['update', 'id'=>$key, 'app'=>$app]);
+			return Url::to(['update', 'id'=>$key]);
+		}
+		if($action == 'delete') {
+			if(($app = Yii::$app->request->get('app')) != null)
+				return Url::to(['delete', 'id'=>$key, 'app'=>$app]);
+			return Url::to(['delete', 'id'=>$key]);
+		}
+	},
+	'template' => '{view} {update} {delete}',
+]);
+
+echo GridView::widget([
+	'dataProvider' => $dataProvider,
+	'filterModel' => $searchModel,
+	'columns' => $columnData,
+]);?>
+
+<?php Pjax::end(); ?>
 </div>

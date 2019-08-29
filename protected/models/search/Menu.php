@@ -13,20 +13,18 @@
 namespace app\models\search;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class Menu extends \mdm\admin\models\searchs\Menu
 {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function tableName()
+	public function init()
 	{
-		$app = Yii::$app->request->get('app');
-		if($app) {
+		if(($app = Yii::$app->request->get('app')) != null) {
 			$params = require(join('/', [dirname(Yii::getAlias('@webroot')), $app, 'app/config', 'params.php']));
-			return $params['mdm.admin.configs']['menuTable'];
+			Yii::$app->params = ArrayHelper::merge(Yii::$app->params, $params);
 		}
-	
-		return parent::tableName();
 	}
 }
