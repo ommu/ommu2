@@ -14,7 +14,6 @@
 use yii\helpers\Url;
 
 $this->context->layout = 'assignment';
-$this->title = Yii::t('rbac-admin', 'Create Menu');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

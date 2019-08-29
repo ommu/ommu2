@@ -61,6 +61,9 @@ class MenuController extends Controller
 		$searchModel = new MenuSearch;
 		$dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
+		$this->view->title = Yii::t('app', 'Menus');
+		$this->view->description = '';
+		$this->view->keywords = '';
 		return $this->render('index', [
 			'dataProvider' => $dataProvider,
 			'searchModel' => $searchModel,

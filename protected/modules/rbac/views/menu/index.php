@@ -18,12 +18,11 @@ use app\components\grid\GridView;
 use yii\widgets\Pjax;
 
 $this->context->layout = 'assignment';
-$this->title = Yii::t('rbac-admin', 'Menus');
 $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
 if(($app = Yii::$app->request->get('app')) != null)
-	$createUrl = Url::to(['create', 'app'=>Yii::$app->request->get('app')]);
+	$createUrl = Url::to(['create', 'app'=>$app]);
 $this->params['menu']['content'] = [
 	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
 ];
