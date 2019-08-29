@@ -13,6 +13,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class Menu extends \mdm\admin\models\Menu
 {
