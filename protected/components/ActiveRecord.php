@@ -62,7 +62,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
 		}
 
 		array_unshift($this->defaultColumns, [
-			'header' => Yii::t('app', 'No'),
+			'header' => '#',
 			'class' => 'yii\grid\SerialColumn',
 			'contentOptions' => [
 				'class'=>'center',
