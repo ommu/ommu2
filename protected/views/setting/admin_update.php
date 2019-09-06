@@ -27,6 +27,7 @@ $js = <<<JS
 	var sublayout, pagination;
 	var v_backend_sublayout = '$model->backoffice_theme_sublayout';
 	var v_backend_pagination = '$backofficeThemePagination';
+	var v_maintenance_sublayout = '$model->maintenance_theme_sublayout';
 	var v_front_sublayout = '$model->theme_sublayout';
 	var v_front_pagination = '$themePagination';
 
@@ -149,7 +150,6 @@ echo $form->field($model, 'analytic')
 	->label($model->getAttributeLabel('analytic_property'))
 	->hint(Yii::t('app', 'Enter the Google Analytics Website Property (Tracking ID).')); ?>
 
-
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'backoffice_theme')
@@ -232,6 +232,74 @@ echo $form->field($model, 'analytic')
 echo $form->field($model, 'backoffice_indexing')
 	->dropDownList($appType)
 	->label($model->getAttributeLabel('backoffice_indexing')); ?>
+
+<div class="ln_solid"></div>
+
+<?php echo $form->field($model, 'maintenance_theme')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $themes,
+		'pluginOptions' => [
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				if (!value.length) return;
+				basesetting_maintenance_theme_sublayout.disable();
+				basesetting_maintenance_theme_sublayout.clearOptions();
+				basesetting_maintenance_theme_sublayout.load(function(callback) {
+					sublayout && sublayout.abort();
+					sublayout = $.ajax({
+						url: \''.$getSublayoutUrl.'\' + value,
+						success: function(results) {
+							basesetting_maintenance_theme_sublayout.removeOption(v_backend_sublayout);
+							basesetting_maintenance_theme_sublayout.showInput();
+							basesetting_maintenance_theme_sublayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+				basesetting_maintenance_theme_pagination.disable();
+				basesetting_maintenance_theme_pagination.clearOptions();
+				basesetting_maintenance_theme_pagination.load(function(callback) {
+					pagination && pagination.abort();
+					pagination = $.ajax({
+						url: \''.$getPaginationUrl.'\' + value,
+						success: function(results) {
+							basesetting_maintenance_theme_pagination.removeOption(v_backend_pagination);
+							basesetting_maintenance_theme_pagination.showInput();
+							basesetting_maintenance_theme_pagination.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('maintenance_theme'));?>
+
+<?php echo $form->field($model, 'maintenance_theme_sublayout')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $backSubLayout,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_backend_sublayout = value;
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('maintenance_theme_sublayout'));?>
+
+<?php $appType = $model::getAnalytics();
+echo $form->field($model, 'maintenance_indexing')
+	->dropDownList($appType)
+	->label($model->getAttributeLabel('maintenance_indexing')); ?>
 
 <div class="ln_solid"></div>
 

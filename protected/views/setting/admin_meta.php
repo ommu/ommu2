@@ -358,7 +358,7 @@ JS;
 <div class="ln_solid"></div>
 
 <?php echo $form->field($model, 'office_contact[phone]')
-	->textarea(['rows'=>3, 'cols'=>50])
+	->textInput()
 	->label($model->getAttributeLabel('office_contact[phone]'))
 	->hint(Yii::t('app', 'A telephone number to contact this business')); ?>
 
