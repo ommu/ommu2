@@ -68,6 +68,9 @@ class SettingController extends Controller
 		$backPagination = $allTheme[$model->backoffice_theme]['pagination'];
 		if(!isset($backPagination))
 			$backPagination = [];
+		$maintenanceSubLayout = $allTheme[$model->maintenance_theme]['sublayout'];
+		if(!isset($maintenanceSubLayout))
+			$maintenanceSubLayout = [];
 		$frontSubLayout = $allTheme[$model->theme]['sublayout'];
 		if(!isset($frontSubLayout))
 			$frontSubLayout = [];
@@ -108,6 +111,7 @@ class SettingController extends Controller
 			'themes' => $themes,
 			'backSubLayout' => $backSubLayout,
 			'backPagination' => $backPagination,
+			'maintenanceSubLayout' => $maintenanceSubLayout,
 			'frontSubLayout' => $frontSubLayout,
 			'frontPagination' => $frontPagination,
 		]);

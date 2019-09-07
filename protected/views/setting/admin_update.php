@@ -284,7 +284,7 @@ echo $form->field($model, 'backoffice_indexing')
 <?php echo $form->field($model, 'maintenance_theme_sublayout')
 	->widget(Selectize::className(), [
 		'cascade' => true,
-		'items' => $backSubLayout,
+		'items' => $maintenanceSubLayout,
 		'pluginOptions' => [
 			'valueField' => 'id',
 			'labelField' => 'label',
