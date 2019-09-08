@@ -45,6 +45,11 @@ class SiteController extends Controller
 				return $this->redirect(Url::to(['/admin/dashboard/index']));
 		}
 
+		if(Yii::$app->isMaintenance()) {
+			$maintenance_theme = Yii::$app->setting->get(join('_', [$appName, 'maintenance_theme']), 'arnica');
+			$this->view->theme($maintenance_theme);
+		}
+
 		$this->view->title = Yii::t('app', 'Home');
 		$this->view->description = '';
 		$this->view->keywords = '';

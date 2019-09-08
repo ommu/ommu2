@@ -90,9 +90,9 @@ class Application extends \yii\web\Application
 		$online = Yii::$app->setting->get(join('_', [$appName, 'online']), 1);
 		$constructionDate = Yii::$app->setting->get(join('_', [$appName, 'construction_date']));
 		if($online != 1)
-			$online = $constructionDate < TimeHelper::getDate() ? 1 : 0;
+			$isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
 
-		return (!$online && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
+		return (!$isOnline && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
 	}
 
 	/**
