@@ -7,7 +7,6 @@ use app\components\Controller;
 use yii\web\Response;
 use app\modules\user\models\LoginForm;
 use yii\validators\EmailValidator;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -23,6 +22,10 @@ class SiteController extends Controller
 				'class' => 'app\components\actions\ErrorAction',
 				'layout' => 'error',
 				'view' => 'front_error',
+			],
+			'contact' => [
+				'class' => 'app\components\actions\ContactAction',
+				'view' => 'front_contact',
 			],
 			'captcha' => [
 				'class' => 'yii\captcha\CaptchaAction',
@@ -99,28 +102,6 @@ class SiteController extends Controller
 		Yii::$app->user->logout();
 
 		return $this->goHome();
-	}
-
-	/**
-	 * Displays contact page.
-	 *
-	 * @return Response|string
-	 */
-	public function actionContact()
-	{
-		$model = new ContactForm();
-		if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-			Yii::$app->session->setFlash('contactFormSubmitted');
-
-			return $this->refresh();
-		}
-
-		$this->view->title = Yii::t('app', 'Contact Us');
-		$this->view->description = '';
-		$this->view->keywords = '';
-		return $this->render('contact', [
-			'model' => $model,
-		]);
 	}
 
 	/**
