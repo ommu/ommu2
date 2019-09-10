@@ -86,11 +86,13 @@ class Application extends \yii\web\Application
 	 */
 	public function isMaintenance(): bool
 	{
-		$appName = self::getAppId();
-		$online = Yii::$app->setting->get(join('_', [$appName, 'online']), 1);
-		$constructionDate = Yii::$app->setting->get(join('_', [$appName, 'construction_date']));
-		if($online != 1)
-			$isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
+		if($online == 1)
+			return false;
+
+		$app = Yii::$app->id;
+		$online = Yii::$app->setting->get(join('_', [$app, 'online']), 1);
+		$constructionDate = Yii::$app->setting->get(join('_', [$app, 'construction_date']));
+		$isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
 
 		return (!$isOnline && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
 	}

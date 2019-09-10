@@ -49,7 +49,7 @@ class SiteController extends Controller
 		}
 
 		if(Yii::$app->isMaintenance()) {
-			$maintenance_theme = Yii::$app->setting->get(join('_', [$appName, 'maintenance_theme']), 'arnica');
+			$maintenance_theme = Yii::$app->setting->get(join('_', [Yii::$app->id, 'maintenance_theme']), 'arnica');
 			$this->view->theme($maintenance_theme);
 		}
 

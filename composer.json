@@ -36,10 +36,11 @@
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
 		"ommu/report": "dev-master",
-		"ommu/support": "~2.1",
+		"ommu/support":  "dev-master",
 		"ommu/banner": "~2.1",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
-		"sudaryanto/back3nd": "dev-master"
+		"sudaryanto/back3nd": "dev-master",
+		"ommu/arnica": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
