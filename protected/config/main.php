@@ -52,7 +52,6 @@ $config = [
 			'locale'            => 'id',
 			'defaultTimeZone'   => 'Asia/Jakarta',
 			'currencyCode'      => 'IDR',
-		 
 		],
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
@@ -86,8 +85,8 @@ $config = [
 				'<controller:\w+>/<id:\d+>'											=> '<controller>/view',
 				//with module
 				'<module:\w+>'														=> '<module>/site/index',
-				'<module:\w+>/<t:[\w\-]+>-<id:\d+>'									=> '<module>/site/view',
-				'<module:\w+>/<id:\d+>'												=> '<module>/site/view',
+				'<module:\w+>/view/<t:[\w\-]+>-<id:\d+>'							=> '<module>/site/view',
+				'<module:\w+>/view/<id:\d+>'										=> '<module>/site/view',
 			],
 		],
 		'view' => [
