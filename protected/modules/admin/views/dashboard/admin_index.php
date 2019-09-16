@@ -12,6 +12,9 @@
  */
 
 use yii\helpers\Html;
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Dashboard'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Summary');
 ?>
 
 <p>

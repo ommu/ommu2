@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
 use app\components\widgets\ActiveForm;
 use ommu\selectize\Selectize;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['update']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $backofficeThemePagination = $model->backoffice_theme_pagination ? $model->backoffice_theme_pagination : 'default';

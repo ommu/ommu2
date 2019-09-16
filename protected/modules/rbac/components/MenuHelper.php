@@ -49,9 +49,14 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 				if ($callback !== null) {
 					$item = call_user_func($callback, $menu);
 				} else {
+					$url = static::parseRoute($menu['route']);
+					if($menu['data']) {
+						parse_str(trim($menu['data']), $data);
+						$url = ArrayHelper::merge($url, $data);
+					}
 					$item = [
 						'label' => $menu['name'],
-						'url' => static::parseRoute($menu['route']),
+						'url' => $url,
 						'icon' => $menu['icon'],
 					];
 					if ($menu['children'] != []) {
