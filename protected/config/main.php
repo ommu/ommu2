@@ -81,8 +81,8 @@ $config = [
 				'<action:(login|logout)>' 											=> 'site/<action>',
 				//with module
 				'<module:\w+>'														=> '<module>/site/index',
-				'<module:\w+>/view/<t:[\w\-]+>-<id:\d+>'							=> '<module>/site/view',
-				'<module:\w+>/view/<id:\d+>'										=> '<module>/site/view',
+				'<module:\w+>/<t:[\w\-]+>-<id:\d+>'									=> '<module>/site/view',
+				'<module:\w+>/<id:\d+>'												=> '<module>/site/view',
 				//without module
 				'<controller:\w+>'													=> '<controller>/index',
 				'<controller:\w+>/<t:[\w\-]+>-<id:\d+>'								=> '<controller>/view',
