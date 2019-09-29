@@ -29,6 +29,8 @@
 		"thamtech/yii2-uuid": "*",
 		"mg-code/yii2-helpers": "*",
 		"adampatterson/numeral": "dev-master",
+		"npm-asset/pdfjs-dist": "~2.2",
+		"npm-asset/workbox-sw": "4.3.1",
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
 		"ommu/yii2-selectize": "*",
@@ -40,8 +42,7 @@
 		"ommu/banner": "~2.1",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
 		"sudaryanto/back3nd": "dev-master",
-		"ommu/arnica": "dev-master",
-		"npm-asset/pdfjs-dist": "~2.2"
+		"ommu/arnica": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
