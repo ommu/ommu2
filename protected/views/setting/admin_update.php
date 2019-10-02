@@ -249,26 +249,9 @@ echo $form->field($model, 'backoffice_indexing')
 					sublayout = $.ajax({
 						url: \''.$getSublayoutUrl.'\' + value,
 						success: function(results) {
-							basesetting_maintenance_theme_sublayout.removeOption(v_backend_sublayout);
+							basesetting_maintenance_theme_sublayout.removeOption(v_maintenance_sublayout);
 							basesetting_maintenance_theme_sublayout.showInput();
 							basesetting_maintenance_theme_sublayout.enable();
-							callback(results);
-						},
-						error: function() {
-							callback();
-						}
-					})
-				});
-				basesetting_maintenance_theme_pagination.disable();
-				basesetting_maintenance_theme_pagination.clearOptions();
-				basesetting_maintenance_theme_pagination.load(function(callback) {
-					pagination && pagination.abort();
-					pagination = $.ajax({
-						url: \''.$getPaginationUrl.'\' + value,
-						success: function(results) {
-							basesetting_maintenance_theme_pagination.removeOption(v_backend_pagination);
-							basesetting_maintenance_theme_pagination.showInput();
-							basesetting_maintenance_theme_pagination.enable();
 							callback(results);
 						},
 						error: function() {
@@ -290,7 +273,7 @@ echo $form->field($model, 'backoffice_indexing')
 			'labelField' => 'label',
 			'searchField' => ['label'],
 			'onChange' => new \yii\web\JsExpression('function(value) {
-				v_backend_sublayout = value;
+				v_maintenance_sublayout = value;
 			}'),
 		],
 	])
