@@ -68,6 +68,9 @@ class SettingController extends Controller
 		$backPagination = $allTheme[$model->backoffice_theme]['pagination'];
 		if(!isset($backPagination))
 			$backPagination = [];
+		$backLoginLayout = $allTheme[$model->backoffice_theme]['loginlayout'];
+		if(!isset($backLoginLayout))
+			$backLoginLayout = [];
 		$maintenanceSubLayout = $allTheme[$model->maintenance_theme]['sublayout'];
 		if(!isset($maintenanceSubLayout))
 			$maintenanceSubLayout = [];
@@ -77,6 +80,9 @@ class SettingController extends Controller
 		$frontPagination = $allTheme[$model->theme]['pagination'];
 		if(!isset($frontPagination))
 			$frontPagination = [];
+		$frontLoginLayout = $allTheme[$model->theme]['loginlayout'];
+		if(!isset($frontLoginLayout))
+			$frontLoginLayout = [];
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -111,9 +117,11 @@ class SettingController extends Controller
 			'themes' => $themes,
 			'backSubLayout' => $backSubLayout,
 			'backPagination' => $backPagination,
+			'backLoginLayout' => $backLoginLayout,
 			'maintenanceSubLayout' => $maintenanceSubLayout,
 			'frontSubLayout' => $frontSubLayout,
 			'frontPagination' => $frontPagination,
+			'frontLoginLayout' => $frontLoginLayout,
 		]);
 	}
 
@@ -178,6 +186,17 @@ class SettingController extends Controller
 		$yaml = Theme::themeParseYaml($theme);
 
 		return is_array($yaml) ? ($yaml['pagination'] ? $this->getSublayout($yaml['pagination']) : []) : [];
+	}
+
+	/**
+	 * ThemeLoginlayout Action
+	 */
+	public function actionLoginlayout($theme)
+	{
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		$yaml = Theme::themeParseYaml($theme);
+
+		return is_array($yaml) ? ($yaml['loginlayout'] ? $this->getSublayout($yaml['loginlayout']) : []) : [];
 	}
 
 	/**

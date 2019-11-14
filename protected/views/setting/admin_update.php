@@ -24,12 +24,14 @@ $backofficeThemePagination = $model->backoffice_theme_pagination ? $model->backo
 $themePagination = $model->theme_pagination ? $model->theme_pagination : 'default';
 
 $js = <<<JS
-	var sublayout, pagination;
+	var sublayout, pagination, loginlayout;
 	var v_backend_sublayout = '$model->backoffice_theme_sublayout';
 	var v_backend_pagination = '$backofficeThemePagination';
+	var v_backend_loginlayout = '$model->backoffice_theme_loginlayout';
 	var v_maintenance_sublayout = '$model->maintenance_theme_sublayout';
 	var v_front_sublayout = '$model->theme_sublayout';
 	var v_front_pagination = '$themePagination';
+	var v_front_loginlayout = '$model->theme_loginlayout';
 
 	$('#basesetting-online input[name="BaseSetting[online]"]').on('change', function() {
 		var id = $(this).val();
@@ -51,6 +53,7 @@ $this->registerJs($js, \yii\web\View::POS_END);
 
 $getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
 $getPaginationUrl = Url::to(['pagination', 'theme'=>'']);
+$getLoginlayoutUrl = Url::to(['loginlayout', 'theme'=>'']);
 ?>
 
 <div class="base-setting-form">
@@ -193,6 +196,23 @@ echo $form->field($model, 'analytic')
 						}
 					})
 				});
+				basesetting_backoffice_theme_loginlayout.disable();
+				basesetting_backoffice_theme_loginlayout.clearOptions();
+				basesetting_backoffice_theme_loginlayout.load(function(callback) {
+					loginlayout && loginlayout.abort();
+					loginlayout = $.ajax({
+						url: \''.$getLoginlayoutUrl.'\' + value,
+						success: function(results) {
+							basesetting_backoffice_theme_loginlayout.removeOption(v_backend_loginlayout);
+							basesetting_backoffice_theme_loginlayout.showInput();
+							basesetting_backoffice_theme_loginlayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
 			}'),
 		],
 	])
@@ -227,6 +247,21 @@ echo $form->field($model, 'analytic')
 		],
 	])
 	->label($model->getAttributeLabel('backoffice_theme_pagination'));?>
+
+<?php echo $form->field($model, 'backoffice_theme_loginlayout')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $backLoginLayout,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_backend_loginlayout = value;
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('backoffice_theme_loginlayout'));?>
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'backoffice_indexing')
@@ -327,6 +362,23 @@ echo $form->field($model, 'maintenance_indexing')
 						}
 					})
 				});
+				basesetting_theme_loginlayout.disable();
+				basesetting_theme_loginlayout.clearOptions();
+				basesetting_theme_loginlayout.load(function(callback) {
+					loginlayout && loginlayout.abort();
+					loginlayout = $.ajax({
+						url: \''.$getLoginlayoutUrl.'\' + value,
+						success: function(results) {
+							basesetting_theme_loginlayout.removeOption(v_front_loginlayout);
+							basesetting_theme_loginlayout.showInput();
+							basesetting_theme_loginlayout.enable();
+							callback(results);
+						},
+						error: function() {
+							callback();
+						}
+					})
+				});
 			}'),
 		],
 	])
@@ -361,6 +413,21 @@ echo $form->field($model, 'maintenance_indexing')
 		],
 	])
 	->label($model->getAttributeLabel('theme_pagination'));?>
+
+<?php echo $form->field($model, 'theme_loginlayout')
+	->widget(Selectize::className(), [
+		'cascade' => true,
+		'items' => $frontLoginLayout,
+		'pluginOptions' => [
+			'valueField' => 'id',
+			'labelField' => 'label',
+			'searchField' => ['label'],
+			'onChange' => new \yii\web\JsExpression('function(value) {
+				v_front_loginlayout = value;
+			}'),
+		],
+	])
+	->label($model->getAttributeLabel('theme_loginlayout'));?>
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'theme_indexing')
