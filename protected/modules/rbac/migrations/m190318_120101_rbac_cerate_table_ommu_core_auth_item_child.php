@@ -35,7 +35,7 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db
 			$this->batchInsert('ommu_core_auth_item_child', ['parent', 'child'], [
 				['userAdmin', 'userModerator'],
 				['userModerator', 'userMember'],
-				['userModerator', '/rbac/*'],
+				['userAdmin', '/rbac/*'],
 			]);
 		}
 	}

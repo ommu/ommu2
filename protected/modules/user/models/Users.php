@@ -111,9 +111,9 @@ class Users extends UsersModel implements IdentityInterface
 		if($isAdmin == true) {
 			$level = UserLevel::getLevel('admin');
 			return static::find()
-				->where(['email' => $email])
-				->andWhere(['enabled' => self::STATUS_ACTIVE])
+				->where(['enabled' => self::STATUS_ACTIVE])
 				->andWhere(['in', 'level_id', array_flip($level)])
+				->andWhere(['email' => $email])
 				->one();
 		}
 
@@ -131,9 +131,9 @@ class Users extends UsersModel implements IdentityInterface
 		if($isAdmin == true) {
 			$level = UserLevel::getLevel('admin');
 			return static::find()
-				->where(['username' => $username])
-				->andWhere(['enabled' => self::STATUS_ACTIVE])
+				->where(['enabled' => self::STATUS_ACTIVE])
 				->andWhere(['in', 'level_id', array_flip($level)])
+				->andWhere(['username' => $username])
 				->one();
 		}
 
@@ -185,7 +185,11 @@ class Users extends UsersModel implements IdentityInterface
 	 */
 	public function refreshToken(int $id): string
 	{
-		$user = self::find()->where(['user_id' => $id])->select('user_id, email')->one();
+		$user = self::find()
+			->select('user_id, email')
+			->where(['user_id' => $id])
+			->one();
+
 		if($user == null)
 			throw new \Exception('Tidak dapat merefresh token!.');
 
@@ -232,9 +236,13 @@ class Users extends UsersModel implements IdentityInterface
 	/**
 	 * Mengembalikan data pada kolom jwt_claims untuk kebutuhan autentifikasi
 	 */
-	public static function getClaimById($userId)
+	public static function getClaimById(int $userId)
 	{
-		$result = self::find()->where(['user_id' => $userId])->select(['user_id', 'jwt_claims'])->one();
+		$result = self::find()
+			->where(['user_id' => $userId])
+			->select(['user_id', 'jwt_claims'])
+			->one();
+
 		if($result != null)
 			return $result->jwt_claims;
 
