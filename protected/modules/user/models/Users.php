@@ -164,6 +164,7 @@ class Users extends UsersModel implements IdentityInterface
 					]));
 					return false;
 				}
+				return true;
 			} else {
 				if(!$this->hashPassword($this->$password)) {
 					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
@@ -171,6 +172,7 @@ class Users extends UsersModel implements IdentityInterface
 					]));
 					return false;
 				}
+				return true;
 			}
 		}
 		
