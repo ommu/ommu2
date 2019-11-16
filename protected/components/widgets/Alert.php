@@ -24,55 +24,69 @@ use Yii;
  */
 class Alert extends \yii\bootstrap\Widget
 {
-    /**
-     * @var array the alert types configuration for the flash messages.
-     * This array is setup as $key => $value, where:
-     * - key: the name of the session flash variable
-     * - value: the bootstrap alert type (i.e. danger, success, info, warning)
-     */
-    public $alertTypes = [
-        'error'   => 'alert-danger',
-        'danger'  => 'alert-danger',
-        'success' => 'alert-success',
-        'info'    => 'alert-info',
-        'warning' => 'alert-warning'
-    ];
-    /**
-     * @var array the options for rendering the close button tag.
-     * Array will be passed to [[\yii\bootstrap\Alert::closeButton]].
-     */
-    public $closeButton = [];
+	/**
+	 * @var array the alert types configuration for the flash messages.
+	 * This array is setup as $key => $value, where:
+	 * - key: the name of the session flash variable
+	 * - value: the bootstrap alert type (i.e. danger, success, info, warning)
+	 */
+	public $alertTypes = [
+		'error'   => 'alert-danger',
+		'danger'  => 'alert-danger',
+		'success' => 'alert-success',
+		'info'    => 'alert-info',
+		'warning' => 'alert-warning'
+	];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function run()
-    {
-        $session = Yii::$app->session;
-        $flashes = $session->getAllFlashes();
-        $appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+	public $alertSoftTypes = [
+		'error'   => 'alert-soft-danger',
+		'danger'  => 'alert-soft-danger',
+		'success' => 'alert-soft-success',
+		'info'    => 'alert-soft-info',
+		'warning' => 'alert-soft-warning'
+	];
 
-        $bootstrapClass = 'yii\bootstrap\Alert';
-        if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
-            $bootstrapClass = 'yii\bootstrap4\Alert';
+	/**
+	 * @var array the options for rendering the close button tag.
+	 * Array will be passed to [[\yii\bootstrap\Alert::closeButton]].
+	 */
+	public $closeButton = [];
 
-        foreach ($flashes as $type => $flash) {
-            if (!isset($this->alertTypes[$type])) {
-                continue;
-            }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function run()
+	{
+		$session = Yii::$app->session;
+		$flashes = $session->getAllFlashes();
 
-            foreach ((array) $flash as $i => $message) {
-                echo $bootstrapClass::widget([
-                    'body' => $message,
-                    'closeButton' => $this->closeButton,
-                    'options' => array_merge($this->options, [
-                        'id' => $this->getId() . '-' . $type . '-' . $i,
-                        'class' => $this->alertTypes[$type] . $appendClass,
-                    ]),
-                ]);
-            }
+		$softAlert = isset($this->options['softAlert']) && $this->options['softAlert'] ? true : false;
+		$template = isset($this->options['template']) && $this->options['template'] ? true : false;
+		$appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
+		if($template)
+			$appendClass = $appendClass . ' d-flex';
 
-            $session->removeFlash($type);
-        }
-    }
+		$bootstrapClass = 'yii\bootstrap\Alert';
+		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+			$bootstrapClass = 'yii\bootstrap4\Alert';
+
+		foreach ($flashes as $type => $flash) {
+			if (!isset($this->alertTypes[$type])) {
+				continue;
+			}
+
+			foreach ((array) $flash as $i => $message) {
+				echo $bootstrapClass::widget([
+					'body' => $template ? strtr($this->options['template'], ['{message}'=>$message]) : $message,
+					'closeButton' => $this->closeButton,
+					'options' => array_merge($this->options, [
+						'id' => $this->getId() . '-' . $type . '-' . $i,
+						'class' => (!$softAlert ? $this->alertTypes[$type] : $this->alertSoftTypes[$type]) . $appendClass,
+					]),
+				]);
+			}
+
+			$session->removeFlash($type);
+		}
+	}
 }

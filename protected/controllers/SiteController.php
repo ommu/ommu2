@@ -7,10 +7,12 @@ use app\components\Controller;
 use yii\web\Response;
 use app\modules\user\models\LoginForm;
 use yii\validators\EmailValidator;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
 	public static $backoffice = false;
+	public $isLoginLayout = false;
 
 	/**
 	 * {@inheritdoc}
@@ -66,11 +68,11 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+		if(!Yii::$app->isSocialMedia())
+			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
-
-		if(!Yii::$app->isSocialMedia())
-			return $this->redirect(Url::to(['/admin/login']));
 
 		$model = new LoginForm();
 		if(Yii::$app->request->isPost) {
@@ -84,6 +86,8 @@ class SiteController extends Controller
 				return $this->goBack();
 		}
 
+		$this->isLoginLayout = true;
+		$this->view->descriptionShow = true;
 		$this->view->title = Yii::t('app', 'Login');
 		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
 		$this->view->keywords = '';
@@ -147,6 +151,6 @@ class SiteController extends Controller
 		if(($model = \ommu\core\models\CorePages::findOne($id)) !== null)
 			return $model;
 
-		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}
 }
