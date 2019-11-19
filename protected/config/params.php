@@ -36,6 +36,7 @@ return [
 	'user' => [
 		'rememberMe' => false,
 		'rememberMeDay' => 7,
+		'loginSignupWithSocialMedia' => false,
 	],
 
 	// RBAC
