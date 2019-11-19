@@ -116,6 +116,7 @@ class PasswordController extends Controller
 	{
 		$model = new UserForgot();
 		$model->scenario = UserForgot::SCENARIO_WITH_FORM;
+		$model->setAttributeLabels(['email_i'=>Yii::t('app', 'Username or Email')]);
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -135,8 +136,8 @@ class PasswordController extends Controller
 		}
 
 		$this->view->descriptionShow = true;
-		$this->view->title = Yii::t('app', 'Forgot Password?');
-		$this->view->description = Yii::t('app', 'Please enter your <strong>email</strong> address and we\'ll send you instructions on how to reset your password');
+		$this->view->title = Yii::t('app', 'Trouble Logging In?');
+		$this->view->description = Yii::t('app', 'Please enter your <strong>username</strong> or <strong>email</strong> and we\'ll send you instructions on how to reset your password');
 		$this->view->keywords = '';
 		return $this->oRender('front_forgot', [
 			'model' => $model,
@@ -148,68 +149,63 @@ class PasswordController extends Controller
 	 */
 	public function actionReset()
 	{
-		if(!Yii::$app->request->get())
+		if(($code = Yii::$app->request->get('cd')) == null)
 			return $this->goHome();
 
-		$code = Yii::$app->request->get('cd');
+		$msg = Yii::$app->request->get('msg');
 		$forgot = UserForgot::findOne(['code'=>$code]);
 
-		if($forgot != null) {
-			if($forgot->view->expired == 1)
-				$render = 'expired';
-			else {
-				$render = 'valid';
-				$ecc3Condition = Yii::$app->params['ecc3']['change_password']['form'];
-				if($ecc3Condition == true) {
-					$model = \app\modules\ecc\models\Users::findOne(['id'=>$forgot->user->_id, 'email'=>$forgot->user->email]);
-					$model->scenario = \app\modules\ecc\models\Users::SCENARIO_RESET_PASSWORD;
-				} else {
-					$model = $this->findModel($forgot->user_id);
-					$model->scenario = Users::SCENARIO_RESET_PASSWORD;
-				}
-
-				if(Yii::$app->request->isPost) {
-					$model->load(Yii::$app->request->post());
-					$model->isForm = true;
-		
-					if($model->save()) {
-						//$forgot->publish = 0;
-						$forgot->save();
-
-						//Yii::$app->user->logout();
-
-						if(!Yii::$app->request->isAjax) {
-							Yii::$app->session->setFlash('success', Yii::t('app', 'Password success updated.'));
-							return $this->redirect(['reset', 'message'=>'success']);
-						} else
-							return Json::encode(['successUrl'=>Url::to(['reset', 'message'=>'success'])]);
-		
-					} else {
-						if(Yii::$app->request->isAjax)
-							return Json::encode(\app\components\ActiveForm::validate($model));
-					}
-				}
-			}
-		} else 
+		if(!$msg && $forgot == null) {
 			$render = 'novalid';
+			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak ditemukan.'));
+			if(!Yii::$app->request->get('cd'))
+				return $this->redirect(['reset', 'cd'=>$code]);
+		}
 
-		if($render == 'novalid')
-			$description = Yii::t('app', 'Reset password code tidak ditemukan.');
-		else if($render == 'expired')
-			$description = Yii::t('app', 'Reset password code tidak dapat digunakan.');
-		else if($render == 'valid')
-			$description = Yii::t('app', 'Masukkan password baru anda pada inputan berikut.');
+		if(!$msg && $forgot->expired == 1) {
+			$render = 'expired';
+			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak dapat digunakan.'));
+			if(!Yii::$app->request->get('cd'))
+				return $this->redirect(['reset', 'cd'=>$code]);
+		}
 
-		$this->view->title = !Yii::$app->request->get('message') ? 
-			Yii::t('app', 'Reset Password') : 
+		if($render != 'novalid' && $render != 'expired')
+			$render = 'valid';
+
+		$model = $this->findModel($forgot->user_id);
+		$model->scenario = Users::SCENARIO_RESET_PASSWORD;
+
+		if(Yii::$app->request->isPost) {
+			$model->load(Yii::$app->request->post());
+			$model->isForm = true;
+
+			if($model->save()) {
+				$forgot->publish = 0;
+				$forgot->save();
+
+				Yii::$app->user->logout();
+
+				if(!Yii::$app->request->isAjax) {
+					Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your email and new password.'));
+					return $this->redirect(['reset', 'cd'=>$code, 'msg'=>'success']);
+				}
+
+			} else {
+				if(Yii::$app->request->isAjax)
+					return Json::encode(\app\components\ActiveForm::validate($model));
+			}
+		}
+
+		$this->view->descriptionShow = true;
+		$this->view->title = !Yii::$app->request->get('msg') ? 
+			Yii::t('app', 'Reset Password?') : 
 			Yii::t('app', 'Reset Password Success');
-		$this->view->description = !Yii::$app->request->get('message') ? 
-			$description : 
-			Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your email and new password at the following link:');
+		$this->view->description = Yii::t('app', 'It\'s a good idea to use a strong password that you\'re not using elsewhere');
 		$this->view->keywords = '';
 		return $this->render('front_reset', [
-			'render' => $render,
 			'model' => $model,
+			'render' => $render,
+			'msg' => $msg,
 		]);
 	}
 
