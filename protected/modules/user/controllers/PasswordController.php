@@ -186,7 +186,7 @@ class PasswordController extends Controller
 				Yii::$app->user->logout();
 
 				if(!Yii::$app->request->isAjax) {
-					Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your email and new password.'));
+					Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your username or email and new password.'));
 					return $this->redirect(['reset', 'cd'=>$code, 'msg'=>'success']);
 				}
 

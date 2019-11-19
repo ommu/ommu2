@@ -88,7 +88,7 @@ class SiteController extends Controller
 
 		$this->isLoginLayout = true;
 		$this->view->descriptionShow = true;
-		$this->view->title = Yii::t('app', 'Login');
+		$this->view->title = Yii::t('app', 'Welcome back!');
 		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('front_login', [
