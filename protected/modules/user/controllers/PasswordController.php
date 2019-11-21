@@ -28,20 +28,11 @@ use ommu\users\models\UserForgot;
 use app\modules\user\models\Users;
 use yii\helpers\Url;
 use yii\helpers\Json;
+use app\components\ActiveForm;
 
 class PasswordController extends Controller
 {
 	public static $backoffice = false;
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function init() 
-	{
-		parent::init();
-
-		$this->layout ='login';
-	}
 
 	/**
 	 * {@inheritdoc}
@@ -94,7 +85,7 @@ class PasswordController extends Controller
 
 			} else {
 				if(Yii::$app->request->isAjax)
-					return Json::encode(\app\components\ActiveForm::validate($model));
+					return Json::encode(ActiveForm::validate($model));
 			}
 		}
 
@@ -131,7 +122,7 @@ class PasswordController extends Controller
 
 			} else {
 				if(Yii::$app->request->isAjax)
-					return Json::encode(\app\components\ActiveForm::validate($model));
+					return Json::encode(ActiveForm::validate($model));
 			}
 		}
 
@@ -192,7 +183,7 @@ class PasswordController extends Controller
 
 			} else {
 				if(Yii::$app->request->isAjax)
-					return Json::encode(\app\components\ActiveForm::validate($model));
+					return Json::encode(ActiveForm::validate($model));
 			}
 		}
 
