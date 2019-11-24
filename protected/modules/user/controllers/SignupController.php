@@ -23,7 +23,7 @@ use app\components\Controller;
 use app\models\CoreSettings;
 use app\modules\user\models\Users;
 use yii\helpers\Json;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 
 class SignupController extends Controller
 {

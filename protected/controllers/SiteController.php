@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use app\components\Controller;
 use yii\web\Response;
 use app\modules\user\models\LoginForm;
+use app\models\CoreSettings;
 use yii\validators\EmailValidator;
 use yii\web\NotFoundHttpException;
 
@@ -74,7 +75,15 @@ class SiteController extends Controller
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
 
+		$setting = CoreSettings::find()
+			->select(['signup_username'])
+			->where(['id' => 1])
+			->one();
+
 		$model = new LoginForm();
+		if($setting->signup_username == 1)
+			$model->setAttributeLabels(['username'=>Yii::t('app', 'Email or Username')]);
+
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 

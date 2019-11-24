@@ -28,7 +28,7 @@ use ommu\users\models\UserForgot;
 use app\modules\user\models\Users;
 use yii\helpers\Url;
 use yii\helpers\Json;
-use app\components\ActiveForm;
+use app\components\widgets\ActiveForm;
 
 class PasswordController extends Controller
 {
@@ -149,46 +149,47 @@ class PasswordController extends Controller
 		if(!$msg && $forgot == null) {
 			$render = 'novalid';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak ditemukan.'));
-			if(!Yii::$app->request->get('cd'))
+			if(!$code)
 				return $this->redirect(['reset', 'cd'=>$code]);
 		}
 
 		if(!$msg && $forgot->expired == 1) {
 			$render = 'expired';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak dapat digunakan.'));
-			if(!Yii::$app->request->get('cd'))
+			if(!$code)
 				return $this->redirect(['reset', 'cd'=>$code]);
 		}
 
-		if($render != 'novalid' && $render != 'expired')
+		if($render != 'novalid' && $render != 'expired') {
 			$render = 'valid';
 
-		$model = $this->findModel($forgot->user_id);
-		$model->scenario = Users::SCENARIO_RESET_PASSWORD;
-
-		if(Yii::$app->request->isPost) {
-			$model->load(Yii::$app->request->post());
-			$model->isForm = true;
-
-			if($model->save()) {
-				$forgot->publish = 0;
-				$forgot->save();
-
-				Yii::$app->user->logout();
-
-				if(!Yii::$app->request->isAjax) {
-					Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your username or email and new password.'));
-					return $this->redirect(['reset', 'cd'=>$code, 'msg'=>'success']);
+			$model = $this->findModel($forgot->user_id);
+			$model->scenario = Users::SCENARIO_RESET_PASSWORD;
+	
+			if(Yii::$app->request->isPost) {
+				$model->load(Yii::$app->request->post());
+				$model->isForm = true;
+	
+				if($model->save()) {
+					$forgot->publish = 0;
+					$forgot->save();
+	
+					Yii::$app->user->logout();
+	
+					if(!Yii::$app->request->isAjax) {
+						Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your username or email and new password.'));
+						return $this->redirect(['reset', 'cd'=>$code, 'msg'=>'success']);
+					}
+	
+				} else {
+					if(Yii::$app->request->isAjax)
+						return Json::encode(ActiveForm::validate($model));
 				}
-
-			} else {
-				if(Yii::$app->request->isAjax)
-					return Json::encode(ActiveForm::validate($model));
 			}
 		}
 
 		$this->view->descriptionShow = true;
-		$this->view->title = !Yii::$app->request->get('msg') ? 
+		$this->view->title = !$msg ? 
 			Yii::t('app', 'Reset Password?') : 
 			Yii::t('app', 'Reset Password Success');
 		$this->view->description = Yii::t('app', 'It\'s a good idea to use a strong password that you\'re not using elsewhere');

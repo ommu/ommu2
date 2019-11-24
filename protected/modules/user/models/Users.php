@@ -117,7 +117,7 @@ class Users extends UsersModel implements IdentityInterface
 				->one();
 		}
 
-		return static::findOne(['email' => $email, 'enabled' => self::STATUS_ACTIVE]);
+		return static::findOne(['enabled' => self::STATUS_ACTIVE, 'email' => $email]);
 	}
 
 	/**
@@ -137,7 +137,7 @@ class Users extends UsersModel implements IdentityInterface
 				->one();
 		}
 
-		return static::findOne(['username' => $username, 'enabled' => self::STATUS_ACTIVE]);
+		return static::findOne(['enabled' => self::STATUS_ACTIVE, 'username' => $username]);
 	}
 
 	/**

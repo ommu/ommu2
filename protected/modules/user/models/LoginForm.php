@@ -10,6 +10,7 @@ namespace app\modules\user\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\CoreSettings;
 
 class LoginForm extends Model
 {
@@ -21,6 +22,11 @@ class LoginForm extends Model
 
 	private $_user = false;
 	private $_byEmail = false;
+
+	/**
+	 * (@inheritdoc)
+	 */
+	protected $_labels;
 
 	/**
 	 * @return array the validation rules.
@@ -37,15 +43,6 @@ class LoginForm extends Model
 			[['is_api'], 'safe'],
 		];
 
-		if(!Yii::$app->isSocialMedia()) {
-			$rules = yii\helpers\ArrayHelper::merge(
-				$rules,
-				[
-					[['username'], 'email'],
-				]
-			);
-		}
-
 		return $rules;
 	}
 
@@ -55,10 +52,26 @@ class LoginForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'username' => Yii::$app->isSocialMedia() ? Yii::t('app', 'Email or Username') : Yii::t('app', 'Email'),
+			'username' => Yii::t('app', 'Email'),
 			'password' => Yii::t('app', 'Password'),
 			'rememberMe' => Yii::t('app', 'Remember'),
 		];
+	}
+
+	/**
+	 * (@inheritdoc)
+	 */
+	public function setAttributeLabels($labels)
+	{
+		$this->_labels = $labels;
+	}
+
+	/**
+	 * (@inheritdoc)
+	 */
+	public function getAttributeLabel($attribute)
+	{
+		return $this->_labels[$attribute] ?? parent::getAttributeLabel($attribute);
 	}
 
 	/**
@@ -116,7 +129,12 @@ class LoginForm extends Model
 	public function getUser($isAdmin=false)
 	{
 		if(Yii::$app->isSocialMedia()) {
-			if($this->_user === false && $this->_byEmail === false)
+			$setting = CoreSettings::find()
+				->select(['signup_username'])
+				->where(['id' => 1])
+				->one();
+
+			if($setting->signup_username == 1 && $this->_user === false && $this->_byEmail === false)
 				$this->_user = Users::findByUsername($this->username, $isAdmin);
 	
 			elseif($this->_user === false && $this->_byEmail === true)
