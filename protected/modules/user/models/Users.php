@@ -18,6 +18,7 @@ use ommu\users\models\Users as UsersModel;
 use ommu\users\models\UserLevel;
 use app\modules\user\components\User as UserIdentity;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use kartik\password\StrengthValidator;
 
 class Users extends UsersModel implements IdentityInterface
 {
@@ -85,8 +86,13 @@ class Users extends UsersModel implements IdentityInterface
 	{
 		$rules = parent::rules();
 
-		return \yii\helpers\ArrayHelper::merge($rules, [
-		]);
+		if(isset(Yii::$app->params['user']['enableStrengthValidator']) && Yii::$app->params['user']['enableStrengthValidator'] == true) {
+			return \yii\helpers\ArrayHelper::merge($rules, [
+				[['password'], StrengthValidator::className(), 'preset'=> StrengthValidator::FAIR],
+			]);
+		}
+
+		return $rules;
 	}
 
 	/**

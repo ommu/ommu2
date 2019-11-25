@@ -37,6 +37,7 @@ return [
 		'rememberMe' => false,
 		'rememberMeDay' => 7,
 		'loginSignupWithSocialMedia' => false,
+		'enableStrengthValidator' => false,
 	],
 
 	// RBAC
