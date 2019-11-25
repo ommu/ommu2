@@ -38,7 +38,7 @@ class SignupController extends Controller
 		parent::init();
 
 		if(!Yii::$app->isSocialMedia())
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+			throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
