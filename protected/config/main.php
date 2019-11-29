@@ -79,14 +79,14 @@ $config = [
 				'<id:\d+>'															=> 'site/view',
 				//a standard rule mapping '/login' to 'site/login', and so on
 				'<action:(login|logout)>' 											=> 'site/<action>',
-				//with module
-				'<module:\w+>'														=> '<module>/site/index',
-				'<module:\w+>/<t:[\w\-]+>-<id:\d+>'									=> '<module>/site/view',
-				'<module:\w+>/<id:\d+>'												=> '<module>/site/view',
 				//without module
 				'<controller:\w+>'													=> '<controller>/index',
 				'<controller:\w+>/<t:[\w\-]+>-<id:\d+>'								=> '<controller>/view',
 				'<controller:\w+>/<id:\d+>'											=> '<controller>/view',
+				//with module
+				'<module:\w+>'														=> '<module>/site/index',
+				'<module:\w+>/<t:[\w\-]+>-<id:\d+>'									=> '<module>/site/view',
+				'<module:\w+>/<id:\d+>'												=> '<module>/site/view',
 			],
 		],
 		'view' => [

@@ -69,7 +69,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		if(!Yii::$app->isSocialMedia())
+		if(!Yii::$app->isSocialMedia() && Yii::$app->id == 'back3nd')
 			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 
 		if(!Yii::$app->user->isGuest)

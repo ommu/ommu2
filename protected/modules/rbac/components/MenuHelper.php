@@ -22,7 +22,8 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 	 */
 	public static function requiredParent($assigned, &$menus)
 	{
-		$assigned = ArrayHelper::merge($assigned, static::getPublicManu($menus));
+		$assigned = static::getPublicManu($menus, $assigned);
+
 		$l = count($assigned);
 		for ($i = 0; $i < $l; $i++) {
 			$id = $assigned[$i];
@@ -77,14 +78,13 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function getPublicManu($menus)
+	public static function getPublicManu($menus, $assigned)
 	{
 		$menus = ArrayHelper::map($menus, 'id', 'public');
 
-		$assigned = [];
 		if(is_array($menus) && !empty($menus)) {
 			foreach ($menus as $key => $val) {
-				if($val == 1)
+				if($val == 1 && !in_array($key, $assigned))
 					$assigned[] = $key;
 			}
 		}
