@@ -19,7 +19,7 @@ use yii\widgets\DetailView;
 use yii\helpers\ArrayHelper;
 
 if(!$small) {
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Publication'), 'url' => ['page/admin/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Development Tools'), 'url' => ['admin/module/manage']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Phrase'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->message;
 
