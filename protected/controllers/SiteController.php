@@ -45,10 +45,10 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
 		if(Yii::$app->id == 'back3nd') {
-			if(Yii::$app->user->isGuest)
-				return $this->redirect(Url::to(['/admin/login']));
-			else
+			if(!Yii::$app->user->isGuest)
 				return $this->redirect(Url::to(['/admin/dashboard/index']));
+			else
+				return $this->redirect(Url::to(['/admin/login']));
 		}
 
 		if(Yii::$app->isMaintenance()) {
@@ -69,11 +69,15 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		if(!Yii::$app->isSocialMedia() && Yii::$app->id == 'back3nd')
-			throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-
 		if(!Yii::$app->user->isGuest)
 			return $this->goHome();
+
+		if(Yii::$app->id == 'back3nd') {
+			if(!Yii::$app->isSocialMedia())
+				return $this->redirect(Url::to(['/admin/login']));
+			else
+				throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+		}
 
 		$setting = CoreSettings::find()
 			->select(['signup_username'])

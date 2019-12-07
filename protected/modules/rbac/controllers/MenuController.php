@@ -1,12 +1,20 @@
 <?php
 /**
  * MenuController
- * @var $this yii\web\View
+ * @var $this app\modules\rbac\controllers\MenuController
  * @var $model app\models\Menu
  *
  * MenuController implements the CRUD actions for Menu model.
  * Reference start
  * TOC :
+ *	Index
+ *	Create
+ *	Update
+ *	View
+ *	Delete
+ *	RunAction
+ *
+ *	findModel
  *
  * @author Putra Sudaryanto <putra@ommu.co>
  * @contact (+62)856-299-4114
@@ -20,6 +28,7 @@ namespace app\modules\rbac\controllers;
 
 use Yii;
 use app\components\Controller;
+use mdm\admin\components\AccessControl;
 use yii\filters\VerbFilter;
 use app\models\Menu;
 use app\models\search\Menu as MenuSearch;
@@ -30,20 +39,12 @@ class MenuController extends Controller
 	/**
 	 * {@inheritdoc}
 	 */
-	public function init()
-	{
-		if(!in_array(Yii::$app->user->identity->level_id, [1,2]))
-			throw new \yii\web\ForbiddenHttpException(Yii::t('app', 'You are not allowed to perform this action.'));
-
-		parent::init();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function behaviors()
 	{
 		return [
+			'access' => [
+				'class' => AccessControl::className(),
+			],
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [

@@ -17,7 +17,7 @@ return [
 	'bootstrap'     => true,
 	'controllerMap'  => [
 		'assignment' => [
-			'class'		  => 'mdm\admin\controllers\AssignmentController',
+			'class'		  => 'app\modules\rbac\controllers\AssignmentController',
 			'userClassName'  => 'app\modules\user\models\Users',
 			'idField'		=> 'user_id',
 			'usernameField'  => 'email',
@@ -48,6 +48,18 @@ return [
 				],
 			],
 			'searchClass' => 'ommu\users\models\search\Users',
+		],
+		'role' => [
+			'class' => 'app\modules\rbac\controllers\RoleController',
+		],
+		'permission' => [
+			'class' => 'app\modules\rbac\controllers\PermissionController',
+		],
+		'route' => [
+			'class' => 'app\modules\rbac\controllers\RouteController',
+		],
+		'rule' => [
+			'class' => 'app\modules\rbac\controllers\RuleController',
 		],
 		'menu' => [
 			'class' => 'app\modules\rbac\controllers\MenuController',
