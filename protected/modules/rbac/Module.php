@@ -19,18 +19,15 @@ class Module extends \mdm\admin\Module
 	public $layout = 'main';
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public $controllerNamespace = 'mdm\admin\controllers';
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function init()
 	{
-		if(!(\app\components\Application::isDev()))
-			throw new \yii\web\ForbiddenHttpException(Yii::t('app', 'You are not allowed to perform this action.'));
-
 		parent::init();
 	}
 

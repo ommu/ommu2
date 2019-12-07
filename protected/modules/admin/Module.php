@@ -19,12 +19,12 @@ class Module extends \ommu\core\Module
 	public $layout = 'main';
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public $controllerNamespace = 'ommu\core\controllers';
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function init()
 	{
