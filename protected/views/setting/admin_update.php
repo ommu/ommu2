@@ -111,7 +111,7 @@ echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$l
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('copyright')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php $online = $model::getOnline();
 echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}{input}{error}{endWrapper}'])
@@ -140,7 +140,7 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 		->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
 </div>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php $appType = $model::getAnalytics();
 echo $form->field($model, 'analytic')
@@ -153,7 +153,7 @@ echo $form->field($model, 'analytic')
 	->label($model->getAttributeLabel('analytic_property'))
 	->hint(Yii::t('app', 'Enter the Google Analytics Website Property (Tracking ID).')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'backoffice_theme')
 	->widget(Selectize::className(), [
@@ -268,7 +268,7 @@ echo $form->field($model, 'backoffice_indexing')
 	->dropDownList($appType)
 	->label($model->getAttributeLabel('backoffice_indexing')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'maintenance_theme')
 	->widget(Selectize::className(), [
@@ -319,7 +319,7 @@ echo $form->field($model, 'maintenance_indexing')
 	->dropDownList($appType)
 	->label($model->getAttributeLabel('maintenance_indexing')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'theme')
 	->widget(Selectize::className(), [
@@ -439,7 +439,7 @@ echo $form->field($model, 'theme_indexing')
 	->label($model->getAttributeLabel('theme_include_script'))
 	->hint(Yii::t('app', 'Anything entered into the box below will be included at the bottom of the <head> tag. If you want to include a script or stylesheet, be sure to use the &lt;script&gt; or &lt;link&gt; tag.')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(['button'=>Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary'])]); ?>

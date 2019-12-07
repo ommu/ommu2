@@ -47,7 +47,7 @@ use app\components\widgets\ActiveForm;
 	->label($model->getAttributeLabel('location')); ?>
 
 <?php if(!empty($model->languages)) {?>
-<div class="ln_solid"></div>
+<hr/>
 
 <?php foreach ($model->languages as $key => $val) {
 		echo $form->field($model, "translate[$key]")
@@ -56,7 +56,7 @@ use app\components\widgets\ActiveForm;
 	}
 }?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(); ?>

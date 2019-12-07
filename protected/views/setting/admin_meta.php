@@ -65,7 +65,7 @@ echo $form->field($model, 'google_meta')
 	->dropDownList($googleMeta)
 	->label($model->getAttributeLabel('twitter_meta')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'office_location')
 	->textInput(['maxlength'=>true])
@@ -355,7 +355,7 @@ JS;
 	])
 	->label($model->getAttributeLabel('office_address[country]')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'office_contact[phone]')
 	->textInput()
@@ -381,7 +381,7 @@ JS;
 	->label($model->getAttributeLabel('office_contact[website]'))
 	->hint(Yii::t('app', 'A website for this business')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(['button'=>Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary'])]); ?>

@@ -71,7 +71,7 @@ $this->registerJs($this->render('_script.js'));
 	->checkbox()
 	->label($model->getAttributeLabel('public')); ?>
 
-<div class="ln_solid"></div>
+<hr/>
 
 <?php echo $form->field($model, 'submitButton')
 	->submitButton(['button'=>Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])]); ?>

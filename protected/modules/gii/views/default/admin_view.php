@@ -49,14 +49,14 @@ foreach ($generator->templates as $name => $path) {
 		->label('Code Template')
 		->dropDownList($templates)->hint('Please select which set of the templates should be used to generated the code.') ?>
 
-	<div class="ln_solid"></div>
+	<hr/>
 
 	<?php $generateButton = isset($files) ? Html::submitButton('Generate', ['name' => 'generate', 'class' => 'btn btn-success']) : '';
 	echo $form->field($generator, 'submitButton', ['template'=>'{beginWrapper}{input}'.$generateButton.'{endWrapper}'])
 		->submitButton(['button'=>Html::submitButton('Preview', ['name' => 'preview', 'class' => 'btn btn-primary'])]); ?>
 
 	<?php if (isset($results) || isset($files)) {?>
-	<div class="ln_solid"></div>
+	<hr/>
 	<div class="default-view">
 		<div class="x_panel">
 			<div class="x_content">
