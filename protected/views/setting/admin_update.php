@@ -72,11 +72,11 @@ echo $form->field($model, 'app_type')
 
 <?php // echo $form->errorSummary($model);?>
 
-<?php $nameSmall = $form->field($model, 'name[small]', ['template' => '<div class="h5">Small Name</div>{input}', 'options' => ['tag' => null]])
+<?php $nameSmall = $form->field($model, 'name[small]', ['template' => '<div class="h6 mt-3 mb-3">Small Name</div>{input}', 'options' => ['tag' => null]])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name')); ?>
 
-<?php echo $form->field($model, 'name[long]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$nameSmall.'<div class="h5">Long Name</div>{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'name[long]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$nameSmall.'<div class="h6 mt-3 mb-3">Long Name</div>{input}{error}{endWrapper}'])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('name'))
 	->hint(Yii::t('app', 'Give your website a unique name. This will appear in the &lt;title&gt; tag throughout most of your site.')); ?>
@@ -103,11 +103,11 @@ echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$l
 	->label($model->getAttributeLabel('logo'))
 	->hint(Yii::t('app', 'extensions are allowed: png, bmp')); ?>
 
-<?php $copyrightName = $form->field($model, 'copyright[name]', ['template' => '<div class="h5">Name</div>{input}', 'options' => ['tag' => null]])
+<?php $copyrightName = $form->field($model, 'copyright[name]', ['template' => '<div class="h6 mt-3 mb-3">Name</div>{input}', 'options' => ['tag' => null]])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('copyright')); ?>
 
-<?php echo $form->field($model, 'copyright[url]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$copyrightName.'<div class="h5">Website or Social Media URL</div>{input}{error}{endWrapper}'])
+<?php echo $form->field($model, 'copyright[url]', ['template' => '{beginLabel}{labelTitle}{hint}{endLabel}{beginWrapper}'.$copyrightName.'<div class="h6 mt-3 mb-3">Website or Social Media URL</div>{input}{error}{endWrapper}'])
 	->textInput(['maxlength'=>true])
 	->label($model->getAttributeLabel('copyright')); ?>
 
