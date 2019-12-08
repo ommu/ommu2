@@ -45,8 +45,12 @@ class ActiveField extends OActiveField
 			Html::addCssClass($config['labelOptions'], $config['horizontalCssClasses']['label']);
 		if(isset($config['horizontalCssClasses']['error']))
 			Html::addCssClass($config['errorOptions'], $config['horizontalCssClasses']['error']);
-		if(isset($config['horizontalCssClasses']['hint']))
-			Html::addCssClass($config['hintOptions'], $config['horizontalCssClasses']['hint']);
+		if(isset($config['horizontalCssClasses']['hint'])) {
+			if($this instanceof \yii\bootstrap4\ActiveField) {
+				Html::addCssClass($config['hintOptions'], join(' ', ['form-text', 'text-muted', $config['horizontalCssClasses']['hint']]));
+			} else
+				Html::addCssClass($config['hintOptions'], $config['horizontalCssClasses']['hint']);
+		}
 
 		parent::__construct($config);
 	}
