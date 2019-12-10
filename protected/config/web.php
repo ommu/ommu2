@@ -92,6 +92,9 @@ $config = [
 			'audiance' => 'http://ommu.co',
 			'id'       => 'LLcrvjg0PkdtmckB2',
 		],
+		'assetManager' => [
+			'class'    => '\app\components\AssetManager',
+		],
 		'setting' => [
 			'class'    => '\app\components\SettingManager',
 			'moduleId' => 'base',
