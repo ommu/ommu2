@@ -19,6 +19,14 @@ use yii\helpers\ArrayHelper;
 class Controller extends \yii\web\Controller
 {
 	/**
+	 * {@inheritdoc}
+	 */
+	public $breadcrumbApp = false;
+	/**
+	 * {@inheritdoc}
+	 */
+	public $breadcrumbAppParam = [];
+	/**
 	 * @var string untuk menampung sub-menu yang akan di render pada layout main_submenu.
 	 */
 	public $subMenu = [];
