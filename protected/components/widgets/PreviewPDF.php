@@ -273,7 +273,9 @@ JS;
 	{
 		$previewOptions = $this->previewOptions;
 		$tag = ArrayHelper::remove($previewOptions, 'tag', 'canvas');
+		$content = Html::tag($tag, '', $previewOptions);
 
-		return Html::tag($tag, '', $previewOptions);
+		$tag = ArrayHelper::remove($previewOptions, 'tag', 'div');
+		return Html::tag($tag, $content, ['class'=>'overflow-x-scroll']);
 	}
 }
