@@ -19,7 +19,7 @@ class PreviewPDF extends \yii\base\Widget
 
 	public $previewOptions = [];
 
-	public $navigationLayout = "{prev}\n{summary}\n{next}";
+	public $navigationLayout = "{prev}\n{summary}\n{next}\n{zoomOut}\n{zoomIn}";
 	public $layout = "{navigation}\n{preview}";
 
 	public function init()
@@ -49,6 +49,12 @@ class PreviewPDF extends \yii\base\Widget
 
 		if(!isset($this->navigationOptions['next']))
 			$this->navigationOptions['next'] = [];
+
+		if(!isset($this->navigationOptions['zoomIn']))
+			$this->navigationOptions['zoomIn'] = [];
+
+		if(!isset($this->navigationOptions['zoomOut']))
+			$this->navigationOptions['zoomOut'] = [];
 
 		// set default previewOptions
 		if(!isset($this->previewOptions['class']))
@@ -160,15 +166,33 @@ $jsFunction = <<<JS
 	document.getElementById('next').addEventListener('click', onNextPage);
 
 	/**
+	 * Displays zoom (+) and (-).
+	 */
+	function onZoomIn() {
+		scale = scale + 0.1;
+
+		queueRenderPage(pageNum);
+	}
+	document.getElementById('zoomIn').addEventListener('click', onZoomIn);
+	function onZoomOut() {
+		scale = scale - 0.1;
+
+		queueRenderPage(pageNum);
+	}
+	document.getElementById('zoomOut').addEventListener('click', onZoomOut);
+
+	/**
 	 * Asynchronously downloads PDF.
 	 */
-	pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-		pdfDoc = pdfDoc_;
-		document.getElementById('page_count').textContent = pdfDoc.numPages;
+	pdfjsLib.getDocument(url)
+		.promise
+		.then(function(pdfDoc_) {
+			pdfDoc = pdfDoc_;
+			document.getElementById('page_count').textContent = pdfDoc.numPages;
 
-		// Initial/first page rendering
-		renderPage(pageNum);
-	});
+			// Initial/first page rendering
+			renderPage(pageNum);
+		});
 JS;
 		$view->registerJs($jsFunction, $view::POS_END);
 	}
@@ -211,6 +235,7 @@ JS;
 		ArrayHelper::remove($navigationOptions, 'summary');
 		ArrayHelper::remove($navigationOptions, 'prev');
 		ArrayHelper::remove($navigationOptions, 'next');
+		ArrayHelper::remove($navigationOptions, 'zoom');
 		$tag = ArrayHelper::remove($navigationOptions, 'tag', 'div');
 		return Html::tag($tag, $content, $navigationOptions);
 	}
@@ -231,6 +256,14 @@ JS;
 				ArrayHelper::remove($navigationOptions['next'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['next'], 'tag', 'button');
 				return Html::tag($tag, Yii::t('app', 'Next'), ArrayHelper::merge($navigationOptions['next'], ['id'=>'next']));
+			case '{zoomIn}':
+				ArrayHelper::remove($navigationOptions['zoomIn'], 'id');
+				$tag = ArrayHelper::remove($navigationOptions['zoomIn'], 'tag', 'button');
+				return Html::tag($tag, Yii::t('app', 'Zoom (+)'), ArrayHelper::merge($navigationOptions['zoomIn'], ['id'=>'zoomIn']));
+			case '{zoomOut}':
+				ArrayHelper::remove($navigationOptions['zoomOut'], 'id');
+				$tag = ArrayHelper::remove($navigationOptions['zoomOut'], 'tag', 'button');
+				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id'=>'zoomOut']));
 			default:
 				return false;
 		}
