@@ -22,7 +22,11 @@ class View extends \yii\web\View
 	use \ommu\traits\ThemeTrait;
 	use \ommu\traits\FileTrait;
 	use \app\modules\user\components\traits\UserTrait;
-	
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public $cards = true;
 	/**
 	 * @var string tempat menyimpan deskripsi pada controller yang akan ditampilkan view/layout sebagai meta description.
 	 */
@@ -382,7 +386,11 @@ class View extends \yii\web\View
 	{
 		if($context == null)
 			$context = $this->context;
-		$content = $this->render($view, $params, $context);
+
+		if(isset($params['overwrite']) && $params['overwrite'] == true)
+			$content = $view;
+		else
+			$content = $this->render($view, $params, $context);
 
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
