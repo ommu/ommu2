@@ -392,6 +392,12 @@ class View extends \yii\web\View
 		else
 			$content = $this->render($view, $params, $context);
 
+		$cards = true;
+		if(isset($params['cards']) && $params['cards'] == false)
+			$cards = false;
+		if($cards == false)
+			return $content;
+
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
 		if ($layoutFile !== false) {
