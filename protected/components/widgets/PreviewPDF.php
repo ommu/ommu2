@@ -19,7 +19,7 @@ class PreviewPDF extends \yii\base\Widget
 
 	public $previewOptions = [];
 
-	public $navigationLayout = "{prev}\n{summary}\n{next}\n{zoomOut}\n{zoomIn}";
+	public $navigationLayout = "{prev}\n{summary}\n{next}\n{zoomOut}\n{zoomIn}\n{raw}";
 	public $layout = "{navigation}\n{preview}";
 
 	public function init()
@@ -56,6 +56,9 @@ class PreviewPDF extends \yii\base\Widget
 		if(!isset($this->navigationOptions['zoomOut']))
 			$this->navigationOptions['zoomOut'] = [];
 
+		if(!isset($this->navigationOptions['raw']))
+			$this->navigationOptions['raw'] = [];
+
 		// set default previewOptions
 		if(!isset($this->previewOptions['class']))
 			$this->previewOptions['class'] = 'preview-pdf';
@@ -69,12 +72,14 @@ class PreviewPDF extends \yii\base\Widget
 		$view = $this->getView();
 		$pdfjsAsset = PdfJsAsset::register($view);
 		$view->registerJsFile('http://mozilla.github.io/pdf.js/build/pdf.js', ['position' => $view::POS_END]);
+		// $view->registerJsFile('http://mozilla.github.io/pdf.js/build/pdf.worker.js', ['position' => $view::POS_END]);
 		// $view->registerJsFile($pdfjsAsset->baseUrl . '/build/pdf.js', ['position' => $view::POS_END]);
+
+// If absolute URL from the remote server is provided, configure the CORS
+// header on that server.
+// var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
 $js = <<<JS
 	var pdfjsAsset = '{$pdfjsAsset->baseUrl}';
-	// If absolute URL from the remote server is provided, configure the CORS
-	// header on that server.
-	// var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
 	var url = '{$this->url}';
 JS;
 		$view->registerJs($js, $view::POS_HEAD);
@@ -251,19 +256,23 @@ JS;
 			case '{prev}':
 				ArrayHelper::remove($navigationOptions['prev'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['prev'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Previous'), ArrayHelper::merge($navigationOptions['prev'], ['id'=>'prev']));
+				return Html::tag($tag, Yii::t('app', 'Previous'), ArrayHelper::merge($navigationOptions['prev'], ['id'=>'prev', 'class'=>'btn btn-primary']));
 			case '{next}':
 				ArrayHelper::remove($navigationOptions['next'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['next'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Next'), ArrayHelper::merge($navigationOptions['next'], ['id'=>'next']));
+				return Html::tag($tag, Yii::t('app', 'Next'), ArrayHelper::merge($navigationOptions['next'], ['id'=>'next', 'class'=>'btn btn-primary']));
 			case '{zoomIn}':
 				ArrayHelper::remove($navigationOptions['zoomIn'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['zoomIn'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Zoom (+)'), ArrayHelper::merge($navigationOptions['zoomIn'], ['id'=>'zoomIn']));
+				return Html::tag($tag, Yii::t('app', 'Zoom (+)'), ArrayHelper::merge($navigationOptions['zoomIn'], ['id'=>'zoomIn', 'class'=>'btn btn-success']));
 			case '{zoomOut}':
 				ArrayHelper::remove($navigationOptions['zoomOut'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['zoomOut'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id'=>'zoomOut']));
+				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id'=>'zoomOut', 'class'=>'btn btn-success']));
+			case '{raw}':
+				ArrayHelper::remove($navigationOptions['raw'], 'id');
+				$tag = ArrayHelper::remove($navigationOptions['raw'], 'tag', 'button');
+				return Html::a(Yii::t('app', 'RAW'), $this->url, ArrayHelper::merge($navigationOptions['raw'], ['class'=>'btn btn-warning', 'target'=>'_blank']));
 			default:
 				return false;
 		}
