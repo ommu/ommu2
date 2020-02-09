@@ -276,6 +276,6 @@ JS;
 		$content = Html::tag($tag, '', $previewOptions);
 
 		$tag = ArrayHelper::remove($previewOptions, 'tag', 'div');
-		return Html::tag($tag, $content, ['class'=>'overflow-x-scroll']);
+		return Html::tag($tag, $content, ['class'=>'overflow-x-scroll text-center', 'id'=>'box-canvas']);
 	}
 }
