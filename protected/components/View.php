@@ -401,12 +401,23 @@ class View extends \yii\web\View
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
 		if ($layoutFile !== false) {
-			$contentParams = ['content'=>$content];
+            $contentParams = ['content'=>$content];
+            
+            // widget title condition
+            if(isset($params['title']))
+                $contentParams = ArrayHelper::merge($contentParams, ['title'=>$params['title']]);
 
-			$contentMenu = false;
-			if(isset($params['contentMenu']))
-				$contentMenu = $params['contentMenu'];
-			$contentParams = ArrayHelper::merge($contentParams, ['contentMenu'=>$contentMenu]);
+            // padding body condition
+            $paddingBody = true;
+            if(isset($params['paddingBody']))
+                $paddingBody = $params['paddingBody'];
+            $contentParams = ArrayHelper::merge($contentParams, ['paddingBody'=>$paddingBody]);
+
+            // content menu condition
+            $contentMenu = false;
+            if(isset($params['contentMenu']))
+                $contentMenu = $params['contentMenu'];
+            $contentParams = ArrayHelper::merge($contentParams, ['contentMenu'=>$contentMenu]);
 
 			return $this->renderFile($layoutFile, $contentParams, $context);
 		}

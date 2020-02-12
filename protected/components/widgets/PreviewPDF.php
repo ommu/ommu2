@@ -8,20 +8,42 @@ use app\assets\PdfJsAsset;
 
 class PreviewPDF extends \yii\base\Widget
 {
+	/**
+	 * {@inheritdoc}
+	 */
 	public $waterMark = true;
+	/**
+	 * {@inheritdoc}
+	 */
 	public $waterMarkParam = [];
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $url;
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $options = [];
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $navigationOptions = [];
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $previewOptions = [];
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $navigationLayout = "{prev}\n{summary}\n{next}\n{zoomOut}\n{zoomIn}\n{raw}";
+	/**
+	 * {@inheritdoc}
+	 */
 	public $layout = "{navigation}\n{preview}";
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function init()
 	{
 		$waterMarkParam = [
@@ -67,6 +89,9 @@ class PreviewPDF extends \yii\base\Widget
 			$this->previewOptions['id'] = 'the-canvas';
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function registerAssets()
 	{
 		$view = $this->getView();
@@ -202,6 +227,9 @@ JS;
 		$view->registerJs($jsFunction, $view::POS_END);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function run() 
 	{
 		$this->registerAssets();
@@ -216,6 +244,9 @@ JS;
 		return Html::tag($tag, $content, $options);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function renderSection($name)
 	{
 		switch ($name) {
@@ -228,6 +259,9 @@ JS;
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function renderNavigation()
 	{
 		$content = preg_replace_callback('/{\\w+}/', function ($matches) {
@@ -245,6 +279,9 @@ JS;
 		return Html::tag($tag, $content, $navigationOptions);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function renderNavigationSection($name)
 	{
 		$navigationOptions = $this->navigationOptions;
@@ -278,6 +315,9 @@ JS;
 		}
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function renderPreview()
 	{
 		$previewOptions = $this->previewOptions;
