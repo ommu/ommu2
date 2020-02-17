@@ -15,15 +15,15 @@ use Yii;
 
 class GridView extends \yii\grid\GridView
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function widget($config = [])
-	{
-		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['widget_class']['GridView']))
-			$parentClass = Yii::$app->view->themeSetting['widget_class']['GridView'];
+    /**
+     * {@inheritdoc}
+     */
+    public static function widget($config = [])
+    {
+        $parentClass = get_parent_class();
+        if(isset(Yii::$app->view->themeSetting['widget_class']['GridView']))
+            $parentClass = Yii::$app->view->themeSetting['widget_class']['GridView'];
 
-		return $parentClass::widget($config);
-	}
+        return $parentClass::widget($config);
+    }
 }
