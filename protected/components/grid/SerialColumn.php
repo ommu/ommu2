@@ -1,0 +1,28 @@
+<?php
+/**
+ * SerialColumn for OMMU
+ * 
+ * @author Putra Sudaryanto <putra@ommu.co>
+ * @contact (+62)856-299-4114
+ * @copyright Copyright (c) 2020 OMMU (www.ommu.co)
+ * @created date 18 Fabruary 2020, 20:52 WIB
+ * @link https://github.com/ommu/ommu
+ */
+
+namespace app\components\grid;
+
+use Yii;
+use yii\helpers\Html;
+
+function get_serial_column_parent() {
+    if(isset(Yii::$app->view->themeSetting['widget_class']['SerialColumn']))
+        return Yii::$app->view->themeSetting['widget_class']['SerialColumn'];
+
+    return 'yii\grid\SerialColumn';
+}
+class_alias(get_serial_column_parent(), 'app\components\grid\OSerialColumn');
+
+class SerialColumn extends OSerialColumn
+{
+
+}

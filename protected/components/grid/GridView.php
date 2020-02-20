@@ -16,6 +16,41 @@ use Yii;
 class GridView extends \yii\grid\GridView
 {
     /**
+    * {@inheritdoc}
+    */
+    public $theadCssClass;
+    /**
+    * {@inheritdoc}
+    */
+    public $tbodyCssClass;
+
+    /**
+    * {@inheritdoc}
+    */
+    public function renderTableHeader()
+    {
+        if(isset($this->theadCssClass)) {
+            $parent = parent::renderTableHeader();
+            return strtr($parent, ['<thead>' => '<thead class="'.$this->theadCssClass.'">']);
+        }
+
+        return parent::renderTableHeader();
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function renderTableBody()
+    {
+        if(isset($this->tbodyCssClass)) {
+            $parent = parent::renderTableBody();
+            return strtr($parent, ['<tbody>' => '<tbody class="kt-'.$this->tbodyCssClass.'">']);
+        }
+
+        return parent::renderTableBody();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public static function widget($config = [])
