@@ -206,7 +206,7 @@ class Controller extends \yii\web\Controller
 			['partial' => Yii::$app->request->isAjax ? true : false]
 		);
 
-		if(!Yii::$app->request->isAjax)
+		if(!Yii::$app->request->isAjax || (Yii::$app->request->isAjax && Yii::$app->request->get('_pjax')))
 			return $this->render($render, $data);
 
 		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader'=>false]));
