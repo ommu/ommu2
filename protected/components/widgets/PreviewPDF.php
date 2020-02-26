@@ -308,7 +308,9 @@ JS;
 				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id'=>'zoomOut', 'class'=>'btn btn-success']));
 			case '{raw}':
 				ArrayHelper::remove($navigationOptions['raw'], 'id');
-				$tag = ArrayHelper::remove($navigationOptions['raw'], 'tag', 'button');
+                $tag = ArrayHelper::remove($navigationOptions['raw'], 'tag', 'button');
+                if(Yii::$app->user->isGuest)
+                    return '';
 				return Html::a(Yii::t('app', 'RAW'), $this->url, ArrayHelper::merge($navigationOptions['raw'], ['class'=>'btn btn-warning', 'target'=>'_blank']));
 			default:
 				return false;
