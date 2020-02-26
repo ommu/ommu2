@@ -24,26 +24,38 @@ use Yii;
  */
 class Alert extends \yii\bootstrap\Widget
 {
+    /**
+     * @var string the body content in the alert component. Note that anything between
+     * the [[begin()]] and [[end()]] calls of the Alert widget will also be treated
+     * as the body content, and will be rendered before this.
+     */
+    public $body;
 	/**
 	 * @var array the alert types configuration for the flash messages.
 	 * This array is setup as $key => $value, where:
 	 * - key: the name of the session flash variable
-	 * - value: the bootstrap alert type (i.e. danger, success, info, warning)
+	 * - value: the bootstrap alert type (i.e. error, danger, success, info, warning, primary, secondary)
 	 */
 	public $alertTypes = [
-		'error'   => 'alert-danger',
-		'danger'  => 'alert-danger',
-		'success' => 'alert-success',
-		'info'    => 'alert-info',
-		'warning' => 'alert-warning'
+		'error'         => 'alert-danger',
+		'danger'        => 'alert-danger',
+		'success'       => 'alert-success',
+		'info'          => 'alert-info',
+		'warning'       => 'alert-warning',
+		'primary'       => 'alert-primary',
+		'secondary'     => 'alert-secondary'
 	];
-
+	/**
+	 * {@inheritdoc}
+	 */
 	public $alertSoftTypes = [
-		'error'   => 'alert-soft-danger',
-		'danger'  => 'alert-soft-danger',
-		'success' => 'alert-soft-success',
-		'info'    => 'alert-soft-info',
-		'warning' => 'alert-soft-warning'
+		'error'         => 'alert-soft-danger',
+		'danger'        => 'alert-soft-danger',
+		'success'       => 'alert-soft-success',
+		'info'          => 'alert-soft-info',
+		'warning'       => 'alert-soft-warning',
+		'primary'       => 'alert-soft-primary',
+		'secondary'     => 'alert-soft-secondary'
 	];
 
 	/**
@@ -57,10 +69,7 @@ class Alert extends \yii\bootstrap\Widget
 	 */
 	public function run()
 	{
-		$session = Yii::$app->session;
-		$flashes = $session->getAllFlashes();
-
-		$softAlert = isset($this->options['softAlert']) && $this->options['softAlert'] ? true : false;
+		$soft = isset($this->options['soft']) && $this->options['soft'] === true ? true : false;
 		$template = isset($this->options['template']) && $this->options['template'] ? true : false;
 		$appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
 		if($template)
@@ -68,25 +77,46 @@ class Alert extends \yii\bootstrap\Widget
 
 		$bootstrapClass = 'yii\bootstrap\Alert';
 		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
-			$bootstrapClass = 'yii\bootstrap4\Alert';
+            $bootstrapClass = 'yii\bootstrap4\Alert';
 
-		foreach ($flashes as $type => $flash) {
-			if (!isset($this->alertTypes[$type])) {
-				continue;
-			}
+        if(!isset($this->body)) {
+            $session = Yii::$app->session;
+            $flashes = $session->getAllFlashes();
+    
+            foreach ($flashes as $type => $flash) {
+                if (!isset($this->alertTypes[$type])) {
+                    continue;
+                }
+    
+                foreach ((array) $flash as $i => $message) {
+                    echo $bootstrapClass::widget([
+                        'body' => $template ? strtr($this->options['template'], ['{message}'=>$message]) : $message,
+                        'closeButton' => $this->closeButton,
+                        'options' => array_merge($this->options, [
+                            'id' => $this->getId() . '-' . $type . '-' . $i,
+                            'class' => (!$soft ? $this->alertTypes[$type] : $this->alertSoftTypes[$type]) . $appendClass,
+                        ]),
+                    ]);
+                }
+    
+                $session->removeFlash($type);
+            }
 
-			foreach ((array) $flash as $i => $message) {
-				echo $bootstrapClass::widget([
-					'body' => $template ? strtr($this->options['template'], ['{message}'=>$message]) : $message,
-					'closeButton' => $this->closeButton,
-					'options' => array_merge($this->options, [
-						'id' => $this->getId() . '-' . $type . '-' . $i,
-						'class' => (!$softAlert ? $this->alertTypes[$type] : $this->alertSoftTypes[$type]) . $appendClass,
-					]),
-				]);
-			}
+        } else {
+            $type = 'success';
+            if(isset($this->options['type'])) {
+                $type = $this->options['type'];
+                unset($this->options['type']);
+            }
 
-			$session->removeFlash($type);
-		}
+            echo $bootstrapClass::widget([
+                'body' => $template ? strtr($this->options['template'], ['{message}'=>$this->body]) : $this->body,
+                'closeButton' => $this->closeButton,
+                'options' => array_merge($this->options, [
+                    'id' => $this->getId() . '-' . $type,
+                    'class' => (!$soft ? $this->alertTypes[$type] : $this->alertSoftTypes[$type]) . $appendClass,
+                ]),
+            ]);
+        }
 	}
 }
