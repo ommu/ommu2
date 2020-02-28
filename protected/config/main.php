@@ -80,8 +80,8 @@ $config = [
 				//a standard rule mapping '/login' to 'site/login', and so on
 				'<action:(login|logout)>' 											=> 'site/<action>',
 				//without and with module
-				'<controller:\w+>'													=> '<controller>/index',
-				'<module:\w+>'														=> '<module>/site/index',
+				// '<controller:\w+>'													=> '<controller>/index',
+				// '<module:\w+>'														=> '<module>/site/index',
 				'<controller:\w+>/<t:[\w\-]+>-<id:\d+>'								=> '<controller>/view',
 				'<module:\w+>/<controller:\w+>/<t:[\w\-]+>-<id:\d+>'				=> '<module>/<controller>/view',
 				'<controller:\w+>/<id:\d+>'											=> '<controller>/view',
