@@ -413,6 +413,12 @@ class View extends \yii\web\View
                 $paddingBody = $params['paddingBody'];
             $contentParams = ArrayHelper::merge($contentParams, ['paddingBody'=>$paddingBody]);
 
+            // text align condition
+            $textAlign = '';
+            if(isset($params['textAlign']))
+                $textAlign = $params['textAlign'];
+            $contentParams = ArrayHelper::merge($contentParams, ['textAlign'=>$textAlign]);
+
             // content menu condition
             $contentMenu = false;
             if(isset($params['contentMenu']))
