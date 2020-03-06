@@ -16,17 +16,17 @@ use Yii;
 class GridView extends \yii\grid\GridView
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public $theadCssClass;
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public $tbodyCssClass;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function renderTableHeader()
     {
         if(isset($this->theadCssClass)) {
@@ -38,8 +38,8 @@ class GridView extends \yii\grid\GridView
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function renderTableBody()
     {
         if(isset($this->tbodyCssClass)) {

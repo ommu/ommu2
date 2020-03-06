@@ -8,8 +8,8 @@ use yii\helpers\ArrayHelper;
 class Breadcrumbs extends \yii\widgets\Breadcrumbs
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public $itemTemplate = "<li>{link}{separator}</li>\n";
     /**
     * @var string the separator between links in the breadcrumbs. Defaults to ' <span>\</span> '.
@@ -17,8 +17,8 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
     public $separator;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function init()
     {
         // set default navigationOptions
@@ -37,8 +37,8 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function run()
     {
         $options = $this->options;
@@ -49,8 +49,8 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     protected function renderSeparator()
     {
         $options = $this->options;
@@ -63,8 +63,8 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
      protected function renderItem($link, $template)
     {
         if(!isset($link['class']))
