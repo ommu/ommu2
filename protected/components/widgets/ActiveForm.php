@@ -47,8 +47,10 @@ class ActiveForm extends OActiveForm
 		}
 
 		$submenuOnLayout = false;
-		if(Yii::$app->view->submenuOnLayout || in_array(strtolower(Yii::$app->view->context->module->id), ['gii', 'rbac']))
-			$submenuOnLayout = true;
+        if(!(Yii::$app->view->context instanceof \yii\base\Widget)) {
+            if(Yii::$app->view->submenuOnLayout || in_array(strtolower(Yii::$app->view->context->module->id), ['gii', 'rbac']))
+                $submenuOnLayout = true;
+        }
 
 		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
 			$fieldConfig = [
