@@ -2,9 +2,9 @@
 /**
  * m191116_175300_user_coremodule_insert_role
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 16 November 2019, 17:53 WIB
  * @link https://github.com/ommu/ommu
  *

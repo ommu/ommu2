@@ -8,9 +8,9 @@
  * @see yii\widgets\ActiveField
  * @see app\components\widgets\ActiveField
  *
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 27 February 2019, 10:47 WIB
  * @link https://github.com/ommu/ommu
  */

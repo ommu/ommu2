@@ -2,9 +2,9 @@
 /**
  * SerialColumn for OMMU
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2020 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2020 OMMU (www.ommu.id)
  * @created date 18 Fabruary 2020, 20:52 WIB
  * @link https://github.com/ommu/ommu
  */

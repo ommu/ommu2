@@ -7,9 +7,9 @@
  * - beforeLogout, clear cache menu
  * - loginByAccessToken, overrided untuk api JWT
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 28 Mei 2017, 06:30 WIB
  * @link https://github.com/ommu/ommu
  * 

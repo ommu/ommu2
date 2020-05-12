@@ -4,9 +4,9 @@
  * @var $model mdm\admin\models\AuthItem
  * @var $context mdm\admin\components\ItemController
  *
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2017 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 28 December 2017, 06:50 WIB
  * @link https://github.com/ommu/ommu
  *

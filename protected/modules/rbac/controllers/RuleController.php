@@ -4,9 +4,9 @@
  * @var $this app\modules\rbac\controllers\RuleController
  * @see $this extend mdm\admin\controllers\RuleController
  *
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2018 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2018 OMMU (www.ommu.id)
  * @created date 7 December 2019, 18:13 WIB
  * @link https://github.com/ommu/ommu
  *

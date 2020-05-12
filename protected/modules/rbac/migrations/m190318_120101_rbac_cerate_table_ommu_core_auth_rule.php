@@ -2,9 +2,9 @@
 /**
  * m190318_120101_rbac_cerate_table_ommu_core_auth_rule
  * 
- * @author Putra Sudaryanto <putra@ommu.co>
+ * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2019 OMMU (www.ommu.co)
+ * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 18 March 2019, 19:05 WIB
  * @link https://github.com/ommu/ommu
  *
