@@ -20,24 +20,26 @@ features to your application.
 DIRECTORY STRUCTURE
 -------------------
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+      mail/                         contains view files for e-mails
+      protected/assets/             contains assets definition
+      protected/commands/           contains console commands (controllers)
+      protected/components/         contains console commands (controllers)
+      protected/config/             contains application configurations
+      protected/controllers/        contains Web controller classes
+      protected/models/             contains model classes
+      protected/modules/            contains modules classes
+      protected/runtime/            contains files generated during runtime
+      protected/vendor/             contains dependent 3rd-party packages
+      protected/views/              contains view files for the Web application
+      public/                       contains images, videos and other files that are publicly accessible
+      themes/                       contains contains theme for the Web application
 
 
 
 REQUIREMENTS
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 5.4.0.
+The minimum requirement by this project template that your Web server supports PHP 7.1.0.
 
 
 INSTALLATION
@@ -51,7 +53,7 @@ at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
 You can then install this project template using the following command:
 
 ~~~
-php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+php composer.phar create-project --prefer-dist --stability=dev ommu/ommu:v2.x-dev ommu2
 ~~~
 
 Now you should be able to access the application through the following URL, assuming `basic` is the directory
