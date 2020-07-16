@@ -63,15 +63,15 @@
 	},
 	"scripts": {
 		"post-create-project-cmd": [
-			"yii\\composer\\Installer::postCreateProject",
-			"yii\\composer\\Installer::postInstall"
+			"app\\components\\helpers\\ComposerInstallerHelper::postCreateProject",
+			"app\\components\\helpers\\ComposerInstallerHelper::postInstall"
 		],
 		"post-install-cmd": [
-			"yii\\composer\\Installer::postInstall"
+			"app\\components\\helpers\\ComposerInstallerHelper::postInstall"
 		]
 	},
 	"extra": {
-		"yii\\composer\\Installer::postCreateProject": {
+		"app\\components\\helpers\\ComposerInstallerHelper::postCreateProject": {
 			"setPermission": [
 				{
 					"protected/runtime": "0777",
@@ -81,7 +81,7 @@
 				}
 			]
 		},
-		"yii\\composer\\Installer::postInstall": {
+		"app\\components\\helpers\\ComposerInstallerHelper::postInstall": {
 			"generateCookieValidationKey": [
 				"back3nd/app/config/main.php"
 			]
