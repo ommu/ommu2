@@ -62,11 +62,11 @@
 		}
 	},
 	"scripts": {
-		"post-install-cmd": [
-			"yii\\composer\\Installer::postInstall"
-		],
 		"post-create-project-cmd": [
 			"yii\\composer\\Installer::postCreateProject",
+			"yii\\composer\\Installer::postInstall"
+		],
+		"post-install-cmd": [
 			"yii\\composer\\Installer::postInstall"
 		]
 	},
@@ -83,7 +83,7 @@
 		},
 		"yii\\composer\\Installer::postInstall": {
 			"generateCookieValidationKey": [
-				"config/web.php"
+				"back3nd/app/config/main.php"
 			]
 		},
 		"installer-types": [
