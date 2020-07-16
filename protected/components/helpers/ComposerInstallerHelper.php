@@ -23,7 +23,7 @@ class ComposerInstallerHelper extends \yii\composer\Installer
     public static function generateCookieValidationKey()
     {
         $configs = func_get_args();
-        $key = UuidHelper::uuid();
+        $key = self::generateRandomString(true);
         foreach ($configs as $config) {
             if (is_file($config)) {
                 $content = preg_replace('/(("|\')cookieValidationKey("|\')\s*=>\s*)(""|\'\')/', "\\1'$key'", file_get_contents($config), -1, $count);
@@ -32,5 +32,22 @@ class ComposerInstallerHelper extends \yii\composer\Installer
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected static function generateRandomString($uuid=false)
+    {
+        if($uuid == true) {
+            return UuidHelper::uuid();
+        }
+
+        if (!extension_loaded('openssl')) {
+            throw new \Exception('The OpenSSL PHP extension is required by Yii2.');
+        }
+        $length = 32;
+        $bytes = openssl_random_pseudo_bytes($length);
+        return strtr(substr(base64_encode($bytes), 0, $length), '+/=', '_-.');
     }
 }
