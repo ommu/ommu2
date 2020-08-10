@@ -79,23 +79,24 @@ class Application extends \yii\web\Application
 		return $appType == 'demo-theme' ? true : false;
 	}
 
-	/**
-	 * Memeriksa apakah aplikasi berjalan pada mode maintenance
-	 *
-	 * @return boolean true|false
-	 */
-	public function isMaintenance(): bool
-	{
-		if($online == 1)
-			return false;
+    /**
+     * Memeriksa apakah aplikasi berjalan pada mode maintenance
+     *
+     * @return boolean true|false
+     */
+    public function isMaintenance(): bool
+    {
+        $app = Yii::$app->id;
+        $online = Yii::$app->setting->get(join('_', [$app, 'online']), 1);
 
-		$app = Yii::$app->id;
-		$online = Yii::$app->setting->get(join('_', [$app, 'online']), 1);
-		$constructionDate = Yii::$app->setting->get(join('_', [$app, 'construction_date']));
-		$isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
+        if($online == 1)
+            return false;
 
-		return (!$isOnline && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
-	}
+        $constructionDate = Yii::$app->setting->get(join('_', [$app, 'construction_date']));
+        $isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
+
+        return (!$isOnline && (Yii::$app->user->isGuest || (!Yii::$app->user->isGuest && !in_array(Yii::$app->user->identity->level_id, [1,2]))));
+    }
 
 	/**
 	 * Memeriksa hak akses user berdasarkan route dan user idnya

@@ -29,6 +29,7 @@
 		"thamtech/yii2-uuid": "*",
 		"mg-code/yii2-helpers": "*",
 		"adampatterson/numeral": "dev-master",
+		"kartik-v/yii2-date-range": "dev-master",
 		"npm-asset/pdfjs-dist": "~2.2",
 		"npm-asset/workbox-sw": "4.3.1",
 		"ommu/yii2-redactor": "~2.0",
