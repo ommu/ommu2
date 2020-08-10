@@ -64,15 +64,15 @@
 	},
 	"scripts": {
 		"post-create-project-cmd": [
-			"ommu\\core\\components\\helpers\\ComposerInstallerHelper::postCreateProject",
-			"ommu\\core\\components\\helpers\\ComposerInstallerHelper::postInstall"
+			"yii\\composer\\Installer::postCreateProject",
+			"yii\\composer\\Installer::postInstall"
 		],
 		"post-install-cmd": [
-			"ommu\\core\\components\\helpers\\ComposerInstallerHelper::postInstall"
+			"yii\\composer\\Installer::postInstall"
 		]
 	},
 	"extra": {
-		"ommu\\core\\components\\helpers\\ComposerInstallerHelper::postCreateProject": {
+		"yii\\composer\\Installer::postCreateProject": {
 			"setPermission": [
 				{
 					"protected/runtime": "0777",
@@ -82,7 +82,7 @@
 				}
 			]
 		},
-		"ommu\\core\\components\\helpers\\ComposerInstallerHelper::postInstall": {
+		"yii\\composer\\Installer::postInstall": {
 			"generateCookieValidationKey": [
 				"back3nd/app/config/main.php"
 			]
