@@ -35,6 +35,8 @@
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
 		"ommu/yii2-selectize": "*",
+		"ommu/yii2-flatpickr": "dev-master",
+		"ommu/yii2-daterangepicker": "dev-master",
 		"ommu/core": "dev-master",
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
