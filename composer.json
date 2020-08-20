@@ -34,9 +34,9 @@
 		"npm-asset/workbox-sw": "4.3.1",
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
-		"ommu/yii2-selectize": "*",
-		"ommu/yii2-flatpickr": "dev-master",
-		"ommu/yii2-daterangepicker": "dev-master",
+		"ommu/yii2-selectize": "@dev",
+		"ommu/yii2-flatpickr": "@dev",
+		"ommu/yii2-daterangepicker": "@dev",
 		"ommu/core": "dev-master",
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
@@ -44,7 +44,7 @@
 		"ommu/support":  "dev-master",
 		"ommu/banner": "~2.1",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
-		"ommu/back3nd": "dev-master"
+		"ommu/back3nd": "@dev"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
