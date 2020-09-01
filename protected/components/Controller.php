@@ -187,7 +187,7 @@ class Controller extends \yii\web\Controller
 	 */
 	public function isBackofficeTheme(): bool
 	{
-		return self::$backoffice;
+		return static::$backoffice;
 	}
 
 	/**
