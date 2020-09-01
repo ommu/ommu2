@@ -60,6 +60,10 @@ class View extends \yii\web\View
 	 */
 	public $searchShow = false;
 	/**
+	 * @var array tempat menyimpan pengaturan aplikasi berdasarkan tema yanng digunakan
+	 */
+	public $themeSetting = [];
+	/**
 	 * @var boolean tempat menyimpan tipe current controller sebagai back-office atau front-office.
 	 *     default false, artinya current controller bertipe front-office.
 	 */
@@ -68,6 +72,10 @@ class View extends \yii\web\View
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting pada controller dipangil berulang kali.
 	 */
 	private static $_settingInitialize = false;
+	/**
+	 * @var boolean tempat menyimpan status pengaturan pada tema untuk mencegah fungsi dipangil berulang kali.
+	 */
+	private static $_themeSettingApplied = false;
 	/**
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
 	 */
@@ -119,6 +127,11 @@ class View extends \yii\web\View
 			if(!self::$_settingInitialize) {
 				self::$_settingInitialize = true;
 			}
+
+            if(self::$_themeApplied && !self::$_themeSettingApplied) {
+                $this->setThemeSetting();
+                self::$_themeSettingApplied = true;
+            }
 		}
 		return true;
 	}
@@ -338,19 +351,20 @@ class View extends \yii\web\View
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getThemeSetting()
+	public function setThemeSetting()
 	{
-		$themeInfo = self::themeParseYaml($this->theme->name);
+        $themeInfo = self::themeParseYaml($this->theme->name);
 
-		$themeSetting = [];
-		if(isset($themeInfo['theme_setting']))
-			$themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
-		if(isset($themeInfo['widget_class']))
-			$themeSetting = ArrayHelper::merge($themeSetting, ['widget_class'=>$themeInfo['widget_class']]);
-		if(isset($themeInfo['ignore_asset_class']))
-			$themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class'=>$themeInfo['ignore_asset_class']]);
+        $themeSetting = [];
+        if(isset($themeInfo['theme_setting']))
+            $themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
+        if(isset($themeInfo['widget_class']))
+            $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class'=>$themeInfo['widget_class']]);
+        if(isset($themeInfo['ignore_asset_class']))
+            $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class'=>$themeInfo['ignore_asset_class']]);
 
-		return $themeSetting;
+
+        $this->themeSetting = $themeSetting;
 	}
 
 	/**
