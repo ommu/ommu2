@@ -91,6 +91,9 @@ $config = [
 		'view' => [
 			'class' => '\app\components\View',
 		],
+		'assetManager' => [
+			'class'    => '\app\components\AssetManager',
+		],
 		'setting' => [
 			'class'    => '\app\components\SettingManager',
 			'moduleId' => 'base',

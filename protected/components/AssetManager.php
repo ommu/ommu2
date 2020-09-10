@@ -13,68 +13,75 @@ namespace app\components;
 
 use Yii;
 use yii\helpers\Url;
-use \yii\helpers\FileHelper;
+use yii\helpers\FileHelper;
 
 class AssetManager extends \yii\web\AssetManager
 {
-	/**
-	 * (@inheritdoc)
-	 */
-	public function clear()
-	{
-		if ($this->basePath == '')
-			return;
+    /**
+     * (@inheritdoc)
+     */
+    public function clear()
+    {
+        if ($this->basePath == '') {
+            return;
+        }
 
-		foreach (scandir($this->basePath) as $file) {
-			if (substr($file, 0, 1) == '.')
-				continue;
+        foreach (scandir($this->basePath) as $file) {
+            if (substr($file, 0, 1) == '.') {
+                continue;
+            }
 
-			FileHelper::removeDirectory($this->basePath . DIRECTORY_SEPARATOR . $file);
-		}
-	}
+            FileHelper::removeDirectory($this->basePath . DIRECTORY_SEPARATOR . $file);
+        }
+    }
 
-	/**
-	 * (@inheritdoc)
-	 */
-	protected function publishDirectory($src, $options)
-	{
-		$dir = $this->hash($src);
-		$dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
+    /**
+     * (@inheritdoc)
+     */
+    protected function getAppsFile()
+    {
+        return join('/', [Yii::getAlias('@webroot'), 'apps.json']);
+    }
 
-		//var_dump($options);
-		if (!empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy'])) || !is_dir($dstDir)) {
-			$rand = $this->generateRandomString();
-			
-			//create version di apps.json
-			if (!file_exists(join('/', [Yii::getAlias('@webroot'), 'apps.json']))) {
-				file_put_contents(join('/', [Yii::getAlias('@webroot'), 'apps.json']), json_encode(['version'=>$rand]));
-				@chmod(join('/', [Yii::getAlias('@webroot'), 'apps.json']), 0777);
+    /**
+     * (@inheritdoc)
+     */
+    protected function publishDirectory($src, $options)
+    {
+        $dir = $this->hash($src);
+        $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
 
-			} else
-				file_put_contents(join('/', [Yii::getAlias('@webroot'), 'apps.json']), json_encode(['version'=>$rand]));
-		}
+        if (!empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy'])) || !is_dir($dstDir)) {
+            $rand = $this->generateRandomString();
+            
+            //create version di apps.json
+            $appsFile = $this->getAppsFile();
+            if (!file_exists($appsFile)) {
+                file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                @chmod($appsFile, 0777);
 
-		return parent::publishDirectory($src, $options);
-	}
+            } else {
+                file_put_contents($appsFile, json_encode(['version'=>$rand]));
+            }
+        }
 
-	/**
-	 * (@inheritdoc)
-	 */
-	public function generateRandomString($length = 10)
-	{
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$charactersLength = strlen($characters);
-		$randomString = '';
-		for ($i = 0; $i < $length; $i++) {
-			$randomString .= $characters[rand(0, $charactersLength - 1)];
-		}
+        return parent::publishDirectory($src, $options);
+    }
 
-		$str = file_get_contents(join('/', [Url::base(true), 'apps.json']));
-		$data = json_decode($str);
-		$dataVersion = $data->version;
-		if ($randomString === $dataVersion)
-			$randomString = $this->generateRandomString();
+    /**
+     * (@inheritdoc)
+     */
+    public function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
 
-		return $randomString;
-	}
+        clearstatcache();
+
+        return $randomString;
+    }
 }
