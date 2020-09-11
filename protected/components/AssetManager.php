@@ -52,16 +52,18 @@ class AssetManager extends \yii\web\AssetManager
         $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
 
         if (!empty($options['forceCopy']) || ($this->forceCopy && !isset($options['forceCopy'])) || !is_dir($dstDir)) {
-            $rand = $this->generateRandomString();
-            
-            //create version di apps.json
-            $appsFile = $this->getAppsFile();
-            if (!file_exists($appsFile)) {
-                file_put_contents($appsFile, json_encode(['version'=>$rand]));
-                @chmod($appsFile, 0777);
+            if (!file_exists($dstDir)) {
+                $rand = $this->generateRandomString();
 
-            } else {
-                file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                //create version di apps.json
+                $appsFile = $this->getAppsFile();
+                if (!file_exists($appsFile)) {
+                    file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                    @chmod($appsFile, 0777);
+
+                } else {
+                    file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                }
             }
         }
 
