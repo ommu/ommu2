@@ -42,7 +42,7 @@
 		"ommu/mailer": "dev-master",
 		"ommu/report": "dev-master",
 		"ommu/support":  "dev-master",
-		"ommu/banner": "~2.1",
+		"ommu/banner": "dev-master",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
 		"ommu/back3nd": "@dev"
 	},
@@ -67,26 +67,14 @@
 	"scripts": {
 		"post-create-project-cmd": [
 			"yii\\composer\\Installer::postCreateProject",
-			"yii\\composer\\Installer::postInstall"
-		],
-		"post-install-cmd": [
-			"yii\\composer\\Installer::postInstall"
 		]
 	},
 	"extra": {
 		"yii\\composer\\Installer::postCreateProject": {
 			"setPermission": [
 				{
-					"protected/runtime": "0777",
-					"back3nd/assets": "0777",
-					"back3nd/cache": "0777",
-					"back3nd/app/runtime": "0777"
+					"protected/runtime": "0777"
 				}
-			]
-		},
-		"yii\\composer\\Installer::postInstall": {
-			"generateCookieValidationKey": [
-				"back3nd/app/config/main.php"
 			]
 		},
 		"installer-types": [
