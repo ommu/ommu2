@@ -96,41 +96,43 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if(parent::beforeRender($viewFile, $params)) {
-			if(!self::$_themeApplied && !$this->theme) {
-				self::$_themeApplied = true;
+            if (!self::$_themeApplied && !$this->theme) {
+                self::$_themeApplied = true;
+                $this->setTheme($this->context);
+            }
 
-				$this->setTheme($this->context);
-			}
+            if (!self::$_themeSettingApplied) {
+                $this->setThemeSetting();
+                self::$_themeSettingApplied = true;
+            }
 
-			if($this->context instanceof Controller && self::$isBackoffice && (!empty($this->context->subMenu) && !Yii::$app->request->isAjax))
-				$this->context->layout = 'main_submenu';
-	
-			if($this->context instanceof Controller && !self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax))
-				$this->context->layout = 'main_sidebar';
+            if ($this->context instanceof Controller) {
+                if (self::$isBackoffice && (!empty($this->context->subMenu) && !Yii::$app->request->isAjax)) {
+                    $this->context->layout = 'main_submenu';
+                }
+    
+                if (!self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax)) {
+                    $this->context->layout = 'main_sidebar';
+                }
 
-			if($this->context instanceof Controller)
-				$this->registerGoogleAnalytics();
+                $this->registerGoogleAnalytics();
+            }
 
-			if(!self::$_appNameApplied) {
+			if (!self::$_appNameApplied) {
 				self::$_appNameApplied = true;
 
 				$app = Yii::$app->id;
 				$siteName = unserialize(Yii::$app->setting->get(join('_', [$app, 'name'])));
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 
-				if(Yii::$app->isDemoTheme()) {
+				if (Yii::$app->isDemoTheme()) {
 					$themeInfo = self::themeParseYaml($this->theme->name);
 					Yii::$app->name = Inflector::camelize($themeInfo['name']);
 				}
 			}
 
-			if(!self::$_settingInitialize) {
-				self::$_settingInitialize = true;
-			}
-
-            if(self::$_themeApplied && !self::$_themeSettingApplied) {
-                $this->setThemeSetting();
-                self::$_themeSettingApplied = true;
+            if (!self::$_settingInitialize) {
+                self::$_settingInitialize = true;
             }
 		}
 		return true;
