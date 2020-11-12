@@ -66,6 +66,7 @@
 	},
 	"scripts": {
 		"post-create-project-cmd": [
+			"yii\\composer\\Installer::postCreateProject",
 			"yii\\composer\\Installer::postInstall"
 		],
 		"post-install-cmd": [
@@ -73,6 +74,11 @@
 		]
 	},
 	"extra": {
+		"yii\\composer\\Installer::postCreateProject": {
+			"generateCookieValidationKey": [
+				"protected/config/main.php"
+			]
+		},
 		"yii\\composer\\Installer::postInstall": {
 			"setPermission": [
 				{
