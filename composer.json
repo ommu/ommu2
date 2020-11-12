@@ -44,7 +44,7 @@
 		"ommu/support":  "dev-master",
 		"ommu/banner": "dev-master",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
-		"ommu/back3nd": "@dev"
+		"ommuid/back3nd": "@dev"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",

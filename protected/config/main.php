@@ -22,6 +22,10 @@ $config = [
 	],
 	'components' => [
 		'request' => [
+			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+			'cookieValidationKey' => ''
+		],
+		'request' => [
 			'csrfParam' => $bn . '_csrf',
 		],
 		'cache' => [
@@ -87,6 +91,9 @@ $config = [
 				'<controller:\w+>/<id:\d+>'											=> '<controller>/view',
 				'<module:\w+>/<controller:\w+>/<id:\d+>'							=> '<module>/<controller>/view',
 			],
+		],
+		'errorHandler' => [
+			'errorAction' => 'site/error',
 		],
 		'view' => [
 			'class' => '\app\components\View',
