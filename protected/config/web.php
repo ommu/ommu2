@@ -88,8 +88,8 @@ $config = [
 		'jwt' => [
 			'class'    => 'app\components\Jwt',
 			'key'      => 'LLcrvjg0PkdtmckBnmtmxmHMzdV1UZ_2',
-			'issuer'   => 'http://ommu.co',
-			'audiance' => 'http://ommu.co',
+			'issuer'   => 'http://ommu.id',
+			'audiance' => 'http://ommu.id',
 			'id'       => 'LLcrvjg0PkdtmckB2',
 		],
 		'assetManager' => [
