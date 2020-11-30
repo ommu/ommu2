@@ -80,9 +80,19 @@
 			]
 		},
 		"yii\\composer\\Installer::postInstall": {
+            "copyFiles": [
+                {
+					"apps.json": "back3nd/apps.json",
+					"author-sample.yaml": "author.yaml"
+                }
+            ],
 			"setPermission": [
 				{
-					"protected/runtime": "0777"
+					"protected/runtime": "0777",
+					"back3nd/assets": "0777",
+					"back3nd/cache": "0777",
+					"back3nd/app/runtime": "0777",
+					"back3nd/apps.json": "0777"
 				}
 			]
 		},
