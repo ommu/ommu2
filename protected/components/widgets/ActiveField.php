@@ -68,8 +68,12 @@ class ActiveField extends OActiveField
 				$this->template = $options['template'];
 				unset($options['template']);
 			}
-		}
-		if ($this->form->layout === 'horizontal') {
+        }
+        $offset = true;
+        if (isset($options['offset']) && $options['offset'] == false) {
+            $offset = false;
+        }
+		if ($this->form->layout === 'horizontal' && $offset) {
 			Html::addCssClass($this->wrapperOptions, $this->horizontalCssClasses['offset']);
 		}
 		$this->labelOptions['class'] = null;

@@ -468,4 +468,39 @@ JS;
 			$this->registerJs($js, self::POS_END);
 		}
 	}
+
+	/**
+	 * Renders a static string by applying a wizard layout.
+	 *
+	 * @param string $view the view name.
+	 * @param array $params the parameters (name-value pairs) that should be made available in the view.
+	 * These parameters will not be available in the layout.
+	 * @return string the rendering result.
+	 */
+	public function renderWizard($view, $params=[], $context=null)
+	{
+		if ($context == null) {
+            $context = $this->context;
+        }
+
+        $content = $this->render($view, $params, $context);
+
+		$layout = $context->layout ? $context->layout : 'main';
+		$layoutFile = preg_replace("/($layout)/", 'wizard', $context->findLayoutFile($this));
+		if ($layoutFile !== false) {
+            $contentParams = ['content'=>$content];
+            
+            // wizard navigation condition
+            if(isset($params['navigation'])) {
+                $contentParams = ArrayHelper::merge($contentParams, ['navigation'=>$params['navigation']]);
+            }
+            if(isset($params['current'])) {
+                $contentParams = ArrayHelper::merge($contentParams, ['current'=>$params['current']]);
+            }
+
+			return $this->renderFile($layoutFile, $contentParams, $context);
+		}
+
+		return $content;
+	}
 }
