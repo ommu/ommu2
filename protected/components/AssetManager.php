@@ -58,11 +58,11 @@ class AssetManager extends \yii\web\AssetManager
                 //create version di apps.json
                 $appsFile = $this->getAppsFile();
                 if (!file_exists($appsFile)) {
-                    file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                    file_put_contents($appsFile, json_encode(['version' => $rand]));
                     @chmod($appsFile, 0777);
 
                 } else {
-                    file_put_contents($appsFile, json_encode(['version'=>$rand]));
+                    file_put_contents($appsFile, json_encode(['version' => $rand]));
                 }
             }
         }

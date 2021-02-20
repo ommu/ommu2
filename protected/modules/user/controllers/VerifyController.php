@@ -75,20 +75,20 @@ class VerifyController extends Controller
 			return $this->goHome();
 
 		$msg = Yii::$app->request->get('msg');
-		$verify = UserVerify::findOne(['code'=>$code]);
+		$verify = UserVerify::findOne(['code' => $code]);
 
 		if(!$msg && $verify == null) {
 			$render = 'novalid';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Verification code not found.'));
 			if(!$code)
-				return $this->redirect(['email', 'cd'=>$code]);
+				return $this->redirect(['email', 'cd' => $code]);
 		}
 
 		if(!$msg && $verify->expired == 1) {
 			$render = 'expired';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Verification code expired.'));
 			if(!$code)
-				return $this->redirect(['email', 'cd'=>$code]);
+				return $this->redirect(['email', 'cd' => $code]);
 		}
 
 		if($render != 'novalid' && $render != 'expired') {
@@ -104,7 +104,7 @@ class VerifyController extends Controller
 				if(!Yii::$app->request->isAjax) {
 					Yii::$app->session->setFlash('success', Yii::t('app', 'Your email has been successfully verified'));
 					if(!$msg)
-						return $this->redirect(['email', 'cd'=>$code, 'msg'=>'success']);
+						return $this->redirect(['email', 'cd' => $code, 'msg' => 'success']);
 				}
 
 			} else {

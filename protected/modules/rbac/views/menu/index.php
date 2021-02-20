@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
 if(($app = Yii::$app->request->get('app')) != null)
-	$createUrl = Url::to(['create', 'app'=>$app]);
+	$createUrl = Url::to(['create', 'app' => $app]);
 $this->params['menu']['content'] = [
-	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
+	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
 ];
 ?>
 
@@ -54,18 +54,18 @@ array_push($columnData, [
 	'urlCreator' => function($action, $model, $key, $index) {
 		if($action == 'view') {
 			if(($app = Yii::$app->request->get('app')) != null)
-				return Url::to(['view', 'id'=>$key, 'app'=>$app]);
-			return Url::to(['view', 'id'=>$key]);
+				return Url::to(['view', 'id' => $key, 'app' => $app]);
+			return Url::to(['view', 'id' => $key]);
 		}
 		if($action == 'update') {
 			if(($app = Yii::$app->request->get('app')) != null)
-				return Url::to(['update', 'id'=>$key, 'app'=>$app]);
-			return Url::to(['update', 'id'=>$key]);
+				return Url::to(['update', 'id' => $key, 'app' => $app]);
+			return Url::to(['update', 'id' => $key]);
 		}
 		if($action == 'delete') {
 			if(($app = Yii::$app->request->get('app')) != null)
-				return Url::to(['delete', 'id'=>$key, 'app'=>$app]);
-			return Url::to(['delete', 'id'=>$key]);
+				return Url::to(['delete', 'id' => $key, 'app' => $app]);
+			return Url::to(['delete', 'id' => $key]);
 		}
 	},
 	'template' => '{view} {update} {delete}',

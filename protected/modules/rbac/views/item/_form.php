@@ -39,7 +39,7 @@ $this->registerJs($js);
 
 <?php $form = ActiveForm::begin([
 	'id' => 'item-form',
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => true,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,

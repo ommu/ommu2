@@ -228,12 +228,12 @@ class Controller extends \yii\web\Controller
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'modal', $this->findLayoutFile($this->getView()));
 		if ($layoutFile !== false) {
-			$contentParams = ['content'=>$content];
+			$contentParams = ['content' => $content];
 
 			$modalHeader = true;
 			if(isset($params['modalHeader']))
 				$modalHeader = $params['modalHeader'];
-			$contentParams = ArrayHelper::merge($contentParams, ['modalHeader'=>$modalHeader]);
+			$contentParams = ArrayHelper::merge($contentParams, ['modalHeader' => $modalHeader]);
 
 			return $this->getView()->renderFile($layoutFile, $contentParams, $this);
 		}

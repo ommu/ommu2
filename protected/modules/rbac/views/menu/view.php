@@ -20,18 +20,18 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url
 $this->params['breadcrumbs'][] = $this->title;
 
 if(!$small) {
-$updateUrl = Url::to(['update', 'id'=>$model->id]);
-$deleteUrl = Url::to(['delete', 'id'=>$model->id]);
+$updateUrl = Url::to(['update', 'id' => $model->id]);
+$deleteUrl = Url::to(['delete', 'id' => $model->id]);
 $createUrl = Url::to(['create']);
 if(($app = Yii::$app->request->get('app')) != null) {
-	$updateUrl = Url::to(['update', 'id'=>$model->id, 'app'=>$app]);
-	$deleteUrl = Url::to(['delete', 'id'=>$model->id, 'app'=>$app]);
-	$createUrl = Url::to(['create', 'app'=>$app]);
+	$updateUrl = Url::to(['update', 'id' => $model->id, 'app' => $app]);
+	$deleteUrl = Url::to(['delete', 'id' => $model->id, 'app' => $app]);
+	$createUrl = Url::to(['create', 'app' => $app]);
 }
 $this->params['menu']['content'] = [
-	['label' => Yii::t('rbac-admin', 'Update'), 'url' => $updateUrl, 'icon' => 'pencil', 'htmlOptions' => ['class'=>'btn btn-primary']],
-	['label' => Yii::t('rbac-admin', 'Delete'), 'url' => $deleteUrl, 'htmlOptions' => ['data-confirm'=>Yii::t('rbac-admin', 'Are you sure to delete this item?'), 'data-method'=>'post', 'class'=>'btn btn-danger'], 'icon'=>'trash'],
-	['label' => Yii::t('rbac-admin', 'Create'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class'=>'btn btn-success']],
+	['label' => Yii::t('rbac-admin', 'Update'), 'url' => $updateUrl, 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],
+	['label' => Yii::t('rbac-admin', 'Delete'), 'url' => $deleteUrl, 'htmlOptions' => ['data-confirm'=>Yii::t('rbac-admin', 'Are you sure to delete this item?'), 'data-method' => 'post', 'class' => 'btn btn-danger'], 'icon' => 'trash'],
+	['label' => Yii::t('rbac-admin', 'Create'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
 ];
 } ?>
 

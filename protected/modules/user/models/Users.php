@@ -166,7 +166,7 @@ class Users extends UsersModel implements IdentityInterface
 			if($this->oldSecurity == false) {
 				if(!Yii::$app->security->validatePassword($this->$password, $this->password_i)) {
 					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
-						'attribute'=>$this->getAttributeLabel($password),
+						'attribute' => $this->getAttributeLabel($password),
 					]));
 					return false;
 				}
@@ -174,7 +174,7 @@ class Users extends UsersModel implements IdentityInterface
 			} else {
 				if(!$this->hashPassword($this->$password)) {
 					$this->addError($password, Yii::t('app', '{attribute} is incorrect.', [
-						'attribute'=>$this->getAttributeLabel($password),
+						'attribute' => $this->getAttributeLabel($password),
 					]));
 					return false;
 				}

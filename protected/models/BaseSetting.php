@@ -237,26 +237,26 @@ class BaseSetting extends \yii\base\Model
 	public function beforeValidate()
 	{
 		if($this->app_type == '')
-			$this->addError('app_type', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('app_type')]));
+			$this->addError('app_type', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('app_type')]));
 
 		if($this->name['small'] == '' || $this->name['long'] == '')
-			$this->addError('name', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('name')]));
+			$this->addError('name', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('name')]));
 
 		if($this->online == '')
-			$this->addError('online', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('online')]));
+			$this->addError('online', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('online')]));
 
 		if($this->online != 1) {
 			if($this->construction_date == '')
-				$this->addError('construction_date', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_date')]));
+				$this->addError('construction_date', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_date')]));
 			if($this->online == 0 && $this->construction_text['maintenance'] == '')
-				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[maintenance]')]));
+				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_text[maintenance]')]));
 			if($this->online == 2 && $this->construction_text['comingsoon'] == '')
-				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('construction_text[comingsoon]')]));
+				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_text[comingsoon]')]));
 		}
 
 		if($this->analytic == 1) {
 			if($this->analytic_property == '')
-				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute'=>$this->getAttributeLabel('analytic_property')]));
+				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('analytic_property')]));
 		}
 
 		$this->logo = UploadedFile::getInstance($this, 'logo');
@@ -264,8 +264,8 @@ class BaseSetting extends \yii\base\Model
 			$logoFileType = $this->formatFileType('png, bmp');
 			if(!in_array(strtolower($this->logo->getExtension()), $logoFileType)) {
 				$this->addError('logo', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
-					'name'=>$this->logo->name,
-					'extensions'=>$this->formatFileType($logoFileType, false),
+					'name' => $this->logo->name,
+					'extensions' => $this->formatFileType($logoFileType, false),
 				]));
 			}
 		}

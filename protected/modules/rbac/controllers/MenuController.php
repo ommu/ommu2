@@ -85,12 +85,12 @@ class MenuController extends Controller
 				Helper::invalidate();
 				if(($app = Yii::$app->request->get('app')) != null) {
 					if(!Yii::$app->request->isAjax)
-						return $this->redirect(['view', 'id'=>$model->id, 'app'=>$app]);
-					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app'=>$app]);
+						return $this->redirect(['view', 'id' => $model->id, 'app' => $app]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 				}
 
 				if(!Yii::$app->request->isAjax)
-					return $this->redirect(['view', 'id'=>$model->id]);
+					return $this->redirect(['view', 'id' => $model->id]);
 				return $this->redirect(Yii::$app->request->referrer ?: ['index']);
 
 			} else {
@@ -124,12 +124,12 @@ class MenuController extends Controller
 				Helper::invalidate();
 				if(($app = Yii::$app->request->get('app')) != null) {
 					if(!Yii::$app->request->isAjax)
-						return $this->redirect(['view', 'id'=>$model->id, 'app'=>$app]);
-					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app'=>$app]);
+						return $this->redirect(['view', 'id' => $model->id, 'app' => $app]);
+					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 				}
 
 				if(!Yii::$app->request->isAjax)
-					return $this->redirect(['view', 'id'=>$model->id]);
+					return $this->redirect(['view', 'id' => $model->id]);
 				return $this->redirect(Yii::$app->request->referrer ?: ['index']);
 
 			} else {
@@ -138,7 +138,7 @@ class MenuController extends Controller
 			}
 		}
 
-		$this->view->title = Yii::t('app', 'Update Menu: {menu}', ['menu'=>$model->name]);
+		$this->view->title = Yii::t('app', 'Update Menu: {menu}', ['menu' => $model->name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('update', [
@@ -153,7 +153,7 @@ class MenuController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		$this->view->title = Yii::t('app', 'Detail Menu: {menu}', ['menu'=>$model->name]);
+		$this->view->title = Yii::t('app', 'Detail Menu: {menu}', ['menu' => $model->name]);
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('view', [
@@ -172,8 +172,8 @@ class MenuController extends Controller
 
 		if(($app = Yii::$app->request->get('app')) != null) {
 			if(!Yii::$app->request->isAjax)
-				return $this->redirect(['index', 'app'=>$app]);
-			return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app'=>$app]);
+				return $this->redirect(['index', 'app' => $app]);
+			return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 		}
 
 		if(!Yii::$app->request->isAjax)

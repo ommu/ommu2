@@ -90,7 +90,7 @@ class Alert extends \yii\bootstrap\Widget
     
                 foreach ((array) $flash as $i => $message) {
                     echo $bootstrapClass::widget([
-                        'body' => $template ? strtr($this->options['template'], ['{message}'=>$message]) : $message,
+                        'body' => $template ? strtr($this->options['template'], ['{message}' => $message]) : $message,
                         'closeButton' => $this->closeButton,
                         'options' => array_merge($this->options, [
                             'id' => $this->getId() . '-' . $type . '-' . $i,
@@ -110,7 +110,7 @@ class Alert extends \yii\bootstrap\Widget
             }
 
             echo $bootstrapClass::widget([
-                'body' => $template ? strtr($this->options['template'], ['{message}'=>$this->body]) : $this->body,
+                'body' => $template ? strtr($this->options['template'], ['{message}' => $this->body]) : $this->body,
                 'closeButton' => $this->closeButton,
                 'options' => array_merge($this->options, [
                     'id' => $this->getId() . '-' . $type,

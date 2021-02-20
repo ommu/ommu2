@@ -289,29 +289,29 @@ JS;
 			case '{summary}':
 				ArrayHelper::remove($navigationOptions['summary'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['summary'], 'tag', 'span');
-				return Html::tag($tag, Html::tag('span', 0, ['id'=>'page_num']).' / '.Html::tag('span', 0, ['id'=>'page_count']), $navigationOptions['summary']);
+				return Html::tag($tag, Html::tag('span', 0, ['id' => 'page_num']).' / '.Html::tag('span', 0, ['id' => 'page_count']), $navigationOptions['summary']);
 			case '{prev}':
 				ArrayHelper::remove($navigationOptions['prev'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['prev'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Previous'), ArrayHelper::merge($navigationOptions['prev'], ['id'=>'prev', 'class'=>'btn btn-primary']));
+				return Html::tag($tag, Yii::t('app', 'Previous'), ArrayHelper::merge($navigationOptions['prev'], ['id' => 'prev', 'class' => 'btn btn-primary']));
 			case '{next}':
 				ArrayHelper::remove($navigationOptions['next'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['next'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Next'), ArrayHelper::merge($navigationOptions['next'], ['id'=>'next', 'class'=>'btn btn-primary']));
+				return Html::tag($tag, Yii::t('app', 'Next'), ArrayHelper::merge($navigationOptions['next'], ['id' => 'next', 'class' => 'btn btn-primary']));
 			case '{zoomIn}':
 				ArrayHelper::remove($navigationOptions['zoomIn'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['zoomIn'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Zoom (+)'), ArrayHelper::merge($navigationOptions['zoomIn'], ['id'=>'zoomIn', 'class'=>'btn btn-success']));
+				return Html::tag($tag, Yii::t('app', 'Zoom (+)'), ArrayHelper::merge($navigationOptions['zoomIn'], ['id' => 'zoomIn', 'class' => 'btn btn-success']));
 			case '{zoomOut}':
 				ArrayHelper::remove($navigationOptions['zoomOut'], 'id');
 				$tag = ArrayHelper::remove($navigationOptions['zoomOut'], 'tag', 'button');
-				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id'=>'zoomOut', 'class'=>'btn btn-success']));
+				return Html::tag($tag, Yii::t('app', 'Zoom (-)'), ArrayHelper::merge($navigationOptions['zoomOut'], ['id' => 'zoomOut', 'class' => 'btn btn-success']));
 			case '{raw}':
 				ArrayHelper::remove($navigationOptions['raw'], 'id');
                 $tag = ArrayHelper::remove($navigationOptions['raw'], 'tag', 'button');
                 if(Yii::$app->user->isGuest)
                     return '';
-				return Html::a(Yii::t('app', 'RAW'), $this->url, ArrayHelper::merge($navigationOptions['raw'], ['class'=>'btn btn-warning', 'target'=>'_blank']));
+				return Html::a(Yii::t('app', 'RAW'), $this->url, ArrayHelper::merge($navigationOptions['raw'], ['class' => 'btn btn-warning', 'target' => '_blank']));
 			default:
 				return false;
 		}
@@ -327,6 +327,6 @@ JS;
 		$content = Html::tag($tag, '', $previewOptions);
 
 		$tag = ArrayHelper::remove($previewOptions, 'tag', 'div');
-		return Html::tag($tag, $content, ['class'=>'overflow-x-scroll text-center', 'id'=>'box-canvas']);
+		return Html::tag($tag, $content, ['class' => 'overflow-x-scroll text-center', 'id' => 'box-canvas']);
 	}
 }

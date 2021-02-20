@@ -361,9 +361,9 @@ class View extends \yii\web\View
         if(isset($themeInfo['theme_setting']))
             $themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
         if(isset($themeInfo['widget_class']))
-            $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class'=>$themeInfo['widget_class']]);
+            $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class' => $themeInfo['widget_class']]);
         if(isset($themeInfo['ignore_asset_class']))
-            $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class'=>$themeInfo['ignore_asset_class']]);
+            $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class' => $themeInfo['ignore_asset_class']]);
 
 
         $this->themeSetting = $themeSetting;
@@ -417,29 +417,29 @@ class View extends \yii\web\View
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
 		if ($layoutFile !== false) {
-            $contentParams = ['content'=>$content];
+            $contentParams = ['content' => $content];
             
             // widget title condition
             if(isset($params['title']))
-                $contentParams = ArrayHelper::merge($contentParams, ['title'=>$params['title']]);
+                $contentParams = ArrayHelper::merge($contentParams, ['title' => $params['title']]);
 
             // padding body condition
             $paddingBody = true;
             if(isset($params['paddingBody']))
                 $paddingBody = $params['paddingBody'];
-            $contentParams = ArrayHelper::merge($contentParams, ['paddingBody'=>$paddingBody]);
+            $contentParams = ArrayHelper::merge($contentParams, ['paddingBody' => $paddingBody]);
 
             // text align condition
             $textAlign = '';
             if(isset($params['textAlign']))
                 $textAlign = $params['textAlign'];
-            $contentParams = ArrayHelper::merge($contentParams, ['textAlign'=>$textAlign]);
+            $contentParams = ArrayHelper::merge($contentParams, ['textAlign' => $textAlign]);
 
             // content menu condition
             $contentMenu = false;
             if(isset($params['contentMenu']))
                 $contentMenu = $params['contentMenu'];
-            $contentParams = ArrayHelper::merge($contentParams, ['contentMenu'=>$contentMenu]);
+            $contentParams = ArrayHelper::merge($contentParams, ['contentMenu' => $contentMenu]);
 
 			return $this->renderFile($layoutFile, $contentParams, $context);
 		}
@@ -457,7 +457,7 @@ class View extends \yii\web\View
 		$analytic_property = Yii::$app->setting->get(join('_', [$app, 'analytic_property']), '');
 
 		if(!Yii::$app->isDev() && $analytic && $analytic_property) {
-			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position'=>self::POS_END, 'async'=>'async']);
+			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position'=>self::POS_END, 'async' => 'async']);
 $js = <<<JS
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
@@ -488,14 +488,14 @@ JS;
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'wizard', $context->findLayoutFile($this));
 		if ($layoutFile !== false) {
-            $contentParams = ['content'=>$content];
+            $contentParams = ['content' => $content];
             
             // wizard navigation condition
             if(isset($params['navigation'])) {
-                $contentParams = ArrayHelper::merge($contentParams, ['navigation'=>$params['navigation']]);
+                $contentParams = ArrayHelper::merge($contentParams, ['navigation' => $params['navigation']]);
             }
             if(isset($params['current'])) {
-                $contentParams = ArrayHelper::merge($contentParams, ['current'=>$params['current']]);
+                $contentParams = ArrayHelper::merge($contentParams, ['current' => $params['current']]);
             }
 
 			return $this->renderFile($layoutFile, $contentParams, $context);

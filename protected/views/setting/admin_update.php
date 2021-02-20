@@ -51,15 +51,15 @@ $js = <<<JS
 JS;
 $this->registerJs($js, \yii\web\View::POS_END);
 
-$getSublayoutUrl = Url::to(['sublayout', 'theme'=>'']);
-$getPaginationUrl = Url::to(['pagination', 'theme'=>'']);
-$getLoginlayoutUrl = Url::to(['loginlayout', 'theme'=>'']);
+$getSublayoutUrl = Url::to(['sublayout', 'theme' => '']);
+$getPaginationUrl = Url::to(['pagination', 'theme' => '']);
+$getLoginlayoutUrl = Url::to(['loginlayout', 'theme' => '']);
 ?>
 
 <div class="base-setting-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => false,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -67,7 +67,7 @@ $getLoginlayoutUrl = Url::to(['loginlayout', 'theme'=>'']);
 
 <?php $appType = $model::getAppType();
 echo $form->field($model, 'app_type')
-	->dropDownList($appType, ['prompt'=>''])
+	->dropDownList($appType, ['prompt' => ''])
 	->label($model->getAttributeLabel('app_type')); ?>
 
 <?php // echo $form->errorSummary($model);?>
@@ -97,7 +97,7 @@ echo $form->field($model, 'app_type')
 	->hint(Yii::t('app', 'Provide some keywords (separated by commas) that describe your website. These will be the default keywords that appear in the tag in your page header. Enter the most relevant keywords you can think of to help your website\'s search engine rankings.')); ?>
 
 <?php $uploadPath = join('/', [$model::getUploadPath(false, $model->app)]);
-$logo = $model->logo ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->logo])), ['alt'=>$model->logo, 'class'=>'mb-3']) : '';
+$logo = $model->logo ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->logo])), ['alt' => $model->logo, 'class' => 'mb-3']) : '';
 echo $form->field($model, 'logo', ['template' => '{label}{beginWrapper}<div>'.$logo.'</div>{input}{error}{hint}{endWrapper}'])
 	->fileInput()
 	->label($model->getAttributeLabel('logo'))
@@ -128,14 +128,14 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 	<?php $options = [];
 	if($model->online != '2')
 		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
-	echo $form->field($model, 'construction_text[comingsoon]', ['options'=>$options])
+	echo $form->field($model, 'construction_text[comingsoon]', ['options' => $options])
 		->textarea(['rows'=>4, 'cols'=>50])
 		->label($model->getAttributeLabel('construction_text[comingsoon]')); ?>
 
 	<?php $options = [];
 	if($model->online != '0')
 		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
-	echo $form->field($model, 'construction_text[maintenance]', ['options'=>$options])
+	echo $form->field($model, 'construction_text[maintenance]', ['options' => $options])
 		->textarea(['rows'=>4, 'cols'=>50])
 		->label($model->getAttributeLabel('construction_text[maintenance]')); ?>
 </div>

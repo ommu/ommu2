@@ -83,7 +83,7 @@ class LoginForm extends Model
 			if(!$this->hasErrors()) {
 				$user = $this->getUser($this->isAdmin);
 				if(!$user)
-					$this->addError('username', Yii::t('app', '{attribute} is incorrect.', ['attribute'=>$this->getAttributeLabel('username')]));
+					$this->addError('username', Yii::t('app', '{attribute} is incorrect.', ['attribute' => $this->getAttributeLabel('username')]));
 			}
 		}
 		return true;

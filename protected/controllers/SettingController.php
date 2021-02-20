@@ -55,7 +55,7 @@ class SettingController extends Controller
 	public function actionUpdate()
 	{
 		$app = Yii::$app->request->get('app');
-		$model = new BaseSetting(['app'=>$app ? $app : Yii::$app->id]);
+		$model = new BaseSetting(['app' => $app ? $app : Yii::$app->id]);
 
 		$themes = [];
 		foreach($allTheme = Theme::getThemes() as $key => $val) {
@@ -90,10 +90,10 @@ class SettingController extends Controller
 				$name = unserialize($model->name);
 				$success = Yii::t('app', 'General setting success updated.');
 				if($app != null)
-					$success = Yii::t('app', 'App setting <strong>{app-name}</strong> success updated.', ['app-name'=>$name['long']]);
+					$success = Yii::t('app', 'App setting <strong>{app-name}</strong> success updated.', ['app-name' => $name['long']]);
 				Yii::$app->session->setFlash('success', $success);
 				if($app != null)
-					return $this->redirect(['update', 'app'=>$app]);
+					return $this->redirect(['update', 'app' => $app]);
 				return $this->redirect(['update']);
 
 			} else {
@@ -103,10 +103,10 @@ class SettingController extends Controller
 		}
 
 		$title = Yii::t('app', 'General Settings');
-		$description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name'=>$model->name['small']]);
+		$description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name' => $model->name['small']]);
 		if($app != null) {
-			$title = Yii::t('app', 'App Setting: {app-name}', ['app-name'=>$model->name['small']]);
-			$description = Yii::t('app', 'This page contains app settings that affect your entire {app-name} application.', ['app-name'=>$model->name['long']]);
+			$title = Yii::t('app', 'App Setting: {app-name}', ['app-name' => $model->name['small']]);
+			$description = Yii::t('app', 'This page contains app settings that affect your entire {app-name} application.', ['app-name' => $model->name['long']]);
 		}
 
 		$this->view->title = $title;
@@ -131,7 +131,7 @@ class SettingController extends Controller
 	public function actionMeta()
 	{
 		$app = Yii::$app->request->get('app');
-		$model = new MetaSetting(['app'=>$app ? $app : Yii::$app->id]);
+		$model = new MetaSetting(['app' => $app ? $app : Yii::$app->id]);
 		$name = unserialize(Yii::$app->setting->get(join('_', [$model->app, 'name'])));
 
 		if(Yii::$app->request->isPost) {
@@ -139,10 +139,10 @@ class SettingController extends Controller
 			if($model->save()) {
 				$success = Yii::t('app', 'Meta setting success updated.');
 				if($app != null)
-					$success = Yii::t('app', 'App meta setting <strong>{app-name}</strong> success updated.', ['app-name'=>$name['long']]);
+					$success = Yii::t('app', 'App meta setting <strong>{app-name}</strong> success updated.', ['app-name' => $name['long']]);
 				Yii::$app->session->setFlash('success', $success);
 				if($app != null)
-					return $this->redirect(['meta', 'app'=>$app]);
+					return $this->redirect(['meta', 'app' => $app]);
 				return $this->redirect(['meta']);
 
 			} else {
@@ -152,10 +152,10 @@ class SettingController extends Controller
 		}
 
 		$title = Yii::t('app', 'Meta Settings');
-		$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name'=>$name['small']]);
+		$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name' => $name['small']]);
 		if($app != null) {
-			$title = Yii::t('app', 'Meta Setting: {app-name}', ['app-name'=>$name['small']]);
-			$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name'=>$name['long']]);
+			$title = Yii::t('app', 'Meta Setting: {app-name}', ['app-name' => $name['small']]);
+			$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name' => $name['long']]);
 		}
 
 		$this->view->title = $title;

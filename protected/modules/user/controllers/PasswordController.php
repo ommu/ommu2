@@ -144,20 +144,20 @@ class PasswordController extends Controller
 			return $this->goHome();
 
 		$msg = Yii::$app->request->get('msg');
-		$forgot = UserForgot::findOne(['code'=>$code]);
+		$forgot = UserForgot::findOne(['code' => $code]);
 
 		if(!$msg && $forgot == null) {
 			$render = 'novalid';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak ditemukan.'));
 			if(!$code)
-				return $this->redirect(['reset', 'cd'=>$code]);
+				return $this->redirect(['reset', 'cd' => $code]);
 		}
 
 		if(!$msg && $forgot->expired == 1) {
 			$render = 'expired';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak dapat digunakan.'));
 			if(!$code)
-				return $this->redirect(['reset', 'cd'=>$code]);
+				return $this->redirect(['reset', 'cd' => $code]);
 		}
 
 		if($render != 'novalid' && $render != 'expired') {
@@ -178,7 +178,7 @@ class PasswordController extends Controller
 	
 					if(!Yii::$app->request->isAjax) {
 						Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your username or email and new password.'));
-						return $this->redirect(['reset', 'cd'=>$code, 'msg'=>'success']);
+						return $this->redirect(['reset', 'cd' => $code, 'msg' => 'success']);
 					}
 	
 				} else {

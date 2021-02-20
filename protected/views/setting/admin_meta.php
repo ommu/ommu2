@@ -46,7 +46,7 @@ JS;
 <div class="base-setting-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => false,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -77,13 +77,13 @@ echo $form->field($model, 'google_meta')
 	->label($model->getAttributeLabel('office_name')); ?>
 
 <?php
-$villageSuggestUrl = Url::to(['/admin/zone/village/suggest', 'extend'=>'village_name,zipcode,district_name,city_id,province_id,country_id']);
-$districtSuggestUrl = Url::to(['/admin/zone/district/suggest', 'extend'=>'district_name,city_id,province_id,country_id']);
-$citySuggestUrl = Url::to(['/admin/zone/city/suggest', 'extend'=>'city_name,province_id,country_id']);
-$provinceSuggestUrl = Url::to(['/admin/zone/province/suggest', 'extend'=>'country_id']);
+$villageSuggestUrl = Url::to(['/admin/zone/village/suggest', 'extend' => 'village_name,zipcode,district_name,city_id,province_id,country_id']);
+$districtSuggestUrl = Url::to(['/admin/zone/district/suggest', 'extend' => 'district_name,city_id,province_id,country_id']);
+$citySuggestUrl = Url::to(['/admin/zone/city/suggest', 'extend' => 'city_name,province_id,country_id']);
+$provinceSuggestUrl = Url::to(['/admin/zone/province/suggest', 'extend' => 'country_id']);
 $countrySuggestUrl = Url::to(['/admin/zone/country/suggest']);
 
-$officeAddressVillage = $form->field($model, 'office_address[village]', ['template' => '{beginWrapper}{input}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-3 col-sm-4 col-xs-6 col-sm-offset-3 mt-3'], 'options' => ['tag' => null]])
+$officeAddressVillage = $form->field($model, 'office_address[village]', ['template' => '{beginWrapper}{input}{endWrapper}', 'horizontalCssClasses' => ['wrapper' => 'col-md-3 col-sm-4 col-xs-6 col-sm-offset-3 mt-3'], 'options' => ['tag' => null]])
 	->widget(Selectize::className(), [
 		'cascade' => true,
 		'options' => [
@@ -141,7 +141,7 @@ JS;
 	$this->registerJs($js, \yii\web\View::POS_END);
 } ?>
 
-<?php $officeAddressDistrict = $form->field($model, 'office_address[district]', ['template' => '{beginWrapper}{input}{endWrapper}', 'horizontalCssClasses' => ['wrapper'=>'col-md-3 col-sm-5 col-xs-6 mt-3'], 'options' => ['tag' => null]])
+<?php $officeAddressDistrict = $form->field($model, 'office_address[district]', ['template' => '{beginWrapper}{input}{endWrapper}', 'horizontalCssClasses' => ['wrapper' => 'col-md-3 col-sm-5 col-xs-6 mt-3'], 'options' => ['tag' => null]])
 	->widget(Selectize::className(), [
 		'cascade' => true,
 		'options' => [
@@ -211,8 +211,8 @@ JS;
 	$this->registerJs($js, \yii\web\View::POS_END);
 } ?>
 
-<?php echo $form->field($model, 'office_address[place]', ['template' => '{label}{beginWrapper}{input}{endWrapper}'.$officeAddressVillage.$officeAddressDistrict.'{error}{hint}', 'horizontalCssClasses' => ['error'=>'col-sm-6 col-xs-12 col-sm-offset-3', 'hint'=>'col-sm-6 col-xs-12 col-sm-offset-3']])
-	->textarea(['rows'=>3, 'cols'=>50, 'maxlength'=>64, 'placeholder'=>$model->getAttributeLabel('office_address[place]')])
+<?php echo $form->field($model, 'office_address[place]', ['template' => '{label}{beginWrapper}{input}{endWrapper}'.$officeAddressVillage.$officeAddressDistrict.'{error}{hint}', 'horizontalCssClasses' => ['error' => 'col-sm-6 col-xs-12 col-sm-offset-3', 'hint' => 'col-sm-6 col-xs-12 col-sm-offset-3']])
+	->textarea(['rows'=>3, 'cols'=>50, 'maxlength'=>64, 'placeholder' => $model->getAttributeLabel('office_address[place]')])
 	->label($model->getAttributeLabel('office_address'))
 	->hint(Yii::t('app', 'The number, street, district and village of the postal address for this business')); ?>
 
@@ -307,12 +307,12 @@ JS;
 			}'),
 		],
 	])
-	->label($model->getAttributeLabel('office_address[province]')); ?>
+	->label($model->getAttributeLabel('office_address[province]'))
+	->hint(Yii::t('app', 'The province (or region) line of the postal address for this business')); ?>
 
 <?php echo $form->field($model, 'office_address[zipcode]')
 	->textInput(['maxlength'=>6])
-	->label($model->getAttributeLabel('office_address[zipcode]'))
-	->hint(Yii::t('app', 'The state (or region) line of the postal address for this business')); ?>
+	->label($model->getAttributeLabel('office_address[zipcode]')); ?>
 
 <?php echo $form->field($model, 'office_address[country]')
 	->widget(Selectize::className(), [

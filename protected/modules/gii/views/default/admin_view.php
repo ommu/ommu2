@@ -52,7 +52,7 @@ foreach ($generator->templates as $name => $path) {
 	<hr/>
 
 	<?php $generateButton = isset($files) ? Html::submitButton('Generate', ['name' => 'generate', 'class' => 'btn btn-success']) : '';
-	echo $form->field($generator, 'submitButton', ['template'=>'{beginWrapper}{input}'.$generateButton.'{endWrapper}'])
+	echo $form->field($generator, 'submitButton', ['template' => '{beginWrapper}{input}'.$generateButton.'{endWrapper}'])
 		->submitButton(['button'=>Html::submitButton('Preview', ['name' => 'preview', 'class' => 'btn btn-primary'])]); ?>
 
 	<?php if (isset($results) || isset($files)) {?>

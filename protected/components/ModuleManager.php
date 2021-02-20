@@ -193,7 +193,7 @@ class ModuleManager extends \yii\base\Component
 			$class = $this->modules[$id];
 			return Yii::createObject($class, [$id, Yii::$app]);
 		}
-		throw new Exception(Yii::t('app', 'Could not find/load requested module: {module-id}', array('module-id'=>$id)));
+		throw new Exception(Yii::t('app', 'Could not find/load requested module: {module-id}', array('module-id' => $id)));
 	}
 
 	/**

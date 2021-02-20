@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $model->title->message; ?>
 <?php echo DetailView::widget([
 	'model' => $model,
 	'options' => [
-		'class'=>'table table-striped detail-view',
+		'class' => 'table table-striped detail-view',
 	],
 	'attributes' => [
 		'page_id',
 		[
 			'attribute' => 'publish',
-			'value' => $model->quickAction(Url::to(['publish', 'id'=>$model->primaryKey]), $model->publish),
+			'value' => $model->quickAction(Url::to(['publish', 'id' => $model->primaryKey]), $model->publish),
 			'format' => 'raw',
 		],
 		[
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $model->title->message; ?>
 			'attribute' => 'media',
 			'value' => function ($model) {
 				$uploadPath = $model::getUploadPath(false);
-				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt'=>$model->media, 'class'=>'mb-3']).'<br/>'.$model->media : '-';
+				return $model->media ? Html::img(Url::to(join('/', ['@webpublic', $uploadPath, $model->media])), ['alt' => $model->media, 'class' => 'mb-3']).'<br/>'.$model->media : '-';
 			},
 			'format' => 'html',
 		],
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $model->title->message; ?>
 			'attribute' => 'views',
 			'value' => function ($model) {
 				$views = $model->getViews(true);
-				return Html::a($views, ['page/view/manage', 'page'=>$model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count'=>$views])]);
+				return Html::a($views, ['page/view/manage', 'page' => $model->primaryKey, 'publish'=>1], ['title'=>Yii::t('app', '{count} views', ['count' => $views])]);
 			},
 			'format' => 'html',
 		],

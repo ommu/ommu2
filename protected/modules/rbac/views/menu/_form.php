@@ -30,7 +30,7 @@ $this->registerJs($this->render('_script.js'));
 <div class="menu-form">
 
 <?php $form = ActiveForm::begin([
-	'options' => ['class'=>'form-horizontal form-label-left'],
+	'options' => ['class' => 'form-horizontal form-label-left'],
 	'enableClientValidation' => false,
 	'enableAjaxValidation' => false,
 	//'enableClientScript' => true,
@@ -46,8 +46,8 @@ $this->registerJs($this->render('_script.js'));
 
 <?php echo $form->field($model, 'icon')
 	->widget('\insolita\iconpicker\Iconpicker', [
-		'iconset'=>'fontawesome',
-		'clientOptions'=>['rows'=>8,'cols'=>10,'placement'=>'right'],
+		'iconset' => 'fontawesome',
+		'clientOptions'=>['rows'=>8,'cols'=>10,'placement' => 'right'],
 	])
 	->label($model->getAttributeLabel('icon')); ?>
 
