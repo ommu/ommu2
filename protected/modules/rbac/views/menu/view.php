@@ -37,25 +37,28 @@ $this->params['menu']['content'] = [
 
 <div class="menu-view">
 
-<?php echo DetailView::widget([
+<?php
+$attributes = [
+    'menuParent.name:text:Parent',
+    'name',
+    [
+        'attribute' => 'icon',
+        'value' => function($model) {
+            return '<i class="fa '.$model->icon.'"></i> '.$model->icon;
+        },
+        'format' => 'html',
+    ],
+    'route',
+    'order',
+    [
+        'attribute' => 'public',
+        'value' => $this->filterYesNo($model->public),
+    ],
+];
+
+echo DetailView::widget([
 	'model' => $model,
-	'attributes' => [
-		'menuParent.name:text:Parent',
-		'name',
-		[
-			'attribute' => 'icon',
-			'value' => function($model) {
-				return '<i class="fa '.$model->icon.'"></i> '.$model->icon;
-			},
-			'format' => 'html',
-		],
-		'route',
-		'order',
-		[
-			'attribute' => 'public',
-			'value' => $this->filterYesNo($model->public),
-		],
-	],
+	'attributes' => $attributes,
 	'template' => '<tr><th style="width:25%">{label}</th><td>{value}</td></tr>',
 ]); ?>
 

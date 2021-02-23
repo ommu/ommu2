@@ -29,12 +29,15 @@ $this->params['menu']['content'] = [
 
 <div class="auth-item-view">
 
-<?php echo DetailView::widget([
+<?php
+$attributes = [
+    'name',
+    'className',
+];
+
+echo DetailView::widget([
 	'model' => $model,
-	'attributes' => [
-		'name',
-		'className',
-	],
+	'attributes' => $attributes,
 ]); ?>
 
 </div>

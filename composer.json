@@ -37,6 +37,9 @@
 		"ommu/yii2-selectize": "@dev",
 		"ommu/yii2-flatpickr": "@dev",
 		"ommu/yii2-daterangepicker": "@dev",
+        "victor78/yii2-zipper": "~0.0.4",
+        "components/jquery": "~3.3.0",
+        "components/bootstrap": "3.4.* | 3.3.* | 3.2.* | 3.1.*",
 		"ommu/core": "dev-master",
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
@@ -98,7 +101,8 @@
 		},
 		"installer-types": [
 			"ommu-theme",
-			"ommu-apps"
+			"ommu-apps",
+			"component"
 		],
 		"installer-paths": {
 			"themes/{$name}/": [
@@ -106,6 +110,9 @@
 			],
 			"{$name}": [
 				"type:ommu-apps"
+			],
+			"protected/vendor/bower-asset/{$name}": [
+				"type:component"
 			]
 		}
 	},

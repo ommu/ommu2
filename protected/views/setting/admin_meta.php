@@ -23,7 +23,7 @@ use ommu\core\models\CoreZoneCity;
 use ommu\core\models\CoreZoneProvince;
 use ommu\core\models\CoreZoneCountry;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Settings'), 'url' => ['update']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Setting'), 'url' => ['update']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $country = $model->office_address['country'];
