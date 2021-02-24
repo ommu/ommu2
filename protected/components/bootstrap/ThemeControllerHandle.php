@@ -83,7 +83,7 @@ class ThemeControllerHandle implements BootstrapInterface
 					];
 				}
 				$controllerMap[$controller] = [
-					'class'=>join('\\', $nsClass),
+					'class' => join('\\', $nsClass),
 				];
 
 			} else if(is_dir($controllerFile)) {

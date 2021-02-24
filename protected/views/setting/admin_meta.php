@@ -311,7 +311,7 @@ JS;
 	->hint(Yii::t('app', 'The province (or region) line of the postal address for this business')); ?>
 
 <?php echo $form->field($model, 'office_address[zipcode]')
-	->textInput(['maxlength'=>6])
+	->textInput(['maxlength' => 6])
 	->label($model->getAttributeLabel('office_address[zipcode]')); ?>
 
 <?php echo $form->field($model, 'office_address[country]')

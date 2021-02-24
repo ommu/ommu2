@@ -88,7 +88,7 @@ class Users extends UsersModel implements IdentityInterface
 
 		if(isset(Yii::$app->params['user']['enableStrengthValidator']) && Yii::$app->params['user']['enableStrengthValidator'] == true) {
 			return \yii\helpers\ArrayHelper::merge($rules, [
-				[['password'], StrengthValidator::className(), 'preset'=> StrengthValidator::FAIR],
+				[['password'], StrengthValidator::className(), 'preset' => StrengthValidator::FAIR],
 			]);
 		}
 

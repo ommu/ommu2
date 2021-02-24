@@ -457,7 +457,7 @@ class View extends \yii\web\View
 		$analytic_property = Yii::$app->setting->get(join('_', [$app, 'analytic_property']), '');
 
 		if(!Yii::$app->isDev() && $analytic && $analytic_property) {
-			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position'=>self::POS_END, 'async' => 'async']);
+			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position' => self::POS_END, 'async' => 'async']);
 $js = <<<JS
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
