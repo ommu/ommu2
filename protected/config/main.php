@@ -117,6 +117,20 @@ $config = [
                 'yii\bootstrap\BootstrapThemeAsset' => [
                     'sourcePath' => '@vendor/components/bootstrap',
                 ],
+                // twitter
+                'yii\gii\TypeAheadAsset' => [
+                    'sourcePath' => '@vendor/twitter/typeahead.js/dist',
+                ],
+                // yii2
+                'yii\widgets\MaskedInputAsset' => [
+                    'sourcePath' => '@npm/inputmask/dist',
+                ],
+                'yii\validators\PunycodeAsset' => [
+                    'sourcePath' => '@npm/punycode',
+                ],
+                'yii\widgets\PjaxAsset' => [
+                    'sourcePath' => '@npm/yii2-pjax',
+                ],
             ],
 		],
 		'setting' => [
