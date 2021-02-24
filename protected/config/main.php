@@ -62,6 +62,10 @@ $config = [
 			// for the mailer to send real emails.
 			'useFileTransport' => true,
 		],
+        'zipper' => [
+            'class' => 'Victor78\Zipper\Zipper', //required
+            'type' => 'zip', //or 'zip' (default), 'tar', 'tar.gz', 'tar.bz2'
+        ],
 		'log' => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
 			'targets' => [
@@ -98,6 +102,22 @@ $config = [
 		],
 		'assetManager' => [
 			'class'    => '\app\components\AssetManager',
+            'bundles'   => [
+                // jquery
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => '@bower/jquery',
+                ],
+                // bootstrap
+                'yii\bootstrap\BootstrapAsset' => [
+                    'sourcePath' => '@bower/bootstrap',
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => '@bower/bootstrap',
+                ],
+                'yii\bootstrap\BootstrapThemeAsset' => [
+                    'sourcePath' => '@bower/bootstrap',
+                ],
+            ],
 		],
 		'setting' => [
 			'class'    => '\app\components\SettingManager',
