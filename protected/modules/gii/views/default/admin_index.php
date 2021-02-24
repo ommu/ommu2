@@ -33,7 +33,7 @@ $generators = Yii::$app->controller->module->generators;?>
 				<p><?php echo $generator->getDescription() ?></p>
 				<p class="lead">Start the fun with the following code generators:</p>
 				<div class="widget_summary">
-					<?php echo Html::a('Start &raquo;', ['default/view', 'id' => $id], ['class' => 'btn btn-success']) ?>
+					<?php echo Html::a('Start &raquo;', ['default/view', 'id' => $id], ['class' => 'btn btn-primary']) ?>
 				</div>
 			</div>
 		</div>
