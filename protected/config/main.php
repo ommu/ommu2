@@ -107,6 +107,13 @@ $config = [
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => '@vendor/components/jquery',
                 ],
+                // jquery ui
+                'yii\jui\JuiAsset' => [
+                    'sourcePath' => '@vendor/components/jqueryui',
+                ],
+                'yii\jui\DatePickerLanguageAsset' => [
+                    'sourcePath' => '@vendor/components/jqueryui',
+                ],
                 // bootstrap
                 'yii\bootstrap\BootstrapAsset' => [
                     'sourcePath' => '@vendor/components/bootstrap',
