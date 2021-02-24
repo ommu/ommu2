@@ -107,7 +107,7 @@ class PasswordController extends Controller
 	{
 		$model = new UserForgot();
 		$model->scenario = UserForgot::SCENARIO_WITH_FORM;
-		$model->setAttributeLabels(['email_i'=>Yii::t('app', 'Username or Email')]);
+		$model->setAttributeLabels(['email_i' => Yii::t('app', 'Username or Email')]);
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());

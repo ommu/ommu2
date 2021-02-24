@@ -75,7 +75,7 @@ class SignupController extends Controller
 		$this->isLoginLayout = true;
 		$this->view->descriptionShow = true;
 		$this->view->title = Yii::t('app', 'Sign up!');
-		$this->view->description = Yii::t('app', 'Create an account on {app-name}', ['app-name'=>Yii::$app->name]);
+		$this->view->description = Yii::t('app', 'Create an account on {app-name}', ['app-name' => Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->oRender('front_index', [
 			'model' => $model,
@@ -91,7 +91,7 @@ class SignupController extends Controller
 		$this->isLoginLayout = true;
 		$this->view->descriptionShow = true;
 		$this->view->title = Yii::t('app', 'Signup Success');
-		$this->view->description = Yii::t('app', 'Create an account on {app-name}', ['app-name'=>Yii::$app->name]);
+		$this->view->description = Yii::t('app', 'Create an account on {app-name}', ['app-name' => Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('front_success');
 	}

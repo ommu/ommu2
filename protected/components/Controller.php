@@ -101,7 +101,7 @@ class Controller extends \yii\web\Controller
 			if($action instanceof \yii\web\ErrorAction) {
 				$model = \ommu\report\models\ReportSetting::find()
 					->select(['auto_report_cat_id'])
-					->where(['id'=>1])
+					->where(['id' => 1])
 					->one();
 				
 				if($model->auto_report_i) {
@@ -210,7 +210,7 @@ class Controller extends \yii\web\Controller
 		if(!Yii::$app->request->isAjax || (Yii::$app->request->isAjax && Yii::$app->request->get('_pjax')))
 			return $this->render($render, $data);
 
-		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader'=>false]));
+		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader' => false]));
 	}
 
 	/**

@@ -59,7 +59,7 @@ use yii\widgets\Breadcrumbs;
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-		<?php echo \app\components\widgets\Alert::widget(['closeButton'=>false]); ?>
+		<?php echo \app\components\widgets\Alert::widget(['closeButton' => false]); ?>
         <?= $content ?>
     </div>
 </div>

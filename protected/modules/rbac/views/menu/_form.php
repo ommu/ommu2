@@ -47,7 +47,7 @@ $this->registerJs($this->render('_script.js'));
 <?php echo $form->field($model, 'icon')
 	->widget('\insolita\iconpicker\Iconpicker', [
 		'iconset' => 'fontawesome',
-		'clientOptions'=>['rows'=>8,'cols'=>10,'placement' => 'right'],
+		'clientOptions' => ['rows' => 8, 'cols' => 10, 'placement' => 'right'],
 	])
 	->label($model->getAttributeLabel('icon')); ?>
 
@@ -74,7 +74,7 @@ $this->registerJs($this->render('_script.js'));
 <hr/>
 
 <?php echo $form->field($model, 'submitButton')
-	->submitButton(['button'=>Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])]); ?>
+	->submitButton(['button' => Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])]); ?>
 
 <?php ActiveForm::end(); ?>
 

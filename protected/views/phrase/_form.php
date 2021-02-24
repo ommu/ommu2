@@ -35,15 +35,15 @@ use app\components\widgets\ActiveForm;
 <?php //echo $form->errorSummary($model);?>
 
 <?php echo $form->field($model, 'category')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('category')); ?>
 
 <?php echo $form->field($model, 'message')
-	->textarea(['rows'=>4, 'cols'=>50])
+	->textarea(['rows' => 4, 'cols' => 50])
 	->label($model->getAttributeLabel('message')); ?>
 
 <?php echo $form->field($model, 'location')
-	->textarea(['rows'=>3, 'cols'=>50])
+	->textarea(['rows' => 3, 'cols' => 50])
 	->label($model->getAttributeLabel('location')); ?>
 
 <?php if(!empty($model->languages)) {?>
@@ -51,7 +51,7 @@ use app\components\widgets\ActiveForm;
 
 <?php foreach ($model->languages as $key => $val) {
 		echo $form->field($model, "translate[$key]")
-			->textarea(['rows'=>4, 'cols'=>50])
+			->textarea(['rows' => 4, 'cols' => 50])
 			->label($val);
 	}
 }?>

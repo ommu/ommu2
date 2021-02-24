@@ -86,7 +86,7 @@ class SiteController extends Controller
 
 		$model = new LoginForm();
 		if($setting->signup_username == 1)
-			$model->setAttributeLabels(['username'=>Yii::t('app', 'Email or Username')]);
+			$model->setAttributeLabels(['username' => Yii::t('app', 'Email or Username')]);
 
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -102,7 +102,7 @@ class SiteController extends Controller
 		$this->isLoginLayout = true;
 		$this->view->descriptionShow = true;
 		$this->view->title = Yii::t('app', 'Welcome back!');
-		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
+		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name' => Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->oRender('front_login', [
 			'model' => $model,

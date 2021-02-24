@@ -276,8 +276,8 @@ class ModuleManager extends \yii\base\Component
 			return $model;
 		} else {
 			return Yii::t('app', '{module-id} module can\'t be enabled. Errors: {errors}', array(
-				'module-id'=>ucfirst($module->id),
-				'errors'=>print_r($model->errors, true),
+				'module-id' => ucfirst($module->id),
+				'errors' => print_r($model->errors, true),
 			));
 		}
 	}
@@ -302,13 +302,13 @@ class ModuleManager extends \yii\base\Component
 				return $model;
 			} else {
 				return Yii::t('app', '{module-id} module can\'t be disabled. Errors: {errors}', array(
-					'module-id'=>ucfirst($module->id),
-					'errors'=>print_r($model->errors, true),
+					'module-id' => ucfirst($module->id),
+					'errors' => print_r($model->errors, true),
 				));
 			}
 		} else {
 			return Yii::t('app', '{module-id} module not found in database.', array(
-				'module-id'=>ucfirst($module->id),
+				'module-id' => ucfirst($module->id),
 			));
 		}
 	}

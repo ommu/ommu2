@@ -95,7 +95,7 @@ class LoginController extends Controller
 		}
 
 		$this->view->title = Yii::t('app', 'Login');
-		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name'=>Yii::$app->name]);
+		$this->view->description = Yii::t('app', 'Login to access your {app-name} Account', ['app-name' => Yii::$app->name]);
 		$this->view->keywords = '';
 		return $this->render('admin_index', [
 			'model' => $model,

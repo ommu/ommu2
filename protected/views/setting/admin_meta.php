@@ -68,12 +68,12 @@ echo $form->field($model, 'google_meta')
 <hr/>
 
 <?php echo $form->field($model, 'office_location')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_location'))
 	->hint(Yii::t('app', 'A struct containing metadata defining the location of a place')); ?>
 
 <?php echo $form->field($model, 'office_name')
-	->textInput(['maxlength'=>true])
+	->textInput(['maxlength' => true])
 	->label($model->getAttributeLabel('office_name')); ?>
 
 <?php
@@ -90,7 +90,7 @@ $officeAddressVillage = $form->field($model, 'office_address[village]', ['templa
 			'placeholder' => Yii::t('app', 'Select a village..'),
 			'class' => 'form-control contacts',
 		],
-		'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a village..')], []),
+		'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a village..')], []),
 		'url' => $villageSuggestUrl,
 		'queryParam' => 'term',
 		'pluginOptions' => [
@@ -148,7 +148,7 @@ JS;
 			'placeholder' => Yii::t('app', 'Select a district..'),
 			'class' => 'form-control contacts',
 		],
-		'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a district..')], []),
+		'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a district..')], []),
 		'url' => $districtSuggestUrl,
 		'queryParam' => 'term',
 		'pluginOptions' => [
@@ -212,7 +212,7 @@ JS;
 } ?>
 
 <?php echo $form->field($model, 'office_address[place]', ['template' => '{label}{beginWrapper}{input}{endWrapper}'.$officeAddressVillage.$officeAddressDistrict.'{error}{hint}', 'horizontalCssClasses' => ['error' => 'col-sm-6 col-xs-12 col-sm-offset-3', 'hint' => 'col-sm-6 col-xs-12 col-sm-offset-3']])
-	->textarea(['rows'=>3, 'cols'=>50, 'maxlength'=>64, 'placeholder' => $model->getAttributeLabel('office_address[place]')])
+	->textarea(['rows' => 3, 'cols' => 50, 'maxlength' => 64, 'placeholder' => $model->getAttributeLabel('office_address[place]')])
 	->label($model->getAttributeLabel('office_address'))
 	->hint(Yii::t('app', 'The number, street, district and village of the postal address for this business')); ?>
 
@@ -222,8 +222,8 @@ JS;
 		'options' => [
 			'placeholder' => Yii::t('app', 'Select a city..'),
 		],
-		'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a city..')], CoreZoneCity::getCity()),
-		// 'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a city..')], []),
+		'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a city..')], CoreZoneCity::getCity()),
+		// 'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a city..')], []),
 		// 'url' => $citySuggestUrl,
 		// 'queryParam' => 'term',
 		'pluginOptions' => [
@@ -270,8 +270,8 @@ JS;
 		'options' => [
 			'placeholder' => Yii::t('app', 'Select a province..'),
 		],
-		'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a province..')], CoreZoneProvince::getProvince()),
-		// 'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a province..')], []),
+		'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a province..')], CoreZoneProvince::getProvince()),
+		// 'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a province..')], []),
 		// 'url' => $provinceSuggestUrl,
 		// 'queryParam' => 'term',
 		'pluginOptions' => [
@@ -320,8 +320,8 @@ JS;
 		'options' => [
 			'placeholder' => Yii::t('app', 'Select a country..'),
 		],
-		'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a country..')], CoreZoneCountry::getCountry()),
-		// 'items' => ArrayHelper::merge([''=>Yii::t('app', 'Select a country..')], []),
+		'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a country..')], CoreZoneCountry::getCountry()),
+		// 'items' => ArrayHelper::merge(['' => Yii::t('app', 'Select a country..')], []),
 		// 'url' => $countrySuggestUrl,
 		// 'queryParam' => 'term',
 		'pluginOptions' => [
@@ -368,7 +368,7 @@ JS;
 	->hint(Yii::t('app', 'A fax number to contact this business')); ?>
 
 <?php echo $form->field($model, 'office_contact[hotline]')
-	->textarea(['rows'=>3, 'cols'=>50])
+	->textarea(['rows' => 3, 'cols' => 50])
 	->label($model->getAttributeLabel('office_contact[hotline]')); ?>
 
 <?php echo $form->field($model, 'office_contact[email]')
@@ -384,7 +384,7 @@ JS;
 <hr/>
 
 <?php echo $form->field($model, 'submitButton')
-	->submitButton(['button'=>Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary'])]); ?>
+	->submitButton(['button' => Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary'])]); ?>
 
 <?php ActiveForm::end(); ?>
 
