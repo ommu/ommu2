@@ -38,7 +38,7 @@ use app\components\widgets\ActiveForm;
 <hr/>
 
 <?php echo $form->field($model, 'submitButton')
-	->submitButton(['button' => Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'), 'name' => 'submit-button'])]); ?>
+	->submitButton(['button' => Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), ['class' => 'btn btn-success', 'name' => 'submit-button'])]); ?>
 
 <?php ActiveForm::end(); ?>
 

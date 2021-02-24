@@ -37,7 +37,7 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
 				placeholder="<?php echo Yii::t('rbac-admin', 'New route(s)');?>">
 			<span class="input-group-btn">
 				<?php echo Html::a(Yii::t('rbac-admin', 'Add') . $animateIcon, ['create'], [
-					'class' => 'btn btn-success',
+					'class' => 'btn btn-primary',
 					'id' => 'btn-new',
 				]);?>
 			</span>

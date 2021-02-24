@@ -30,7 +30,7 @@ $rules = array_combine($rules, $rules);
 unset($rules[RouteRule::RULE_NAME]);
 
 $this->params['menu']['content'] = [
-	['label' => Yii::t('rbac-admin', 'Create ' . $labels['Item']), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
+	['label' => Yii::t('rbac-admin', 'Create ' . $labels['Item']), 'url' => Url::to(['create']), 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary']],
 ];
 ?>
 

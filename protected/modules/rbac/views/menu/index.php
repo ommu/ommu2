@@ -24,7 +24,7 @@ $createUrl = Url::to(['create']);
 if(($app = Yii::$app->request->get('app')) != null)
 	$createUrl = Url::to(['create', 'app' => $app]);
 $this->params['menu']['content'] = [
-	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-success']],
+	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary']],
 ];
 ?>
 
