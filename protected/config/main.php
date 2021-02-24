@@ -105,17 +105,17 @@ $config = [
             'bundles'   => [
                 // jquery
                 'yii\web\JqueryAsset' => [
-                    'sourcePath' => '@bower/jquery',
+                    'sourcePath' => '@vendor/components/jquery',
                 ],
                 // bootstrap
                 'yii\bootstrap\BootstrapAsset' => [
-                    'sourcePath' => '@bower/bootstrap',
+                    'sourcePath' => '@vendor/components/bootstrap',
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
-                    'sourcePath' => '@bower/bootstrap',
+                    'sourcePath' => '@vendor/components/bootstrap',
                 ],
                 'yii\bootstrap\BootstrapThemeAsset' => [
-                    'sourcePath' => '@bower/bootstrap',
+                    'sourcePath' => '@vendor/components/bootstrap',
                 ],
             ],
 		],

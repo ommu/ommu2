@@ -101,8 +101,7 @@
 		},
 		"installer-types": [
 			"ommu-theme",
-			"ommu-apps",
-			"component"
+			"ommu-apps"
 		],
 		"installer-paths": {
 			"themes/{$name}/": [
@@ -110,9 +109,6 @@
 			],
 			"{$name}": [
 				"type:ommu-apps"
-			],
-			"protected/vendor/bower-asset/{$name}": [
-				"type:component"
 			]
 		}
 	},
