@@ -69,11 +69,11 @@ class SourceMessage extends SourceMessageModel
 			// 'modified modified'
 		]);
 		if((isset($params['sort']) && in_array($params['sort'], ['creationDisplayname', '-creationDisplayname'])) || (isset($params['creationDisplayname']) && $params['creationDisplayname'] != ''))
-			$query = $query->joinWith(['creation creation']);
+			$query->joinWith(['creation creation']);
 		if((isset($params['sort']) && in_array($params['sort'], ['modifiedDisplayname', '-modifiedDisplayname'])) || (isset($params['modifiedDisplayname']) && $params['modifiedDisplayname'] != ''))
-			$query = $query->joinWith(['modified modified']);
+			$query->joinWith(['modified modified']);
 
-		$query = $query->groupBy(['id']);
+		$query->groupBy(['id']);
 
 		// add conditions that should always apply here
 		$dataParams = [
