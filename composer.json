@@ -38,12 +38,14 @@
 		"ommu/yii2-flatpickr": "@dev",
 		"ommu/yii2-daterangepicker": "@dev",
         "victor78/yii2-zipper": "~0.0.4",
-        "components/jquery": "~3.3.0",
-        "components/bootstrap": "3.4.* | 3.3.* | 3.2.* | 3.1.*",
-        "twitter/typeahead.js": "0.10.* | ~0.11.0",
+    
+        "components/jquery": "3.5.*@stable | 3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
         "npm-asset/inputmask": "~3.2.2 | ~3.3.5",
         "npm-asset/punycode": "1.3.*",
         "npm-asset/yii2-pjax": "~2.0.1",
+        "components/bootstrap": "3.4.* | 3.3.* | 3.2.* | 3.1.*",
+        "twitter/typeahead.js": "0.10.* | ~0.11.0",
+
 		"ommu/core": "dev-master",
 		"ommu/users": "dev-master",
 		"ommu/mailer": "dev-master",
@@ -116,6 +118,15 @@
 			]
 		}
 	},
+    "suggest": {
+        "bower-asset/jquery": "change to components/jquery",
+        "bower-asset/inputmask": "change to npm-asset/inputmask",
+        "bower-asset/punycode": "change to npm-asset/punycode",
+        "bower-asset/yii2-pjax": "change to npm-asset/yii2-pjax",
+        "bower-asset/bootstrap": "change to components/bootstrap",
+        "bower-asset/jquery-ui": "change to components/jqueryui",
+        "bower-asset/typeahead.js": "change to twitter/typeahead.js"
+    },
 	"repositories": [
 		{
 			"type": "composer",

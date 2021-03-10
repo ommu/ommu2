@@ -106,10 +106,19 @@ $config = [
                 // jquery
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => '@vendor/components/jquery',
+                    'js' => [
+                        YII_DEBUG ? 'jquery.js': 'jquery.min.js',
+                    ],
                 ],
                 // jquery ui
                 'yii\jui\JuiAsset' => [
                     'sourcePath' => '@vendor/components/jqueryui',
+                    'js' => [
+                        YII_DEBUG ? 'jquery-ui.js': 'jquery-ui.min.js',
+                    ],
+                    'css' => [
+                        YII_DEBUG ? 'themes/smoothness/jquery-ui.css': 'themes/smoothness/jquery-ui.min.css',
+                    ],
                 ],
                 'yii\jui\DatePickerLanguageAsset' => [
                     'sourcePath' => '@vendor/components/jqueryui',
@@ -117,26 +126,41 @@ $config = [
                 // bootstrap
                 'yii\bootstrap\BootstrapAsset' => [
                     'sourcePath' => '@vendor/components/bootstrap',
+                    'css' => [
+                        YII_DEBUG ? 'css/bootstrap.css': 'css/bootstrap.min.css',
+                    ],
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'sourcePath' => '@vendor/components/bootstrap',
+                    'js' => [
+                        YII_DEBUG ? 'js/bootstrap.js': 'js/bootstrap.min.js',
+                    ],
                 ],
                 'yii\bootstrap\BootstrapThemeAsset' => [
                     'sourcePath' => '@vendor/components/bootstrap',
-                ],
-                // twitter
-                'yii\gii\TypeAheadAsset' => [
-                    'sourcePath' => '@vendor/twitter/typeahead.js/dist',
+                    'css' => [
+                        YII_DEBUG ? 'css/bootstrap-theme.css': 'css/bootstrap-theme.min.css',
+                    ],
                 ],
                 // yii2
                 'yii\widgets\MaskedInputAsset' => [
                     'sourcePath' => '@npm/inputmask/dist',
+                    'js' => [
+                        YII_DEBUG ? 'jquery.inputmask.bundle.js': 'min/jquery.inputmask.bundle.min.js',
+                    ],
                 ],
                 'yii\validators\PunycodeAsset' => [
                     'sourcePath' => '@npm/punycode',
                 ],
                 'yii\widgets\PjaxAsset' => [
                     'sourcePath' => '@npm/yii2-pjax',
+                ],
+                // gii
+                'yii\gii\TypeAheadAsset' => [
+                    'sourcePath' => '@vendor/twitter/typeahead.js/dist',
+                    'js' => [
+                        YII_DEBUG ? 'typeahead.bundle.js': 'typeahead.bundle.min.js',
+                    ],
                 ],
             ],
 		],
