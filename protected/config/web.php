@@ -109,7 +109,7 @@ $config = [
 			'class'                 => 'yii\redactor\RedactorModule',
 			'uploadDir'             => '@public',
 			'uploadUrl'             => '@web/public',
-			'imageAllowExtensions'  => ['jpg','png']
+			'imageAllowExtensions'  => ['jpg', 'png']
 		],
 	],
 	'params' => $params,

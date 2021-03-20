@@ -17,7 +17,7 @@ class m190318_120101_gii_insert_role extends \yii\db\Migration
 	public function up()
 	{
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
 				['/gii/*', '2', '', time()],
 				['/gii/default/index', '2', '', time()],
@@ -25,7 +25,7 @@ class m190318_120101_gii_insert_role extends \yii\db\Migration
 		}
 
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item_child';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item_child', ['parent', 'child'], [
 				['userModerator', '/gii/*'],
 			]);

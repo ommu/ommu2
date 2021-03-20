@@ -23,26 +23,29 @@ class ThemeControllerHandle implements BootstrapInterface
 	 */
 	public function bootstrap($app)
 	{
-		if(!$app->isDemoTheme())
+		if (!$app->isDemoTheme()) {
 			return;
+        }
 
 		$themePath = Yii::getAlias($app->params['themePath']);
-		if(!file_exists($themePath))
+		if (!file_exists($themePath)) {
 			return;
+        }
 		
 		$controllerMap = [];
 		foreach(scandir($themePath) as $file) {
 			$themeFile = $themePath . DIRECTORY_SEPARATOR . $file;
-			if($file == '.' || 
+			if ($file == '.' || 
 				$file == '..' ||
 				(is_file($themeFile))) {
 					continue;
 			}
 
-			if(is_dir($themeFile)) {
+			if (is_dir($themeFile)) {
 				$controllerArray = $this->getControllers($file);
-				if(is_array($controllerArray))
+				if (is_array($controllerArray)) {
 					$controllerMap = ArrayHelper::merge($controllerMap, $controllerArray);
+                }
 			}
 		}
 		$app->controllerMap = $controllerMap;
@@ -59,23 +62,24 @@ class ThemeControllerHandle implements BootstrapInterface
 		$lastPath = end($pathArray);
 		foreach(scandir($controllerPath) as $file) {
 			$controllerFile = $controllerPath . DIRECTORY_SEPARATOR . $file;
-			if($file == '.' || 
+			if ($file == '.' || 
 				$file == '..' ||
-				(is_file($controllerFile) && in_array($file, ['index.php','.DS_Store']))) {
+				(is_file($controllerFile) && in_array($file, ['index.php', '.DS_Store']))) {
 					continue;
 			}
 
-			if(is_file($controllerFile)) {
+			if (is_file($controllerFile)) {
 				$controller = join('-', [$theme, strtolower(preg_replace('(Controller.php)', '', $file))]);
-				if($lastPath != 'controllers')
+				if ($lastPath != 'controllers') {
 					$controller = join('-', [$theme, $lastPath, strtolower(preg_replace('(Controller.php)', '', $file))]);
+                }
 				$controllerClass = preg_replace('(.php)', '', $file);
 				
 				$nsClass = [
 					sprintf('themes\%s\controllers', $theme), 
 					$controllerClass,
 				];
-				if($sub != null) {
+				if ($sub != null) {
 					$nsClass = [
 						sprintf('themes\%s\controllers', $theme), 
 						$sub,
@@ -86,7 +90,7 @@ class ThemeControllerHandle implements BootstrapInterface
 					'class' => join('\\', $nsClass),
 				];
 
-			} else if(is_dir($controllerFile)) {
+			} else if (is_dir($controllerFile)) {
 				$subPath = join('/', [$path, $file]);
 				$controllerMap = ArrayHelper::merge($controllerMap, $this->getController($theme, $subPath, $file));
 			}
@@ -100,11 +104,13 @@ class ThemeControllerHandle implements BootstrapInterface
 	 */
 	public function getControllers($theme)
 	{
-		if($theme) {
+		if ($theme) {
 			$controllerPath = sprintf('@themes/%s/controllers', $theme);
-			if(file_exists(Yii::getAlias($controllerPath)))
+			if (file_exists(Yii::getAlias($controllerPath))) {
 				return $this->getController($theme, $controllerPath);
-		} else
+            }
+		} else {
 			return false;
+        }
 	}
 }

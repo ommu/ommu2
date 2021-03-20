@@ -37,11 +37,13 @@ class SignupController extends Controller
 	{
 		parent::init();
 
-		if(!Yii::$app->isSocialMedia())
+		if (!Yii::$app->isSocialMedia()) {
 			throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
 
-		if(!Yii::$app->user->isGuest)
+		if (!Yii::$app->user->isGuest) {
 			return $this->goHome();
+        }
 	}
 
 	/**
@@ -67,8 +69,9 @@ class SignupController extends Controller
 				return $this->redirect(['success']);
 
 			} else {
-				if (Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return Json::encode(ActiveForm::validate($model));
+                }
 			}
 		}
 

@@ -17,14 +17,14 @@ class m191116_175300_user_coremodule_insert_role extends \yii\db\Migration
 	public function up()
 	{
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
 				['/user/password/change', '2', '', time()],
 			]);
 		}
 
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item_child';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item_child', ['parent', 'child'], [
 				['userMember', '/user/password/change'],
 			]);

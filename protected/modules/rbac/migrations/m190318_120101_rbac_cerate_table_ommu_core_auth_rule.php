@@ -23,7 +23,7 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_rule extends \yii\db\Migra
 		}
 		
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_rule';
-		if(!Yii::$app->db->getTableSchema($tableName, true)) {
+		if (!Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->createTable('ommu_core_auth_rule', [
 				'name' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'data' => Schema::TYPE_TEXT,

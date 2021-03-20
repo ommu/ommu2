@@ -60,18 +60,21 @@ class SourceMessage extends SourceMessageModel
 	 */
 	public function search($params, $column=null)
 	{
-		if(!($column && is_array($column)))
+		if (!($column && is_array($column))) {
 			$query = SourceMessageModel::find()->alias('t');
-		else
+        } else {
 			$query = SourceMessageModel::find()->alias('t')->select($column);
+        }
 		$query->joinWith([
 			// 'creation creation', 
 			// 'modified modified'
 		]);
-		if((isset($params['sort']) && in_array($params['sort'], ['creationDisplayname', '-creationDisplayname'])) || (isset($params['creationDisplayname']) && $params['creationDisplayname'] != ''))
+		if ((isset($params['sort']) && in_array($params['sort'], ['creationDisplayname', '-creationDisplayname'])) || (isset($params['creationDisplayname']) && $params['creationDisplayname'] != '')) {
 			$query->joinWith(['creation creation']);
-		if((isset($params['sort']) && in_array($params['sort'], ['modifiedDisplayname', '-modifiedDisplayname'])) || (isset($params['modifiedDisplayname']) && $params['modifiedDisplayname'] != ''))
+        }
+		if ((isset($params['sort']) && in_array($params['sort'], ['modifiedDisplayname', '-modifiedDisplayname'])) || (isset($params['modifiedDisplayname']) && $params['modifiedDisplayname'] != '')) {
 			$query->joinWith(['modified modified']);
+        }
 
 		$query->groupBy(['id']);
 
@@ -80,8 +83,9 @@ class SourceMessage extends SourceMessageModel
 			'query' => $query,
 		];
 		// disable pagination agar data pada api tampil semua
-		if(isset($params['pagination']) && $params['pagination'] == 0)
+		if (isset($params['pagination']) && $params['pagination'] == 0) {
 			$dataParams['pagination'] = false;
+        }
 		$dataProvider = new ActiveDataProvider($dataParams);
 
 		$attributes = array_keys($this->getTableSchema()->columns);
@@ -98,11 +102,12 @@ class SourceMessage extends SourceMessageModel
 			'defaultOrder' => ['id' => SORT_DESC],
 		]);
 
-		if(Yii::$app->request->get('id'))
+		if (Yii::$app->request->get('id')) {
 			unset($params['id']);
+        }
 		$this->load($params);
 
-		if(!$this->validate()) {
+		if (!$this->validate()) {
 			// uncomment the following line if you do not want to return any records when validation fails
 			// $query->where('0=1');
 			return $dataProvider;

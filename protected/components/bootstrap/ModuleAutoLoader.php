@@ -25,12 +25,12 @@ class ModuleAutoLoader implements BootstrapInterface
 	public function bootstrap($app)
 	{
 		$modules = $app->cache->get(self::CACHE_ID);
-		if($modules === false) {
+		if ($modules === false) {
 			$modules = [];
 			foreach($app->params['moduleAutoloadPaths'] as $modulePath) {
 				$modulePath = Yii::getAlias($modulePath);
 				foreach(scandir($modulePath) as $moduleId) {
-					if($moduleId == '.' || 
+					if ($moduleId == '.' || 
 						$moduleId == '..' ||
 						is_file($modulePath . DIRECTORY_SEPARATOR . $moduleId) ||
 						in_array($moduleId, $app->params['dontLoadModule'])) {
@@ -38,7 +38,7 @@ class ModuleAutoLoader implements BootstrapInterface
 					}
 
 					$moduleDir = $modulePath . DIRECTORY_SEPARATOR . $moduleId;
-					if(is_dir($moduleDir) && is_file($moduleDir . DIRECTORY_SEPARATOR . 'config.php')) {
+					if (is_dir($moduleDir) && is_file($moduleDir . DIRECTORY_SEPARATOR . 'config.php')) {
 						try {
 							$modules[$moduleDir] = require($moduleDir . DIRECTORY_SEPARATOR . 'config.php');
 						} catch(\Exception $ex) {

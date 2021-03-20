@@ -71,10 +71,11 @@ class MenuContent extends \yii\widgets\Menu
 	public function htmlOptions($array)
 	{
 		$htmlOptions = '';
-		if(!empty($array)) {
+		if (!empty($array)) {
 			foreach ($array as $key => $value) {
-				if($key == 'class')
+				if ($key == 'class') {
 					$value = join(' ', [$value, $this->view->themeSetting['content_menu_class']]);
+                }
 				$htmlOptions .= $key.'="'.$value.'"';
 			}
 		}

@@ -24,7 +24,7 @@ class Menu extends \mdm\admin\models\Menu
 	 */
 	public function init()
 	{
-		if(($app = Yii::$app->request->get('app')) != null) {
+		if (($app = Yii::$app->request->get('app')) != null) {
 			$params = require(join('/', [dirname(Yii::getAlias('@webroot')), $app, 'app/config', 'params.php']));
 			Yii::$app->params = ArrayHelper::merge(Yii::$app->params, $params);
 		}
@@ -86,8 +86,9 @@ class Menu extends \mdm\admin\models\Menu
 		parent::afterFind();
 
 		$this->menuCode = $this->name;
-		if($this->module)
+		if ($this->module) {
 			$this->menuCode = join('#', [$this->name, $this->module]);
+        }
 	}
 
 	/**
@@ -95,13 +96,15 @@ class Menu extends \mdm\admin\models\Menu
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if($this->isNewRecord) {
-				if($this->creation_id == null)
+		if (parent::beforeValidate()) {
+			if ($this->isNewRecord) {
+				if ($this->creation_id == null) {
 					$this->creation_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
 			} else {
-				if($this->modified_id == null)
+				if ($this->modified_id == null) {
 					$this->modified_id = !Yii::$app->user->isGuest ? Yii::$app->user->id : null;
+                }
 			}
 		}
 		return true;

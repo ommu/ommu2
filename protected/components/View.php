@@ -95,7 +95,7 @@ class View extends \yii\web\View
 	 */
 	public function beforeRender($viewFile, $params)
 	{
-		if(parent::beforeRender($viewFile, $params)) {
+		if (parent::beforeRender($viewFile, $params)) {
             if (!self::$_themeApplied && !$this->theme) {
                 self::$_themeApplied = true;
                 $this->setTheme($this->context);
@@ -160,8 +160,9 @@ class View extends \yii\web\View
 		Yii::$app->meta->setImage($this->image);
 		Yii::$app->meta->setUrl(Yii::$app->request->absoluteUrl);
 
-		if((self::$isBackoffice && !$backendIndexing) || (!self::$isBackoffice && !$frontendIndexing))
+		if ((self::$isBackoffice && !$backendIndexing) || (!self::$isBackoffice && !$frontendIndexing)) {
 			Yii::$app->meta->setRobots('noindex');
+        }
 	}
 
 	/**
@@ -195,16 +196,18 @@ class View extends \yii\web\View
 
 		$title = trim($this->title) != '' ? $this->title : 'OMMU';
 		$this->title = $title;
-		if(Yii::$app->isDemoTheme()) {
+		if (Yii::$app->isDemoTheme()) {
 			$themeInfo = self::themeParseYaml($this->theme->name);
-			if($title != 'OMMU')
+			if ($title != 'OMMU') {
 				$title = join(' - ', [$this->title, $themeInfo['name']]);
-			else
+            } else {
 				$title = $themeInfo['name'];
+            }
 		}
 
-		if(Yii::$app->isDefaultRoute())
+		if (Yii::$app->isDefaultRoute()) {
 			$pageTitleTemplate = str_replace('{title} | ', '', $pageTitleTemplate);
+        }
 
 		return strtr($pageTitleTemplate, [
 			'{title}' => $title,
@@ -231,14 +234,15 @@ class View extends \yii\web\View
 	 */
 	protected function addCacheBustQuery($url)
 	{
-		if(strpos($url, '?') === false) {
+		if (strpos($url, '?') === false) {
 			$file = str_replace('@web', '@webroot', $url);
 			$file = Yii::getAlias($file);
 
-			if(file_exists($file))
+			if (file_exists($file)) {
 				$url .= '?v=' . filemtime($file);
-			else
+            } else {
 				$url .= '?v=' . urlencode(Yii::$app->version);
+            }
 		}
 		return $url;
 	}
@@ -253,7 +257,7 @@ class View extends \yii\web\View
 		$themes = $this->theme->pathMap;
 		$res = '';
 		foreach($themes as $key => $val) {
-			if($key == '@app/views') {
+			if ($key == '@app/views') {
 				$res = $val;
 				break;
 			}
@@ -281,17 +285,19 @@ class View extends \yii\web\View
 	 */
 	public function setTheme($context): void
 	{
-		if(Yii::$app->params['installed'] === false || Yii::$app->params['databaseInstalled'] === false)
+		if (Yii::$app->params['installed'] === false || Yii::$app->params['databaseInstalled'] === false) {
 			return;
+        }
 
 		$app = Yii::$app->id;
 		$isBackofficeTheme = true;
-		if($context != null && $context->hasMethod('isBackofficeTheme'))
+		if ($context != null && $context->hasMethod('isBackofficeTheme')) {
 			$isBackofficeTheme = $context->isBackofficeTheme();
+        }
 
 		$themeParam = join('_', [$app, 'theme']);
 		$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
-		if($isBackofficeTheme) {
+		if ($isBackofficeTheme) {
 			$themeParam = join('_', [$app, 'backoffice_theme']);
 			$themeName = Yii::$app->setting->get($themeParam, Yii::$app->params['defaultTheme']);
 			self::$isBackoffice = true;
@@ -325,13 +331,15 @@ class View extends \yii\web\View
 	 */
 	public function getSublayout()
 	{
-		if(($layout = Yii::$app->request->get('layout')) != null)
+		if (($layout = Yii::$app->request->get('layout')) != null) {
 			return $layout ? $layout : 'default';
+        }
 
 		$app = Yii::$app->id;
 		$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'theme_sublayout']), 'default');
-		if(self::$isBackoffice)
+		if (self::$isBackoffice) {
 			$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_sublayout']), 'default');
+        }
 
 		return $themeSublayout ? $themeSublayout : 'default';
 	}
@@ -343,7 +351,7 @@ class View extends \yii\web\View
 	{
 		$ignoreAssetClass = $this->themeSetting['ignore_asset_class'];
 
-		if(isset($ignoreAssetClass) && is_array($ignoreAssetClass) && !empty($ignoreAssetClass)) {
+		if (isset($ignoreAssetClass) && is_array($ignoreAssetClass) && !empty($ignoreAssetClass)) {
 			foreach ($ignoreAssetClass as $assetClass) {
 				unset($this->assetBundles[$assetClass]);
 			}
@@ -358,12 +366,15 @@ class View extends \yii\web\View
         $themeInfo = self::themeParseYaml($this->theme->name);
 
         $themeSetting = [];
-        if(isset($themeInfo['theme_setting']))
+        if (isset($themeInfo['theme_setting'])) {
             $themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
-        if(isset($themeInfo['widget_class']))
+        }
+        if (isset($themeInfo['widget_class'])) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class' => $themeInfo['widget_class']]);
-        if(isset($themeInfo['ignore_asset_class']))
+        }
+        if (isset($themeInfo['ignore_asset_class'])) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class' => $themeInfo['ignore_asset_class']]);
+        }
 
 
         $this->themeSetting = $themeSetting;
@@ -376,8 +387,9 @@ class View extends \yii\web\View
 	{
 		$app = Yii::$app->id;
 		$themePagination = Yii::$app->setting->get(join('_', [$app, 'theme_pagination']), 'default');
-		if(self::$isBackoffice)
+		if (self::$isBackoffice) {
 			$themePagination = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_pagination']), 'default');
+        }
 
 		return $themePagination ? $themePagination : 'default';
 	}
@@ -400,19 +412,23 @@ class View extends \yii\web\View
 	 */
 	public function renderWidget($view, $params=[], $context=null)
 	{
-		if($context == null)
+		if ($context == null) {
 			$context = $this->context;
+        }
 
-		if(isset($params['overwrite']) && $params['overwrite'] == true)
+		if (isset($params['overwrite']) && $params['overwrite'] == true) {
 			$content = $view;
-		else
+        } else {
 			$content = $this->render($view, $params, $context);
+        }
 
 		$cards = true;
-		if(isset($params['cards']) && $params['cards'] == false)
+		if (isset($params['cards']) && $params['cards'] == false) {
 			$cards = false;
-		if($cards == false)
+        }
+		if ($cards == false) {
 			return $content;
+        }
 
 		$layout = $context->layout ? $context->layout : 'main';
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
@@ -420,25 +436,29 @@ class View extends \yii\web\View
             $contentParams = ['content' => $content];
             
             // widget title condition
-            if(isset($params['title']))
+            if (isset($params['title'])) {
                 $contentParams = ArrayHelper::merge($contentParams, ['title' => $params['title']]);
+            }
 
             // padding body condition
             $paddingBody = true;
-            if(isset($params['paddingBody']))
+            if (isset($params['paddingBody'])) {
                 $paddingBody = $params['paddingBody'];
+            }
             $contentParams = ArrayHelper::merge($contentParams, ['paddingBody' => $paddingBody]);
 
             // text align condition
             $textAlign = '';
-            if(isset($params['textAlign']))
+            if (isset($params['textAlign'])) {
                 $textAlign = $params['textAlign'];
+            }
             $contentParams = ArrayHelper::merge($contentParams, ['textAlign' => $textAlign]);
 
             // content menu condition
             $contentMenu = false;
-            if(isset($params['contentMenu']))
+            if (isset($params['contentMenu'])) {
                 $contentMenu = $params['contentMenu'];
+            }
             $contentParams = ArrayHelper::merge($contentParams, ['contentMenu' => $contentMenu]);
 
 			return $this->renderFile($layoutFile, $contentParams, $context);
@@ -456,7 +476,7 @@ class View extends \yii\web\View
 		$analytic = Yii::$app->setting->get(join('_', [$app, 'analytic']), 1);
 		$analytic_property = Yii::$app->setting->get(join('_', [$app, 'analytic_property']), '');
 
-		if(!Yii::$app->isDev() && $analytic && $analytic_property) {
+		if (!Yii::$app->isDev() && $analytic && $analytic_property) {
 			$this->registerJsFile('https://www.googletagmanager.com/gtag/js?id='.$analytic_property, ['position' => self::POS_END, 'async' => 'async']);
 $js = <<<JS
 	window.dataLayer = window.dataLayer || [];
@@ -491,10 +511,10 @@ JS;
             $contentParams = ['content' => $content];
             
             // wizard navigation condition
-            if(isset($params['navigation'])) {
+            if (isset($params['navigation'])) {
                 $contentParams = ArrayHelper::merge($contentParams, ['navigation' => $params['navigation']]);
             }
-            if(isset($params['current'])) {
+            if (isset($params['current'])) {
                 $contentParams = ArrayHelper::merge($contentParams, ['current' => $params['current']]);
             }
 

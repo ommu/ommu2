@@ -22,17 +22,21 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
     public function init()
     {
         // set default navigationOptions
-        if(!isset($this->options['class']))
+        if (!isset($this->options['class'])) {
             $this->options['class'] = 'breadcrumb';
+        }
 
-        if(!isset($this->options['link']))
+        if (!isset($this->options['link'])) {
             $this->options['link'] = [];
+        }
 
-        if(!isset($this->options['separator']))
+        if (!isset($this->options['separator'])) {
             $this->options['separator'] = [];
+        }
             
-        if(!isset($this->separator))
+        if (!isset($this->separator)) {
             $this->separator = $this->renderSeparator();
+        }
 
     }
 
@@ -67,8 +71,9 @@ class Breadcrumbs extends \yii\widgets\Breadcrumbs
      */
      protected function renderItem($link, $template)
     {
-        if(!isset($link['class']))
+        if (!isset($link['class'])) {
             $link = ArrayHelper::merge($link, $this->options['link']);
+        }
         $parent = parent::renderItem($link, $template);
 
         return strtr($parent, ['{separator}' => $this->separator]);

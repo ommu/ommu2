@@ -94,17 +94,18 @@ class Controller extends \yii\web\Controller
 	 */
 	public function beforeAction($action) 
 	{
-		if(parent::beforeAction($action)) {
-			if(!self::$settingInitialize)
+		if (parent::beforeAction($action)) {
+			if (!self::$settingInitialize) {
 				self::$settingInitialize = true;
+            }
 
-			if($action instanceof \yii\web\ErrorAction) {
+			if ($action instanceof \yii\web\ErrorAction) {
 				$model = \ommu\report\models\ReportSetting::find()
 					->select(['auto_report_cat_id'])
 					->where(['id' => 1])
 					->one();
 				
-				if($model->auto_report_i) {
+				if ($model->auto_report_i) {
 					$url = Yii::$app->request->absoluteUrl;
 					$name = $action->getExceptionName();
 					$message = $action->getExceptionMessage();
@@ -142,10 +143,11 @@ class Controller extends \yii\web\Controller
 		}
 		*/
 
-		if(!self::$_themeApplied) {
+		if (!self::$_themeApplied) {
 			self::$_themeApplied = true;
 			$this->getView()->setTheme($this);
-		}
+        }
+        
 	}
 
 	/**
@@ -199,16 +201,18 @@ class Controller extends \yii\web\Controller
 	 */
 	public function oRender($render, $data=null)
 	{
-		if($data == null)
+		if ($data == null) {
 			$data = [];
+        }
 
 		$data = ArrayHelper::merge(
 			$data,
 			['partial' => Yii::$app->request->isAjax ? true : false]
 		);
 
-		if(!Yii::$app->request->isAjax || (Yii::$app->request->isAjax && Yii::$app->request->get('_pjax')))
+		if (!Yii::$app->request->isAjax || (Yii::$app->request->isAjax && Yii::$app->request->get('_pjax'))) {
 			return $this->render($render, $data);
+        }
 
 		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader' => false]));
 	}
@@ -231,8 +235,9 @@ class Controller extends \yii\web\Controller
 			$contentParams = ['content' => $content];
 
 			$modalHeader = true;
-			if(isset($params['modalHeader']))
+			if (isset($params['modalHeader'])) {
 				$modalHeader = $params['modalHeader'];
+            }
 			$contentParams = ArrayHelper::merge($contentParams, ['modalHeader' => $modalHeader]);
 
 			return $this->getView()->renderFile($layoutFile, $contentParams, $this);

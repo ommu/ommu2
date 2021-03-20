@@ -55,8 +55,9 @@ class Formatter extends \yii\i18n\Formatter
 	 */
 	public function asDate($value, $format = null)
 	{
-		if(in_array(date('Y-m-d', strtotime($value)), ['0000-00-00','1970-01-01','0002-12-02','-0001-11-30']))
+		if (in_array(date('Y-m-d', strtotime($value)), ['0000-00-00', '1970-01-01', '0002-12-02', '-0001-11-30'])) {
 			return $this->nullDisplay;
+        }
 
 		return parent::asDate($value, $format);
 	}
@@ -91,8 +92,9 @@ class Formatter extends \yii\i18n\Formatter
 	 */
 	public function asTime($value, $format = null)
 	{
-		if(in_array($value, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']))
+		if (in_array($value, ['0000-00-00 00:00:00', '1970-01-01 00:00:00', '0002-12-02 07:07:12', '-0001-11-30 00:00:00'])) {
 			return $this->nullDisplay;
+        }
 
 		return parent::asTime($value, $format);
 	}
@@ -127,8 +129,9 @@ class Formatter extends \yii\i18n\Formatter
 	 */
 	public function asDatetime($value, $format = null)
 	{
-		if(in_array($value, ['0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00']))
+		if (in_array($value, ['0000-00-00 00:00:00', '1970-01-01 00:00:00', '0002-12-02 07:07:12', '-0001-11-30 00:00:00'])) {
 			return $this->nullDisplay;
+        }
 
 		return parent::asDatetime($value, $format);
 	}
@@ -141,8 +144,9 @@ class Formatter extends \yii\i18n\Formatter
 	 */
 	public function asShortImage($value)
 	{
-		if ($value === null)
+		if ($value === null) {
 			return $this->nullDisplay;
+        }
 
 		return substr($value, 0, $this->shortImageLength) . '**.' . substr(strrchr($value, '.'), 1);
 	}

@@ -18,14 +18,14 @@ class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 	public function up()
 	{
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
 				['/#', '2', '', time()],
 			]);
 		}
 
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_menus';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Dashboard', 'rbac', null, null, '/#', null, null],
 				['Publications', 'rbac', null, null, '/#', null, null],
@@ -34,7 +34,7 @@ class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 			]);
 		}
 		
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Menu Settings', 'rbac', null, Menu::getParentId('Settings#rbac'), '/rbac/menu/index', null, null],
 			]);

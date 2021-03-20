@@ -17,7 +17,7 @@ class m190318_120101_user_coremodule_insert_assignment extends \yii\db\Migration
 	public function up()
 	{
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_assignment';
-		if(Yii::$app->db->getTableSchema($tableName, true)) {
+		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert('ommu_core_auth_assignment', ['item_name', 'user_id', 'created_at'], [
 				['userAdmin', '1', time()],
 				['userAdmin', '2', time()],

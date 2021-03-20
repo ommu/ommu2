@@ -35,11 +35,11 @@ $js = <<<JS
 
 	$('#basesetting-online input[name="BaseSetting[online]"]').on('change', function() {
 		var id = $(this).val();
-		if(id == '1') {
+		if (id == '1') {
 			$('div#construction').hide();
 		} else {
 			$('div#construction').show();
-			if(id == '0') {
+			if (id == '0') {
 				$('.field-basesetting-construction_text-comingsoon').hide();
 				$('.field-basesetting-construction_text-maintenance').show();
 			} else {
@@ -120,21 +120,23 @@ echo $form->field($model, 'online', ['template' => '{beginLabel}{labelTitle}{hin
 	->hint(Yii::t('app', 'Maintenance Mode will prevent site visitors from accessing your website.')); ?>
 
 <div id="construction" <?php echo $model->online == '1' ? 'style="display: none;"' : ''; ?>>
-	<?php $model->construction_date = !in_array($model->construction_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $model->construction_date : '';
+	<?php $model->construction_date = !in_array($model->construction_date, array('0000-00-00', '1970-01-01', '0002-12-02', '-0001-11-30')) ? $model->construction_date : '';
 	echo $form->field($model, 'construction_date')
 		->textInput(['type' => 'date'])
 		->label($model->getAttributeLabel('construction_date')); ?>
 
 	<?php $options = [];
-	if($model->online != '2')
+	if ($model->online != '2') {
 		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
+    }
 	echo $form->field($model, 'construction_text[comingsoon]', ['options' => $options])
 		->textarea(['rows' => 4, 'cols' => 50])
 		->label($model->getAttributeLabel('construction_text[comingsoon]')); ?>
 
 	<?php $options = [];
-	if($model->online != '0')
+	if ($model->online != '0') {
 		$options = ArrayHelper::merge($options, ['style' => 'display: none;']);
+    }
 	echo $form->field($model, 'construction_text[maintenance]', ['options' => $options])
 		->textarea(['rows' => 4, 'cols' => 50])
 		->label($model->getAttributeLabel('construction_text[maintenance]')); ?>

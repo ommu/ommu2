@@ -21,7 +21,7 @@ $this->context->layout = 'assignment';
 $this->params['breadcrumbs'][] = $this->title;
 
 $createUrl = Url::to(['create']);
-if(($app = Yii::$app->request->get('app')) != null)
+if (($app = Yii::$app->request->get('app')) != null)
 	$createUrl = Url::to(['create', 'app' => $app]);
 $this->params['menu']['content'] = [
 	['label' => Yii::t('rbac-admin', 'Create Menu'), 'url' => $createUrl, 'icon' => 'plus-square', 'htmlOptions' => ['class' => 'btn btn-primary']],
@@ -52,19 +52,22 @@ array_push($columnData, [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),
 	'urlCreator' => function($action, $model, $key, $index) {
-		if($action == 'view') {
-			if(($app = Yii::$app->request->get('app')) != null)
+		if ($action == 'view') {
+			if (($app = Yii::$app->request->get('app')) != null) {
 				return Url::to(['view', 'id' => $key, 'app' => $app]);
+            }
 			return Url::to(['view', 'id' => $key]);
 		}
-		if($action == 'update') {
-			if(($app = Yii::$app->request->get('app')) != null)
+		if ($action == 'update') {
+			if (($app = Yii::$app->request->get('app')) != null) {
 				return Url::to(['update', 'id' => $key, 'app' => $app]);
+            }
 			return Url::to(['update', 'id' => $key]);
 		}
-		if($action == 'delete') {
-			if(($app = Yii::$app->request->get('app')) != null)
+		if ($action == 'delete') {
+			if (($app = Yii::$app->request->get('app')) != null) {
 				return Url::to(['delete', 'id' => $key, 'app' => $app]);
+            }
 			return Url::to(['delete', 'id' => $key]);
 		}
 	},

@@ -89,8 +89,9 @@ class Application extends \yii\web\Application
         $app = Yii::$app->id;
         $online = Yii::$app->setting->get(join('_', [$app, 'online']), 1);
 
-        if($online == 1)
+        if ($online == 1) {
             return false;
+        }
 
         $constructionDate = Yii::$app->setting->get(join('_', [$app, 'construction_date']));
         $isOnline = $constructionDate < TimeHelper::getDate() ? 1 : 0;
@@ -109,8 +110,9 @@ class Application extends \yii\web\Application
 	{
 		$routes = Helper::getRoutesByUser($userId);
 		foreach($routes as $r => $val) {
-			if($route == $r)
+			if ($route == $r) {
 				return true;
+            }
 		}
 		return false;
 	}
@@ -125,7 +127,7 @@ class Application extends \yii\web\Application
 		$app = $this->id;
 		$module = $this->controller->module->id;
 
-		if($module == $app) {
+		if ($module == $app) {
 			$controller = $this->controller->id;
 			$action = $this->controller->action->id;
 			return ($controller == 'site' && $action == 'index') ? true : false;
@@ -148,7 +150,7 @@ class Application extends \yii\web\Application
 		$conn = [];
 		foreach($this->components as $key => $val) {
 			foreach($val as $k => $items) {
-				if($k == 'class' && $items == 'yii\db\Connection') {
+				if ($k == 'class' && $items == 'yii\db\Connection') {
 					$conn[] = $key;
 					continue;
 				}

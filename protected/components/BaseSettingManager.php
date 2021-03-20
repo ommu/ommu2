@@ -34,8 +34,9 @@ abstract class BaseSettingManager extends \yii\base\Component
 	 */
 	public function init()
 	{
-		if($this->moduleId === null)
+		if ($this->moduleId === null) {
 			throw new \Exception('Could not determine module id');
+        }
 
 		$this->loadValues();
 		parent::init();
@@ -60,22 +61,25 @@ abstract class BaseSettingManager extends \yii\base\Component
 	 */
 	public function set($name, $value)
 	{
-		if($value === null)
+		if ($value === null) {
 			return $this->delete($name);
+        }
 
 		$value = (string)$value;
 		$record = $this->find()->andWhere(['name' => $name])->one();
-		if($record !== null && $record->value == $value)
+		if ($record !== null && $record->value == $value) {
 			return false;
+        }
 
-		if($record === null) {
+		if ($record === null) {
 			$record = $this->createRecord();
 			$record->name = $name;
 		}
 		$record->value = $value;
 
-		if(!$record->save())
+		if (!$record->save()) {
 			throw new \yii\base\Exception('Could not store setting! (' .print_r($record->getErrors(), true) . ')');
+        }
 
 		$this->_loaded[$name] = $value;
 		$this->invalidateCache();
@@ -114,11 +118,13 @@ abstract class BaseSettingManager extends \yii\base\Component
 	public function delete($name)
 	{
 		$record = $this->find()->andWhere(['name' => $name])->one();
-		if($record !== null)
+		if ($record !== null) {
 			$record->delete();
+        }
 
-		if(isset($this->_loaded[$name]))
+		if (isset($this->_loaded[$name])) {
 			unset($this->_loaded[$name]);
+        }
 
 		$this->invalidateCache();
 	}
@@ -131,7 +137,7 @@ abstract class BaseSettingManager extends \yii\base\Component
 	protected function loadValues()
 	{
 		$cached = Yii::$app->cache->get($this->getCacheKey());
-		if($cached === false) {
+		if ($cached === false) {
 			$this->_loaded = [];
 			$settings = &$this->_loaded;
 
@@ -140,8 +146,9 @@ abstract class BaseSettingManager extends \yii\base\Component
 			}, $this->find()->all());
 			Yii::$app->cache->set($this->getCacheKey(), $this->_loaded);
 
-		} else
+		} else {
 			$this->_loaded = $cached;
+        }
 	}
 
 	/**

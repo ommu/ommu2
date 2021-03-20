@@ -46,7 +46,7 @@ use app\components\widgets\ActiveForm;
 	->textarea(['rows' => 3, 'cols' => 50])
 	->label($model->getAttributeLabel('location')); ?>
 
-<?php if(!empty($model->languages)) {?>
+<?php if (!empty($model->languages)) {?>
 <hr/>
 
 <?php foreach ($model->languages as $key => $val) {

@@ -72,10 +72,11 @@ class PhraseController extends Controller
 
 		$gridColumn = Yii::$app->request->get('GridColumn', null);
 		$cols = [];
-		if($gridColumn != null && count($gridColumn) > 0) {
+		if ($gridColumn != null && count($gridColumn) > 0) {
 			foreach($gridColumn as $key => $val) {
-				if($gridColumn[$key] == 1)
+				if ($gridColumn[$key] == 1) {
 					$cols[] = $key;
+                }
 			}
 		}
 		$columns = $searchModel->getGridColumn($cols);
@@ -99,21 +100,23 @@ class PhraseController extends Controller
 	{
 		$model = new SourceMessage();
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+			if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Phrase success created.'));
-				if(!Yii::$app->request->isAjax)
+				if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['manage']);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -135,21 +138,23 @@ class PhraseController extends Controller
 	{
 		$model = $this->findModel($id);
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			// $postData = Yii::$app->request->post();
 			// $model->load($postData);
 			// $model->order = $postData['order'] ? $postData['order'] : 0;
 
-			if($model->save()) {
+			if ($model->save()) {
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Phrase success updated.'));
-				if(!Yii::$app->request->isAjax)
+				if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['manage']);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['manage']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -202,8 +207,9 @@ class PhraseController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = SourceMessage::findOne($id)) !== null)
+		if (($model = SourceMessage::findOne($id)) !== null) {
 			return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

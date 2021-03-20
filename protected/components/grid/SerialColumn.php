@@ -15,8 +15,9 @@ use Yii;
 use yii\helpers\Html;
 
 function get_serial_column_parent() {
-    if(isset(Yii::$app->view->themeSetting['widget_class']['SerialColumn']))
+    if (isset(Yii::$app->view->themeSetting['widget_class']['SerialColumn'])) {
         return Yii::$app->view->themeSetting['widget_class']['SerialColumn'];
+    }
 
     return 'yii\grid\SerialColumn';
 }

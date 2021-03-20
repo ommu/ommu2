@@ -66,7 +66,7 @@ foreach ($generator->templates as $name => $path) {
 						'results' => $results,
 						'hasError' => $hasError,
 					]);
-				} elseif (isset($files)) {
+				} else if (isset($files)) {
 					echo $this->render('@yii/gii/views/default/view/files', [
 						'id' => $id,
 						'generator' => $generator,

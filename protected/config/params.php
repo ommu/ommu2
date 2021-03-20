@@ -47,7 +47,7 @@ return [
 	'mdm.admin.configs' => [
 		'menuTable' => 'ommu_core_menus',
 	],
-	'rbacDontLoadController' => ['default','user'],
+	'rbacDontLoadController' => ['default', 'user'],
 
 	// GRIDVIEW
 	// Gridview setting

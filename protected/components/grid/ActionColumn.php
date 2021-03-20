@@ -16,8 +16,9 @@ use Yii;
 use yii\helpers\Html;
 
 function get_active_column_parent() {
-    if(isset(Yii::$app->view->themeSetting['widget_class']['ActionColumn']))
+    if (isset(Yii::$app->view->themeSetting['widget_class']['ActionColumn'])) {
         return Yii::$app->view->themeSetting['widget_class']['ActionColumn'];
+    }
 
     return 'yii\grid\ActionColumn';
 }
@@ -32,7 +33,8 @@ class ActionColumn extends OActionColumn
     {
         parent::init();
 
-        if (!isset($this->contentOptions['class']))
+        if (!isset($this->contentOptions['class'])) {
             Html::addCssClass($this->contentOptions, 'action-column');
+        }
     }
 }

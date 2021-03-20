@@ -51,7 +51,7 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 					$item = call_user_func($callback, $menu);
 				} else {
 					$url = static::parseRoute($menu['route']);
-					if($menu['data']) {
+					if ($menu['data']) {
 						parse_str(trim($menu['data']), $data);
 						$url = ArrayHelper::merge($url, $data);
 					}
@@ -82,10 +82,11 @@ class MenuHelper extends \mdm\admin\components\MenuHelper
 	{
 		$menus = ArrayHelper::map($menus, 'id', 'public');
 
-		if(is_array($menus) && !empty($menus)) {
+		if (is_array($menus) && !empty($menus)) {
 			foreach ($menus as $key => $val) {
-				if($val == 1 && !in_array($key, $assigned))
+				if ($val == 1 && !in_array($key, $assigned)) {
 					$assigned[] = $key;
+                }
 			}
 		}
 

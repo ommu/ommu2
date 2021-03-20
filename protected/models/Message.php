@@ -32,9 +32,10 @@ class Message extends \ommu\core\models\Message
 	 */
 	public static function getDb()
 	{
-		if (Configs::instance()->db !== null)
+		if (Configs::instance()->db !== null) {
 			return Configs::instance()->db;
-		else
+        } else {
 			return parent::getDb();
+        }
 	}
 }

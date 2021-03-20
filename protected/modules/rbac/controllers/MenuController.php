@@ -78,24 +78,27 @@ class MenuController extends Controller
 	{
 		$model = new Menu;
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 
-			if($model->save()) {
+			if ($model->save()) {
 				Helper::invalidate();
-				if(($app = Yii::$app->request->get('app')) != null) {
-					if(!Yii::$app->request->isAjax)
+				if (($app = Yii::$app->request->get('app')) != null) {
+					if (!Yii::$app->request->isAjax) {
 						return $this->redirect(['view', 'id' => $model->id, 'app' => $app]);
+                    }
 					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 				}
 
-				if(!Yii::$app->request->isAjax)
+				if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['view', 'id' => $model->id]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['index']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -117,24 +120,27 @@ class MenuController extends Controller
 			$model->parent_name = $model->menuParent->name;
 		}
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 
-			if($model->save()) {
+			if ($model->save()) {
 				Helper::invalidate();
-				if(($app = Yii::$app->request->get('app')) != null) {
-					if(!Yii::$app->request->isAjax)
+				if (($app = Yii::$app->request->get('app')) != null) {
+					if (!Yii::$app->request->isAjax) {
 						return $this->redirect(['view', 'id' => $model->id, 'app' => $app]);
+                    }
 					return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 				}
 
-				if(!Yii::$app->request->isAjax)
+				if (!Yii::$app->request->isAjax) {
 					return $this->redirect(['view', 'id' => $model->id]);
+                }
 				return $this->redirect(Yii::$app->request->referrer ?: ['index']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -167,17 +173,20 @@ class MenuController extends Controller
 	public function actionDelete($id)
 	{
 		$model = $this->findModel($id);
-		if($model->delete())
+		if ($model->delete()) {
 			Helper::invalidate();
+        }
 
-		if(($app = Yii::$app->request->get('app')) != null) {
-			if(!Yii::$app->request->isAjax)
+		if (($app = Yii::$app->request->get('app')) != null) {
+			if (!Yii::$app->request->isAjax) {
 				return $this->redirect(['index', 'app' => $app]);
+            }
 			return $this->redirect(Yii::$app->request->referrer ?: ['index', 'app' => $app]);
 		}
 
-		if(!Yii::$app->request->isAjax)
+		if (!Yii::$app->request->isAjax) {
 			return $this->redirect(['index']);
+        }
 		return $this->redirect(Yii::$app->request->referrer ?: ['index']);
 	}
 
@@ -186,8 +195,9 @@ class MenuController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = Menu::findOne($id)) !== null)
+		if (($model = Menu::findOne($id)) !== null) {
 			return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

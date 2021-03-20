@@ -35,14 +35,15 @@ class Theme extends \yii\base\Theme
 		$themePath = Yii::getAlias(Yii::$app->params['themePath']);
 		$result = [];
 		foreach(scandir($themePath) as $themeId) {
-			if($themeId == '.' || 
+			if ($themeId == '.' || 
 				$themeId == '..' ||
 				is_file($themePath . DIRECTORY_SEPARATOR . $themeId)) {
 					continue;
 			}
 
-			if(is_dir($themePath . DIRECTORY_SEPARATOR . $themeId))
+			if (is_dir($themePath . DIRECTORY_SEPARATOR . $themeId)) {
 				$result[$themeId] = self::themeParseYaml($themeId);
+            }
 		}
 
 		return $result;

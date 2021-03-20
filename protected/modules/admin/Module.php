@@ -36,8 +36,9 @@ class Module extends \ommu\core\Module
 	 */
 	public function getViewPath() 
 	{
-		if(preg_match('/app/', get_class(Yii::$app->controller)))
+		if (preg_match('/app/', get_class(Yii::$app->controller))) {
 			return Yii::getAlias('@app/modules/admin/views');
+        }
 
 		return Yii::getAlias('@ommu/core/views');
 	}

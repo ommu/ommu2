@@ -117,23 +117,27 @@ $officeAddressVillage = $form->field($model, 'office_address[village]', ['templa
 				if (!value.length) return;
 				var options = this.options;
 				var selected = this.options[value];
-				if(selected.zipcode)
+				if (selected.zipcode) {
 					$(\'form\').find(\'#metasetting-office_address-zipcode\').val(selected.zipcode);
-				if(selected.district_name) {
+                }
+				if (selected.district_name) {
 					metasetting_office_address_district.addOption({district_name: selected.district_name, label: selected.district_name});
 					metasetting_office_address_district.setValue(selected.district_name);
 				}
-				if(selected.city_id)
+				if (selected.city_id) {
 					metasetting_office_address_city.setValue(selected.city_id);
-				if(selected.province_id)
+                }
+				if (selected.province_id) {
 					metasetting_office_address_province.setValue(selected.province_id);
-				if(selected.country_id)
+                }
+				if (selected.country_id) {
 					metasetting_office_address_country.setValue(selected.country_id);
+                }
 			}'),
 		],
 	])
 	->label($model->getAttributeLabel('office_address[village]'));
-if($model->office_address['village']) {
+if ($model->office_address['village']) {
 $js = <<<JS
 	metasetting_office_address_village.addOption({label: '{$model->office_address['village']}', village_name: '{$model->office_address['village']}'});
 	metasetting_office_address_village.setValue('{$model->office_address['village']}');
@@ -175,12 +179,15 @@ JS;
 				if (!value.length) return;
 				var options = this.options;
 				var selected = this.options[value];
-				if(selected.city_id)
+				if (selected.city_id) {
 					metasetting_office_address_city.setValue(selected.city_id);
-				if(selected.province_id)
+                }
+				if (selected.province_id) {
 					metasetting_office_address_province.setValue(selected.province_id);
-				if(selected.country_id)
+                }
+				if (selected.country_id) {
 					metasetting_office_address_country.setValue(selected.country_id);
+                }
 				// metasetting_office_address_village.disable(); 
 				// metasetting_office_address_village.clearOptions();
 				// metasetting_office_address_village.load(function(callback) {
@@ -203,7 +210,7 @@ JS;
 		],
 	])
 	->label($model->getAttributeLabel('office_address[district]'));
-if($model->office_address['district']) {
+if ($model->office_address['district']) {
 $js = <<<JS
 	metasetting_office_address_district.addOption({label: '{$model->office_address['district']}', district_name: '{$model->office_address['district']}'});
 	metasetting_office_address_district.setValue('{$model->office_address['district']}');
@@ -236,10 +243,12 @@ JS;
 				if (!value.length) return;
 				var options = this.options;
 				var selected = this.options[value];
-				if(selected.province_id)
+				if (selected.province_id) {
 					metasetting_office_address_province.setValue(selected.province_id);
-				if(selected.country_id)
+                }
+				if (selected.country_id) {
 					metasetting_office_address_country.setValue(selected.country_id);
+                }
 				// metasetting_office_address_district.disable(); 
 				// metasetting_office_address_district.clearOptions();
 				// metasetting_office_address_district.load(function(callback) {
@@ -284,8 +293,9 @@ JS;
 				if (!value.length) return;
 				var options = this.options;
 				var selected = this.options[value];
-				if(selected.country_id)
+				if (selected.country_id) {
 					metasetting_office_address_country.setValue(selected.country_id);
+                }
 				// metasetting_office_address_city.disable(); 
 				// metasetting_office_address_city.clearOptions();
 				// metasetting_office_address_city.load(function(callback) {

@@ -22,7 +22,7 @@ class Menu extends \mdm\admin\models\searchs\Menu
 	 */
 	public function init()
 	{
-		if(($app = Yii::$app->request->get('app')) != null) {
+		if (($app = Yii::$app->request->get('app')) != null) {
 			$params = require(join('/', [dirname(Yii::getAlias('@webroot')), $app, 'app/config', 'params.php']));
 			Yii::$app->params = ArrayHelper::merge(Yii::$app->params, $params);
 		}

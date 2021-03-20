@@ -51,42 +51,53 @@ class PreviewPDF extends \yii\base\Widget
 			'alpha' => '0.5',
 			'color' => 'red',
 		];
-		if(isset($this->waterMarkParam) && !empty($this->waterMarkParam))
+		if (isset($this->waterMarkParam) && !empty($this->waterMarkParam)) {
 			$this->waterMarkParam = ArrayHelper::merge($waterMarkParam, $this->waterMarkParam);
-		else
+        } else {
 			$this->waterMarkParam = $waterMarkParam;
+        }
 
-		if($this->waterMark == false)
+		if ($this->waterMark == false) {
 			$this->waterMarkParam = [];
+        }
 
 		// set default navigationOptions
-		if(!isset($this->navigationOptions['class']))
+		if (!isset($this->navigationOptions['class'])) {
 			$this->navigationOptions['class'] = 'summary';
+        }
 
-		if(!isset($this->navigationOptions['summary']))
+		if (!isset($this->navigationOptions['summary'])) {
 			$this->navigationOptions['summary'] = [];
+        }
 
-		if(!isset($this->navigationOptions['prev']))
+		if (!isset($this->navigationOptions['prev'])) {
 			$this->navigationOptions['prev'] = [];
+        }
 
-		if(!isset($this->navigationOptions['next']))
+		if (!isset($this->navigationOptions['next'])) {
 			$this->navigationOptions['next'] = [];
+        }
 
-		if(!isset($this->navigationOptions['zoomIn']))
+		if (!isset($this->navigationOptions['zoomIn'])) {
 			$this->navigationOptions['zoomIn'] = [];
+        }
 
-		if(!isset($this->navigationOptions['zoomOut']))
+		if (!isset($this->navigationOptions['zoomOut'])) {
 			$this->navigationOptions['zoomOut'] = [];
+        }
 
-		if(!isset($this->navigationOptions['raw']))
+		if (!isset($this->navigationOptions['raw'])) {
 			$this->navigationOptions['raw'] = [];
+        }
 
 		// set default previewOptions
-		if(!isset($this->previewOptions['class']))
+		if (!isset($this->previewOptions['class'])) {
 			$this->previewOptions['class'] = 'preview-pdf';
+        }
 
-		if(!isset($this->previewOptions['id']))
+		if (!isset($this->previewOptions['id'])) {
 			$this->previewOptions['id'] = 'the-canvas';
+        }
 	}
 
 	/**
@@ -309,8 +320,9 @@ JS;
 			case '{raw}':
 				ArrayHelper::remove($navigationOptions['raw'], 'id');
                 $tag = ArrayHelper::remove($navigationOptions['raw'], 'tag', 'button');
-                if(Yii::$app->user->isGuest)
+                if (Yii::$app->user->isGuest) {
                     return '';
+                }
 				return Html::a(Yii::t('app', 'RAW'), $this->url, ArrayHelper::merge($navigationOptions['raw'], ['class' => 'btn btn-warning', 'target' => '_blank']));
 			default:
 				return false;

@@ -72,14 +72,16 @@ class Alert extends \yii\bootstrap\Widget
 		$soft = isset($this->options['soft']) && $this->options['soft'] === true ? true : false;
 		$template = isset($this->options['template']) && $this->options['template'] ? true : false;
 		$appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
-		if($template)
+		if ($template) {
 			$appendClass = $appendClass . ' d-flex';
+        }
 
 		$bootstrapClass = 'yii\bootstrap\Alert';
-		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+		if (isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
             $bootstrapClass = 'yii\bootstrap4\Alert';
+        }
 
-        if(!isset($this->body)) {
+        if (!isset($this->body)) {
             $session = Yii::$app->session;
             $flashes = $session->getAllFlashes();
     
@@ -104,7 +106,7 @@ class Alert extends \yii\bootstrap\Widget
 
         } else {
             $type = 'success';
-            if(isset($this->options['type'])) {
+            if (isset($this->options['type'])) {
                 $type = $this->options['type'];
                 unset($this->options['type']);
             }

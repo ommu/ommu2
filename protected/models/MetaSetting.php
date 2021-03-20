@@ -104,10 +104,11 @@ class MetaSetting extends \yii\base\Model
 			'0' => Yii::t('app', 'Disable'),
 		);
 
-		if($value !== null)
+		if ($value !== null) {
 			return $items[$value];
-		else
+        } else {
 			return $items;
+        }
 	}
 
 	/**
@@ -116,8 +117,9 @@ class MetaSetting extends \yii\base\Model
 	public function beforeValidate()
 	{
 
-		if(!empty($this->getErrors()))
+		if (!empty($this->getErrors())) {
 			return false;
+        }
 
 		return true;
 	}
@@ -127,8 +129,9 @@ class MetaSetting extends \yii\base\Model
 	 */
 	public function beforeSave()
 	{
-		if(!$this->beforeValidate())
+		if (!$this->beforeValidate()) {
 			return false;
+        }
 
 		$this->office_address = serialize($this->office_address);
 		$this->office_contact = serialize($this->office_contact);
@@ -141,8 +144,9 @@ class MetaSetting extends \yii\base\Model
 	 */
 	public function save()
 	{
-		if(!$this->beforeSave())
+		if (!$this->beforeSave()) {
 			return false;
+        }
 
 		Yii::$app->meta->set($this->getId('google_meta'), $this->google_meta);
 		Yii::$app->meta->set($this->getId('facebook_meta'), $this->facebook_meta);

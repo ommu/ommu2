@@ -44,20 +44,22 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	public function getGridColumn($columns=null) 
 	{
 		// jika $column didefinisikan pada grid-option
-		if(empty($columns) || $columns == null) {
+		if (empty($columns) || $columns == null) {
 			array_splice($this->defaultColumns, 0);
 			foreach($this->templateColumns as $key => $val) {
-				if(!in_array($key, $this->gridForbiddenColumn) && !in_array($key, $this->defaultColumns))
+				if (!in_array($key, $this->gridForbiddenColumn) && !in_array($key, $this->defaultColumns)) {
 					$this->defaultColumns[] = $val;
+                }
 			}
 			return $this->defaultColumns;
 		}
 
 		foreach($columns as $val) {
-			if(!in_array($val, $this->gridForbiddenColumn) && !in_array($val, $this->defaultColumns)) {
+			if (!in_array($val, $this->gridForbiddenColumn) && !in_array($val, $this->defaultColumns)) {
 				$col = $this->getTemplateColumn($val);
-				if($col != null)
+				if ($col != null) {
 					$this->defaultColumns[] = $col;
+                }
 			}
 		}
 
@@ -79,11 +81,12 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	public function getTemplateColumn($name) 
 	{
 		$data = null;
-		if(trim($name) == '')
+		if (trim($name) == '') {
 			return $data;
+        }
 
 		foreach($this->templateColumns as $key => $item) {
-			if($name == $key) {
+			if ($name == $key) {
 				$data = $item;
 				break;
 			}
@@ -124,11 +127,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	{
 		$pkColumn = '';
 		$pk = self::getTableSchema()->primaryKey;
-		if(is_array($pk) && count($pk)) {
+		if (is_array($pk) && count($pk)) {
 			$pkColumn = $pk[0];
 		}
 
-		if($pk == '') return;
+		if ($pk == '') return;
 
 		$sql = sprintf("DELETE FROM %s WHERE %s > 0", self::tableName(), $pkColumn);
 		try {
@@ -146,11 +149,11 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	{
 		$pkColumn = '';
 		$pk = self::getTableSchema()->primaryKey;
-		if(is_array($pk) && count($pk)) {
+		if (is_array($pk) && count($pk)) {
 			$pkColumn = $pk[0];
 		}
 
-		if($pk == '') return;
+		if ($pk == '') return;
 		$sql = sprintf("ALTER TABLE %s AUTO_INCREMENT = %d", self::tableName(), $ai);
 		try {
 			self::getDb()->createCommand($sql)->execute();
@@ -162,7 +165,8 @@ class ActiveRecord extends \yii\db\ActiveRecord
 	 * https://stackoverflow.com/questions/25522462/yii2-rest-query#answer-25618361
 	 * 
 	 */
-	public function formName() {
+	public function formName()
+    {
 		return '';
 	}
 }

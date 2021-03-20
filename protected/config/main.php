@@ -50,7 +50,7 @@ $config = [
 			'datetimeFormat'    => 'php:d-M-Y H:i:s',
 			'timeFormat'        => 'php:H:i:s',
 			'thousandSeparator' => '.',
-			'decimalSeparator'  => ',',
+			'decimalSeparator'  => ', ',
 			'locale'            => 'id',
 			'defaultTimeZone'   => 'Asia/Jakarta',
 			'currencyCode'      => 'IDR',
@@ -178,7 +178,7 @@ $config = [
 			'class'                 => 'yii\redactor\RedactorModule',
 			'uploadDir'             => '@public',
 			'uploadUrl'             => '@web/public',
-			'imageAllowExtensions'  => ['jpg','png']
+			'imageAllowExtensions'  => ['jpg', 'png']
 		],
 	],
 ];

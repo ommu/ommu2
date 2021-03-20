@@ -262,7 +262,7 @@ class Generator extends \yii\gii\Generator
             $columnPhpType = $column->phpType;
             if ($columnPhpType === 'integer') {
                 $type = 'int';
-            } elseif ($columnPhpType === 'boolean') {
+            } else if ($columnPhpType === 'boolean') {
                 $type = 'bool';
             } else {
                 $type = $columnPhpType;
@@ -288,7 +288,7 @@ class Generator extends \yii\gii\Generator
         foreach ($table->columns as $column) {
             if ($this->generateLabelsFromComments && !empty($column->comment)) {
                 $labels[$column->name] = $column->comment;
-            } elseif (!strcasecmp($column->name, 'id')) {
+            } else if (!strcasecmp($column->name, 'id')) {
                 $labels[$column->name] = 'ID';
             } else {
                 $label = Inflector::camel2words($column->name);
@@ -374,7 +374,7 @@ class Generator extends \yii\gii\Generator
 
                     if ($attributesCount === 1) {
                         $rules[] = "[['" . $uniqueColumns[0] . "'], 'unique']";
-                    } elseif ($attributesCount > 1) {
+                    } else if ($attributesCount > 1) {
                         $columnsList = implode("', '", $uniqueColumns);
                         $rules[] = "[['$columnsList'], 'unique', 'targetAttribute' => ['$columnsList']]";
                     }
@@ -716,7 +716,7 @@ class Generator extends \yii\gii\Generator
         if (!empty($key) && strcasecmp($key, 'id')) {
             if (substr_compare($key, 'id', -2, 2, true) === 0) {
                 $key = rtrim(substr($key, 0, -2), '_');
-            } elseif (substr_compare($key, 'id', 0, 2, true) === 0) {
+            } else if (substr_compare($key, 'id', 0, 2, true) === 0) {
                 $key = ltrim(substr($key, 2, strlen($key)), '_');
             }
         }
@@ -745,7 +745,7 @@ class Generator extends \yii\gii\Generator
     {
         if (!Yii::$app->has($this->db)) {
             $this->addError('db', 'There is no application component named "db".');
-        } elseif (!Yii::$app->get($this->db) instanceof Connection) {
+        } else if (!Yii::$app->get($this->db) instanceof Connection) {
             $this->addError('db', 'The "db" application component must be a DB connection instance.');
         }
     }
@@ -832,7 +832,7 @@ class Generator extends \yii\gii\Generator
                     $tableNames[] = $schema === '' ? $table : ($schema . '.' . $table);
                 }
             }
-        } elseif (($table = $db->getTableSchema($this->tableName, true)) !== null) {
+        } else if (($table = $db->getTableSchema($this->tableName, true)) !== null) {
             $tableNames[] = $this->tableName;
             $this->classNames[$this->tableName] = $this->modelClass;
         }
@@ -855,7 +855,7 @@ class Generator extends \yii\gii\Generator
         $db = $this->getDbConnection();
         if (preg_match("/^{$db->tablePrefix}(.*?)$/", $tableName, $matches)) {
             $tableName = '{{%' . $matches[1] . '}}';
-        } elseif (preg_match("/^(.*?){$db->tablePrefix}$/", $tableName, $matches)) {
+        } else if (preg_match("/^(.*?){$db->tablePrefix}$/", $tableName, $matches)) {
             $tableName = '{{' . $matches[1] . '%}}';
         }
         return $tableName;

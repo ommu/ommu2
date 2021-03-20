@@ -60,7 +60,7 @@ class LoginController extends Controller
 	 */
 	public function actions() {
 		$actions = parent::actions();
-		if(Yii::$app->request->getContentType() == 'application/json' || Yii::$app->request->isAjax) {
+		if (Yii::$app->request->getContentType() == 'application/json' || Yii::$app->request->isAjax) {
 
 			$this->enableCsrfValidation = false;
 			$actions['index'] = [
@@ -75,23 +75,27 @@ class LoginController extends Controller
 	 */
 	public function actionIndex()
 	{
-		if(!Yii::$app->user->isGuest)
+		if (!Yii::$app->user->isGuest) {
 			return $this->goHome();
+        }
 
-		if(Yii::$app->isSocialMedia())
+		if (Yii::$app->isSocialMedia()) {
 			return $this->redirect(Url::to(['/site/login']));
+        }
 
 		$model = new LoginForm();
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			$model->isAdmin = true;
 
 			$validator = new EmailValidator();
-			if($validator->validate($model->username) === true)
+			if ($validator->validate($model->username) === true) {
 				$model->setByEmail(true);
+            }
 
-			if($model->login())
+			if ($model->login()) {
 				return $this->goBack();
+            }
 		}
 
 		$this->view->title = Yii::t('app', 'Login');

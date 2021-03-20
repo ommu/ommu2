@@ -160,10 +160,11 @@ class BaseSetting extends \yii\base\Model
 			'demo-theme' => Yii::t('app', 'Demo Theme'),
 		);
 
-		if($value !== null)
+		if ($value !== null) {
 			return $items[$value];
-		else
+        } else {
 			return $items;
+        }
 	}
 
 	/**
@@ -177,10 +178,11 @@ class BaseSetting extends \yii\base\Model
 			'0' => Yii::t('app', 'Maintenance'),
 		);
 
-		if($value !== null)
+		if ($value !== null) {
 			return $items[$value];
-		else
+        } else {
 			return $items;
+        }
 	}
 
 	/**
@@ -193,10 +195,11 @@ class BaseSetting extends \yii\base\Model
 			'0' => Yii::t('app', 'Disable'),
 		);
 
-		if($value !== null)
+		if ($value !== null) {
 			return $items[$value];
-		else
+        } else {
 			return $items;
+        }
 	}
 
 	/**
@@ -236,33 +239,40 @@ class BaseSetting extends \yii\base\Model
 	 */
 	public function beforeValidate()
 	{
-		if($this->app_type == '')
+		if ($this->app_type == '') {
 			$this->addError('app_type', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('app_type')]));
+        }
 
-		if($this->name['small'] == '' || $this->name['long'] == '')
+		if ($this->name['small'] == '' || $this->name['long'] == '') {
 			$this->addError('name', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('name')]));
+        }
 
-		if($this->online == '')
+		if ($this->online == '') {
 			$this->addError('online', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('online')]));
+        }
 
-		if($this->online != 1) {
-			if($this->construction_date == '')
+		if ($this->online != 1) {
+			if ($this->construction_date == '') {
 				$this->addError('construction_date', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_date')]));
-			if($this->online == 0 && $this->construction_text['maintenance'] == '')
+            }
+			if ($this->online == 0 && $this->construction_text['maintenance'] == '') {
 				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_text[maintenance]')]));
-			if($this->online == 2 && $this->construction_text['comingsoon'] == '')
+            }
+			if ($this->online == 2 && $this->construction_text['comingsoon'] == '') {
 				$this->addError('construction_text', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('construction_text[comingsoon]')]));
+            }
 		}
 
-		if($this->analytic == 1) {
-			if($this->analytic_property == '')
+		if ($this->analytic == 1) {
+			if ($this->analytic_property == '') {
 				$this->addError('analytic_property', Yii::t('app', '{attribute} cannot be blank.', ['attribute' => $this->getAttributeLabel('analytic_property')]));
+            }
 		}
 
 		$this->logo = UploadedFile::getInstance($this, 'logo');
-		if($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
+		if ($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
 			$logoFileType = $this->formatFileType('png, bmp');
-			if(!in_array(strtolower($this->logo->getExtension()), $logoFileType)) {
+			if (!in_array(strtolower($this->logo->getExtension()), $logoFileType)) {
 				$this->addError('logo', Yii::t('app', 'The file {name} cannot be uploaded. Only files with these extensions are allowed: {extensions}', [
 					'name' => $this->logo->name,
 					'extensions' => $this->formatFileType($logoFileType, false),
@@ -270,8 +280,9 @@ class BaseSetting extends \yii\base\Model
 			}
 		}
 
-		if(!empty($this->getErrors()))
+		if (!empty($this->getErrors())) {
 			return false;
+        }
 
 		return true;
 	}
@@ -281,13 +292,15 @@ class BaseSetting extends \yii\base\Model
 	 */
 	public function beforeSave()
 	{
-		if(!$this->beforeValidate())
+		if (!$this->beforeValidate()) {
 			return false;
+        }
 
 		$this->name = serialize($this->name);
 		$this->copyright = serialize($this->copyright);
-		if($this->construction_date != '')
+		if ($this->construction_date != '') {
 			$this->construction_date = Yii::$app->formatter->asDate($this->construction_date, 'php:Y-m-d');
+        }
 		$this->construction_text = serialize($this->construction_text);
 
 		$uploadPath = join('/', [self::getUploadPath(true, $this->app)]);
@@ -295,16 +308,18 @@ class BaseSetting extends \yii\base\Model
 		$this->createUploadDirectory(self::getUploadPath(true, $this->app));
 
 		$this->logo = UploadedFile::getInstance($this, 'logo');
-		if($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
+		if ($this->logo instanceof UploadedFile && !$this->logo->getHasError()) {
 			$fileName = 'logo_'.time().'.'.strtolower($this->logo->getExtension());
-			if($this->logo->saveAs(join('/', [$uploadPath, $fileName]))) {
-				if($this->old_logo != '' && file_exists(join('/', [$uploadPath, $this->old_logo])))
+			if ($this->logo->saveAs(join('/', [$uploadPath, $fileName]))) {
+				if ($this->old_logo != '' && file_exists(join('/', [$uploadPath, $this->old_logo]))) {
 					rename(join('/', [$uploadPath, $this->old_logo]), join('/', [$verwijderenPath, time().'_'.$this->old_logo]));
+                }
 				$this->logo = $fileName;
 			}
 		} else {
-			if($this->logo == '')
+			if ($this->logo == '') {
 				$this->logo = $this->old_logo;
+            }
 		}
 		return true;
 	}
@@ -314,8 +329,9 @@ class BaseSetting extends \yii\base\Model
 	 */
 	public function save()
 	{
-		if(!$this->beforeSave())
+		if (!$this->beforeSave()) {
 			return false;
+        }
 
 		Yii::$app->setting->set($this->getId('app_type'), $this->app_type);
 		Yii::$app->setting->set($this->getId('online'), $this->online);

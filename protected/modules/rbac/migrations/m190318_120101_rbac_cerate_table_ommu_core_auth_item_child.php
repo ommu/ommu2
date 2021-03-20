@@ -23,7 +23,7 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db
 		}
 		
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item_child';
-		if(!Yii::$app->db->getTableSchema($tableName, true)) {
+		if (!Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->createTable('ommu_core_auth_item_child', [
 				'parent' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'child' => Schema::TYPE_STRING . '(64) NOT NULL',

@@ -63,48 +63,58 @@ class SettingController extends Controller
 		}
 
 		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'];
-		if(!isset($backSubLayout))
+		if (!isset($backSubLayout)) {
 			$backSubLayout = [];
+        }
 		$backPagination = $allTheme[$model->backoffice_theme]['pagination'];
-		if(!isset($backPagination))
+		if (!isset($backPagination)) {
 			$backPagination = [];
+        }
 		$backLoginLayout = $allTheme[$model->backoffice_theme]['loginlayout'];
-		if(!isset($backLoginLayout))
+		if (!isset($backLoginLayout)) {
 			$backLoginLayout = [];
+        }
 		$maintenanceSubLayout = $allTheme[$model->maintenance_theme]['sublayout'];
-		if(!isset($maintenanceSubLayout))
+		if (!isset($maintenanceSubLayout)) {
 			$maintenanceSubLayout = [];
+        }
 		$frontSubLayout = $allTheme[$model->theme]['sublayout'];
-		if(!isset($frontSubLayout))
+		if (!isset($frontSubLayout)) {
 			$frontSubLayout = [];
+        }
 		$frontPagination = $allTheme[$model->theme]['pagination'];
-		if(!isset($frontPagination))
+		if (!isset($frontPagination)) {
 			$frontPagination = [];
+        }
 		$frontLoginLayout = $allTheme[$model->theme]['loginlayout'];
-		if(!isset($frontLoginLayout))
+		if (!isset($frontLoginLayout)) {
 			$frontLoginLayout = [];
+        }
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
-			if($model->save()) {
+			if ($model->save()) {
 				$name = unserialize($model->name);
 				$success = Yii::t('app', 'General setting success updated.');
-				if($app != null)
+				if ($app != null) {
 					$success = Yii::t('app', 'App setting <strong>{app-name}</strong> success updated.', ['app-name' => $name['long']]);
+                }
 				Yii::$app->session->setFlash('success', $success);
-				if($app != null)
+				if ($app != null) {
 					return $this->redirect(['update', 'app' => $app]);
+                }
 				return $this->redirect(['update']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
 		$title = Yii::t('app', 'General Settings');
 		$description = Yii::t('app', 'This page contains general settings that affect your entire {app-name} application.', ['app-name' => $model->name['small']]);
-		if($app != null) {
+		if ($app != null) {
 			$title = Yii::t('app', 'App Setting: {app-name}', ['app-name' => $model->name['small']]);
 			$description = Yii::t('app', 'This page contains app settings that affect your entire {app-name} application.', ['app-name' => $model->name['long']]);
 		}
@@ -134,26 +144,29 @@ class SettingController extends Controller
 		$model = new MetaSetting(['app' => $app ? $app : Yii::$app->id]);
 		$name = unserialize(Yii::$app->setting->get(join('_', [$model->app, 'name'])));
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
-			if($model->save()) {
+			if ($model->save()) {
 				$success = Yii::t('app', 'Meta setting success updated.');
-				if($app != null)
+				if ($app != null) {
 					$success = Yii::t('app', 'App meta setting <strong>{app-name}</strong> success updated.', ['app-name' => $name['long']]);
+                }
 				Yii::$app->session->setFlash('success', $success);
-				if($app != null)
+				if ($app != null) {
 					return $this->redirect(['meta', 'app' => $app]);
+                }
 				return $this->redirect(['meta']);
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return \yii\helpers\Json::encode(\app\components\widgets\ActiveForm::validate($model));
+                }
 			}
 		}
 
 		$title = Yii::t('app', 'Meta Settings');
 		$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name' => $name['small']]);
-		if($app != null) {
+		if ($app != null) {
 			$title = Yii::t('app', 'Meta Setting: {app-name}', ['app-name' => $name['small']]);
 			$description = Yii::t('app', 'This page contains meta settings that affect your entire {app-name} application.', ['app-name' => $name['long']]);
 		}

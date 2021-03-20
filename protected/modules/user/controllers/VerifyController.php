@@ -39,11 +39,11 @@ class VerifyController extends Controller
 		$model = new UserVerify();
 		$model->scenario = UserVerify::SCENARIO_WITH_FORM;
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 
-			if($model->save()) {
-				if(!Yii::$app->request->isAjax) {
+			if ($model->save()) {
+				if (!Yii::$app->request->isAjax) {
 					Yii::$app->session->setFlash('success', Yii::t('app', 'Hi, <strong>{displayname}</strong> an email with verification code has been sent to <strong>{email}</strong>', [
 						'displayname' => $model->user->displayname,
 						'email' => $model->user->email,
@@ -52,8 +52,9 @@ class VerifyController extends Controller
 				}
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return Json::encode(ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -71,45 +72,50 @@ class VerifyController extends Controller
 	 */
 	public function actionEmail()
 	{
-		if(($code = Yii::$app->request->get('cd')) == null)
+		if (($code = Yii::$app->request->get('cd')) == null) {
 			return $this->goHome();
+        }
 
 		$msg = Yii::$app->request->get('msg');
 		$verify = UserVerify::findOne(['code' => $code]);
 
-		if(!$msg && $verify == null) {
+		if (!$msg && $verify == null) {
 			$render = 'novalid';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Verification code not found.'));
-			if(!$code)
+			if (!$code) {
 				return $this->redirect(['email', 'cd' => $code]);
+            }
 		}
 
-		if(!$msg && $verify->expired == 1) {
+		if (!$msg && $verify->expired == 1) {
 			$render = 'expired';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Verification code expired.'));
-			if(!$code)
+			if (!$code) {
 				return $this->redirect(['email', 'cd' => $code]);
+            }
 		}
 
-		if($render != 'novalid' && $render != 'expired') {
+		if ($render != 'novalid' && $render != 'expired') {
 			$render = 'valid';
 
 			$model = $this->findModel($verify->user_id);
 			$model->verified = 1;
 
-			if($model->save(false, ['verified', 'update_date', 'update_ip'])) {
+			if ($model->save(false, ['verified', 'update_date', 'update_ip'])) {
 				$verify->publish = 0;
 				$verify->save();
 
-				if(!Yii::$app->request->isAjax) {
+				if (!Yii::$app->request->isAjax) {
 					Yii::$app->session->setFlash('success', Yii::t('app', 'Your email has been successfully verified'));
-					if(!$msg)
+					if (!$msg) {
 						return $this->redirect(['email', 'cd' => $code, 'msg' => 'success']);
+                    }
 				}
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return Json::encode(ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -135,8 +141,9 @@ class VerifyController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = Users::findOne($id)) !== null)
+		if (($model = Users::findOne($id)) !== null) {
 			return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

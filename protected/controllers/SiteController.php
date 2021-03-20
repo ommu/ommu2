@@ -44,14 +44,15 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		if(Yii::$app->id == 'back3nd') {
-			if(!Yii::$app->user->isGuest)
+		if (Yii::$app->id == 'back3nd') {
+			if (!Yii::$app->user->isGuest) {
 				return $this->redirect(Url::to(['/admin/dashboard/index']));
-			else
+            } else {
 				return $this->redirect(Url::to(['/admin/login']));
+            }
 		}
 
-		if(Yii::$app->isMaintenance()) {
+		if (Yii::$app->isMaintenance()) {
 			$maintenanceTheme = Yii::$app->setting->get(join('_', [Yii::$app->id, 'maintenance_theme']), 'arnica');
 			$this->view->theme($maintenanceTheme);
 		}
@@ -69,14 +70,16 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		if(!Yii::$app->user->isGuest)
+		if (!Yii::$app->user->isGuest) {
 			return $this->goHome();
+        }
 
-		if(Yii::$app->id == 'back3nd') {
-			if(!Yii::$app->isSocialMedia())
+		if (Yii::$app->id == 'back3nd') {
+			if (!Yii::$app->isSocialMedia()) {
 				return $this->redirect(Url::to(['/admin/login']));
-			else
+            } else {
 				throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            }
 		}
 
 		$setting = CoreSettings::find()
@@ -85,18 +88,21 @@ class SiteController extends Controller
 			->one();
 
 		$model = new LoginForm();
-		if($setting->signup_username == 1)
+		if ($setting->signup_username == 1) {
 			$model->setAttributeLabels(['username' => Yii::t('app', 'Email or Username')]);
+        }
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 
 			$validator = new EmailValidator();
-			if($validator->validate($model->username) === true)
+			if ($validator->validate($model->username) === true) {
 				$model->setByEmail(true);
+            }
 
-			if($model->login())
+			if ($model->login()) {
 				return $this->goBack();
+            }
 		}
 
 		$this->isLoginLayout = true;
@@ -161,8 +167,9 @@ class SiteController extends Controller
 	 */
 	protected function findModel($id)
 	{
-		if(($model = \ommu\core\models\CorePages::findOne($id)) !== null)
+		if (($model = \ommu\core\models\CorePages::findOne($id)) !== null) {
 			return $model;
+        }
 
 		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

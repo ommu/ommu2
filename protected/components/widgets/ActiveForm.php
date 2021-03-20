@@ -20,8 +20,9 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 function get_form_parent() {
-	if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+	if (isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
 		return 'yii\bootstrap4\ActiveForm';
+    }
 
 	return 'yii\bootstrap\ActiveForm';
 }
@@ -39,20 +40,23 @@ class ActiveForm extends OActiveForm
 	 */
 	public function init()
 	{
-		if(isset($this->options['class'])) {
-			if(preg_match('/(form-horizontal)/', $this->options['class']))
+		if (isset($this->options['class'])) {
+			if (preg_match('/(form-horizontal)/', $this->options['class'])) {
 				$this->layout = 'horizontal';
-			if(preg_match('/(form-inline)/', $this->options['class']))
+            }
+			if (preg_match('/(form-inline)/', $this->options['class'])) {
 				$this->layout = 'inline';
+            }
 		}
 
 		$submenuOnLayout = false;
-        if(!(Yii::$app->view->context instanceof \yii\base\Widget)) {
-            if(Yii::$app->view->submenuOnLayout || in_array(strtolower(Yii::$app->view->context->module->id), ['gii', 'rbac']))
+        if (!(Yii::$app->view->context instanceof \yii\base\Widget)) {
+            if (Yii::$app->view->submenuOnLayout || in_array(strtolower(Yii::$app->view->context->module->id), ['gii', 'rbac'])) {
                 $submenuOnLayout = true;
+            }
         }
 
-		if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
+		if (isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
 			$fieldConfig = [
 				'options' => [
 					'class' => ['form-group', 'row'],
@@ -64,7 +68,7 @@ class ActiveForm extends OActiveForm
 					'class' => !$submenuOnLayout ? 'col-md-8 col-sm-9 col-12' : 'col-sm-9 col-12',
 				],
 			];
-			if($this->layout === 'horizontal') {
+			if ($this->layout === 'horizontal') {
 				$fieldConfig = ArrayHelper::merge(
 					$fieldConfig, 
 					[
@@ -95,7 +99,7 @@ class ActiveForm extends OActiveForm
 					'class' => 'help-block help-block-error',
 				],
 			];
-			if($this->layout === 'horizontal') {
+			if ($this->layout === 'horizontal') {
 				$fieldConfig = ArrayHelper::merge(
 					$fieldConfig, 
 					[
@@ -108,8 +112,9 @@ class ActiveForm extends OActiveForm
 			}
 		}
 
-		if(!empty($this->fieldConfig))
+		if (!empty($this->fieldConfig)) {
 			$fieldConfig = ArrayHelper::merge($fieldConfig, $this->fieldConfig);
+        }
 
 		$this->fieldConfig = $fieldConfig;
 

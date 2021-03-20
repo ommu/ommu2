@@ -69,23 +69,25 @@ class PasswordController extends Controller
 		$model = $this->findModel();
 		$model->scenario = Users::SCENARIO_CHANGE_PASSWORD;
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 			$model->isForm = true;
 
-			if($model->save()) {
+			if ($model->save()) {
 				Yii::$app->user->logout();
 
-				if(!Yii::$app->request->isAjax) {
+				if (!Yii::$app->request->isAjax) {
 					Yii::$app->session->setFlash('success', Yii::t('app', 'Password changed.'));
-					if(Yii::$app->id == 'back3nd')
+					if (Yii::$app->id == 'back3nd') {
 						return $this->redirect(['/admin/login']);
+                    }
 					return $this->redirect(['/site/login']);
 				}
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return Json::encode(ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -109,10 +111,10 @@ class PasswordController extends Controller
 		$model->scenario = UserForgot::SCENARIO_WITH_FORM;
 		$model->setAttributeLabels(['email_i' => Yii::t('app', 'Username or Email')]);
 
-		if(Yii::$app->request->isPost) {
+		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
-			if($model->save()) {
-				if(!Yii::$app->request->isAjax) {
+			if ($model->save()) {
+				if (!Yii::$app->request->isAjax) {
 					Yii::$app->session->setFlash('success', Yii::t('app', 'Hi, <strong>{displayname}</strong> an email with instructions for creating a new password has been sent to <strong>{email}</strong>', [
 						'displayname' => $model->user->displayname,
 						'email' => $model->user->email,
@@ -121,8 +123,9 @@ class PasswordController extends Controller
 				}
 
 			} else {
-				if(Yii::$app->request->isAjax)
+				if (Yii::$app->request->isAjax) {
 					return Json::encode(ActiveForm::validate($model));
+                }
 			}
 		}
 
@@ -140,50 +143,54 @@ class PasswordController extends Controller
 	 */
 	public function actionReset()
 	{
-		if(($code = Yii::$app->request->get('cd')) == null)
+		if (($code = Yii::$app->request->get('cd')) == null) {
 			return $this->goHome();
+        }
 
 		$msg = Yii::$app->request->get('msg');
 		$forgot = UserForgot::findOne(['code' => $code]);
 
-		if(!$msg && $forgot == null) {
+		if (!$msg && $forgot == null) {
 			$render = 'novalid';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak ditemukan.'));
-			if(!$code)
+			if (!$code) {
 				return $this->redirect(['reset', 'cd' => $code]);
+            }
 		}
 
-		if(!$msg && $forgot->expired == 1) {
+		if (!$msg && $forgot->expired == 1) {
 			$render = 'expired';
 			Yii::$app->session->setFlash('error', Yii::t('app', 'Reset password code tidak dapat digunakan.'));
-			if(!$code)
+			if (!$code) {
 				return $this->redirect(['reset', 'cd' => $code]);
+            }
 		}
 
-		if($render != 'novalid' && $render != 'expired') {
+		if ($render != 'novalid' && $render != 'expired') {
 			$render = 'valid';
 
 			$model = $this->findModel($forgot->user_id);
 			$model->scenario = Users::SCENARIO_RESET_PASSWORD;
 	
-			if(Yii::$app->request->isPost) {
+			if (Yii::$app->request->isPost) {
 				$model->load(Yii::$app->request->post());
 				$model->isForm = true;
 	
-				if($model->save()) {
+				if ($model->save()) {
 					$forgot->publish = 0;
 					$forgot->save();
 	
 					Yii::$app->user->logout();
 	
-					if(!Yii::$app->request->isAjax) {
+					if (!Yii::$app->request->isAjax) {
 						Yii::$app->session->setFlash('success', Yii::t('app', 'You have successfully changed your password. To sign in to your account, use your username or email and new password.'));
 						return $this->redirect(['reset', 'cd' => $code, 'msg' => 'success']);
 					}
 	
 				} else {
-					if(Yii::$app->request->isAjax)
+					if (Yii::$app->request->isAjax) {
 						return Json::encode(ActiveForm::validate($model));
+                    }
 				}
 			}
 		}
@@ -210,10 +217,12 @@ class PasswordController extends Controller
 	 */
 	protected function findModel($id=null)
 	{
-		if($id == null)
+		if ($id == null) {
 			$id = Yii::$app->user->id;
-		if(($model = Users::findOne($id)) !== null)
+        }
+		if (($model = Users::findOne($id)) !== null) {
 			return $model;
+        }
 
 		throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 	}

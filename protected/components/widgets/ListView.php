@@ -21,8 +21,9 @@ class ListView extends \yii\widgets\ListView
 	public static function widget($config = [])
 	{
 		$parentClass = get_parent_class();
-		if(isset(Yii::$app->view->themeSetting['widget_class']['ListView']))
+		if (isset(Yii::$app->view->themeSetting['widget_class']['ListView'])) {
 			$parentClass = Yii::$app->view->themeSetting['widget_class']['ListView'];
+        }
 
 		return $parentClass::widget($config);
 	}

@@ -37,11 +37,13 @@ class Module extends \mdm\admin\Module
 	public function getViewPath()
 	{
 		$controller = strtolower(Yii::$app->controller->id);
-		if(in_array($controller, Yii::$app->params['rbacDontLoadController']))
+		if (in_array($controller, Yii::$app->params['rbacDontLoadController'])) {
 			throw new \yii\web\NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
 
-		if(!in_array($controller, ['permission','role']) && !file_exists(join('/', [parent::getViewPath(), $controller])))
+		if (!in_array($controller, ['permission', 'role']) && !file_exists(join('/', [parent::getViewPath(), $controller]))) {
 			return Yii::getAlias('@mdm/admin/views');
+        }
 
 		return parent::getViewPath();
 	}
@@ -51,9 +53,10 @@ class Module extends \mdm\admin\Module
 	 */
 	public function getLayoutPath()
 	{
-		if(Yii::$app->view->theme)
+		if (Yii::$app->view->theme) {
 			return Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'layouts';
-		else
+        } else {
 			return parent::getLayoutPath();
+        }
 	}
 }

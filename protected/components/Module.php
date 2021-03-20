@@ -28,7 +28,7 @@ class Module extends \yii\base\Module
 	{
 		parent::init();
 
-		if(is_array($config = $this->getModuleConfig())) {
+		if (is_array($config = $this->getModuleConfig())) {
 			$this->params = \yii\helpers\ArrayHelper::merge(
 				$this->params,
 				$config
@@ -46,10 +46,11 @@ class Module extends \yii\base\Module
 	 */
 	public function getLayoutPath()
 	{
-		if(Yii::$app->view->theme)
+		if (Yii::$app->view->theme) {
 			return Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'layouts';
-		else
+        } else {
 			return parent::getLayoutPath();
+        }
 	}
 
 	/**
@@ -60,8 +61,9 @@ class Module extends \yii\base\Module
 	public function getName()
 	{
 		$info = $this->getModuleInfo();
-		if($info['name'])
+		if ($info['name']) {
 			return $info['name'];
+        }
 
 		return $this->id;
 	}
@@ -74,8 +76,9 @@ class Module extends \yii\base\Module
 	public function getDescription()
 	{
 		$info = $this->getModuleInfo();
-		if($info['description'])
+		if ($info['description']) {
 			return $info['description'];
+        }
 
 		return '';
 	}
@@ -88,8 +91,9 @@ class Module extends \yii\base\Module
 	public function getVersion()
 	{
 		$info = $this->getModuleInfo();
-		if($info['version'])
+		if ($info['version']) {
 			return $info['version'];
+        }
 
 		return '';
 	}
@@ -114,7 +118,7 @@ class Module extends \yii\base\Module
 	{
 		$module = Yii::$app->moduleManager->enable($this);
 
-		if(is_object($module) && $module->installed == 0) {
+		if (is_object($module) && $module->installed == 0) {
 			$module->installed = 1;
 			$this->migrate();
 			$module->save();
@@ -144,7 +148,7 @@ class Module extends \yii\base\Module
 	{
 		$migrationPath = $this->getMigrationPath();
 		$uninstallMigration = join('/', [$migrationPath, 'uninstall.php']);
-		if(file_exists($uninstallMigration)) {
+		if (file_exists($uninstallMigration)) {
 			ob_start();
 			require_once($uninstallMigration);
 			$migration = new \uninstall();
@@ -157,8 +161,9 @@ class Module extends \yii\base\Module
 
 			$migrations = opendir($migrationPath);
 			while(false !== ($migration = readdir($migrations))) {
-				if($migration == '.' || $migration == '..' || $migration == 'uninstall.php')
+				if ($migration == '.' || $migration == '..' || $migration == 'uninstall.php') {
 					continue;
+                }
 
 				Yii::$app->sweeto->createCommand()->delete(\app\commands\MigrateController::getMigrationTable(), [
 					'version' => str_replace('.php', '', $migration)])->execute();
@@ -176,8 +181,9 @@ class Module extends \yii\base\Module
 	public function migrate()
 	{
 		$migrationPath = $this->getMigrationPath();
-		if(is_dir($migrationPath))
+		if (is_dir($migrationPath)) {
 			\app\commands\MigrateController::webMigrateUp($migrationPath);
+        }
 	}
 
 	/**
@@ -187,8 +193,9 @@ class Module extends \yii\base\Module
 	 */
 	protected function getModuleInfo()
 	{
-		if($this->_moduleInfo != null)
+		if ($this->_moduleInfo != null) {
 			return $this->_moduleInfo;
+        }
 
 		$moduleJson = file_get_contents(join('/', [$this->getBasePath(), 'module.json']));
 		return \yii\helpers\Json::decode($moduleJson);
@@ -200,8 +207,9 @@ class Module extends \yii\base\Module
 	public function getModuleConfig()
 	{
 		$configFile = $this->getBasePath() . DIRECTORY_SEPARATOR . $this->id .'.yaml';
-		if(!file_exists($configFile))
+		if (!file_exists($configFile)) {
 			return false;
+        }
 		
 		return \Symfony\Component\Yaml\Yaml::parseFile($configFile);
 	}

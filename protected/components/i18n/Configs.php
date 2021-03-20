@@ -85,8 +85,9 @@ class Configs extends \yii\base\BaseObject
 	{
 		if (self::$_instance === null) {
 			$type = ArrayHelper::getValue(Yii::$app->params, 'i18n.config', []);
-			if (is_array($type) && !isset($type['class']))
+			if (is_array($type) && !isset($type['class'])) {
 				$type['class'] = static::className();
+            }
 
 			return self::$_instance = Yii::createObject($type);
 		}
@@ -97,13 +98,14 @@ class Configs extends \yii\base\BaseObject
 	public static function __callStatic($name, $arguments)
 	{
 		$instance = static::instance();
-		if ($instance->hasProperty($name))
+		if ($instance->hasProperty($name)) {
 			return $instance->$name;
-		else {
-			if (count($arguments))
+        } else {
+			if (count($arguments)) {
 				$instance->options[$name] = reset($arguments);
-			else
+            } else {
 				return array_key_exists($name, $instance->options) ? $instance->options[$name] : null;
+            }
 		}
 	}
 

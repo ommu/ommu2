@@ -20,8 +20,9 @@ use Yii;
 use yii\helpers\Html;
 
 function get_field_parent() {
-	if(isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4'])
+	if (isset(Yii::$app->view->themeSetting['bootstrap4']) && Yii::$app->view->themeSetting['bootstrap4']) {
 		return 'yii\bootstrap4\ActiveField';
+    }
 
 	return 'yii\bootstrap\ActiveField';
 }
@@ -39,17 +40,21 @@ class ActiveField extends OActiveField
 	 */
 	public function __construct($config = [])
 	{
-		if(isset($config['horizontalCssClasses']['wrapper']))
+		if (isset($config['horizontalCssClasses']['wrapper'])) {
 			$config['wrapperOptions']['class'] = $config['horizontalCssClasses']['wrapper'];
-		if(isset($config['horizontalCssClasses']['label']))
+        }
+		if (isset($config['horizontalCssClasses']['label'])) {
 			Html::addCssClass($config['labelOptions'], $config['horizontalCssClasses']['label']);
-		if(isset($config['horizontalCssClasses']['error']))
+        }
+		if (isset($config['horizontalCssClasses']['error'])) {
 			Html::addCssClass($config['errorOptions'], $config['horizontalCssClasses']['error']);
-		if(isset($config['horizontalCssClasses']['hint'])) {
-			if($this instanceof \yii\bootstrap4\ActiveField) {
+        }
+		if (isset($config['horizontalCssClasses']['hint'])) {
+			if ($this instanceof \yii\bootstrap4\ActiveField) {
 				Html::addCssClass($config['hintOptions'], join(' ', ['form-text', 'text-muted', $config['horizontalCssClasses']['hint']]));
-			} else
+			} else {
 				Html::addCssClass($config['hintOptions'], $config['horizontalCssClasses']['hint']);
+            }
 		}
 
 		parent::__construct($config);
@@ -60,7 +65,7 @@ class ActiveField extends OActiveField
 	 */
 	public function submitButton($options = [])
 	{
-		if(!isset($this->template) || (isset($this->template) && $this->template === $this->form->fieldConfig['template'])) {
+		if (!isset($this->template) || (isset($this->template) && $this->template === $this->form->fieldConfig['template'])) {
 			if (!isset($options['template'])) {
 				$this->template = $this->form->layout === 'horizontal' ?
 					$this->horizontalSubmitButtonTemplate : $this->horizontalSubmitButtonTemplate;
@@ -81,8 +86,9 @@ class ActiveField extends OActiveField
 
 		$model = $this->model;
 		$button = $options['button'];
-		if(!isset($options['button']))
+		if (!isset($options['button'])) {
 			$button = Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']);
+        }
 		$this->parts['{input}'] = $button;
 
 		return $this;

@@ -79,11 +79,12 @@ class LoginForm extends Model
 	 */
 	public function beforeValidate()
 	{
-		if(parent::beforeValidate()) {
-			if(!$this->hasErrors()) {
+		if (parent::beforeValidate()) {
+			if (!$this->hasErrors()) {
 				$user = $this->getUser($this->isAdmin);
-				if(!$user)
+				if (!$user) {
 					$this->addError('username', Yii::t('app', '{attribute} is incorrect.', ['attribute' => $this->getAttributeLabel('username')]));
+                }
 			}
 		}
 		return true;
@@ -101,13 +102,15 @@ class LoginForm extends Model
 		if (!$this->hasErrors()) {
 			$user = $this->getUser($this->isAdmin);
 
-			if($user) {
-				if($user->oldSecurity == false) {
-					if(!$user->validatePassword($this->password))
+			if ($user) {
+				if ($user->oldSecurity == false) {
+					if (!$user->validatePassword($this->password)) {
 						$this->addError($attribute, Yii::t('app', 'Password is incorrect.'));
+                    }
 				} else {
-					if(!$user->hashPassword($this->password))
+					if (!$user->hashPassword($this->password)) {
 						$this->addError($attribute, Yii::t('app', 'Password is incorrect.'));
+                    }
 				}
 			}
 		}
@@ -128,19 +131,20 @@ class LoginForm extends Model
 	 */
 	public function getUser($isAdmin=false)
 	{
-		if(Yii::$app->isSocialMedia()) {
+		if (Yii::$app->isSocialMedia()) {
 			$setting = CoreSettings::find()
 				->select(['signup_username'])
 				->where(['id' => 1])
 				->one();
 
-			if($setting->signup_username == 1 && $this->_user === false && $this->_byEmail === false)
+			if ($setting->signup_username == 1 && $this->_user === false && $this->_byEmail === false) {
 				$this->_user = Users::findByUsername($this->username, $isAdmin);
-	
-			elseif($this->_user === false && $this->_byEmail === true)
+            } else if ($this->_user === false && $this->_byEmail === true) {
 				$this->_user = Users::findByEmail($this->username, $isAdmin);
-		} else
+            }
+		} else {
 			$this->_user = Users::findByEmail($this->username, $isAdmin);
+        }
 
 		return $this->_user;
 	}
@@ -151,9 +155,9 @@ class LoginForm extends Model
 	 */
 	public function login()
 	{
-		if($this->validate()) {
+		if ($this->validate()) {
 			$user = $this->getUser($this->isAdmin);
-			if(!$this->is_api) {
+			if (!$this->is_api) {
 				Yii::$app->session->set('_backend_app', true);
 				Yii::$app->session->set('__name', $user->username);
 				Yii::$app->session->set('__states', serialize([
@@ -162,11 +166,12 @@ class LoginForm extends Model
 					'_backend_app' => true,
 				]));
 				$user->lastlogin_from = 'web';
-			} else
+			} else {
 				$user->lastlogin_from = 'api';
+            }
 			$user->lastlogin_date = Yii::$app->formatter->asDate('now', 'php:Y-m-d H:i:s');
 			$user->lastlogin_ip = $_SERVER['REMOTE_ADDR'];
-			$user->save(false, ['lastlogin_date','lastlogin_ip','lastlogin_from']);
+			$user->save(false, ['lastlogin_date', 'lastlogin_ip', 'lastlogin_from']);
 
 			return Yii::$app->user->login($this->getUser($this->isAdmin), $this->rememberMe ? 3600*24*7 : 0);
 		}

@@ -61,7 +61,7 @@ class User extends \yii\web\User
 	 */
 	protected function beforeLogout($identity)
 	{
-		if(parent::beforeLogout($identity)) {
+		if (parent::beforeLogout($identity)) {
 			$this->trigger(self::EVENT_INVALIDATE_CACHE);
 		}
 
@@ -76,10 +76,11 @@ class User extends \yii\web\User
 	private function generateJwtTokenIfExpire($identity)
 	{
 		$jwtClaims = '';
-		if($identity == null)
+		if ($identity == null) {
 			return;
+        }
 
-		if($identity->jwt_claims == null || $identity->jwt_claims == '') {
+		if ($identity->jwt_claims == null || $identity->jwt_claims == '') {
 			$identity->refreshToken($identity->getId());
 			return;
 		}
@@ -89,22 +90,25 @@ class User extends \yii\web\User
 			->select(['user_id', 'jwt_claims'])
 			->where(['user_id' => $userId])
 			->one();
-		if($user == null)
+		if ($user == null) {
 			return;
+        }
 
 		$claims = unserialize($user->jwt_claims);
-		if(is_array($claims) === false)
+		if (is_array($claims) === false) {
 			throw new \Exception('Cannot verify claim!.');
+        }
 
 		$token = (string) $this->buildJwtTokenFromClaim($claims, $userId);
-		if($token == null || trim($token) == '' || substr_count($token, '.') < 2) {
+		if ($token == null || trim($token) == '' || substr_count($token, '.') < 2) {
 			$identity->refreshToken($userId);
 			return;
 		}
 
 		$tokenObject = Yii::$app->jwt->getParser()->parse((string) $token);
-		if(!Yii::$app->jwt->validateToken($tokenObject))
+		if (!Yii::$app->jwt->validateToken($tokenObject)) {
 			$identity->refreshToken($userId);
+        }
 	}
 
 	/**
@@ -112,8 +116,9 @@ class User extends \yii\web\User
 	 */
 	public function getLanguage()
 	{
-		if($this->isGuest)
+		if ($this->isGuest) {
 			return Yii::$app->params['defaultLanguage'] ?? 'id';
+        }
 
 		return $this->getIdentity()->language;
 	}
@@ -123,16 +128,18 @@ class User extends \yii\web\User
 	 */
 	public function loginByAccessToken($token, $type=\yii\filters\auth\HttpBearerAuth)
 	{
-		if(trim($token) == '')
+		if (trim($token) == '') {
 			return null;
+        }
 
 		$userToken = '';
-		if($token instanceof \Lcobucci\JWT\Token)
+		if ($token instanceof \Lcobucci\JWT\Token) {
 			$userToken = $token;
-		else
+        } else {
 			$userToken = Yii::$app->jwt->getParser()->parse((string) $token);
+        }
 
-		if(Yii::$app->jwt->validateToken($userToken)) {
+		if (Yii::$app->jwt->validateToken($userToken)) {
 			$uid = $userToken->getClaim('uid');
 			$identity = Users::find()
 				->select('user_id, username, email, auth_key')

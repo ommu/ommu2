@@ -23,7 +23,7 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 		}
 		
 		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_menus';
-		if(!Yii::$app->db->getTableSchema($tableName, true)) {
+		if (!Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->createTable('ommu_core_menus', [
 				'id' => Schema::TYPE_INTEGER . '(11) NOT NULL AUTO_INCREMENT',
 				'name' => Schema::TYPE_STRING . '(128) NOT NULL',

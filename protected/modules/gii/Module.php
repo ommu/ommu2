@@ -48,10 +48,11 @@ class Module extends \yii\gii\Module implements BootstrapInterface
 	 */
 	public function getLayoutPath()
 	{
-		if(Yii::$app->view->theme)
+		if (Yii::$app->view->theme) {
 			return Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'layouts';
-		else
+        } else {
 			return parent::getLayoutPath();
+        }
 	}
 
 	/**
