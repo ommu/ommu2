@@ -30,5 +30,12 @@ class Users extends UsersModel
 		parent::afterFind();
 
 		$this->photos = join('/', [self::getUploadPath(false), 'default.png']);
+        // if (isset($this->member)) {
+        //     $uploadPath = join('/', [Members::getUploadPath(false), $this->user->member_id]);
+        //     $photos = $this->member->photo_profile ? join('/', [$uploadPath, $this->member->photo_profile]) : '';
+        //     $this->photos = ($photos != '' && file_exists($photos)) ? $photos : join('/', [Members::getUploadPath(false), 'default.png']);
+        // } else {
+        //     $this->photos = join('/', [self::getUploadPath(false), 'default.png']);
+        // }
 	}
 }
