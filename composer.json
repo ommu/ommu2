@@ -111,7 +111,7 @@
 			"ommu-apps"
 		],
 		"installer-paths": {
-			"themes/{$name}/": [
+			"protected/themes/{$name}/": [
 				"type:ommu-theme"
 			],
 			"{$name}": [
