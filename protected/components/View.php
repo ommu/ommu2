@@ -85,6 +85,10 @@ class View extends \yii\web\View
 	 */
 	private static $_appNameApplied = false;
 	/**
+	 * @var boolean tempat menyimpan status banned dengan ip address untuk mencegah fungsi pengecekan ip address dipangil berulang kali.
+	 */
+	private static $_bannedIpApplied = false;
+	/**
 	 * {@inheritdoc}
 	 */
 	private static $_beforeRenderEventCalled = 0;
@@ -96,31 +100,22 @@ class View extends \yii\web\View
 	public function beforeRender($viewFile, $params)
 	{
 		if (parent::beforeRender($viewFile, $params)) {
+            $context = $this->context;
+
+            // Theme applied
             if (!self::$_themeApplied && !$this->theme) {
                 self::$_themeApplied = true;
-                $this->setTheme($this->context);
+                $this->setTheme($context);
             }
 
+            // Theme setting applied
             if (!self::$_themeSettingApplied) {
                 $this->setThemeSetting();
                 self::$_themeSettingApplied = true;
             }
 
-            if ($this->context instanceof Controller) {
-                if (self::$isBackoffice && (!empty($this->context->subMenu) && !Yii::$app->request->isAjax)) {
-                    $this->context->layout = 'main_submenu';
-                }
-    
-                if (!self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax)) {
-                    $this->context->layout = 'main_sidebar';
-                }
-
-                $this->registerGoogleAnalytics();
-            }
-
+            // Application name applied
 			if (!self::$_appNameApplied) {
-				self::$_appNameApplied = true;
-
 				$app = Yii::$app->id;
 				$siteName = unserialize(Yii::$app->setting->get(join('_', [$app, 'name'])));
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
@@ -129,12 +124,48 @@ class View extends \yii\web\View
 					$themeInfo = self::themeParseYaml($this->theme->name);
 					Yii::$app->name = Inflector::camelize($themeInfo['name']);
 				}
+				self::$_appNameApplied = true;
 			}
 
+            // Setting initialize
             if (!self::$_settingInitialize) {
                 self::$_settingInitialize = true;
             }
+
+            if ($context instanceof Controller) {
+                // Banned with IP address
+                if (!self::$_bannedIpApplied) {
+                    self::$_bannedIpApplied = true;
+
+                    if ($context->hasMethod('isVisitorBanned')) {
+                        if ($context->isVisitorBanned() === true) {
+                            if (file_exists($this->theme->getPath(join('/', ['layouts', 'block.php'])))) {
+                                $context->layout = 'block';
+                            } else {
+                                $context->layout = 'main';
+                            }
+
+                            return true;
+
+                        } else {
+                            // Back3nd submenu
+                            if (self::$isBackoffice && (!empty($context->subMenu) && !Yii::$app->request->isAjax)) {
+                                $context->layout = 'main_submenu';
+                            }
+                
+                            // Front3nd sidebar
+                            if (!self::$isBackoffice && ($this->sidebarShow && !Yii::$app->request->isAjax)) {
+                                $context->layout = 'main_sidebar';
+                            }
+                        }
+                    }
+                }
+
+                // Google analytics regitered
+                $this->registerGoogleAnalytics();
+            }
 		}
+
 		return true;
 	}
 

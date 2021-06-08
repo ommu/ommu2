@@ -18,6 +18,8 @@ use yii\helpers\ArrayHelper;
 
 class Controller extends \yii\web\Controller
 {
+	use \ommu\traits\UtilityTrait;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -50,6 +52,10 @@ class Controller extends \yii\web\Controller
 	 */
 	public static $backoffice = true;
 	/**
+	 * @var boolean tempat menyimpan status banned visitor berdasarkan ip address.
+	 */
+    public static $visitorBanned = false;
+	/**
 	 * {@inheritdoc}
 	 * @var string nama model untuk hapus data(real) untuk keperluan testing.
 	 */
@@ -62,6 +68,10 @@ class Controller extends \yii\web\Controller
 	 * @var boolean tempat menyimpan status untuk mencegah fungsi seting tema dipangil berulang kali.
 	 */
 	private static $_themeApplied = false;
+	/**
+	 * @var boolean tempat menyimpan status banned dengan ip address untuk mencegah fungsi pengecekan ip address dipangil berulang kali.
+	 */
+	private static $_bannedIpApplied = false;
 
 	/**
 	 * {@inheritdoc}
@@ -94,26 +104,28 @@ class Controller extends \yii\web\Controller
 	 */
 	public function beforeAction($action) 
 	{
-		if (parent::beforeAction($action)) {
-			if (!self::$settingInitialize) {
-				self::$settingInitialize = true;
+        if (parent::beforeAction($action)) {
+            // Setting initialize
+            if (!self::$settingInitialize) {
+                self::$settingInitialize = true;
             }
 
-			if ($action instanceof \yii\web\ErrorAction) {
-				$model = \ommu\report\models\ReportSetting::find()
-					->select(['auto_report_cat_id'])
-					->where(['id' => 1])
-					->one();
-				
-				if ($model->auto_report_i) {
-					$url = Yii::$app->request->absoluteUrl;
-					$name = $action->getExceptionName();
-					$message = $action->getExceptionMessage();
-					$message = $name.' '.nl2br(Html::encode($message));
-					\ommu\report\models\Reports::insertReport($url, $message);
-				}
-			}
-		}
+            // Auto reported
+            if ($action instanceof \yii\web\ErrorAction) {
+                $model = \ommu\report\models\ReportSetting::find()
+                    ->select(['auto_report_cat_id'])
+                    ->where(['id' => 1])
+                    ->one();
+                
+                if ($model->auto_report_i) {
+                    $url = Yii::$app->request->absoluteUrl;
+                    $name = $action->getExceptionName();
+                    $message = $action->getExceptionMessage();
+                    $message = $name.' '.nl2br(Html::encode($message));
+                    \ommu\report\models\Reports::insertReport($url, $message);
+                }
+            }
+        }
 
 		return true;
 	}
@@ -143,11 +155,17 @@ class Controller extends \yii\web\Controller
 		}
 		*/
 
+        // Theme applied
 		if (!self::$_themeApplied) {
-			self::$_themeApplied = true;
 			$this->getView()->setTheme($this);
+			self::$_themeApplied = true;
         }
-        
+
+        // Banned with IP address
+		if (!self::$_bannedIpApplied) {
+            self::$visitorBanned = $this->bannedWithIps();
+			self::$_bannedIpApplied = true;
+        }
 	}
 
 	/**
@@ -193,28 +211,39 @@ class Controller extends \yii\web\Controller
 	}
 
 	/**
+	 * Menentukan balikan hak akses visitor pada aplikasi berdasarkan ip address.
+     *  function ini digunakan pada class \app\components\Views
+	 *
+	 * @return boolean true|false
+	 */
+	public function isVisitorBanned(): bool
+	{
+		return static::$visitorBanned;
+	}
+
+	/**
 	 * Mengembalikan render dalam bentuk partial atau bukan partial.
 	 *
-	 * @param string $render
-	 * @param array $data
+	 * @param string $view
+	 * @param array $params
 	 * @return mixed
 	 */
-	public function oRender($render, $data=null)
+	public function oRender($view, $params=null)
 	{
-		if ($data == null) {
-			$data = [];
+		if ($params == null) {
+			$params = [];
         }
 
-		$data = ArrayHelper::merge(
-			$data,
+		$params = ArrayHelper::merge(
+			$params,
 			['partial' => Yii::$app->request->isAjax ? true : false]
 		);
 
 		if (!Yii::$app->request->isAjax || (Yii::$app->request->isAjax && Yii::$app->request->get('_pjax'))) {
-			return $this->render($render, $data);
+			return $this->render($view, $params);
         }
 
-		return $this->renderModal($render, ArrayHelper::merge($data, ['modalHeader' => false]));
+		return $this->renderModal($view, ArrayHelper::merge($params, ['modalHeader' => false]));
 	}
 
 	/**
@@ -244,5 +273,48 @@ class Controller extends \yii\web\Controller
 		}
 
 		return $content;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function bannedWithIps(): bool
+	{
+		$setting = \app\models\CoreSettings::find()
+			->select(['banned_ips'])
+			->where(['id' => 1])
+			->one();
+
+        $visitorIsBanned = false;
+
+        if ($setting->banned_ips != '') {
+            $bannedIps = $this->strToArray($setting->banned_ips, ':');
+            $allowStatus = $bannedIps[0] == strtolower('allow') ? true : false;
+            if ($allowStatus === true) {
+                unset($bannedIps[0]);
+                $bannedIps = array_values($bannedIps);
+            }
+            $visitorIsBanned = $allowStatus === true ? true : false;
+            $visitorIp = $this->getUserIP();
+            $bannedIps = $this->strToArray($bannedIps[0]);
+
+            if (in_array($visitorIp, $bannedIps)) {
+                $visitorIsBanned = $allowStatus === true ? false : true;
+            } else {
+                foreach($bannedIps as $ip) {
+                    if (strpos($ip, '*') !== false) {
+                        if(strpos($visitorIp, array_shift(explode("*", $ip))) === 0) {
+                            $visitorIsBanned = $allowStatus === true ? false : true;
+                        }
+                    } else {
+                        if(strcmp($visitorIp, $ip) === 0) {
+                            $visitorIsBanned = $allowStatus === true ? false : true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $visitorIsBanned;
 	}
 }
