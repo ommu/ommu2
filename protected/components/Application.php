@@ -40,6 +40,10 @@ class Application extends \yii\web\Application
 	 */
 	public static function isDev(): bool 
 	{
+        if (in_array(php_sapi_name(), ['cli', 'cli-server'])) {
+            return true;
+        }
+
 		return $_SERVER["SERVER_ADDR"] == '127.0.0.1' || $_SERVER["HTTP_HOST"] == 'localhost';
 	}
 
