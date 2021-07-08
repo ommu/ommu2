@@ -11,22 +11,42 @@
  */
 
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\rbac\DbManager;
 
 class m190318_120101_gii_insert_role extends \yii\db\Migration
 {
+    /**
+     * @throws yii\base\InvalidConfigException
+     * @return DbManager
+     */
+    protected function getAuthManager()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if (!$authManager instanceof DbManager) {
+            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+        }
+
+        return $authManager;
+    }
+
 	public function up()
 	{
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
+			$this->batchInsert($tableName, ['name', 'type', 'data', 'created_at'], [
 				['/gii/*', '2', '', time()],
 				['/gii/default/index', '2', '', time()],
 			]);
 		}
 
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item_child';
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemChildTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_auth_item_child', ['parent', 'child'], [
+			$this->batchInsert($tableName, ['parent', 'child'], [
 				['userModerator', '/gii/*'],
 			]);
 		}

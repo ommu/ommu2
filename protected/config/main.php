@@ -181,6 +181,12 @@ $config = [
 			'imageAllowExtensions'  => ['jpg', 'png']
 		],
 	],
+    'controllerMap' => [
+        'migrate' => [
+            'class' => 'app\commands\MigrateController',
+            'migrationTable' => 'ommu_migration',
+        ]
+    ],
 ];
 
 $config = \yii\helpers\ArrayHelper::merge(

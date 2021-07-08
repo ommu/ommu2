@@ -12,19 +12,39 @@
 
 use Yii;
 use yii\db\Schema;
+use yii\base\InvalidConfigException;
+use yii\rbac\DbManager;
 
 class m190318_120101_rbac_cerate_table_ommu_core_auth_item extends \yii\db\Migration
 {
+    /**
+     * @throws yii\base\InvalidConfigException
+     * @return DbManager
+     */
+    protected function getAuthManager()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if (!$authManager instanceof DbManager) {
+            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+        }
+
+        return $authManager;
+    }
+
 	public function up()
 	{
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
 		$tableOptions = null;
 		if ($this->db->driverName === 'mysql') {
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemTable;
 		if (!Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->createTable('ommu_core_auth_item', [
+			$this->createTable($tableName, [
 				'name' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'type' => Schema::TYPE_INTEGER . '(11) NOT NULL',
 				'description' => Schema::TYPE_TEXT,
@@ -37,7 +57,7 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item extends \yii\db\Migra
 				'PRIMARY KEY ([[name]])',
 			], $tableOptions);
 
-			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
+			$this->batchInsert($tableName, ['name', 'type', 'data', 'created_at'], [
 				['userAdmin', '1', '', time()],
 				['userModerator', '1', '', time()],
 				['userMember', '1', '', time()],
@@ -50,6 +70,12 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item extends \yii\db\Migra
 
 	public function down()
 	{
-		$this->dropTable('ommu_core_auth_item');
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemTable;
+
+		$this->dropTable($tableName);
 	}
 }

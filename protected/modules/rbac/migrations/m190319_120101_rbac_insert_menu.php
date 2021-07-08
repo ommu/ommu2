@@ -12,21 +12,43 @@
 
 use Yii;
 use app\models\Menu;
+use yii\base\InvalidConfigException;
+use yii\rbac\DbManager;
+use mdm\admin\components\Configs;
 
 class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 {
+    /**
+     * @throws yii\base\InvalidConfigException
+     * @return DbManager
+     */
+    protected function getAuthManager()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if (!$authManager instanceof DbManager) {
+            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+        }
+
+        return $authManager;
+    }
+
 	public function up()
 	{
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_item';
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_auth_item', ['name', 'type', 'data', 'created_at'], [
+			$this->batchInsert($tableName, ['name', 'type', 'data', 'created_at'], [
 				['/#', '2', '', time()],
 			]);
 		}
 
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_menus';
+        $menuTable = Configs::instance()->menuTable;
+		$tableName = Yii::$app->db->tablePrefix . $menuTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
+			$this->batchInsert($menuTable, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Dashboard', 'rbac', null, null, '/#', null, null],
 				['Publications', 'rbac', null, null, '/#', null, null],
 				['Settings', 'rbac', null, null, '/#', null, null],
@@ -35,7 +57,7 @@ class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 		}
 		
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
+			$this->batchInsert($menuTable, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Menu Settings', 'rbac', null, Menu::getParentId('Settings#rbac'), '/rbac/menu/index', null, null],
 			]);
 		}

@@ -11,14 +11,34 @@
  */
 
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\rbac\DbManager;
 
 class m190318_120101_user_coremodule_insert_assignment extends \yii\db\Migration
 {
+    /**
+     * @throws yii\base\InvalidConfigException
+     * @return DbManager
+     */
+    protected function getAuthManager()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if (!$authManager instanceof DbManager) {
+            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+        }
+
+        return $authManager;
+    }
+
 	public function up()
 	{
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_assignment';
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
+		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_auth_assignment', ['item_name', 'user_id', 'created_at'], [
+			$this->batchInsert($tableNam, ['item_name', 'user_id', 'created_at'], [
 				['userAdmin', '1', time()],
 				['userAdmin', '2', time()],
 				['userModerator', '3', time()],

@@ -12,19 +12,22 @@
 
 use Yii;
 use yii\db\Schema;
+use mdm\admin\components\Configs;
 
 class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 {
 	public function up()
 	{
+        $menuTable = Configs::instance()->menuTable;
+
 		$tableOptions = null;
 		if ($this->db->driverName === 'mysql') {
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_menus';
+		$tableName = Yii::$app->db->tablePrefix . $menuTable;
 		if (!Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->createTable('ommu_core_menus', [
+			$this->createTable($tableName, [
 				'id' => Schema::TYPE_INTEGER . '(11) NOT NULL AUTO_INCREMENT',
 				'name' => Schema::TYPE_STRING . '(128) NOT NULL',
 				'parent' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
@@ -43,19 +46,19 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 
 			$this->createIndex(
 				'parent',
-				'ommu_core_menus',
+				$tableName,
 				'parent'
 			);
 
 			$this->createIndex(
 				'route',
-				'ommu_core_menus',
+				$tableName,
 				'route'
 			);
 
 			$this->createIndex(
 				'name',
-				'ommu_core_menus',
+				$tableName,
 				['name', 'module']
 			);
 		}
@@ -63,21 +66,24 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 
 	public function down()
 	{
+        $menuTable = Configs::instance()->menuTable;
+		$tableName = Yii::$app->db->tablePrefix . $menuTable;
+
 		$this->dropIndex(
 			'parent',
-			'ommu_core_menus'
+			$tableName
 		);
 
 		$this->dropIndex(
 			'route',
-			'ommu_core_menus'
+			$tableName
 		);
 
 		$this->dropIndex(
 			'name',
-			'ommu_core_menus'
+			$tableName
 		);
 
-		$this->dropTable('ommu_core_menus');
+		$this->dropTable($tableName);
 	}
 }

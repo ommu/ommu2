@@ -12,19 +12,39 @@
 
 use Yii;
 use yii\db\Schema;
+use yii\base\InvalidConfigException;
+use yii\rbac\DbManager;
 
 class m190318_120101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migration
 {
+    /**
+     * @throws yii\base\InvalidConfigException
+     * @return DbManager
+     */
+    protected function getAuthManager()
+    {
+        $authManager = Yii::$app->getAuthManager();
+        if (!$authManager instanceof DbManager) {
+            throw new InvalidConfigException('You should configure "authManager" component to use database before executing this migration.');
+        }
+
+        return $authManager;
+    }
+
 	public function up()
 	{
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
 		$tableOptions = null;
 		if ($this->db->driverName === 'mysql') {
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_auth_assignment';
+		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
 		if (!Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->createTable('ommu_core_auth_assignment', [
+			$this->createTable($tableName, [
 				'item_name' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'user_id' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'created_at' => Schema::TYPE_INTEGER . '(11)',
@@ -35,6 +55,12 @@ class m190318_120101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migr
 
 	public function down()
 	{
-		$this->dropTable('ommu_core_auth_assignment');
+        $authManager = $this->getAuthManager();
+        $this->db = $authManager->db;
+        $schema = $this->db->getSchema()->defaultSchema;
+
+		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
+
+		$this->dropTable($tableName);
 	}
 }

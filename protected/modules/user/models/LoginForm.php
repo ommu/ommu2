@@ -184,6 +184,8 @@ class LoginForm extends Model
 	 */
 	public function attributes()
 	{
-		return array_merge(parent::attributes(), ['rememberMe', 'isAdmin', 'is_api']);
+		return array_merge(parent::attributes(), [
+            'rememberMe', 'isAdmin', 'is_api',
+        ]);
 	}
 }

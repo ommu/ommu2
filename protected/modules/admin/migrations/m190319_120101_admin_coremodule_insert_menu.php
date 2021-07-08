@@ -12,14 +12,16 @@
 
 use Yii;
 use app\models\Menu;
+use mdm\admin\components\Configs;
 
 class m190319_120101_admin_coremodule_insert_menu extends \yii\db\Migration
 {
 	public function up()
 	{
-		$tableName = Yii::$app->db->tablePrefix . 'ommu_core_menus';
+        $menuTable = Configs::instance()->menuTable;
+		$tableName = Yii::$app->db->tablePrefix . $menuTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert('ommu_core_menus', ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
+			$this->batchInsert($tableName, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Summary', 'admin', null, Menu::getParentId('Dashboard#rbac'), '/admin/dashboard/index', null, null],
 				['Static Pages', 'admin', null, Menu::getParentId('Publications#rbac'), '/admin/page/admin/index', null, null],
 				['Public Permissions', 'admin', null, Menu::getParentId('Settingss#rbac'), '/admin/setting/general', null, null],
