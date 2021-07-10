@@ -28,13 +28,13 @@ class ModuleManager extends \yii\base\Component
 	 */
 	protected $modules;
 	/**
-	 * @var array tempat menyimpan module yang dalam kondisi aktif/enable.
-	 */
-	protected $moduleEnabled = [];
-	/**
 	 * @var array tempat menyimpan daftar core module
 	 */
 	protected $moduleCores = [];
+	/**
+	 * @var array tempat menyimpan module yang dalam kondisi aktif/enable.
+	 */
+	protected $moduleEnabled = [];
 
 	/**
 	 * {@inheritdoc}
@@ -103,8 +103,9 @@ class ModuleManager extends \yii\base\Component
         }
 
 		// mengelompokkan core module
-		if ($isCore)
+		if ($isCore) {
 			$this->moduleCores[$config['id']] = $config['class'];
+        }
 
 		// mendaftarkan urlManager module pada aplikasi
 		if (isset($config['urlManagerRules'])) {
@@ -205,7 +206,7 @@ class ModuleManager extends \yii\base\Component
 			$class = $this->modules[$id];
 			return Yii::createObject($class, [$id, Yii::$app]);
 		}
-		throw new Exception(Yii::t('app', 'Could not find/load requested module: {module-id}', array('module-id' => $id)));
+		throw new Exception(Yii::t('app', 'Could not find/load requested module: {moduleId}', array('moduleId' => $id)));
 	}
 
 	/**
@@ -257,6 +258,8 @@ class ModuleManager extends \yii\base\Component
 	 */
 	public function remove(\app\components\Module $module)
 	{
+        $moduleBasePath = $module->getBasePath();
+
 		if ($this->createBackup) {
 			$moduleBackupPath = Yii::getAlias('@runtime/module_backups');
 			if (!is_dir($moduleBackupPath)) {
@@ -266,10 +269,10 @@ class ModuleManager extends \yii\base\Component
 			}
 
 			$moduleBackupNewPath = join('/', [$moduleBackupPath, $module->id.'_'.time()]);
-			$moduleBasePath = $module->getBasePath();
 			FileHelper::copyDirectory($moduleBasePath, $moduleBackupNewPath);
-			FileHelper::removeDirectory($moduleBasePath);
 		}
+
+        FileHelper::removeDirectory($moduleBasePath);
 		
 		$this->flushCache();
 	}
@@ -291,8 +294,8 @@ class ModuleManager extends \yii\base\Component
 
 			return $model;
 		} else {
-			return Yii::t('app', '{module-id} module can\'t be enabled. Errors: {errors}', array(
-				'module-id' => ucfirst($module->id),
+			return Yii::t('app', '{moduleId} module can\'t be enabled. Errors: {errors}', array(
+				'moduleId' => ucfirst($module->id),
 				'errors' => print_r($model->errors, true),
 			));
 		}
@@ -318,14 +321,14 @@ class ModuleManager extends \yii\base\Component
 
 				return $model;
 			} else {
-				return Yii::t('app', '{module-id} module can\'t be disabled. Errors: {errors}', array(
-					'module-id' => ucfirst($module->id),
+				return Yii::t('app', '{moduleId} module can\'t be disabled. Errors: {errors}', array(
+					'moduleId' => ucfirst($module->id),
 					'errors' => print_r($model->errors, true),
 				));
 			}
 		} else {
-			return Yii::t('app', '{module-id} module not found in database.', array(
-				'module-id' => ucfirst($module->id),
+			return Yii::t('app', '{moduleId} module not found in database.', array(
+				'moduleId' => ucfirst($module->id),
 			));
 		}
 	}

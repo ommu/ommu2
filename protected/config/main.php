@@ -1,8 +1,8 @@
 <?php
+$bn = \app\components\Application::getAppId();
 $database = (\app\components\Application::isDev() && (is_readable(__DIR__ . '/database-dev.php')))?
 	require(__DIR__ . '/database-dev.php'):
 	require(__DIR__ . '/database.php');
-$bn = \app\components\Application::getAppId();
 
 $config = [
 	'id' => 'basic',

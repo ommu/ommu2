@@ -161,8 +161,10 @@ class Module extends \yii\base\Module
 
 			$migrations = opendir($migrationPath);
 			while(false !== ($migration = readdir($migrations))) {
-				if ($migration == '.' || $migration == '..' || $migration == 'uninstall.php') {
-					continue;
+				if ($migration == '.' || 
+                    $migration == '..' || 
+                    $migration == 'uninstall.php') {
+                        continue;
                 }
 
 				Yii::$app->sweeto->createCommand()->delete(\app\commands\MigrateController::getMigrationTable(), [
