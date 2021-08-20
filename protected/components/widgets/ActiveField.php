@@ -33,7 +33,7 @@ class ActiveField extends OActiveField
 	/**
 	 * {@inheritdoc}
 	 */
-	public $horizontalSubmitButtonTemplate = "{beginWrapper}\n{input}\n{endWrapper}";
+	public $horizontalSubmitButtonTemplate = "{beginWrapper}\n{input}{backTo}\n{endWrapper}";
 
 	/**
 	 * {@inheritdoc}
@@ -90,6 +90,12 @@ class ActiveField extends OActiveField
 			$button = Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']);
         }
 		$this->parts['{input}'] = $button;
+
+        $backTo = '';
+		if (isset($options['backTo'])) {
+            $backTo = $options['backTo'];
+        }
+        $this->parts['{backTo}'] = $backTo;
 
 		return $this;
 	}

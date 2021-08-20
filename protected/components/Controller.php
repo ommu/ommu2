@@ -117,7 +117,7 @@ class Controller extends \yii\web\Controller
                     ->where(['id' => 1])
                     ->one();
                 
-                if ($model->auto_report_i) {
+                if ($model->autoReport) {
                     $url = Yii::$app->request->absoluteUrl;
                     $name = $action->getExceptionName();
                     $message = $action->getExceptionMessage();
