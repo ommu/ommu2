@@ -1,6 +1,6 @@
 <?php
 /**
- * m190318_120101_rbac_cerate_table_core_auth_assignment
+ * m190318_110401_rbac_cerate_table_ommu_core_auth_rule
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -15,7 +15,7 @@ use yii\db\Schema;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
 
-class m190318_120101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migration
+class m190318_110401_rbac_cerate_table_ommu_core_auth_rule extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException
@@ -42,13 +42,14 @@ class m190318_120101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migr
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
+		$tableName = Yii::$app->db->tablePrefix . $authManager->ruleTable;
 		if (!Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->createTable($tableName, [
-				'item_name' => Schema::TYPE_STRING . '(64) NOT NULL',
-				'user_id' => Schema::TYPE_STRING . '(64) NOT NULL',
+				'name' => Schema::TYPE_STRING . '(64) NOT NULL',
+				'data' => Schema::TYPE_TEXT,
 				'created_at' => Schema::TYPE_INTEGER . '(11)',
-				'PRIMARY KEY ([[item_name]], [[user_id]])',
+				'updated_at' => Schema::TYPE_INTEGER . '(11)',
+				'PRIMARY KEY ([[name]])',
 			], $tableOptions);
 		}
 	}
@@ -59,7 +60,7 @@ class m190318_120101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migr
         $this->db = $authManager->db;
         $schema = $this->db->getSchema()->defaultSchema;
 
-		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
+		$tableName = Yii::$app->db->tablePrefix . $authManager->ruleTable;
 
 		$this->dropTable($tableName);
 	}

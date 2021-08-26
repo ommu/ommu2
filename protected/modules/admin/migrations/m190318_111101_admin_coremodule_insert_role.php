@@ -1,6 +1,6 @@
 <?php
 /**
- * m190318_120101_admin_coremodule_insert_role
+ * m190318_111101_admin_coremodule_insert_role
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -14,7 +14,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
 
-class m190318_120101_admin_coremodule_insert_role extends \yii\db\Migration
+class m190318_111101_admin_coremodule_insert_role extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException

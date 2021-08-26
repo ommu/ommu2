@@ -1,6 +1,6 @@
 <?php
 /**
- * m190319_120101_admin_coremodule_insert_menu
+ * m190318_111201_admin_coremodule_insert_menu
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -11,15 +11,16 @@
  */
 
 use Yii;
-use app\models\Menu;
 use mdm\admin\components\Configs;
+use app\models\Menu;
 
-class m190319_120101_admin_coremodule_insert_menu extends \yii\db\Migration
+class m190318_111201_admin_coremodule_insert_menu extends \yii\db\Migration
 {
 	public function up()
 	{
         $menuTable = Configs::instance()->menuTable;
 		$tableName = Yii::$app->db->tablePrefix . $menuTable;
+
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert($tableName, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
 				['Summary', 'admin', null, Menu::getParentId('Dashboard#rbac'), '/admin/dashboard/index', null, null],

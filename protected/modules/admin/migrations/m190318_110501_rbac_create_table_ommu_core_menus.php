@@ -1,6 +1,6 @@
 <?php
 /**
- * m190319_030101_rbac_create_table_ommu_core_menus
+ * m190318_110501_rbac_create_table_ommu_core_menus
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -14,7 +14,7 @@ use Yii;
 use yii\db\Schema;
 use mdm\admin\components\Configs;
 
-class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
+class m190318_110501_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 {
 	public function up()
 	{
@@ -68,21 +68,6 @@ class m190319_030101_rbac_create_table_ommu_core_menus extends \yii\db\Migration
 	{
         $menuTable = Configs::instance()->menuTable;
 		$tableName = Yii::$app->db->tablePrefix . $menuTable;
-
-		$this->dropIndex(
-			'parent',
-			$tableName
-		);
-
-		$this->dropIndex(
-			'route',
-			$tableName
-		);
-
-		$this->dropIndex(
-			'name',
-			$tableName
-		);
 
 		$this->dropTable($tableName);
 	}

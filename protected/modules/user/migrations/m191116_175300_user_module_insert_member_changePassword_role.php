@@ -1,22 +1,20 @@
 <?php
 /**
- * m190319_120101_rbac_insert_menu
+ * m191116_175300_user_module_insert_member_changePassword_role
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 18 March 2019, 19:04 WIB
+ * @created date 16 November 2019, 17:53 WIB
  * @link https://github.com/ommu/ommu
  *
  */
 
 use Yii;
-use app\models\Menu;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
-use mdm\admin\components\Configs;
 
-class m190319_120101_rbac_insert_menu extends \yii\db\Migration
+class m191116_175300_user_module_insert_member_changePassword_role extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException
@@ -41,24 +39,14 @@ class m190319_120101_rbac_insert_menu extends \yii\db\Migration
 		$tableName = Yii::$app->db->tablePrefix . $authManager->itemTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->batchInsert($tableName, ['name', 'type', 'data', 'created_at'], [
-				['/#', '2', '', time()],
+				['/user/password/change', '2', '', time()],
 			]);
 		}
 
-        $menuTable = Configs::instance()->menuTable;
-		$tableName = Yii::$app->db->tablePrefix . $menuTable;
+		$tableName = Yii::$app->db->tablePrefix . $authManager->itemChildTable;
 		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert($menuTable, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
-				['Dashboard', 'rbac', null, null, '/#', null, null],
-				['Publications', 'rbac', null, null, '/#', null, null],
-				['Settings', 'rbac', null, null, '/#', null, null],
-				['Development Tools', 'rbac', null, null, '/#', null, null],
-			]);
-		}
-		
-		if (Yii::$app->db->getTableSchema($tableName, true)) {
-			$this->batchInsert($menuTable, ['name', 'module', 'icon', 'parent', 'route', 'order', 'data'], [
-				['Menu Settings', 'rbac', null, Menu::getParentId('Settings#rbac'), '/rbac/menu/index', null, null],
+			$this->batchInsert($tableName, ['parent', 'child'], [
+				['userMember', '/user/password/change'],
 			]);
 		}
 	}

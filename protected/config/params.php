@@ -4,7 +4,7 @@ return [
 
 	// MODULES
 	// Folder apa saja yg akan di muat secara otomatis oleh module auto loader.
-	'moduleAutoloadPaths'    => ['@vendor/ommu', '@app/modules'],
+	'moduleAutoloadPaths'    => ['@app/modules', '@vendor/ommu'],
 	'moduleMarketplacePath'  => '@app/modules',
 	'dontLoadModule'         => [],
 

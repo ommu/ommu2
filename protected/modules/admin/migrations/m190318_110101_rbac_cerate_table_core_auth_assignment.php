@@ -1,11 +1,11 @@
 <?php
 /**
- * m190318_120101_rbac_cerate_table_ommu_core_auth_item_child
+ * m190318_110101_rbac_cerate_table_core_auth_assignment
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
- * @created date 18 March 2019, 19:04 WIB
+ * @created date 18 March 2019, 19:05 WIB
  * @link https://github.com/ommu/ommu
  *
  */
@@ -15,7 +15,7 @@ use yii\db\Schema;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
 
-class m190318_120101_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db\Migration
+class m190318_110101_rbac_cerate_table_core_auth_assignment extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException
@@ -42,21 +42,14 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		$tableName = Yii::$app->db->tablePrefix . $authManager->itemChildTable;
+		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
 		if (!Yii::$app->db->getTableSchema($tableName, true)) {
 			$this->createTable($tableName, [
-				'parent' => Schema::TYPE_STRING . '(64) NOT NULL',
-				'child' => Schema::TYPE_STRING . '(64) NOT NULL',
-				'creation_date' => Schema::TYPE_TIMESTAMP . ' NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT \'trigger\'',
-				'modified_date' => Schema::TYPE_TIMESTAMP . ' NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT \'trigger\'',
-				'PRIMARY KEY ([[parent]], [[child]])',
+				'item_name' => Schema::TYPE_STRING . '(64) NOT NULL',
+				'user_id' => Schema::TYPE_STRING . '(64) NOT NULL',
+				'created_at' => Schema::TYPE_INTEGER . '(11)',
+				'PRIMARY KEY ([[item_name]], [[user_id]])',
 			], $tableOptions);
-
-			$this->batchInsert($tableName, ['parent', 'child'], [
-				['userAdmin', 'userModerator'],
-				['userModerator', 'userMember'],
-				['userAdmin', '/rbac/*'],
-			]);
 		}
 	}
 
@@ -66,7 +59,7 @@ class m190318_120101_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db
         $this->db = $authManager->db;
         $schema = $this->db->getSchema()->defaultSchema;
 
-		$tableName = Yii::$app->db->tablePrefix . $authManager->itemChildTable;
+		$tableName = Yii::$app->db->tablePrefix . $authManager->assignmentTable;
 
 		$this->dropTable($tableName);
 	}

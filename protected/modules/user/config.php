@@ -13,5 +13,4 @@
 return [
 	'id'        => 'user',
 	'class'     => app\modules\user\Module::className(),
-	'core'      => true,
 ];
