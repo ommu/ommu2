@@ -167,7 +167,7 @@ class Module extends \yii\base\Module
                         continue;
                 }
 
-				Yii::$app->sweeto->createCommand()->delete(\app\commands\MigrateController::getMigrationTable(), [
+				Yii::$app->db->createCommand()->delete(\app\commands\MigrateController::getMigrationTable(), [
 					'version' => str_replace('.php', '', $migration)])->execute();
 			}
 		}

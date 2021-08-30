@@ -1,6 +1,6 @@
 <?php
 /**
- * m191116_175300_user_module_insert_member_changePassword_role
+ * m191116_175300_user_module_insert_changePassword_role
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -14,7 +14,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
 
-class m191116_175300_user_module_insert_member_changePassword_role extends \yii\db\Migration
+class m191116_175300_user_module_insert_changePassword_role extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException
