@@ -121,7 +121,7 @@ class View extends \yii\web\View
 				Yii::$app->name = $siteName ? $siteName['small'] : 'OMMU';
 
 				if (Yii::$app->isDemoTheme()) {
-					$themeInfo = self::themeParseYaml($this->theme->name);
+					$themeInfo = self::themeInfo($this->theme->name);
 					Yii::$app->name = Inflector::camelize($themeInfo['name']);
 				}
 				self::$_appNameApplied = true;
@@ -228,7 +228,7 @@ class View extends \yii\web\View
 		$title = trim($this->title) != '' ? $this->title : 'OMMU';
 		$this->title = $title;
 		if (Yii::$app->isDemoTheme()) {
-			$themeInfo = self::themeParseYaml($this->theme->name);
+			$themeInfo = self::themeInfo($this->theme->name);
 			if ($title != 'OMMU') {
 				$title = join(' - ', [$this->title, $themeInfo['name']]);
             } else {
@@ -394,7 +394,7 @@ class View extends \yii\web\View
 	 */
 	public function setThemeSetting()
 	{
-        $themeInfo = self::themeParseYaml($this->theme->name);
+        $themeInfo = self::themeInfo($this->theme->name);
 
         $themeSetting = [];
         if (isset($themeInfo['theme_setting'])) {

@@ -185,7 +185,7 @@ class SettingController extends Controller
 	public function actionSublayout($theme)
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$yaml = Theme::themeParseYaml($theme);
+		$yaml = Theme::themeInfo($theme);
 
 		return is_array($yaml) ? ($yaml['sublayout'] ? $this->getSublayout($yaml['sublayout']) : []) : [];
 	}
@@ -196,7 +196,7 @@ class SettingController extends Controller
 	public function actionPagination($theme)
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$yaml = Theme::themeParseYaml($theme);
+		$yaml = Theme::themeInfo($theme);
 
 		return is_array($yaml) ? ($yaml['pagination'] ? $this->getSublayout($yaml['pagination']) : []) : [];
 	}
@@ -207,7 +207,7 @@ class SettingController extends Controller
 	public function actionLoginlayout($theme)
 	{
 		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		$yaml = Theme::themeParseYaml($theme);
+		$yaml = Theme::themeInfo($theme);
 
 		return is_array($yaml) ? ($yaml['loginlayout'] ? $this->getSublayout($yaml['loginlayout']) : []) : [];
 	}

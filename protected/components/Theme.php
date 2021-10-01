@@ -42,7 +42,7 @@ class Theme extends \yii\base\Theme
 			}
 
 			if (is_dir($themePath . DIRECTORY_SEPARATOR . $themeId)) {
-				$result[$themeId] = self::themeParseYaml($themeId);
+				$result[$themeId] = self::themeInfo($themeId);
             }
 		}
 
