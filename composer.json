@@ -34,7 +34,6 @@
         "victor78/yii2-zipper": "~0.0.4",
 		"npm-asset/workbox-sw": "4.3.1",
 
-        "ommu/yii2-composer": "dev-master",
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
 		"ommu/yii2-selectize": "@dev",
