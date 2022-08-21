@@ -33,7 +33,7 @@
 		"npm-asset/pdfjs-dist": "~2.2",
         "victor78/yii2-zipper": "~0.0.4",
 		"npm-asset/workbox-sw": "4.3.1",
-        
+
         "ommu/yii2-composer": "dev-master",
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
@@ -41,7 +41,7 @@
 		"ommu/yii2-flatpickr": "@dev",
 		"ommu/yii2-daterangepicker": "@dev",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
-    
+
         "components/jquery": "3.5.*@stable | 3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
         "npm-asset/inputmask": "~3.2.2 | ~3.3.5",
         "npm-asset/punycode": "1.3.*",
