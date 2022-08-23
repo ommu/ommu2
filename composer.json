@@ -95,10 +95,15 @@
 		"yii\\composer\\Installer::postInstall": {
             "copyFiles": [
                 {
-					"apps.json": "back3nd/apps.json",
-					"author-sample.yaml": "author.yaml"
+					"author-sample.yaml": "author.yaml",
+					"protected/config/main.php.sample": "protected/config/main.php",
+					"protected/config/database.php.sample": "protected/config/database.php",
+					"apps.json": "back3nd/apps.json"
                 }
             ],
+			"generateCookieValidationKey": [
+				"protected/config/main.php"
+			],
 			"setPermission": [
 				{
 					"protected/runtime": "0777",
