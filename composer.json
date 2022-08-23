@@ -88,9 +88,7 @@
 	},
 	"extra": {
 		"yii\\composer\\Installer::postCreateProject": {
-			"generateCookieValidationKey": [
-				"protected/config/main.php"
-			]
+
 		},
 		"yii\\composer\\Installer::postInstall": {
             "copyFiles": [
