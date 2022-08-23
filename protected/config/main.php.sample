@@ -12,6 +12,7 @@ $config = [
 	'runtimePath' => dirname(__DIR__) . '/runtime',
 	'bootstrap' => [
 		'log',
+        'queue',
 		'app\components\bootstrap\ThemeControllerHandle'
 	],
 	'aliases' => [
@@ -29,6 +30,17 @@ $config = [
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
+        'redis' => [
+            'class'    => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port'     => 6379,
+            'database' => 0,
+            'retries'  => 1,
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'as log' => \yii\queue\LogBehavior::class,
+        ],
 		'user' => [
 			'class'             => 'app\modules\user\components\User',
 			'identityClass'     => 'app\modules\user\models\Users',
