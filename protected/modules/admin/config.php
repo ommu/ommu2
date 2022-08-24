@@ -18,5 +18,6 @@ return [
 	'controllerMap' => [
 		'dashboard' => 'app\modules\admin\controllers\DashboardController',
 		'login' => 'app\modules\admin\controllers\LoginController',
+		'symlink' => 'app\modules\admin\controllers\SymlinkController',
 	],
 ];

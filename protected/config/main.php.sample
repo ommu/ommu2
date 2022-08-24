@@ -38,8 +38,11 @@ $config = [
             'retries'  => 1,
         ],
         'queue' => [
-            'class' => \yii\queue\redis\Queue::class,
-            'as log' => \yii\queue\LogBehavior::class,
+            'class' => \yii\queue\db\Queue::class,
+            'db' => 'db',
+            'tableName' => 'ommu_queue',
+            'channel' => 'default',
+            'mutex' => \yii\mutex\MysqlMutex::class,
         ],
 		'user' => [
 			'class'             => 'app\modules\user\components\User',
@@ -87,6 +90,9 @@ $config = [
 				],
 			],
 		],
+        'broadcaster' => [
+            'class' => 'app\components\broadcast\RedisBroadcaster',
+        ],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,

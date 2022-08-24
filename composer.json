@@ -34,6 +34,8 @@
 		"npm-asset/pdfjs-dist": "~2.2",
         "victor78/yii2-zipper": "~0.0.4",
 		"npm-asset/workbox-sw": "4.3.1",
+        "predis/predis": "^1.1",
+        "npm-asset/wolfy87-eventemitter": "~5.2.1",
 
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
