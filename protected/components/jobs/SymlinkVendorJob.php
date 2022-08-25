@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
  * SymlinkVendorJob
  */
 
-class SymlinkVendorJob extends BaseObject implements \yii\queue\JobInterface
+class SymlinkVendorJob extends BaseObject
 {
     public $user_id = 0;
     public $cmd = 'st';
@@ -21,7 +21,7 @@ class SymlinkVendorJob extends BaseObject implements \yii\queue\JobInterface
 	/**
 	 * {@inheritdoc}
 	 */
-    public function execute($queue)
+    public function execute()
     {
         if ($this->user_id < 1) {
             return;
