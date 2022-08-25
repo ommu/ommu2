@@ -43,6 +43,7 @@
 		"ommu/yii2-flatpickr": "@dev",
 		"ommu/yii2-daterangepicker": "@dev",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
+		"ommu/yii2-centrifugo": "dev-master",
 
         "components/jquery": "3.5.*@stable | 3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
         "npm-asset/inputmask": "~3.2.2 | ~3.3.5",

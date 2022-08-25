@@ -31,19 +31,14 @@ class ComposerJob extends BaseObject
 
         if(is_array($args) && count($args)) {
             $cmd = ArrayHelper::merge([$this->cmd], $args);
-            Yii::$app->broadcaster->task(['message' => $cmd]);
-            echo join(' ', $cmd);
 
             chdir(self::repoPath());
             $process = new Process(join(' ', $cmd));
             $process->run(function ($type, $buffer) {
-                echo $type;
-                echo $buffer;
-                // file_put_contents(join('/', [Yii::getAlias('@webroot'), 'buffer.txt']), $buffer);
                 if (Process::ERR == $type) {
-                    Yii::$app->broadcaster->task(['message' => $buffer]);
+                    Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
                 } else {
-                    Yii::$app->broadcaster->task(['message' => $buffer]);
+                    Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
                 }
             });
         }

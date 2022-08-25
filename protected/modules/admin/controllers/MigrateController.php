@@ -62,8 +62,7 @@ class MigrateController extends Controller
 
             $migrationPath = $postData['modulePath'];
             $buffer = \app\commands\MigrateController::webMigrateUp($migrationPath);
-            echo $buffer;
-            Yii::$app->broadcaster->task(['message' => $buffer]);
+            Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
         }
 
         $modules = [];
@@ -78,7 +77,7 @@ class MigrateController extends Controller
                 }
 
                 $moduleDir = $modulePath . DIRECTORY_SEPARATOR . $moduleId;
-                if (is_dir($moduleDir) && is_file($moduleDir . DIRECTORY_SEPARATOR . 'config.php')) {
+                if (is_dir($moduleDir) && is_dir($moduleDir . DIRECTORY_SEPARATOR . 'migrations')) {
                     try {
                         $moduleDir = $moduleDir . DIRECTORY_SEPARATOR . 'migrations';
                         $modules[$moduleDir] = $moduleId;

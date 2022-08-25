@@ -118,6 +118,23 @@ class RedisBroadcaster extends \yii\base\Component
         $this->getClient()->publish($this->channel, $msg);
     }
 
+    public function task($payload)
+    {
+        $data = $this->getData($payload, 3);
+
+        $this->eventName = 'task';
+        $t = [
+            'd' => 3, //DataType
+            's' => $this->serverGroup, //ServerName
+            'e' => $this->eventName, //EventName
+            'r' => '', //RoomName
+            'p' => $data,
+        ];
+
+        $msg = json_encode($t);
+        $this->getClient()->publish($this->channel, $msg);
+    }
+
     /**
      * Roomcast akan mengirim data ke channel/room tertentu, hanya user yg ada pada
      * channel/room tersebut yg akan mendapat pesan dari server.
@@ -143,23 +160,6 @@ class RedisBroadcaster extends \yii\base\Component
             's' => $this->serverGroup, //ServerName
             'e' => $this->eventName, //EventName
             'r' => $roomName, //RoomName
-            'p' => $data,
-        ];
-
-        $msg = json_encode($t);
-        $this->getClient()->publish($this->channel, $msg);
-    }
-
-    public function task($payload)
-    {
-        $data = $this->getData($payload, 3);
-
-        $this->eventName = 'task';
-        $t = [
-            'd' => 3, //DataType
-            's' => $this->serverGroup, //ServerName
-            'e' => $this->eventName, //EventName
-            'r' => '', //RoomName
             'p' => $data,
         ];
 

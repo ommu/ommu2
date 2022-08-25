@@ -32,18 +32,14 @@ class SymlinkVendorJob extends BaseObject
         if(is_array($data) && count($data)) {
             foreach ($data as $key => $val) {
                 $cmd = [$this->cmd, $key, $val];
-                Yii::$app->broadcaster->task(['message' => $cmd]);
 
                 chdir(self::repoPath());
                 $process = new Process(join(' ', $cmd));
                 $process->run(function ($type, $buffer) {
-                    echo $type;
-                    echo $buffer;
-                    // file_put_contents(join('/', [Yii::getAlias('@webroot'), 'buffer.txt']), $buffer);
                     if (Process::ERR == $type) {
-                        Yii::$app->broadcaster->task(['message' => $buffer]);
+                        Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
                     } else {
-                        Yii::$app->broadcaster->task(['message' => $buffer]);
+                        Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
                     }
                 });
             }

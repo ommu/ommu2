@@ -71,6 +71,7 @@ class SymlinkController extends Controller
                 '/Users/putrasudaryanto/htdocs/project_ommu_extension/yii2-daterangepicker-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/yii2-daterangepicker',
                 '/Users/putrasudaryanto/htdocs/project_ommu_extension/yii2-dropzone' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/yii2-dropzone',
                 '/Users/putrasudaryanto/htdocs/project_ommu_extension/yii2-gapi' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/gapi-google-analytics-php-interface',
+                '/Users/putrasudaryanto/htdocs/project_ommu_extension/yii2-centrifugo' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/yii2-centrifugo',
                 // module
                 '/Users/putrasudaryanto/htdocs/project_ommu_module/module_users-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/users',
                 // '/Users/putrasudaryanto/htdocs/project_ommu_module/module_mailer-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/vendor/ommu/mailer',

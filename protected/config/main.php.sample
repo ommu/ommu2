@@ -91,7 +91,10 @@ $config = [
 			],
 		],
         'broadcaster' => [
-            'class' => 'app\components\broadcast\RedisBroadcaster',
+            'class'  => \ommu\centrifugo\Broadcaster::class,
+            'host'   => 'http://localhost:8000/api',
+            'secret' => 'very-long-secret-key',
+            'apikey' => 'very-long-api-ket',
         ],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
