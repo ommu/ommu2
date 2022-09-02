@@ -24,7 +24,7 @@ use mdm\admin\components\AccessControl;
 
 class ComposerController extends Controller
 {
-    const COMPOSER_CMD = 'php composer';
+    const COMPOSER_CMD = '/usr/local/bin/composer';
 
 	/**
 	 * {@inheritdoc}

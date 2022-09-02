@@ -89,6 +89,10 @@ class View extends \yii\web\View
 	 */
 	private static $_bannedIpApplied = false;
 	/**
+	 * @var boolean tempat menyimpan status untuk mencegah fungsi generate tokenAuthSocket pada controller dipangil berulang kali.
+	 */
+	private static $_authSocketInitialize = false;
+	/**
 	 * {@inheritdoc}
 	 */
 	private static $_beforeRenderEventCalled = 0;
@@ -163,6 +167,31 @@ class View extends \yii\web\View
 
                 // Google analytics regitered
                 $this->registerGoogleAnalytics();
+
+                // webSocket
+                if (!self::$_authSocketInitialize) {
+                    self::$_authSocketInitialize = true;
+
+                    \app\assets\CentrifugeAsset::register($this);
+                    if (Yii::$app->broadcaster->isEnable() === true) {
+                        $userId = !Yii::$app->user->isGuest ? Yii::$app->user->id : 'isGuest';
+                        $centrifugeToken = Yii::$app->broadcaster->getToken($userId);
+$js = <<<JS
+    const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket', {
+        token: '{$centrifugeToken}'
+    });
+
+    centrifuge.on('connecting', function (ctx) {
+        console.log('connecting: ' + ctx.code + ', ' + ctx.reason);
+    }).on('connected ', function (ctx) {
+        console.log('connected over' + ctx.transport);
+    }).on('disconnected ', function (ctx) {
+        console.log('disconnected:' + ctx.code+ ', ' +ctx.reason);
+    }).connect();
+JS;
+$this->registerJs($js, $this::POS_END);
+                    }
+                }
             }
 		}
 

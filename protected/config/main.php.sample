@@ -13,7 +13,8 @@ $config = [
 	'bootstrap' => [
 		'log',
         'queue',
-		'app\components\bootstrap\ThemeControllerHandle'
+		'app\components\bootstrap\ThemeControllerHandle',
+        'app\components\bootstrap\LanguageSelector'
 	],
 	'aliases' => [
 		'@bower'      => '@vendor/bower-asset',
@@ -21,6 +22,7 @@ $config = [
 		'@ommu'       => '@vendor/ommu',
 		'@webpublic'  => '/public',
 	],
+    'language' => 'en-US',
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -92,6 +94,7 @@ $config = [
 		],
         'broadcaster' => [
             'class'  => \ommu\centrifugo\Broadcaster::class,
+            'enable' => true,
             'host'   => 'http://localhost:8000/api',
             'secret' => 'very-long-secret-key',
             'apikey' => 'very-long-api-ket',

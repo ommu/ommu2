@@ -35,11 +35,12 @@ class SymlinkVendorJob extends BaseObject
 
                 chdir(self::repoPath());
                 $process = new Process(join(' ', $cmd));
+                echo join(' ', $cmd);
                 $process->run(function ($type, $buffer) {
                     if (Process::ERR == $type) {
-                        Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
+                        Yii::$app->broadcaster->publish('devtool', ['message' => $buffer]);
                     } else {
-                        Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
+                        Yii::$app->broadcaster->publish('devtool', ['message' => $buffer]);
                     }
                 });
             }

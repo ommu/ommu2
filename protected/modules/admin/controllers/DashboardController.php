@@ -46,7 +46,7 @@ class DashboardController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->layout = 'admin_default';
+		$this->layout = 'default';
 		$this->view->title = 'Dashboard';
 		$this->view->description = '';
 		$this->view->keywords = '';

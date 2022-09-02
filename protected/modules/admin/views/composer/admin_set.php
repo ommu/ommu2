@@ -24,10 +24,10 @@ use yii\helpers\Url;
         <?php echo Html::dropDownList('args[key1]', '', ['install' => 'install', 'update' => 'update'], ['prompt' => '', 'class' => 'form-control mb-5']);?>
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
-        <?php echo Html::dropDownList('args[key2]', '', ['--ignore-platform-req' => '--ignore-platform-req'], ['prompt' => '', 'class' => 'form-control mb-5']);?>
+        <?php echo Html::dropDownList('args[key2]', '', ['--ignore-platform-reqs' => '--ignore-platform-reqs'], ['prompt' => '', 'class' => 'form-control mb-5']);?>
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
-        <?php echo Html::dropDownList('args[key3]', '', ['-vvv' => '-vvv'], ['prompt' => '', 'class' => 'form-control mb-5']);?>
+        <?php echo Html::dropDownList('args[key3]', '', ['-v' => 'normal output', '-vv' => 'more verbose output', '-vvv' => 'debug'], ['prompt' => '', 'class' => 'form-control mb-5']);?>
     </div>
 </div>
 

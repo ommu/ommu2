@@ -62,7 +62,7 @@ class MigrateController extends Controller
 
             $migrationPath = $postData['modulePath'];
             $buffer = \app\commands\MigrateController::webMigrateUp($migrationPath);
-            Yii::$app->broadcaster->publish("devtool", ['message' => $buffer]);
+            Yii::$app->broadcaster->publish('devtool', ['message' => $buffer]);
         }
 
         $modules = [];
