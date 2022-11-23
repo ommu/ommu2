@@ -20,6 +20,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$small = $small ?? false;
 if (!$small) {
     $this->params['menu']['content'] = [
         ['label' => Yii::t('rbac-admin', 'Update'), 'url' => Url::to(['update', 'id' => $model->name]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],

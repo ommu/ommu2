@@ -18,9 +18,9 @@ use app\components\BaseSettingManager;
 
 class SettingManager extends BaseSettingManager
 {
-	public $google_meta = 1;
-	public $facebook_meta = 1;
-	public $twitter_meta = 1;
+	public $google_meta = 0;
+	public $facebook_meta = 0;
+	public $twitter_meta = 0;
 
 	/**
 	 * init()
@@ -32,21 +32,21 @@ class SettingManager extends BaseSettingManager
 
 		$app = Yii::$app->id;
 		// google meta
-		$google_meta = $this->_loaded[join('_', [$app, 'google_meta'])];
-		if (!($google_meta == '' || $google_meta == 1)) {
-			$this->google_meta = 0;
+		$google_meta = $this->_loaded[join('_', [$app, 'google_meta'])] ?? null;
+		if ($google_meta == '1') {
+			$this->google_meta = 1;
         }
 
 		// facebook meta
-		$facebook_meta = $this->_loaded[join('_', [$app, 'facebook_meta'])];
-		if (!($facebook_meta == '' || $facebook_meta == 1)) {
-			$this->facebook_meta = 0;
+		$facebook_meta = $this->_loaded[join('_', [$app, 'facebook_meta'])] ?? null;
+		if ($facebook_meta == 1) {
+			$this->facebook_meta = 1;
         }
 
 		// twitter meta
-		$twitter_meta = $this->_loaded[join('_', [$app, 'twitter_meta'])];
-		if (!($twitter_meta == '' || $twitter_meta == 1)) {
-			$this->twitter_meta = 0;
+		$twitter_meta = $this->_loaded[join('_', [$app, 'twitter_meta'])] ?? null;
+		if ($twitter_meta == 1) {
+			$this->twitter_meta = 1;
         }
 	}
 

@@ -37,30 +37,32 @@ class LanguageSelector implements BootstrapInterface
                             $app->language = $languageModel->language;
                         }
 
-                    } else {
-                        $allowedLanguages = $app->i18n->getAllowedLanguages();
-                        $langParam = isset($app->params['defaultLanguage']) ? $app->params['defaultLanguage'] : '';
+                    // } else {
+                    //     $allowedLanguages = $app->i18n->getAllowedLanguages();
+                    //     $langParam = isset($app->params['defaultLanguage']) ? $app->params['defaultLanguage'] : ''; 
 
-                        if ($langParam == '') {
-                            $langParam = $app->language;
-                        }
+                    //     if ($langParam == '') {
+                    //         $langParam = $app->language;
+                    //     }
     
-                        if (isset($app->request->cookies['language'])) {
-                            $cookieLang = (string)$app->request->cookies['language'];
+                    //     if (isset($app->request->cookies['language'])) {
+                    //         $cookieLang = (string)$app->request->cookies['language'];
     
-                            if (!array_key_exists($cookieLang, $allowedLanguages)) {
-                                $cookie = $this->createCookie($langParam);
-                                $app->getResponse()->getCookies()->add($cookie);
-                            }
-                        }
-                        $app->language = $langParam;
+                    //         if (!array_key_exists($cookieLang, $allowedLanguages)) {
+                    //             $cookie = $this->createCookie($langParam);
+                    //             $app->getResponse()->getCookies()->add($cookie);
+                    //         }
+                    //     }
+                    //     $app->language = $langParam;
                     }
 
                 } else {
                     $postData = $app->request->post();
-                    $userId = $app->user->id;
-                    $userLang = $this->getUserLang($app, $userId, $postData['lang']);
-                    $app->language = $userLang;
+                    if (isset($postData['lang'])) {
+                        $userId = $app->user->id;
+                        $userLang = $this->getUserLang($app, $userId, $postData['lang']);
+                        $app->language = $userLang;
+                    }
                 }
 
                 // $app->cache->set(self::CACHE_ID, $app->language);

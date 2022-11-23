@@ -149,6 +149,7 @@ class MenuController extends Controller
 		$this->view->keywords = '';
 		return $this->render('update', [
 			'model' => $model,
+            'small' => false,
 		]);
 	}
 
@@ -164,6 +165,7 @@ class MenuController extends Controller
 		$this->view->keywords = '';
 		return $this->render('view', [
 			'model' => $model,
+            'small' => false,
 		]);
 	}
 

@@ -172,7 +172,7 @@ class View extends \yii\web\View
                 if (!self::$_authSocketInitialize) {
                     self::$_authSocketInitialize = true;
 
-                    \app\assets\CentrifugeAsset::register($this);
+                    !Yii::$app->request->isAjax ? \app\assets\CentrifugeAsset::register($this) : '';
                     if (Yii::$app->broadcaster->isEnable() === true) {
                         $userId = !Yii::$app->user->isGuest ? Yii::$app->user->id : 'isGuest';
                         $centrifugeToken = Yii::$app->broadcaster->getToken($userId);
@@ -189,7 +189,7 @@ $js = <<<JS
         console.log('disconnected:' + ctx.code+ ', ' +ctx.reason);
     }).connect();
 JS;
-$this->registerJs($js, $this::POS_END);
+!Yii::$app->request->isAjax ? $this->registerJs($js, $this::POS_END) : '';
                     }
                 }
             }
@@ -345,7 +345,9 @@ $this->registerJs($js, $this::POS_END);
 	 */
 	public function setTheme($context): void
 	{
-		if (Yii::$app->params['installed'] === false || Yii::$app->params['databaseInstalled'] === false) {
+        $installed = Yii::$app->params['installed'] ?? null;
+        $databaseInstalled = Yii::$app->params['databaseInstalled'] ?? null;
+		if (($installed && $installed === false) || ($databaseInstalled && $databaseInstalled === false)) {
 			return;
         }
 
@@ -409,9 +411,9 @@ $this->registerJs($js, $this::POS_END);
 	 */
 	public function unsetAssetBundles()
 	{
-		$ignoreAssetClass = $this->themeSetting['ignore_asset_class'];
+		$ignoreAssetClass = $this->themeSetting['ignore_asset_class'] ?? null;
 
-		if (isset($ignoreAssetClass) && is_array($ignoreAssetClass) && !empty($ignoreAssetClass)) {
+		if ($ignoreAssetClass && is_array($ignoreAssetClass) && !empty($ignoreAssetClass)) {
 			foreach ($ignoreAssetClass as $assetClass) {
 				unset($this->assetBundles[$assetClass]);
 			}
@@ -426,16 +428,15 @@ $this->registerJs($js, $this::POS_END);
         $themeInfo = self::themeInfo($this->theme->name);
 
         $themeSetting = [];
-        if (isset($themeInfo['theme_setting'])) {
+        if (array_key_exists('theme_setting', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
         }
-        if (isset($themeInfo['widget_class'])) {
+        if (array_key_exists('widget_class', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class' => $themeInfo['widget_class']]);
         }
-        if (isset($themeInfo['ignore_asset_class'])) {
+        if (array_key_exists('ignore_asset_class', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class' => $themeInfo['ignore_asset_class']]);
         }
-
 
         $this->themeSetting = $themeSetting;
 	}
@@ -496,30 +497,24 @@ $this->registerJs($js, $this::POS_END);
             $contentParams = ['content' => $content];
             
             // widget title condition
-            if (isset($params['title'])) {
-                $contentParams = ArrayHelper::merge($contentParams, ['title' => $params['title']]);
-            }
+            $title = $params['title'] ?? false;
+            $contentParams = ArrayHelper::merge($contentParams, ['title' => $title]);
 
             // padding body condition
-            $paddingBody = true;
-            if (isset($params['paddingBody'])) {
-                $paddingBody = $params['paddingBody'];
-            }
+            $paddingBody = $params['paddingBody'] ?? true;
             $contentParams = ArrayHelper::merge($contentParams, ['paddingBody' => $paddingBody]);
 
             // text align condition
-            $textAlign = '';
-            if (isset($params['textAlign'])) {
-                $textAlign = $params['textAlign'];
-            }
+            $textAlign = $params['textAlign'] ?? false;
             $contentParams = ArrayHelper::merge($contentParams, ['textAlign' => $textAlign]);
 
             // content menu condition
-            $contentMenu = false;
-            if (isset($params['contentMenu'])) {
-                $contentMenu = $params['contentMenu'];
-            }
+            $contentMenu = $params['contentMenu'] ?? false;
             $contentParams = ArrayHelper::merge($contentParams, ['contentMenu' => $contentMenu]);
+
+            // alert condition
+            $alert = $params['alert'] ?? true;
+            $contentParams = ArrayHelper::merge($contentParams, ['alert' => $alert]);
 
 			return $this->renderFile($layoutFile, $contentParams, $context);
 		}
@@ -571,12 +566,11 @@ JS;
             $contentParams = ['content' => $content];
             
             // wizard navigation condition
-            if (isset($params['navigation'])) {
-                $contentParams = ArrayHelper::merge($contentParams, ['navigation' => $params['navigation']]);
-            }
-            if (isset($params['current'])) {
-                $contentParams = ArrayHelper::merge($contentParams, ['current' => $params['current']]);
-            }
+            $navigation = $params['navigation'] ?? '';
+            $contentParams = ArrayHelper::merge($contentParams, ['navigation' => $navigation]);
+
+            $current = $params['current'] ?? '';
+            $contentParams = ArrayHelper::merge($contentParams, ['current' => $current]);
 
 			return $this->renderFile($layoutFile, $contentParams, $context);
 		}

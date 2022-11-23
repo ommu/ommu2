@@ -14,7 +14,7 @@ namespace app\modules\user\models;
 
 use Yii;
 use yii\web\IdentityInterface;
-use ommu\users\models\Users as UsersModel;
+use app\models\Users as UsersModel;
 use ommu\users\models\UserLevel;
 use app\modules\user\components\User as UserIdentity;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -112,7 +112,7 @@ class Users extends UsersModel implements IdentityInterface
 	 * @param string $email
 	 * @return static|null
 	 */
-	public function findByEmail($email, $isAdmin=false)
+	public static function findByEmail($email, $isAdmin=false)
 	{
 		if ($isAdmin == true) {
 			$level = UserLevel::getLevel('admin');
@@ -132,7 +132,7 @@ class Users extends UsersModel implements IdentityInterface
 	 * @param string $username
 	 * @return static|null
 	 */
-	public function findByUsername($username, $isAdmin=false)
+	public static function findByUsername($username, $isAdmin=false)
 	{
 		if ($isAdmin == true) {
 			$level = UserLevel::getLevel('admin');
