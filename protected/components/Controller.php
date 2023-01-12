@@ -37,6 +37,10 @@ class Controller extends \yii\web\Controller
 	 */
 	public $subMenuParam;
 	/**
+	 * @var integer untuk menampung sub-menu parameter.
+	 */
+	public $subMenuBackTo;
+	/**
 	 * @var object instance dari current controller. jika controller yg akses site maka akan berisi site.
 	 *    variabel akan di isi oleh klas anak/turunan dari klas ini.
 	 */
@@ -258,7 +262,7 @@ class Controller extends \yii\web\Controller
 	{
 		$content = $this->renderAjax($view, $params);
 
-		$layout = $context->layout ? $context->layout : 'main';
+		$layout = $this->layout ?? 'main';
 		$layoutFile = preg_replace("/($layout)/", 'modal', $this->findLayoutFile($this->getView()));
 		if ($layoutFile !== false) {
 			$contentParams = ['content' => $content];

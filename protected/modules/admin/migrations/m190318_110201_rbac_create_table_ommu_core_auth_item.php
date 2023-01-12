@@ -63,6 +63,7 @@ class m190318_110201_rbac_cerate_table_ommu_core_auth_item extends \yii\db\Migra
 				['userMember', '1', '', time()],
 				['/rbac/*', '2', '', time()],
 				['/rbac/assignment/index', '2', '', time()],
+				['/rbac/role/index', '2', '', time()],
 				['/rbac/menu/index', '2', '', time()],
 			]);
 		}

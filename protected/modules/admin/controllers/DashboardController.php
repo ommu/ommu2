@@ -38,7 +38,7 @@ class DashboardController extends Controller
 	 * {@inheritdoc}
 	 */
 	public function allowAction(): array {
-		return ['index'];
+		return [''];
 	}
 
 	/**
@@ -46,9 +46,8 @@ class DashboardController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// $migrationPath = '/Users/putrasudaryanto/htdocs/project_ommu_module/module_users-v2/migrations';
-		// \app\commands\MigrateController::webMigrateUp($migrationPath);
-		$this->view->title = 'DashboardControllers';
+		$this->layout = 'default';
+		$this->view->title = 'Dashboard';
 		$this->view->description = '';
 		$this->view->keywords = '';
 		return $this->render('admin_index');

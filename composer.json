@@ -25,6 +25,7 @@
 		"mdmsoft/yii2-admin": "^2.7",
 		"yiisoft/yii2-imagine": "~2.0",
 		"yiisoft/yii2-jui": "^2.0",
+        "yiisoft/yii2-queue": "^2.1",
 		"sizeg/yii2-jwt": "^1.0",
 		"thamtech/yii2-uuid": "*",
 		"mg-code/yii2-helpers": "*",
@@ -33,6 +34,8 @@
 		"npm-asset/pdfjs-dist": "~2.2",
         "victor78/yii2-zipper": "~0.0.4",
 		"npm-asset/workbox-sw": "4.3.1",
+        "predis/predis": "^1.1",
+        "npm-asset/wolfy87-eventemitter": "~5.2.1",
 
 		"ommu/yii2-redactor": "~2.0",
 		"ommu/yii-traits": "dev-master",
@@ -40,6 +43,7 @@
 		"ommu/yii2-flatpickr": "@dev",
 		"ommu/yii2-daterangepicker": "@dev",
 		"ommu/gapi-google-analytics-php-interface": "dev-master",
+		"ommu/yii2-centrifugo": "dev-master",
 
         "components/jquery": "3.5.*@stable | 3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
         "npm-asset/inputmask": "~3.2.2 | ~3.3.5",
@@ -87,17 +91,20 @@
 	},
 	"extra": {
 		"yii\\composer\\Installer::postCreateProject": {
-			"generateCookieValidationKey": [
-				"protected/config/main.php"
-			]
+
 		},
 		"yii\\composer\\Installer::postInstall": {
             "copyFiles": [
                 {
-					"apps.json": "back3nd/apps.json",
-					"author-sample.yaml": "author.yaml"
+					"author-sample.yaml": "author.yaml",
+					"protected/config/main.php.sample": "protected/config/main.php",
+					"protected/config/database.php.sample": "protected/config/database.php",
+					"apps.json": "back3nd/apps.json"
                 }
             ],
+			"generateCookieValidationKey": [
+				"protected/config/main.php"
+			],
 			"setPermission": [
 				{
 					"protected/runtime": "0777",

@@ -12,7 +12,9 @@ $config = [
 	'runtimePath' => dirname(__DIR__) . '/runtime',
 	'bootstrap' => [
 		'log',
-		'app\components\bootstrap\ThemeControllerHandle'
+        'queue',
+		'app\components\bootstrap\ThemeControllerHandle',
+        'app\components\bootstrap\LanguageSelector'
 	],
 	'aliases' => [
 		'@bower'      => '@vendor/bower-asset',
@@ -20,6 +22,8 @@ $config = [
 		'@ommu'       => '@vendor/ommu',
 		'@webpublic'  => '/public',
 	],
+    'language' => 'en-US',
+    'sourceLanguage' => 'en-US',
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -29,6 +33,20 @@ $config = [
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
 		],
+        'redis' => [
+            'class'    => 'yii\redis\Connection',
+            'hostname' => 'localhost',
+            'port'     => 6379,
+            'database' => 0,
+            'retries'  => 1,
+        ],
+        'queue' => [
+            'class' => \yii\queue\db\Queue::class,
+            'db' => 'db',
+            'tableName' => 'ommu_queue',
+            'channel' => 'default',
+            'mutex' => \yii\mutex\MysqlMutex::class,
+        ],
 		'user' => [
 			'class'             => 'app\modules\user\components\User',
 			'identityClass'     => 'app\modules\user\models\Users',
@@ -75,6 +93,13 @@ $config = [
 				],
 			],
 		],
+        'broadcaster' => [
+            'class'  => \ommu\centrifugo\Broadcaster::class,
+            'enable' => true,
+            'host'   => 'http://localhost:8000/api',
+            'secret' => 'very-long-secret-key',
+            'apikey' => 'very-long-api-ket',
+        ],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,

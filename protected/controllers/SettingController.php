@@ -62,34 +62,13 @@ class SettingController extends Controller
 			$themes[$key] = $val ? $val['desc'] : ucwords($key);
 		}
 
-		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'];
-		if (!isset($backSubLayout)) {
-			$backSubLayout = [];
-        }
-		$backPagination = $allTheme[$model->backoffice_theme]['pagination'];
-		if (!isset($backPagination)) {
-			$backPagination = [];
-        }
-		$backLoginLayout = $allTheme[$model->backoffice_theme]['loginlayout'];
-		if (!isset($backLoginLayout)) {
-			$backLoginLayout = [];
-        }
-		$maintenanceSubLayout = $allTheme[$model->maintenance_theme]['sublayout'];
-		if (!isset($maintenanceSubLayout)) {
-			$maintenanceSubLayout = [];
-        }
-		$frontSubLayout = $allTheme[$model->theme]['sublayout'];
-		if (!isset($frontSubLayout)) {
-			$frontSubLayout = [];
-        }
-		$frontPagination = $allTheme[$model->theme]['pagination'];
-		if (!isset($frontPagination)) {
-			$frontPagination = [];
-        }
-		$frontLoginLayout = $allTheme[$model->theme]['loginlayout'];
-		if (!isset($frontLoginLayout)) {
-			$frontLoginLayout = [];
-        }
+		$backSubLayout = $allTheme[$model->backoffice_theme]['sublayout'] ?? [];
+		$backPagination = $allTheme[$model->backoffice_theme]['pagination'] ?? [];
+		$backLoginLayout = $allTheme[$model->backoffice_theme]['loginlayout'] ?? [];
+		$maintenanceSubLayout = $allTheme[$model->maintenance_theme]['sublayout'] ?? [];
+		$frontSubLayout = $allTheme[$model->theme]['sublayout'] ?? [];
+		$frontPagination = $allTheme[$model->theme]['pagination'] ?? [];
+		$frontLoginLayout = $allTheme[$model->theme]['loginlayout'] ?? [];
 
 		if (Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());

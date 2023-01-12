@@ -35,6 +35,7 @@ $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('_script.js'));
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i>';
 
+$small = $small ?? false;
 if (!$small) {
     $this->params['menu']['content'] = [
         ['label' => Yii::t('rbac-admin', 'Update'), 'url' => Url::to(['update', 'id' => $model->name]), 'icon' => 'pencil', 'htmlOptions' => ['class' => 'btn btn-primary']],

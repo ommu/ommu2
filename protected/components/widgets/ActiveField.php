@@ -85,9 +85,9 @@ class ActiveField extends OActiveField
 		$options['label'] = null;
 
 		$model = $this->model;
-		$button = $options['button'];
+		$button = $options['button'] ?? null;
 		if (!isset($options['button'])) {
-			$button = Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']);
+			$button = Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
         }
 		$this->parts['{input}'] = $button;
 

@@ -32,6 +32,7 @@ use app\components\Controller;
 use mdm\admin\components\AccessControl;
 use app\models\SourceMessage;
 use app\models\search\SourceMessage as SourceMessageSearch;
+use yii\helpers\ArrayHelper;
 
 class PhraseController extends Controller
 {
@@ -208,6 +209,9 @@ class PhraseController extends Controller
 	protected function findModel($id)
 	{
 		if (($model = SourceMessage::findOne($id)) !== null) {
+            if (!empty($model->languages)) {
+                $model->translate = ArrayHelper::map($model->translates, 'language', 'translation');
+            }
 			return $model;
         }
 
