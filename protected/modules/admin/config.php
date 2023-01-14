@@ -21,5 +21,7 @@ return [
 		'symlink' => 'app\modules\admin\controllers\SymlinkController',
 		'composer' => 'app\modules\admin\controllers\ComposerController',
 		'migrate' => 'app\modules\admin\controllers\MigrateController',
+		'view-log' => 'app\modules\admin\controllers\ViewLogController',
+		'asset' => 'app\modules\admin\controllers\AssetController',
 	],
 ];
