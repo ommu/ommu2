@@ -391,19 +391,19 @@ JS;
 	/**
 	 * Menetapkan sub-layout dari tema yang akan digunakan/aktif berdasarkan current controller.
 	 */
-	public function getSublayout()
+	public function getSublayout($subLayout='default')
 	{
 		if (($layout = Yii::$app->request->get('layout')) != null) {
-			return $layout ? $layout : 'default';
+			return $layout ? $layout : $subLayout;
         }
 
 		$app = Yii::$app->id;
-		$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'theme_sublayout']), 'default');
+		$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'theme_sublayout']), $subLayout);
 		if (self::$isBackoffice) {
-			$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_sublayout']), 'default');
+			$themeSublayout = Yii::$app->setting->get(join('_', [$app, 'backoffice_theme_sublayout']), $subLayout);
         }
 
-		return $themeSublayout ? $themeSublayout : 'default';
+		return $themeSublayout ? $themeSublayout : $subLayout;
 	}
 
 	/**
@@ -495,6 +495,10 @@ JS;
 		$layoutFile = preg_replace("/($layout)/", 'widget', $context->findLayoutFile($this));
 		if ($layoutFile !== false) {
             $contentParams = ['content' => $content];
+            
+            // widget title condition
+            $pageId = $params['pageId'] ?? false;
+            $contentParams = ArrayHelper::merge($contentParams, ['pageId' => $pageId]);
             
             // widget title condition
             $title = $params['title'] ?? false;

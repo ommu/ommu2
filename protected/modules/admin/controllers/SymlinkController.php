@@ -88,7 +88,8 @@ class SymlinkController extends Controller
                 '/Users/putrasudaryanto/htdocs/project_ommu_theme/gentelella-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/gentelella',
                 '/Users/putrasudaryanto/htdocs/project_ommu_theme/stackadmin-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/stackadmin',
                 '/Users/putrasudaryanto/htdocs/project_ommu_theme/arnica-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/arnica',
-                '/Users/putrasudaryanto/htdocs/project_ommu_theme/blueclean-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/blueclean'
+                '/Users/putrasudaryanto/htdocs/project_ommu_theme/blueclean-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/blueclean',
+                '/Users/putrasudaryanto/htdocs/project_ommu_theme/sandbox-v2/sandbox-master-v2' => '/Users/putrasudaryanto/htdocs/_client/bpadjogja_v2/protected/themes/sandbox'
             ];
 
             $model = new \app\components\jobs\SymlinkVendorJob([

@@ -33,8 +33,4 @@ JS;
 $this->registerJs($js, $this::POS_END);
 ?>
 
-<?php echo Html::a(Yii::t('app', 'Create Symlinks'), Url::to(['/admin/symlink/set']), ['class' => 'btn btn-primary modal-btn', 'data-target'=> 'modalBroadcast'])?>
-
-<?php echo Html::a(Yii::t('app', 'Composer'), Url::to(['/admin/composer/set']), ['class' => 'btn btn-primary modal-btn', 'data-target'=> 'modalBroadcast'])?>
-
-<?php echo Html::a(Yii::t('app', 'Migrate'), Url::to(['/admin/migrate/set']), ['class' => 'btn btn-primary modal-btn', 'data-target'=> 'modalBroadcast'])?>
+<?php echo Html::a(Yii::t('app', 'Composer'), Url::to(['/admin/composer/set']), ['class' => 'btn btn-success modal-btn', 'data-target'=> 'modalBroadcast'])?>

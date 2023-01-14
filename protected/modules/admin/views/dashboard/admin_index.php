@@ -57,10 +57,46 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Summary');
     </div>
 </div>
 
-<?php echo $this->renderWidget('admin_development', [
-    'title' => Yii::t('app', 'Development Tool'),
-	'contentMenu' => true,
-	'breadcrumb' => false,
-]); ?>
+<div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?php echo $this->renderWidget('_migrate', [
+            'title' => Yii::t('app', 'Migrate'),
+            'contentMenu' => true,
+            'breadcrumb' => false,
+        ]); ?>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?php echo $this->renderWidget('_composer', [
+            'title' => Yii::t('app', 'Composer'),
+            'contentMenu' => true,
+            'breadcrumb' => false,
+        ]); ?>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?php echo $this->renderWidget('_asset', [
+            'title' => Yii::t('app', 'Assets'),
+            'contentMenu' => true,
+            'breadcrumb' => false,
+        ]); ?>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?php echo $this->renderWidget('_view_log', [
+            'title' => Yii::t('app', 'Logs'),
+            'contentMenu' => true,
+            'breadcrumb' => false,
+        ]); ?>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <?php echo $this->renderWidget('_others', [
+            'title' => Yii::t('app', 'Others'),
+            'contentMenu' => true,
+            'breadcrumb' => false,
+        ]); ?>
+    </div>
+</div>
 
 </div>
