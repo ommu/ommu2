@@ -39,6 +39,18 @@ class m230512_010725_admin_modulecore_create_table_zoneVillage extends \yii\db\M
 				'PRIMARY KEY ([[village_id]])',
 				'CONSTRAINT ommu_core_zone_village_ibfk_1 FOREIGN KEY ([[district_id]]) REFERENCES {{%ommu_core_zone_district}} ([[district_id]]) ON DELETE CASCADE ON UPDATE CASCADE',
 			], $tableOptions);
+
+            $this->createIndex(
+                'village_name',
+                $tableName,
+                'village_name'
+            );
+
+            $this->createIndex(
+                'mfdonline',
+                $tableName,
+                'mfdonline'
+            );
 		}
 	}
 

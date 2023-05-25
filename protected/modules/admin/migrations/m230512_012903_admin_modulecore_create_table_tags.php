@@ -35,6 +35,12 @@ class m230512_012903_admin_modulecore_create_table_tags extends \yii\db\Migratio
 				'_id' => Schema::TYPE_INTEGER . '(11)',
 				'PRIMARY KEY ([[tag_id]])',
 			], $tableOptions);
+
+            $this->createIndex(
+                'body',
+                $tableName,
+                'body'
+            );
 		}
 	}
 

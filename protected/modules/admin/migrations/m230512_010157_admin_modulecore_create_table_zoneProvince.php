@@ -39,6 +39,18 @@ class m230512_010157_admin_modulecore_create_table_zoneProvince extends \yii\db\
 				'PRIMARY KEY ([[province_id]])',
 				'CONSTRAINT ommu_core_zone_province_ibfk_1 FOREIGN KEY ([[country_id]]) REFERENCES {{%ommu_core_zone_country}} ([[country_id]]) ON DELETE CASCADE ON UPDATE CASCADE',
 			], $tableOptions);
+
+            $this->createIndex(
+                'province_name',
+                $tableName,
+                'province_name'
+            );
+
+            $this->createIndex(
+                'mfdonline',
+                $tableName,
+                'mfdonline'
+            );
 		}
 	}
 

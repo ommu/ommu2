@@ -34,6 +34,12 @@ class m230512_005350_admin_modulecore_create_table_zoneCountry extends \yii\db\M
 				'slug' => Schema::TYPE_STRING . '(64) NOT NULL COMMENT \'trigger\'',
 				'PRIMARY KEY ([[country_id]])',
 			], $tableOptions);
+
+            $this->createIndex(
+                'country_name',
+                $tableName,
+                'country_name'
+            );
 		}
 	}
 
