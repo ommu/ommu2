@@ -36,6 +36,12 @@ class m230512_012958_admin_modulecore_create_table_pageViews extends \yii\db\Mig
 				'CONSTRAINT ommu_core_page_views_ibfk_1 FOREIGN KEY ([[page_id]]) REFERENCES {{%ommu_core_pages}} ([[page_id]]) ON DELETE CASCADE ON UPDATE CASCADE',
 				'CONSTRAINT ommu_core_page_views_ibfk_2 FOREIGN KEY ([[user_id]]) REFERENCES {{%ommu_users}} ([[user_id]]) ON DELETE CASCADE ON UPDATE CASCADE',
 			], $tableOptions);
+
+			$this->createIndex(
+				'pageWithUser',
+				$tableName,
+				['page_id', 'user_id']
+			);
 		}
 	}
 

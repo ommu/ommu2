@@ -34,6 +34,12 @@ class m230512_005330_admin_modulecore_create_table_modules extends \yii\db\Migra
 				'modified_id' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
 				'PRIMARY KEY ([[id]])',
 			], $tableOptions);
+
+            $this->createIndex(
+                'module_id',
+                $tableName,
+                'module_id'
+            );
 		}
 	}
 

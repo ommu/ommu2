@@ -38,11 +38,14 @@ class m230512_012903_admin_modulecore_create_table_pages extends \yii\db\Migrati
 				'modified_id' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
 				'updated_date' => Schema::TYPE_DATETIME . ' NOT NULL DEFAULT \'0000-00-00 00:00:00\' COMMENT \'trigger\'',
 				'slug' => Schema::TYPE_TEXT . ' NOT NULL',
-				'_id' => Schema::TYPE_INTEGER . '(11) UNSIGNED',
-				'_alias_url' => Schema::TYPE_TEXT,
-				'_intro_text' => Schema::TYPE_TEXT,
 				'PRIMARY KEY ([[page_id]])',
 			], $tableOptions);
+
+            $this->createIndex(
+                'name',
+                $tableName,
+                'name'
+            );
 		}
 	}
 
