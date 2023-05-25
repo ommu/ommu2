@@ -1,6 +1,6 @@
 <?php
 /**
- * m230525_214054_admin_modulecore_addStoreProsedure_sync
+ * m230525_134620_admin_modulecore_addStoreProsedure_sync
  *
  * @author Putra Sudaryanto <dwptr@ommu.id>
  * @contact (+62)811-2540-432
@@ -13,7 +13,7 @@
 use Yii;
 use yii\db\Schema;
 
-class m230525_214054_admin_modulecore_addStoreProsedure_sync extends \yii\db\Migration
+class m230525_134620_admin_modulecore_addStoreProsedure_sync extends \yii\db\Migration
 {
 	public function up()
 	{
