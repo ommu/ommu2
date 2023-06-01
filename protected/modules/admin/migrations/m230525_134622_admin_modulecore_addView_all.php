@@ -26,8 +26,8 @@ select
   `a`.`page_id` AS `page_id`,
   sum(case when `b`.`publish` = '1' then `b`.`views` else 0 end) AS `views`,
   sum(`b`.`views`) AS `view_all`
-from (`_client_bpadjogja_v2`.`ommu_core_pages` `a`
-   left join `_client_bpadjogja_v2`.`ommu_core_page_views` `b`
+from (`ommu_core_pages` `a`
+   left join `ommu_core_page_views` `b`
      on (`a`.`page_id` = `b`.`page_id`))
 group by `a`.`page_id`;
 SQL;

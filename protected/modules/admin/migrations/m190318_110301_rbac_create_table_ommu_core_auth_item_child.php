@@ -1,6 +1,6 @@
 <?php
 /**
- * m190318_110301_rbac_cerate_table_ommu_core_auth_item_child
+ * m190318_110301_rbac_create_table_ommu_core_auth_item_child
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
  * @contact (+62)856-299-4114
@@ -15,7 +15,7 @@ use yii\db\Schema;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;
 
-class m190318_110301_rbac_cerate_table_ommu_core_auth_item_child extends \yii\db\Migration
+class m190318_110301_rbac_create_table_ommu_core_auth_item_child extends \yii\db\Migration
 {
     /**
      * @throws yii\base\InvalidConfigException

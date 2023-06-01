@@ -17,16 +17,16 @@ class m230525_134620_admin_modulecore_addStoreProsedure_sync extends \yii\db\Mig
 {
 	public function up()
 	{
-        $this->execute('DROP PROCEDURE `syncGetMessage`');
-        $this->execute('DROP PROCEDURE `syncSlug`');
+        $this->execute('DROP PROCEDURE IF EXISTS `syncGetMessage`');
+        $this->execute('DROP PROCEDURE IF EXISTS `syncSlug`');
 
 		// alter sp syncGetMessage
 		$alterProsedureSyncGetMessage = <<< SQL
 CREATE PROCEDURE `syncGetMessage`(IN id_sp INT, OUT message_sp TEXT)
 BEGIN
-		SELECT `message` 
-		INTO message_sp 
-		FROM `source_message` WHERE `id`=id_sp;
+	SELECT `message` 
+	INTO message_sp 
+	FROM `source_message` WHERE `id`=id_sp;
 END;
 SQL;
 		$this->execute($alterProsedureSyncGetMessage);
@@ -35,8 +35,7 @@ SQL;
 		$alterProsedureSyncSlug = <<< SQL
 CREATE PROCEDURE `syncSlug`(IN `string_sp` TEXT, OUT `slug_sp` TEXT)
 BEGIN
-		SELECT LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(string_sp), ':', ''), '’', ''), ')', ''), '(', ''), ',', ''), '\\', ''), '\/', ''), '\"', ''), '?', ''), '\'', ''), '&', ''), '!', ''), '.', ''), ' ', '-'), '--', '-'), '--', '-'))
-		INTO slug_sp;
+	SELECT LOWER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(string_sp), ':', ''), '’', ''), ')', ''), '(', ''), ',', ''), '\\', ''), '\/', ''), '\"', ''), '?', ''), '\'', ''), '&', ''), '!', ''), '.', ''), ' ', '-'), '--', '-'), '--', '-')) INTO slug_sp;
 END;
 SQL;
 		$this->execute($alterProsedureSyncSlug);
