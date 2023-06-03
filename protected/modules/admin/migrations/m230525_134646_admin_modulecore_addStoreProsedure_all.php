@@ -17,15 +17,15 @@ class m230525_134646_admin_modulecore_addStoreProsedure_all extends \yii\db\Migr
 {
 	public function up()
 	{
-        $this->execute('DROP PROCEDURE `coreGetLanguageDefault`');
-        $this->execute('DROP PROCEDURE `coreGetSetting`');
-        $this->execute('DROP PROCEDURE `coreGetZoneCountryWithProvinceId`');
-        $this->execute('DROP PROCEDURE `coreGetZoneProvinceWithCityId`');
-        $this->execute('DROP PROCEDURE `coreGetZoneProvinceWithCityMfdonline`');
-        $this->execute('DROP PROCEDURE `coreGetZoneCityWithDistrictId`');
-        $this->execute('DROP PROCEDURE `coreGetZoneCityWithDistrictMfdonline`');
-        $this->execute('DROP PROCEDURE `coreGetZoneDistrictWithVillageId`');
-        $this->execute('DROP PROCEDURE `coreGetZoneDistrictWithVillageMfdonline`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetLanguageDefault`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetSetting`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneCountryWithProvinceId`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneProvinceWithCityId`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneProvinceWithCityMfdonline`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneCityWithDistrictId`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneCityWithDistrictMfdonline`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneDistrictWithVillageId`');
+        $this->execute('DROP PROCEDURE IF EXISTS `coreGetZoneDistrictWithVillageMfdonline`');
 
 		// alter sp coreGetLanguageDefault
 		$alterProsedureCoreGetLanguageDefault = <<< SQL
@@ -46,7 +46,7 @@ BEGIN
 	 */
 	SELECT `signup_numgiven`
 	INTO signup_numgiven_sp
-	FROM `ommu_core_settings` 
+	FROM `ommu_core_settings`
 	WHERE `id`=1;
 END;
 SQL;

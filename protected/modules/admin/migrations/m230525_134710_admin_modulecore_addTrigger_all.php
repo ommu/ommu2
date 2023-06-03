@@ -40,7 +40,7 @@ class m230525_134710_admin_modulecore_addTrigger_all extends \yii\db\Migration
 		// alter trigger coreBeforeUpdatePages
 		$alterTriggerCoreBeforeUpdatePages = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdatePages` AFTER DELETE ON `ommu_core_pages` 
+    TRIGGER `coreBeforeUpdatePages` BEFORE UPDATE ON `ommu_core_pages` 
     FOR EACH ROW BEGIN
 	IF (NEW.publish <> OLD.publish) THEN
 		SET NEW.updated_date = NOW();
@@ -52,7 +52,7 @@ SQL;
 		// alter trigger coreAfterDeletePages
 		$alterTriggerCoreAfterDeletePages = <<< SQL
 CREATE
-    TRIGGER `coreAfterDeletePages` BEFORE UPDATE ON `ommu_core_pages` 
+    TRIGGER `coreAfterDeletePages` AFTER DELETE ON `ommu_core_pages` 
     FOR EACH ROW BEGIN
 	/*
 	DELETE FROM `source_message` WHERE `id`=OLD.name;
@@ -69,7 +69,7 @@ SQL;
 		// alter trigger coreAfterInsertPageViews
 		$alterTriggerCoreAfterInsertPageViews = <<< SQL
 CREATE
-    TRIGGER `coreAfterInsertPageViews` BEFORE UPDATE ON `ommu_core_page_views` 
+    TRIGGER `coreAfterInsertPageViews` AFTER INSERT ON `ommu_core_page_views` 
     FOR EACH ROW BEGIN
 	IF (NEW.publish = 1 AND NEW.views <> 0) THEN
 		INSERT `ommu_core_page_view_history` (`view_id`, `view_date`, `view_ip`)
@@ -82,7 +82,7 @@ SQL;
 		// alter trigger coreBeforeUpdatePageViews
 		$alterTriggerCoreBeforeUpdatePageViews = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdatePageViews` AFTER INSERT ON `ommu_core_page_views` 
+    TRIGGER `coreBeforeUpdatePageViews` BEFORE UPDATE ON `ommu_core_page_views` 
     FOR EACH ROW BEGIN
 	IF (NEW.publish <> OLD.publish) THEN
 		IF (NEW.publish = 0) THEN
@@ -100,7 +100,7 @@ SQL;
 		// alter trigger coreAfterUpdatePageViews
 		$alterTriggerCoreAfterUpdatePageViews = <<< SQL
 CREATE
-    TRIGGER `coreAfterUpdatePageViews` BEFORE UPDATE ON `ommu_core_page_views` 
+    TRIGGER `coreAfterUpdatePageViews` AFTER UPDATE ON `ommu_core_page_views` 
     FOR EACH ROW BEGIN
 	IF (NEW.view_date <> OLD.view_date) THEN
 		INSERT `ommu_core_page_view_history` (`view_id`, `view_date`, `view_ip`)
@@ -113,7 +113,7 @@ SQL;
 		// alter trigger coreBeforeInsertZoneCountry
 		$alterTriggerCoreBeforeInsertZoneCountry = <<< SQL
 CREATE
-    TRIGGER `coreBeforeInsertZoneCountry` AFTER UPDATE ON `ommu_core_zone_country` 
+    TRIGGER `coreBeforeInsertZoneCountry` BEFORE INSERT ON `ommu_core_zone_country` 
     FOR EACH ROW BEGIN
 	DECLARE slug_tr TEXT;
 	
@@ -130,7 +130,7 @@ SQL;
 		// alter trigger coreBeforeUpdateZoneCountry
 		$alterTriggerCoreBeforeUpdateZoneCountry = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateZoneCountry` AFTER INSERT ON `ommu_core_zone_country` 
+    TRIGGER `coreBeforeUpdateZoneCountry` BEFORE UPDATE ON `ommu_core_zone_country` 
     FOR EACH ROW BEGIN
 	DECLARE slug_tr TEXT;
 	
@@ -145,7 +145,7 @@ SQL;
 		// alter trigger coreBeforeInsertZoneProvince
 		$alterTriggerCoreBeforeInsertZoneProvince = <<< SQL
 CREATE
-    TRIGGER `coreBeforeInsertZoneProvince` BEFORE UPDATE ON `ommu_core_zone_province` 
+    TRIGGER `coreBeforeInsertZoneProvince` BEFORE INSERT ON `ommu_core_zone_province` 
     FOR EACH ROW BEGIN
 	DECLARE slug_tr TEXT;
 	
@@ -162,7 +162,7 @@ SQL;
 		// alter trigger coreBeforeUpdateZoneProvince
 		$alterTriggerCoreBeforeUpdateZoneProvince = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateZoneProvince` AFTER UPDATE ON `ommu_core_zone_province` 
+    TRIGGER `coreBeforeUpdateZoneProvince` BEFORE UPDATE ON `ommu_core_zone_province` 
     FOR EACH ROW BEGIN
 	DECLARE slug_tr TEXT;
 	
@@ -181,7 +181,7 @@ SQL;
 		// alter trigger coreBeforeInsertZoneCity
 		$alterTriggerCoreBeforeInsertZoneCity = <<< SQL
 CREATE
-    TRIGGER `coreBeforeInsertZoneCity` AFTER DELETE ON `ommu_core_zone_city` 
+    TRIGGER `coreBeforeInsertZoneCity` BEFORE INSERT ON `ommu_core_zone_city` 
     FOR EACH ROW BEGIN
 	DECLARE province_id_tr INT;
 	DECLARE slug_tr TEXT;
@@ -234,7 +234,7 @@ SQL;
 		// alter trigger coreBeforeInsertZoneDistricts
 		$alterTriggerCoreBeforeInsertZoneDistricts = <<< SQL
 CREATE
-    TRIGGER `coreBeforeInsertZoneDistricts` BEFORE UPDATE ON `ommu_core_zone_district` 
+    TRIGGER `coreBeforeInsertZoneDistricts` BEFORE INSERT ON `ommu_core_zone_district` 
     FOR EACH ROW BEGIN
 	DECLARE `city_id_tr` INT;
 	DECLARE slug_tr TEXT;
@@ -260,7 +260,7 @@ SQL;
 		// alter trigger coreBeforeUpdateZoneDistricts
 		$alterTriggerCoreBeforeUpdateZoneDistricts = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateZoneDistricts` AFTER INSERT ON `ommu_core_zone_district` 
+    TRIGGER `coreBeforeUpdateZoneDistricts` BEFORE UPDATE ON `ommu_core_zone_district` 
     FOR EACH ROW BEGIN
 	DECLARE `city_id_tr` INT;
 	DECLARE slug_tr TEXT;
@@ -287,7 +287,7 @@ SQL;
 		// alter trigger coreBeforeInsertZoneVillage
 		$alterTriggerCoreBeforeInsertZoneVillage = <<< SQL
 CREATE
-    TRIGGER `coreBeforeInsertZoneVillage` BEFORE UPDATE ON `ommu_core_zone_village` 
+    TRIGGER `coreBeforeInsertZoneVillage` BEFORE INSERT ON `ommu_core_zone_village` 
     FOR EACH ROW BEGIN
 	DECLARE `district_id_tr` INT;
 	DECLARE slug_tr TEXT;
@@ -314,7 +314,7 @@ SQL;
 		// alter trigger coreBeforeUpdateZoneVillage
 		$alterTriggerCoreBeforeUpdateZoneVillage = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateZoneVillage` AFTER UPDATE ON `ommu_core_zone_village` 
+    TRIGGER `coreBeforeUpdateZoneVillage` BEFORE UPDATE ON `ommu_core_zone_village` 
     FOR EACH ROW BEGIN
 	DECLARE `district_id_tr` INT;
 	DECLARE slug_tr TEXT;
@@ -342,7 +342,7 @@ SQL;
 		// alter trigger coreBeforeUpdateSettings
 		$alterTriggerCoreBeforeUpdateSettings = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateSettings` AFTER INSERT ON `ommu_core_settings` 
+    TRIGGER `coreBeforeUpdateSettings` BEFORE UPDATE ON `ommu_core_settings` 
     FOR EACH ROW BEGIN
 	/*
 	IF (NEW.site_type <> OLD.site_type) THEN
@@ -386,7 +386,7 @@ SQL;
 		// alter trigger coreBeforeUpdateTags
 		$alterTriggerCoreBeforeUpdateTags = <<< SQL
 CREATE
-    TRIGGER `coreBeforeUpdateTags` AFTER UPDATE ON `ommu_core_tags` 
+    TRIGGER `coreBeforeUpdateTags` BEFORE UPDATE ON `ommu_core_tags` 
     FOR EACH ROW BEGIN
 	IF (NEW.publish <> OLD.publish) THEN
 		SET NEW.updated_date = NOW();
