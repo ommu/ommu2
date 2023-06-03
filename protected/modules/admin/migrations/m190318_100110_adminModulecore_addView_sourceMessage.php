@@ -25,8 +25,8 @@ CREATE VIEW `_source_message` AS
 select
   `a`.`id` AS `id`,
   count(`b`.`id`) AS `translates`
-from (`_client_bpadjogja_v2_mediaakses`.`source_message` `a`
-   left join `_client_bpadjogja_v2_mediaakses`.`message` `b`
+from (`source_message` `a`
+   left join `message` `b`
      on (`a`.`id` = `b`.`id`))
 group by `a`.`id`;
 SQL;
