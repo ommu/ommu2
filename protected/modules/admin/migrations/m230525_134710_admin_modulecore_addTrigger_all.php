@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230525_134710_admin_modulecore_addTrigger_all extends \yii\db\Migration

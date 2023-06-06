@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230512_012958_admin_modulecore_create_table_pageViews extends \yii\db\Migration

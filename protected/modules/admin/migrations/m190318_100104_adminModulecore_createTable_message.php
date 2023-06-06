@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m190318_100104_adminModulecore_createTable_message extends \yii\db\Migration

@@ -10,8 +10,6 @@
  *
  */
 
-use Yii;
-
 class m190318_100101_admin_modulecore_change_migration_version extends \yii\db\Migration
 {
 	/**

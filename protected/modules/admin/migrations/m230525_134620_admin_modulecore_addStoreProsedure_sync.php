@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230525_134620_admin_modulecore_addStoreProsedure_sync extends \yii\db\Migration

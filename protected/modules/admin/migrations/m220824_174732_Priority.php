@@ -5,7 +5,6 @@
  * @license http://www.yiiframework.com/license/
  */
 
-use Yii;
 use yii\db\Migration;
 
 /**

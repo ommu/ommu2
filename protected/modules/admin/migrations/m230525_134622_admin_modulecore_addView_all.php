@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230525_134622_admin_modulecore_addView_all extends \yii\db\Migration

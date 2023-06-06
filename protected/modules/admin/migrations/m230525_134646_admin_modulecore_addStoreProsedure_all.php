@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230525_134646_admin_modulecore_addStoreProsedure_all extends \yii\db\Migration

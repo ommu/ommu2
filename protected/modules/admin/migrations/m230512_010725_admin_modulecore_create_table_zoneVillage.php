@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230512_010725_admin_modulecore_create_table_zoneVillage extends \yii\db\Migration

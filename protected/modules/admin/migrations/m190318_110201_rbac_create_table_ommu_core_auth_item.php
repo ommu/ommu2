@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;

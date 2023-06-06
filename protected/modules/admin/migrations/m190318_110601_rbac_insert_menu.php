@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use app\models\Menu;
 use yii\base\InvalidConfigException;
 use yii\rbac\DbManager;

@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m190318_100110_adminModulecore_addView_sourceMessage extends \yii\db\Migration

@@ -10,7 +10,6 @@
  *
  */
 
-use Yii;
 use yii\db\Schema;
 
 class m230512_013012_admin_modulecore_create_table_pageHistory extends \yii\db\Migration
