@@ -284,6 +284,10 @@ class Controller extends \yii\web\Controller
 	 */
 	public function bannedWithIps(): bool
 	{
+		if (Yii::$app->isDev()) {
+			return false;
+		}
+
 		$setting = \app\models\CoreSettings::find()
 			->select(['banned_ips'])
 			->where(['id' => 1])
@@ -293,7 +297,7 @@ class Controller extends \yii\web\Controller
 
         if ($setting->banned_ips != '') {
             $bannedIps = $this->strToArray($setting->banned_ips, ':');
-            $allowStatus = $bannedIps[0] == strtolower('allow') ? true : false;
+            $allowStatus = strtolower($bannedIps[0]) == strtolower('allow') ? true : false;
             if ($allowStatus === true) {
                 unset($bannedIps[0]);
                 $bannedIps = array_values($bannedIps);
