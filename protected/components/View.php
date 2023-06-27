@@ -176,8 +176,10 @@ class View extends \yii\web\View
                     if (Yii::$app->broadcaster->isEnable() === true) {
                         $userId = !Yii::$app->user->isGuest ? Yii::$app->user->id : 'isGuest';
                         $centrifugeToken = Yii::$app->broadcaster->getToken($userId);
+                        $centrifugeHost = Yii::$app->params['broadcaster']['server'];
+                        $centrifugePort = Yii::$app->params['broadcaster']['port'];
 $js = <<<JS
-    const centrifuge = new Centrifuge('ws://localhost:8000/connection/websocket', {
+    const centrifuge = new Centrifuge('ws://{$centrifugeHost}:{$centrifugePort}/connection/websocket', {
         token: '{$centrifugeToken}'
     });
 

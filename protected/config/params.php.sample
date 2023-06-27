@@ -63,9 +63,9 @@ return [
 		'datepickerType' => 'flatpickr',				// flatpickr | juiDatepicker
 	],
 
-    // Redis Broadcaster
+    // Broadcaster
     'broadcaster' => [
-        'server' => '127.0.0.1',
-        'port' => 6379,
+        'server' => 'localhost',
+        'port' => 8000,
     ],
 ];
