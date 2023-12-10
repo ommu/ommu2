@@ -430,13 +430,13 @@ JS;
         $themeInfo = self::themeInfo($this->theme->name);
 
         $themeSetting = [];
-        if (array_key_exists('theme_setting', $themeInfo)) {
+        if (is_array($themeInfo) && array_key_exists('theme_setting', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, $themeInfo['theme_setting']);
         }
-        if (array_key_exists('widget_class', $themeInfo)) {
+        if (is_array($themeInfo) && array_key_exists('widget_class', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['widget_class' => $themeInfo['widget_class']]);
         }
-        if (array_key_exists('ignore_asset_class', $themeInfo)) {
+        if (is_array($themeInfo) && array_key_exists('ignore_asset_class', $themeInfo)) {
             $themeSetting = ArrayHelper::merge($themeSetting, ['ignore_asset_class' => $themeInfo['ignore_asset_class']]);
         }
 
