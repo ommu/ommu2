@@ -38,11 +38,11 @@
         "npm-asset/wolfy87-eventemitter": "~5.2.1",
 
 		"ommu/yii2-redactor": "~2.0",
-		"ommu/yii-traits": "dev-master",
-		"ommu/yii2-selectize": "@dev",
-		"ommu/yii2-flatpickr": "@dev",
-		"ommu/yii2-daterangepicker": "@dev",
-		"ommu/gapi-google-analytics-php-interface": "dev-master",
+		"ommu/yii-traits": "v2.x-dev",
+		"ommu/yii2-selectize": "dev-master",
+		"ommu/yii2-flatpickr": "dev-master",
+		"ommu/yii2-daterangepicker": "dev-master",
+		"ommu/gapi-google-analytics-php-interface": "v2.x-dev",
 		"ommu/yii2-centrifugo": "dev-master",
 
         "components/jquery": "3.5.*@stable | 3.4.*@stable | 3.3.*@stable | 3.2.*@stable | 3.1.*@stable | 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable",
@@ -53,20 +53,20 @@
         "twitter/typeahead.js": "0.10.* | ~0.11.0",
         "components/jqueryui": "~1.12.1",
 
-		"ommu/core": "dev-master",
-		"ommu/users": "dev-master",
+		"ommu/core": "v2.x-dev",
+		"ommu/users": "v2.x-dev",
 		"ommu/mailer": "dev-master",
-		"ommu/report": "dev-master",
-		"ommu/support":  "dev-master",
-		"ommu/banner": "dev-master",
+		"ommu/report": "v2.x-dev",
+		"ommu/support":  "v2.x-dev",
+		"ommu/banner": "v2.x-dev",
 
-		"ommuid/back3nd": "@dev"
+		"ommuid/back3nd": "dev-master"
 	},
 	"require-dev": {
 		"yiisoft/yii2-debug": "~2.0.0",
 		"yiisoft/yii2-gii": "~2.0.0",
 		"yiisoft/yii2-faker": "~2.0.0",
-		"ommu/gii": "dev-master",
+		"ommu/gii": "v2.x-dev",
 
 		"codeception/base": "^2.2.3",
 		"codeception/verify": "~0.3.1",
@@ -86,6 +86,9 @@
 			"yii\\composer\\Installer::postInstall"
 		],
 		"post-install-cmd": [
+			"yii\\composer\\Installer::postInstall"
+		],
+		"post-update-cmd": [
 			"yii\\composer\\Installer::postInstall"
 		]
 	},
