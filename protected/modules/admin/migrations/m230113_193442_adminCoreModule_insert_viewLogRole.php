@@ -3,7 +3,7 @@
  * m230113_193442_adminCoreModule_insert_viewLogRole
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
- * @contact (+62)856-299-4114
+ * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2023 OMMU (www.ommu.id)
  * @created date 13 January 2023, 19:35 WIB
  * @link https://github.com/ommu/ommu

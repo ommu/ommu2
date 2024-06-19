@@ -4,7 +4,7 @@
  * @var $this app\controllers\SettingController
  *
  * @author Putra Sudaryanto <putra@ommu.id>
- * @contact (+62)856-299-4114
+ * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 25 July 2019, 18:32 WIB
  * @link https://github.com/ommu/ommu

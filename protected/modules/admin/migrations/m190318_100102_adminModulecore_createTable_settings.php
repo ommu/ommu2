@@ -2,8 +2,8 @@
 /**
  * m190318_100102_adminModulecore_createTable_settings
  * 
- * @author Putra Sudaryanto <dwptr@ommu.id>
- * @contact (+62)856-299-4114
+ * @author Putra Sudaryanto <putra@ommu.id>
+ * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2023 OMMU (www.ommu.id)
  * @created date 3 June 2023, 18:07 WIB
  * @link https://github.com/ommu/ommu

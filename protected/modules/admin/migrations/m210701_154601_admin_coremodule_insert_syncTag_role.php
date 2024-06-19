@@ -3,7 +3,7 @@
  * m210701_154601_admin_coremodule_insert_syncTag_role
  * 
  * @author Putra Sudaryanto <putra@ommu.id>
- * @contact (+62)856-299-4114
+ * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2021 OMMU (www.ommu.id)
  * @created date 1 July 2021, 15:46 WIB
  * @link https://github.com/ommu/ommu
