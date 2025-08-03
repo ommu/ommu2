@@ -1,19 +1,38 @@
 {
-	"name": "yiisoft/yii2-app-basic",
-	"description": "Yii 2 Basic Project Template",
-	"keywords": ["yii2", "framework", "basic", "project template"],
-	"homepage": "http://www.yiiframework.com/",
+	"name": "ommu/ommu2",
+	"description": "Ommu2 Platform",
+	"keywords": [
+		"cms",
+		"module",
+		"backoffice-theme",
+		"gii",
+		"core",
+		"ommu",
+		"ommu2",
+		"yii2"
+	],
+	"homepage": "https://github.com/ommu/ommu2",
 	"type": "project",
-	"license": "BSD-3-Clause",
+	"license": "Apache-2.0",
 	"support": {
-		"issues": "https://github.com/yiisoft/yii2/issues?state=open",
-		"forum": "http://www.yiiframework.com/forum/",
-		"wiki": "http://www.yiiframework.com/wiki/",
-		"irc": "irc://irc.freenode.net/yii",
-		"source": "https://github.com/yiisoft/yii2"
+		"issues": "https://github.com/ommu/ommu2/issues",
+		"wiki": "https://github.com/ommu/ommu2/wiki",
+		"source": "https://github.com/ommu/ommu2"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ommu/ommu2.git"
+	},
+	"authors": [
+		{
+			"name": "Putra Sudaryanto",
+			"email": "putra@ommu.id",
+			"homepage": "https://ommu.id",
+			"role": "Creator"
+		}
+	],
 	"require": {
 		"php": "~7.0",
 		"oomphinc/composer-installers-extender": "^2.0",
