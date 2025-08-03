@@ -6,7 +6,7 @@
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 2 May 2019, 09:39 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  */
 
 namespace app\components\grid;

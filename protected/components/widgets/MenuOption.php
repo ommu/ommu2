@@ -6,7 +6,7 @@
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 2 September 2017, 15:42 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  */
 
 namespace app\components\widgets;

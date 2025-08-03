@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 15 September 2017, 19:07 WIB
  * @modified date 22 April 2017, 18:28 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  *
  * This is the model class for table "source_message".
  *

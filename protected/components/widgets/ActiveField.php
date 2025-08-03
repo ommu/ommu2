@@ -11,7 +11,7 @@
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 21 February 2019, 15:29 WIB
  * @modified date 8 May 2019, 17:35 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  */
 
 namespace app\components\widgets;

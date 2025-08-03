@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2019 OMMU (www.ommu.id)
  * @created date 3 May 2019, 13:22 WIB
  * @modified date 18 February 2020, 17:37 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  */
 
 namespace app\components\grid;

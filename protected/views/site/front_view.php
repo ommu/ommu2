@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 2 October 2017, 16:31 WIB
  * @modified date 31 January 2019, 16:38 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  *
  */
 

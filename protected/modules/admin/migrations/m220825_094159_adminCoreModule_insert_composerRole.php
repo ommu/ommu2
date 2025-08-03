@@ -6,7 +6,7 @@
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2022 OMMU (www.ommu.id)
  * @created date 25 August 2022, 09:42 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  *
  */
 

@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 2 October 2017, 00:14 WIB
  * @modified date 22 April 2018, 18:36 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  *
  * This is the model class for table "ommu_core_tags".
  *

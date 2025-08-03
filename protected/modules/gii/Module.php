@@ -6,7 +6,7 @@
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2017 OMMU (www.ommu.id)
  * @created date 24 September 2017, 12:38 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  * 
  * version 2.0.8
  * https://www.yiiframework.com/news/190/gii-extension-2-0-8-released

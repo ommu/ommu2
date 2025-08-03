@@ -7,7 +7,7 @@
  * @contact (+62)811-2540-432
  * @copyright Copyright (c) 2018 OMMU (www.ommu.id)
  * @created date 4 January 2018, 11:29 WIB
- * @link https://github.com/ommu/ommu
+ * @link https://github.com/ommu/ommu2
  * 
  */
 
