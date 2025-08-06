@@ -121,6 +121,7 @@
 					"author-sample.yaml": "author.yaml",
 					"protected/config/main.php.sample": "protected/config/main.php",
 					"protected/config/database.php.sample": "protected/config/database.php",
+					"protected/config/params.php.sample": "protected/config/params.php",
 					"apps.json": "back3nd/apps.json"
                 }
             ],
