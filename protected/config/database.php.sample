@@ -4,9 +4,9 @@ return [
 		// uncomment the following to use a MySQL database
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host=db.host;dbname=db.name',
-			'username' => 'db.username',
-			'password' => 'db.password',
+			'dsn' => 'mysql:host='.env('DB_HOST', 'db.host').';dbname='.env('DB_NAME', 'db.name'),
+			'username' => env('DB_USERNAME', 'db.username'),
+			'password' => env('DB_PASSWORD', 'db.password'),
 			'charset' => 'utf8',
 
 			// Schema cache options (for production environment)
