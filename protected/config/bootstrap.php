@@ -6,6 +6,6 @@ Yii::setAlias('@public', dirname(dirname(__DIR__)) . '/public');
 Yii::setAlias('@mail', dirname(dirname(__DIR__)) . '/mail');
 Yii::setAlias('@modules', '@app/modules');
 
-define('DOTENV_PATH', __DIR__.'/.env');
+define('DOTENV_PATH', __DIR__);
 define('DOTENV_FILE', '.env');
-define('DOTENV_OVERLOAD', false);
+define('DOTENV_OVERLOAD', true);
