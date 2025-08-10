@@ -35,15 +35,15 @@ $config = [
 		],
         'redis' => [
             'class'    => 'yii\redis\Connection',
-            'hostname' => 'localhost',
-            'port'     => 6379,
-            'database' => 0,
+            'hostname' => env('REDIS_HOSTNAME'),
+            'port'     => env('REDIS_PORT', 6379),
+            'database' => env('REDIS_DATABASE', 0),
             'retries'  => 1,
         ],
         'queue' => [
             'class' => \yii\queue\db\Queue::class,
             'db' => 'db',
-            'tableName' => 'ommu_queue',
+            'tableName' => env('QUEUE_TABLE', 'ommu_queue'),
             'channel' => 'default',
             'mutex' => \yii\mutex\MysqlMutex::class,
         ],
@@ -53,14 +53,14 @@ $config = [
 			'enableAutoLogin'   => true,
 			'loginUrl'          => ['/login'],
 			'identityCookie'    => ['name' => $bn . '_identity', 'httpOnly' => true],
-			'authTimeout'       => 7 * 24 * 3600,
+			'authTimeout'       =>  env('AUTH_TIMEOUT', 7 * 24 * 3600),
 		],
 		'authManager' => [
 			'class'             => 'mdm\admin\components\DbManager',
-			'assignmentTable'   => 'ommu_core_auth_assignment',
-			'itemTable'         => 'ommu_core_auth_item',
-			'itemChildTable'    => 'ommu_core_auth_item_child',
-			'ruleTable'         => 'ommu_core_auth_rule',
+			'assignmentTable'   => env('AUTH_ASSIGNMENT', 'ommu_core_auth_assignment'),
+			'itemTable'         => env('AUTH_ITEM', 'ommu_core_auth_item'),
+			'itemChildTable'    => env('AUTH_ITEM_CHILD', 'ommu_core_auth_item_child'),
+			'ruleTable'         => env('AUTH_RULE', 'ommu_core_auth_rule'),
 		],
 		'formatter' => [
 			'class'             => 'app\components\i18n\Formatter',
@@ -96,9 +96,9 @@ $config = [
         'broadcaster' => [
             'class'  => \ommu\centrifugo\Broadcaster::class,
             'enable' => true,
-            'host'   => 'http://localhost:8000/api',
-            'secret' => 'very-long-secret-key',
-            'apikey' => 'very-long-api-ket',
+            'host'   => env('BROADCASTER_HOST', 'http://localhost:8000/api'),
+            'secret' => env('BROADCASTER_SECRET'),
+            'apikey' => env('BROADCASTER_API'),
         ],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
@@ -209,7 +209,7 @@ $config = [
     'controllerMap' => [
         'migrate' => [
             'class' => 'app\commands\MigrateController',
-            'migrationTable' => 'ommu_migration',
+            'migrationTable' => env('MIGRATE_TABLE'),
         ]
     ],
 ];

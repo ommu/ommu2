@@ -24,7 +24,7 @@ return [
 	// Letak folder tema, pada path ini tema akan diupload.
 	'themePath' => '@themes',
 	// Tema default yang akan digunakan jika tidak ada pengaturan yang dilakukan.
-	'defaultTheme' => 'gentelella',
+	'defaultTheme' => env('THEME_DEFAULT', 'gentelella'),
 
 	// BACKOFFICE
 	// Backoffice setting/option
@@ -65,7 +65,7 @@ return [
 
     // Broadcaster
     'broadcaster' => [
-        'server' => 'localhost',
-        'port' => 8000,
+        'server' => env('BROADCASTER_HOST_PARAM', 'localhost'),
+        'port' => env('BROADCASTER_PORT_PARAM', 8000),
     ],
 ];

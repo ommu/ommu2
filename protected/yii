@@ -11,6 +11,10 @@
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
+define('DOTENV_PATH', join('/', [__DIR__, 'config']));
+define('DOTENV_FILE', '.env');
+define('DOTENV_OVERLOAD', true);
+
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
 
