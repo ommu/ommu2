@@ -28,8 +28,9 @@ $columns = [
 	],
 	$usernameField,
 ];
-if (!empty($extraColumns))
-	$columns = array_merge($columns, $extraColumns);
+// if (!empty($extraColumns)) {
+// 	$columns = array_merge($columns, $extraColumns);
+// }
 $columns[] = [
 	'class' => 'app\components\grid\ActionColumn',
 	'header' => Yii::t('app', 'Option'),

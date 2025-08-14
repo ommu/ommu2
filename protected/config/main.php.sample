@@ -51,9 +51,10 @@ $config = [
 			'class'             => 'app\modules\user\components\User',
 			'identityClass'     => 'app\modules\user\models\Users',
 			'enableAutoLogin'   => true,
+			'enableSession'     => true,
 			'loginUrl'          => ['/login'],
 			'identityCookie'    => ['name' => $bn . '_identity', 'httpOnly' => true],
-			'authTimeout'       =>  env('AUTH_TIMEOUT', 7 * 24 * 3600),
+			'authTimeout'       =>  (int)env('AUTH_TIMEOUT', 7 * 24 * 3600),
 		],
 		'authManager' => [
 			'class'             => 'mdm\admin\components\DbManager',
